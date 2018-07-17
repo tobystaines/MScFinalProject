@@ -1,104 +1,105 @@
-import os, re, subprocess
-from soundfile import SoundFile
-import glob
-
-_find_sampling_rate = re.compile('.* ([0-9:]+) Hz,', re.MULTILINE)
-_find_channels = re.compile(".*Hz,( .*?),", re.MULTILINE)
-_find_duration = re.compile('.*Duration: ([0-9:]+)', re.MULTILINE)
+from functools import partial
+import tensorflow as tf
+import Audio_functions as af
+import Utils
 
 
-def timestamp_to_seconds( ms ):
-    """Convert a hours:minutes:seconds string representation to the appropriate time in seconds."""
-    a = ms.split(':')
-    assert 3 == len(a)
-    return float(a[0]) * 3600 + float(a[1]) * 60 + float(a[2])
+def get_dataset(
+        data_folder,
+        sample_rate,
+        n_fft,
+        fft_hop,
+        n_channels,
+        patch_window,
+        patch_hop,
+        n_parallel_readers
+):
+    """Still need to fix this to stop it producing a tuple"""
+    return (
+        tf.data.Dataset.list_files(data_folder + '/*.wav')
+        .map(partial(
+            af.read_audio,
+            sample_rate=sample_rate,
+            n_channels=n_channels
+        ), num_parallel_calls=n_parallel_readers)
+        #.map(fake_stereo, num_parallel_calls=n_parallel_readers)
+        .map(Utils.partial_argv(
+            af.compute_spectrogram,
+            n_fft=n_fft,
+            fft_hop=fft_hop,
+            n_channels=n_channels,
+        ), num_parallel_calls=n_parallel_readers)
+        .map(Utils.partial_argv(
+            af.extract_spectrogram_patches,
+            n_fft=n_fft,
+            n_channels=n_channels,
+            patch_window=patch_window,
+            patch_hop=patch_hop,
+        ))
+        .flat_map(Utils.zip_tensor_slices)
+    )
 
 
-def seconds_to_min_sec( secs ):
-    """Return a minutes:seconds string representation of the given number of seconds."""
-    mins = int(secs) / 60
-    secs = int(secs - (mins * 60))
-    return "%d:%02d" % (mins, secs)
+def zip_datasets(dataset_a, dataset_b, n_shuffle, batch_size):
+    return tf.data.Dataset.zip((dataset_a, dataset_b))\
+        .batch(batch_size)\
+        .shuffle(n_shuffle)
 
 
-def get_mp3_metadata(audio_path):
-    """Determine length of tracks listed in the given input files (e.g. playlists)."""
-    ffmpeg = subprocess.check_output(
-      'ffmpeg -i "%s"; exit 0' % audio_path,
-      shell = True,
-      stderr = subprocess.STDOUT )
+def prepare_datasets(model_config):
 
-    # Get sampling rate
-    match = _find_sampling_rate.search( ffmpeg )
-    assert(match)
-    sampling_rate = int(match.group( 1 ))
+    x_train = get_dataset(model_config['data_root']+'train_sup/Mixed',
+                                  model_config['SAMPLE_RATE'],
+                                  model_config['N_FFT'],
+                                  model_config['FFT_HOP'],
+                                  model_config['N_CHANNELS'],
+                                  model_config['PATCH_WINDOW'],
+                                  model_config['PATCH_HOP'],
+                                  model_config['N_PARALLEL_READERS'])
+    y_train = get_dataset(model_config['data_root']+'train_sup/Voice',
+                                  model_config['SAMPLE_RATE'],
+                                  model_config['N_FFT'],
+                                  model_config['FFT_HOP'],
+                                  model_config['N_CHANNELS'],
+                                  model_config['PATCH_WINDOW'],
+                                  model_config['PATCH_HOP'],
+                                  model_config['N_PARALLEL_READERS'])
+    train_data = zip_datasets(x_train, y_train, model_config['N_SHUFFLE'], model_config['BATCH_SIZE'])
 
-    # Get channels
-    match = _find_channels.search( ffmpeg )
-    assert(match)
-    channels = match.group( 1 )
-    channels = (2 if channels.__contains__("stereo") else 1)
+    x_val = get_dataset(model_config['data_root']+'validation/Mixed',
+                                model_config['SAMPLE_RATE'],
+                                model_config['N_FFT'],
+                                model_config['FFT_HOP'],
+                                model_config['N_CHANNELS'],
+                                model_config['PATCH_WINDOW'],
+                                model_config['PATCH_HOP'],
+                                model_config['N_PARALLEL_READERS'])
+    y_val = get_dataset(model_config['data_root']+'validation/Voice',
+                                model_config['SAMPLE_RATE'],
+                                model_config['N_FFT'],
+                                model_config['FFT_HOP'],
+                                model_config['N_CHANNELS'],
+                                model_config['PATCH_WINDOW'],
+                                model_config['PATCH_HOP'],
+                                model_config['N_PARALLEL_READERS'])
+    val_data = zip_datasets(x_val, y_val, model_config['N_SHUFFLE'], model_config['BATCH_SIZE'])
 
-    # Get duration
-    match = _find_duration.search( ffmpeg )
-    assert(match)
-    duration = match.group( 1 )
-    duration = timestamp_to_seconds(duration)
+    x_test = get_dataset(model_config['data_root']+'test/Mixed',
+                                 model_config['SAMPLE_RATE'],
+                                 model_config['N_FFT'],
+                                 model_config['FFT_HOP'],
+                                 model_config['N_CHANNELS'],
+                                 model_config['PATCH_WINDOW'],
+                                 model_config['PATCH_HOP'],
+                                 model_config['N_PARALLEL_READERS'])
+    y_test = get_dataset(model_config['data_root']+'test/Voice',
+                                 model_config['SAMPLE_RATE'],
+                                 model_config['N_FFT'],
+                                 model_config['FFT_HOP'],
+                                 model_config['N_CHANNELS'],
+                                 model_config['PATCH_WINDOW'],
+                                 model_config['PATCH_HOP'],
+                                 model_config['N_PARALLEL_READERS'])
+    test_data = zip_datasets(x_test, y_test, model_config['N_SHUFFLE'], model_config['BATCH_SIZE'])
 
-    return sampling_rate, channels, duration
-
-
-def get_audio_metadata(audioPath, sphereType=False):
-    """
-    Returns sampling rate, number of channels and duration of an audio file
-    :param audioPath:
-    :param sphereType:
-    :return:
-    """
-
-    snd_file = SoundFile(audioPath, mode='r')
-    inf = snd_file._info
-    sr = inf.samplerate
-    channels = inf.channels
-    duration = float(inf.frames) / float(inf.samplerate)
-    return int(sr), int(channels), float(duration)
-
-
-class Sample(object):
-    '''
-    Represents a particular audio track - maintains metadata about the audio file for faster audio handling during training
-    '''
-    def __init__(self, path, sample_rate, channels, duration):
-        self.path = path
-        self.sample_rate = sample_rate
-        self.channels = channels
-        self.duration = duration
-
-    @classmethod
-    def from_path(cls, path):
-        '''
-        Create new sample object from audio file path by retrieving metadata.
-        :param path:
-        :return:
-        '''
-
-        sr, channels, duration = get_audio_metadata(path)
-        return cls(path, sr, channels, duration)
-
-
-def getCHiME3(dataset):
-
-    root = 'C:/Users/Toby/Jupyter Notebooks/My Work/MSc Project/Test Audio/GANdatasetsMini/'
-    if dataset == 'train_unsup':
-        mix_list = glob.glob(root+dataset+'/*.wav')
-        voice_list = list()
-    else:
-        mix_list = glob.glob(root+dataset+'/Mixed/*.wav')
-        voice_list = glob.glob(root+dataset+'/Voice/*.wav')
-    mix = list()
-    voice = list()
-    for item in mix_list:
-        mix.append(Sample.from_path(item))
-    for item in voice_list:
-        voice.append(Sample.from_path(item))
-    return mix, voice
+    return train_data, val_data, test_data

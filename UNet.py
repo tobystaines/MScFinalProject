@@ -1,5 +1,5 @@
 import tensorflow as tf
-import model_functions as mf
+import Model_functions as mf
 
 
 class UNetModel(object):

@@ -16,6 +16,7 @@ ex = Experiment('UNet_Speech_Separation')
 def cfg():
     model_config = {"model_base_dir": "checkpoints",  # Base folder for model checkpoints
                     "log_dir": "logs",  # Base folder for log files
+                    "data_root": 'C:/Users/Toby/Jupyter Notebooks/My Work/MSc Project/Test Audio/GANdatasetsMini/',  # Base folder of CHiME 3 dataset
                     'SAMPLE_RATE': 44100,  # Desired sample rate of audio. Inout will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
@@ -24,19 +25,34 @@ def cfg():
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 8,
-                    'N_SHUFFLE': 20
+                    'N_SHUFFLE': 20,
+                    'EPOCHS': 1
                     }
 
     experiment_id = np.random.randint(0,1000000)
 
 
 @ex.capture
-def test():
+def test(sess, data, model, model_config):
+    #_, cost = sess.run([model.train_op, model.cost], {model.is_training: False})
     pass
 
 
+
+
 @ex.capture
-def train():
+def train(sess, data, model_config):
+
+    # Build model
+
+
+    # Summaries
+    # Start session
+    # Load checkpoint model if required
+
+
+    # Training finished - save model and close session
+
     pass
 
 
@@ -46,33 +62,81 @@ def optimise():
 
 
 @ex.automain
-def do_experiment():
+def do_experiment(model_config):
 
-    # Prepare data for input
-    if os.path.exists('dataset.pkl'):  # Load existing dataset
-        with open('dataset.pkl', 'r') as file:
-            dataset = pickle.load(file)
-        print("Loaded dataset from pickle!")
-    else:  # Create new dataset
-        train, _ = Dataset.getCHiME3('train')
-        validation = list(Dataset.getCHiME3('validation'))
-        test = list(Dataset.getCHiME3('test'))
+    #tf.reset_default_graph()
+    # Prepare data
+    print('Preparing dataset')
+    train_data, val_data, test_data = Dataset.prepare_datasets(model_config)
 
-        data = dict()
-        data["train"] = train
-        data["valid"] = validation
-        data["test"] = test
+    #  Start session
+    sess = tf.Session()
+
+    #  Start training
+    #model = train(sess, train_data, model_config)
+
+    #  Create iterators
+    iterator = train_data.make_initializable_iterator()
+    mixed, voice = iterator.get_next()
+
+    training_init_op = iterator.make_initializer(train_data)
+    validation_init_op = iterator.make_initializer(val_data)
+    testing_init_op = iterator.make_initializer(test_data)
+
+    #  Create variable placeholders
+    is_training = tf.placeholder(shape=(), dtype=bool)
+    mixed_mag = mixed[0][:, :, 1:, :2]  # Yet more hacking to get around this tuple problem
+    mixed_phase = mixed[0][:, :, 1:, 2:]
+    voice_mag = voice[0][:, :, 1:, :2]
+
+    #  Build U-Net model
+    print('Creating model')
+    model = UNet.UNetModel(
+        mixed_mag,
+        voice_mag,
+        mixed_phase,
+        is_training
+    )
+    sess.run(tf.global_variables_initializer())
+
+    #  Begin training loop
+    print('Starting training')
+    epoch = 1
+    iteration = 1
+    sess.run(training_init_op)
+    while epoch < model_config['EPOCHS'] + 1:
+
+        try:
+            _, cost = sess.run([model.train_op, model.cost], {model.is_training: True})
+            if iteration % 10 == 0:
+                print("            , {0}, {1}".format(iteration, cost))
+            iteration += 1
+        except tf.errors.OutOfRangeError:
+            print('Epoch {e} finished.'.format(e=epoch))
+            epoch += 1
+            sess.run(training_init_op)
+    print('Finished requested number of epochs. Training complete.')
+
+    #  Test trained model
+    # Testing - move to test func later
+    # Calculate L1 loss
+    print('Starting testing')
+    sess.run(testing_init_op)
+    iteration = 1
+    test_costs = list()
+    while True:
+        try:
+            cost = sess.run(model.cost, {model.is_training: False})
+            if iteration % 10 == 0:
+                print("            , {0}, {1}".format(iteration, cost))
+            test_costs.append(cost)
+            iteration += 1
+        except tf.errors.OutOfRangeError:
+            mean_cost = sum(test_costs)/len(test_costs)
+            print('Testing complete. Mean cost over test set: {c}'.format(c=mean_cost))
+            break
+    # Calculate audio loss metrics
 
 
-        # Zip up all paired dataset partitions so we have (mixture, voice) tuples
-        data["train"] = zip(data["train"][0], data["train"][1])
-        data["valid"] = zip(data["valid"][0], data["valid"][1])
-        data["test"] = zip(data["test"][0], data["test"][1])
-
-        with open('dataset.pkl', 'wb') as file:
-            pickle.dump(data, file)
-        print("Created dataset structure")
-
-    # Train the network
 
     pass
