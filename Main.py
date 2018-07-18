@@ -110,7 +110,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 
 @ex.capture
 def test(sess, model, handle, testing_iterator, testing_handle):
-    # Testing - move to test func later
+
     # Calculate L1 loss
     print('Starting testing')
     sess.run(testing_iterator.initializer)

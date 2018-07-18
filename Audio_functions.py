@@ -3,7 +3,7 @@ import numpy as np
 import librosa
 
 
-def read_audio(path, sample_rate, n_channels):
+def read_audio(path, sample_rate, n_channels=1):
 
     def read_audio_py(py_path):
         # if n_channels == 1:
@@ -28,7 +28,7 @@ def fake_stereo(audio):
     return fake_stereo(mixed), fake_stereo(voice)
 
 
-def compute_spectrogram(audio, n_fft, fft_hop, n_channels):
+def compute_spectrogram(audio, n_fft, fft_hop, n_channels=1):
     '''
     Parameters
     ----------
@@ -44,10 +44,10 @@ def compute_spectrogram(audio, n_fft, fft_hop, n_channels):
         spec = librosa.stft(
             x, n_fft=n_fft, hop_length=fft_hop, window='hann')
         # TODO: normalize?
-        mag = np.abs(spec)
-        temp = mag - mag.min()
-        mag_norm = temp / temp.max()
-        return mag_norm, np.angle(spec)
+        #mag = np.abs(spec)
+        #temp = mag - mag.min()
+        #mag_norm = temp / temp.max() # Return mag_norm for normalised spec.
+        return np.abs(spec), np.angle(spec)
 
     # def stereo_func(py_audio):
     #    left_mag, left_phase = stft(py_audio[:, 0])
@@ -98,8 +98,7 @@ def extract_spectrogram_patches(
         num_patches = tf.shape(patches)[1]
 
         return tf.reshape(patches, [num_patches, patch_window,
-                                    int(1 + n_fft / 2), 2])   # int(n_channels * 2)]) #here was '1 + n_fft / 2, n_channels * 2',
-        # it was causing an error in 6th code block
+                                    int(1 + n_fft / 2), 2])
 
 def replace_spectrogram_patches(patches):
     '''
@@ -116,9 +115,13 @@ def replace_spectrogram_patches(patches):
     # Is it possible to account for no set num patches per whole spectrogram?
     pass
 
-def invert_spectrogram():
+def invert_spectrogram(mag, phase, n_fft, fft_hop):
+
     # Could be a problem if the spec has been normalised
-    pass
+    spec = np.array([mag, phase])
+    wave = librosa.istft(spec, n_fft=n_fft, hop_length=fft_hop, window='hann')
+
+    return wave
 
 
 def hwr_tf(x):
