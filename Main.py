@@ -1,22 +1,19 @@
 import numpy as np
 import tensorflow as tf
 from sacred import Experiment
-import pickle
 import os
 
 import Audio_functions as af
-import Model_functions as mf
 import UNet
 import Dataset
-import Utils
 
 ex = Experiment('UNet_Speech_Separation')
 
 @ex.config
 def cfg():
-    model_config = {"model_base_dir": "checkpoints",  # Base folder for model checkpoints
+    model_config = {"model_base_dir": "C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints",  # Base folder for model checkpoints
                     "log_dir": "logs",  # Base folder for log files
-                    "data_root": 'C:/Users/Toby/Jupyter Notebooks/My Work/MSc Project/Test Audio/GANdatasetsMini/',  # Base folder of CHiME 3 dataset
+                    "data_root": 'C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/',  # Base folder of CHiME 3 dataset
                     'SAMPLE_RATE': 44100,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
@@ -28,7 +25,7 @@ def cfg():
                     'N_SHUFFLE': 20,
                     'EPOCHS': 1,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
-                    'VAL_ITERS': 15,  # Number of training iterations between validation checks,
+                    'VAL_ITERS': 7,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 2  # Number of successively worse validation checks before early stopping
                     }
 
@@ -36,49 +33,77 @@ def cfg():
 
 
 @ex.capture
-def train(sess, model, model_config, handle, training_iterator, training_handle, validation_iterator, validation_handle, writer):
+def train(sess, model, model_config, model_folder, handle, training_iterator, training_handle, validation_iterator,
+          validation_handle, writer):
 
-    #  Begin training loop
+    def validation(min_val_cost, worse_val_checks):
+        print('Validating')
+        sess.run(validation_iterator.initializer)
+        val_costs = list()
+        while True:
+            try:
+                val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
+                val_costs.append(val_cost)
+            except tf.errors.OutOfRangeError:
+                # Calculate and record mean loss over validation dataset
+                val_check_mean_cost = sum(val_costs) / len(val_costs)
+                print('Validation check mean loss: {l}'.format(l=val_check_mean_cost))
+                summary = tf.Summary(
+                    value=[tf.Summary.Value(tag='Validation_mean_loss', simple_value=val_check_mean_cost)])
+                writer.add_summary(summary, iteration)
+                # If validation loss has worsened increment the counter, else, reset the counter
+                if val_check_mean_cost > min_val_cost:
+                    worse_val_checks += 1
+                    print('Validation loss has worsened. worse_val_checks = {w}'.format(w=worse_val_checks))
+                else:
+                    min_val_cost = val_check_mean_cost
+                    worse_val_checks = 0
+                    print('Validation loss has improved!')
+                    # As this is the best model so far, save it
+                    #saver.save(sess, os.path.join(model_config["model_base_dir"], model_folder,
+                    #                              model_folder), global_step=int(iteration))
+                break
+        return min_val_cost, worse_val_checks
+
     print('Starting training')
+    # Initialise variables and define summary
     epoch = 1
     iteration = 1
     min_val_cost = 1
     worse_val_checks = 0
+    training_summary = tf.summary.scalar('Training_loss', model.cost)
+    #saver = tf.train.Saver(tf.global_variables(), write_version=tf.train.SaverDef.V2)
     sess.run(training_iterator.initializer)
+
+    # Begin training loop
     # Train for the specified number of epochs, unless early stopping is triggered
     while epoch < model_config['EPOCHS'] + 1 and worse_val_checks < model_config['NUM_WORSE_VAL_CHECKS']:
         try:
-            _, cost = sess.run([model.train_op, model.cost], {model.is_training: True, handle: training_handle})
-            if iteration % 10 == 0:
+            _, cost, summary = sess.run([model.train_op, model.cost, training_summary], {model.is_training: True, handle: training_handle})
+            if iteration % 5 == 0:
                 print("       Training iteration: {i}, Loss: {l}".format(i=iteration, l=cost))
-            writer.add_summary(cost, iteration)
+            writer.add_summary(summary, iteration)  # Record the loss at each iteration
+
             # If using early stopping, enter validation loop
             if model_config['EARLY_STOPPING'] and iteration % model_config['VAL_ITERS'] == 0:
-                print('Validating')
-                sess.run(validation_iterator.initializer)
-                val_costs = list()
-                while True:
-                    try:
-                        val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
-                        val_costs.append(val_cost)
-                    except tf.errors.OutOfRangeError:
-                        val_check_mean_cost = sum(val_costs) / len(val_costs)
-                        print('Validation check mean loss: {l}'.format(l=val_check_mean_cost))
-                        if val_check_mean_cost > min_val_cost:  # If validation loss has worsened, take note
-                            worse_val_checks += 1
-                            print('Validation loss has worsened. worse_val_checks = {w}'.format(w=worse_val_checks))
-                        else:  # If validation cost has improved, reset counter
-                            min_val_cost = val_check_mean_cost
-                            worse_val_checks = 0
-                            print('Validation loss has improved!')
-                        break
+                min_val_cost, worse_val_checks = validation(min_val_cost, worse_val_checks)
+
             iteration += 1
+
         # When the dataset is exhausted, note the end of the epoch
         except tf.errors.OutOfRangeError:
             print('Epoch {e} finished.'.format(e=epoch))
             epoch += 1
             sess.run(training_iterator.initializer)
-    print('Finished requested number of epochs. Training complete.')
+
+    if worse_val_checks >= model_config['NUM_WORSE_VAL_CHECKS']:
+        print('Stopped early due to validation criteria.')
+    else:
+        # Final validation check
+        if iteration % model_config['VAL_ITERS'] != 1 or not model_config['EARLY_STOPPING']:
+            min_val_cost, _ = validation(min_val_cost, worse_val_checks)
+        print('Finished requested number of epochs. Training complete.')
+    print('Best validation loss: {l}'.format(l=min_val_cost))
 
     return model
 
@@ -146,13 +171,12 @@ def do_experiment(model_config, experiment_id):
 
     # Summaries
     model_folder = str(experiment_id)
-    tf.summary.scalar('L1_loss', model.cost)
-    merged = tf.summary.merge_all()
     writer = tf.summary.FileWriter(os.path.join(model_config["log_dir"], model_folder), graph=sess.graph)
 
     # Train the model
     sess.run(tf.global_variables_initializer())
-    model = train(sess, model, model_config, handle, training_iterator, training_handle, validation_iterator, validation_handle, writer)
+    model = train(sess, model, model_config, model_folder, handle, training_iterator, training_handle, validation_iterator,
+                  validation_handle, writer)
 
     # Test trained model
     mean_test_loss = test(sess, model, handle, testing_iterator, testing_handle)
