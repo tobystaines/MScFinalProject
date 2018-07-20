@@ -1,0 +1,85 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "C:\\Users\\Toby\\MSc_Project\\MScFinalProject",
+    "dependencies": [
+      "mir-eval==0.4",
+      "numpy==1.14.0",
+      "sacred==0.7.4",
+      "tensorflow==1.5.0"
+    ],
+    "mainfile": "Main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "Audio_functions.py",
+        "_sources\\Audio_functions_d40a36796e513d6a1f231dc38934ae2c.py"
+      ],
+      [
+        "Dataset.py",
+        "_sources\\Dataset_d4e01a3259e94b26a4d64115527b82fb.py"
+      ],
+      [
+        "Main.py",
+        "_sources\\Main_99623025a04b7cce234192f817750f8d.py"
+      ],
+      [
+        "UNet.py",
+        "_sources\\UNet_2dd1ab2b52260f79a03454be1b6d782b.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\config\\captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"C:/Users/Toby/MSc_Project/MScFinalProject/Main.py\", line 233, in do_experiment\n    mean_test_loss = test(sess, model, model_config, handle, testing_iterator, testing_handle)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\config\\captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"C:/Users/Toby/MSc_Project/MScFinalProject/Main.py\", line 156, in test\n    sdr, sir, sar = mir_eval.separation.bss_eval_sources(voice, voice_est)\n",
+    "ValueError: too many values to unpack (expected 3)\n"
+  ],
+  "heartbeat": "2018-07-20T16:24:18.124953",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Core(TM) i5-4200H CPU @ 2.80GHz",
+    "hostname": "tobyspc",
+    "os": [
+      "Windows",
+      "Windows-10-10.0.17134-SP0"
+    ],
+    "python_version": "3.6.1"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-07-20T16:14:25.807974",
+  "status": "FAILED",
+  "stop_time": "2018-07-20T16:24:18.172926"
+}

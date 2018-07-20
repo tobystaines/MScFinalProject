@@ -1,0 +1,86 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "C:\\Users\\Toby\\MSc_Project\\MScFinalProject",
+    "dependencies": [
+      "mir-eval==0.4",
+      "numpy==1.14.0",
+      "sacred==0.7.4",
+      "tensorflow==1.5.0"
+    ],
+    "mainfile": "Main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "Audio_functions.py",
+        "_sources\\Audio_functions_d40a36796e513d6a1f231dc38934ae2c.py"
+      ],
+      [
+        "Dataset.py",
+        "_sources\\Dataset_d4e01a3259e94b26a4d64115527b82fb.py"
+      ],
+      [
+        "Main.py",
+        "_sources\\Main_7cfcdbc76ee21234749f25dc21e97826.py"
+      ],
+      [
+        "UNet.py",
+        "_sources\\UNet_2dd1ab2b52260f79a03454be1b6d782b.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\config\\captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"C:/Users/Toby/MSc_Project/MScFinalProject/Main.py\", line 214, in do_experiment\n    restorer = tf.train.Saver(tf.global_variables(), write_version=tf.train.SaverDef.V2)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\training\\saver.py\", line 1239, in __init__\n    self.build()\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\training\\saver.py\", line 1248, in build\n    self._build(self._filename, build_save=True, build_restore=True)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\training\\saver.py\", line 1272, in _build\n    raise ValueError(\"No variables to save\")\n",
+    "ValueError: No variables to save\n"
+  ],
+  "heartbeat": "2018-07-20T15:32:56.984693",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Core(TM) i5-4200H CPU @ 2.80GHz",
+    "hostname": "tobyspc",
+    "os": [
+      "Windows",
+      "Windows-10-10.0.17134-SP0"
+    ],
+    "python_version": "3.6.1"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-07-20T15:32:46.270289",
+  "status": "FAILED",
+  "stop_time": "2018-07-20T15:32:57.031564"
+}
