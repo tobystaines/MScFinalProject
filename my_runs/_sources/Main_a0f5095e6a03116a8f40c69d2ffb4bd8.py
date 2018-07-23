@@ -21,6 +21,7 @@ def cfg():
                     "local_run": True,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "84569/84569-16",
                     "log_dir": "logs",  # Base folder for log files
+                    #"data_root": 'C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/',  # Base folder of CHiME 3 dataset
                     'SAMPLE_RATE': 44100,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform

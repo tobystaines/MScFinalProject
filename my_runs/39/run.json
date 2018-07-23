@@ -1,0 +1,98 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "C:\\Users\\Toby\\MSc_Project\\MScFinalProject",
+    "dependencies": [
+      "mir-eval==0.4",
+      "numpy==1.14.0",
+      "sacred==0.7.4",
+      "tensorflow==1.5.0"
+    ],
+    "mainfile": "Main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "Audio_functions.py",
+        "_sources\\Audio_functions_d40a36796e513d6a1f231dc38934ae2c.py"
+      ],
+      [
+        "Dataset.py",
+        "_sources\\Dataset_25d07f975e85dd7386c841b09f2e2f3e.py"
+      ],
+      [
+        "Main.py",
+        "_sources\\Main_2dc1ab69c0918cf4bc47d747d78a13a3.py"
+      ],
+      [
+        "UNet.py",
+        "_sources\\UNet_2dd1ab2b52260f79a03454be1b6d782b.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\config\\captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"C:/Users/Toby/MSc_Project/MScFinalProject/Main.py\", line 198, in do_experiment\n    train_data, val_data, test_data = Dataset.prepare_datasets(model_config)\n",
+    "  File \"C:\\Users\\Toby\\MSc_Project\\MScFinalProject\\Dataset.py\", line 115, in prepare_datasets\n    train_data, val_data, test_data = build_datasets(model_config, path)\n",
+    "  File \"C:\\Users\\Toby\\MSc_Project\\MScFinalProject\\Dataset.py\", line 59, in build_datasets\n    model_config['N_PARALLEL_READERS'])\n",
+    "  File \"C:\\Users\\Toby\\MSc_Project\\MScFinalProject\\Dataset.py\", line 21, in get_dataset\n    .filter(lambda x: re.search('^((?!CH0).)*$', str(x)))  # Filter out any files containing 'CH0' as these do not exist in the mixed data\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\data\\ops\\dataset_ops.py\", line 877, in filter\n    return FilterDataset(self, predicate)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\data\\ops\\dataset_ops.py\", line 1812, in __init__\n    self._predicate.add_to_graph(ops.get_default_graph())\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\function.py\", line 486, in add_to_graph\n    self._create_definition_if_needed()\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\function.py\", line 321, in _create_definition_if_needed\n    self._create_definition_if_needed_impl()\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\function.py\", line 338, in _create_definition_if_needed_impl\n    outputs = self._func(*inputs)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\data\\ops\\dataset_ops.py\", line 1804, in tf_predicate\n    ret = ops.convert_to_tensor(ret, dtype=dtypes.bool)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\ops.py\", line 932, in convert_to_tensor\n    as_ref=False)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\ops.py\", line 1022, in internal_convert_to_tensor\n    ret = conversion_func(value, dtype=dtype, name=name, as_ref=as_ref)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\constant_op.py\", line 233, in _constant_tensor_conversion_function\n    return constant(v, dtype=dtype, name=name)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\constant_op.py\", line 212, in constant\n    value, dtype=dtype, shape=shape, verify_shape=verify_shape))\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\tensor_util.py\", line 413, in make_tensor_proto\n    _AssertCompatible(values, dtype)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\tensor_util.py\", line 328, in _AssertCompatible\n    (dtype.name, repr(mismatch), type(mismatch).__name__))\n",
+    "TypeError: Expected bool, got <_sre.SRE_Match object; span=(0, 40), match='Tensor(\"arg0:0\", shape=(), dtype=string)'> of type 'SRE_Match' instead.\n"
+  ],
+  "heartbeat": "2018-07-23T15:27:02.933553",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Core(TM) i5-4200H CPU @ 2.80GHz",
+    "hostname": "tobyspc",
+    "os": [
+      "Windows",
+      "Windows-10-10.0.17134-SP0"
+    ],
+    "python_version": "3.6.1"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-07-23T15:27:02.771565",
+  "status": "FAILED",
+  "stop_time": "2018-07-23T15:27:02.978535"
+}

@@ -15,25 +15,30 @@ def get_dataset(
         patch_hop,
         n_parallel_readers
 ):
-    # TODO Still need to fix this to stop it producing a tuple
+    """Still need to fix this to stop it producing a tuple"""
     return (
-        tf.data.Dataset.list_files(data_folder + '/*.wav')  # TODO still uncertain if this is done in deterministic order or not
-        .filter(lambda x: re.search('CH0', str(x)) is None)  # Filter out any files containing 'CH0' as these do not exist in the mixed data
-        .map(partial(af.read_audio,
-                     sample_rate=sample_rate,
-                     n_channels=n_channels),
-             num_parallel_calls=n_parallel_readers)
-        .map(Utils.partial_argv(af.compute_spectrogram,
-                                n_fft=n_fft,
-                                fft_hop=fft_hop,
-                                n_channels=n_channels,),
-             num_parallel_calls=n_parallel_readers)
-        .map(Utils.partial_argv(af.extract_spectrogram_patches,
-                                n_fft=n_fft,
-                                n_channels=n_channels,
-                                patch_window=patch_window,
-                                patch_hop=patch_hop,))
-        .flat_map(Utils.zip_tensor_slices))
+        tf.data.Dataset.list_files(data_folder + '/*.wav')
+        .filter(re.search('^((?!CH0).)*$'))  # Filter out any files containing 'CH0' as these do not exist in the mixed data
+        .map(partial(
+            af.read_audio,
+            sample_rate=sample_rate,
+            n_channels=n_channels
+        ), num_parallel_calls=n_parallel_readers)
+        .map(Utils.partial_argv(
+            af.compute_spectrogram,
+            n_fft=n_fft,
+            fft_hop=fft_hop,
+            n_channels=n_channels,
+        ), num_parallel_calls=n_parallel_readers)
+        .map(Utils.partial_argv(
+            af.extract_spectrogram_patches,
+            n_fft=n_fft,
+            n_channels=n_channels,
+            patch_window=patch_window,
+            patch_hop=patch_hop,
+        ))
+        .flat_map(Utils.zip_tensor_slices)
+    )
 
 
 def zip_datasets(dataset_a, dataset_b, n_shuffle, batch_size, shuffle):
@@ -108,8 +113,8 @@ def prepare_datasets(model_config):
     if model_config['local_run']:
         path = {'x_train': 'train_sup/Mixed',
                 'y_train': 'train_sup/Voice',
-                'x_val': 'validation/Mixed',
-                'y_val': 'validation/Voice',
+                'x_val': 'val/Mixed',
+                'y_val': 'val/Voice',
                 'x_test': 'test/Mixed',
                 'y_test': 'test/Voice'}
         train_data, val_data, test_data = build_datasets(model_config, path)

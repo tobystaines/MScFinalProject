@@ -15,10 +15,10 @@ def get_dataset(
         patch_hop,
         n_parallel_readers
 ):
-    # TODO Still need to fix this to stop it producing a tuple
+    """Still need to fix this to stop it producing a tuple"""
     return (
-        tf.data.Dataset.list_files(data_folder + '/*.wav')  # TODO still uncertain if this is done in deterministic order or not
-        .filter(lambda x: re.search('CH0', str(x)) is None)  # Filter out any files containing 'CH0' as these do not exist in the mixed data
+        tf.data.Dataset.list_files(data_folder + '/*.wav')
+        .filter(lambda x: re.search('^((?!CH0).)*$', str(x)))  # Filter out any files containing 'CH0' as these do not exist in the mixed data
         .map(partial(af.read_audio,
                      sample_rate=sample_rate,
                      n_channels=n_channels),
@@ -108,8 +108,8 @@ def prepare_datasets(model_config):
     if model_config['local_run']:
         path = {'x_train': 'train_sup/Mixed',
                 'y_train': 'train_sup/Voice',
-                'x_val': 'validation/Mixed',
-                'y_val': 'validation/Voice',
+                'x_val': 'val/Mixed',
+                'y_val': 'val/Voice',
                 'x_test': 'test/Mixed',
                 'y_test': 'test/Voice'}
         train_data, val_data, test_data = build_datasets(model_config, path)

@@ -1,0 +1,99 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "C:\\Users\\Toby\\MSc_Project\\MScFinalProject",
+    "dependencies": [
+      "mir-eval==0.4",
+      "numpy==1.14.0",
+      "sacred==0.7.4",
+      "tensorflow==1.5.0"
+    ],
+    "mainfile": "Main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "Audio_functions.py",
+        "_sources\\Audio_functions_d40a36796e513d6a1f231dc38934ae2c.py"
+      ],
+      [
+        "Dataset.py",
+        "_sources\\Dataset_7c7df7289cb93934450c4020f5183d2a.py"
+      ],
+      [
+        "Main.py",
+        "_sources\\Main_2dc1ab69c0918cf4bc47d747d78a13a3.py"
+      ],
+      [
+        "UNet.py",
+        "_sources\\UNet_2dd1ab2b52260f79a03454be1b6d782b.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\client\\session.py\", line 1350, in _do_call\n    return fn(*args)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\client\\session.py\", line 1329, in _run_fn\n    status, run_metadata)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\errors_impl.py\", line 473, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.OutOfRangeError: End of sequence\n\t [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,256,513,2], [?,256,513,2]], output_types=[DT_FLOAT, DT_FLOAT], _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](IteratorFromStringHandle)]]\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"C:/Users/Toby/MSc_Project/MScFinalProject/Main.py\", line 150, in test\n    handle: testing_handle})\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\client\\session.py\", line 895, in run\n    run_metadata_ptr)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\client\\session.py\", line 1128, in _run\n    feed_dict_tensor, options, run_metadata)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\client\\session.py\", line 1344, in _do_run\n    options, run_metadata)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\client\\session.py\", line 1363, in _do_call\n    raise type(e)(node_def, op, message)\n",
+    "tensorflow.python.framework.errors_impl.OutOfRangeError: End of sequence\n\t [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,256,513,2], [?,256,513,2]], output_types=[DT_FLOAT, DT_FLOAT], _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](IteratorFromStringHandle)]]\n\nCaused by op 'IteratorGetNext', defined at:\n  File \"C:\\Program Files\\JetBrains\\PyCharm Community Edition 2018.1.4\\helpers\\pydev\\pydevd.py\", line 1664, in <module>\n    main()\n  File \"C:\\Program Files\\JetBrains\\PyCharm Community Edition 2018.1.4\\helpers\\pydev\\pydevd.py\", line 1658, in main\n    globals = debugger.run(setup['file'], None, None, is_module)\n  File \"C:\\Program Files\\JetBrains\\PyCharm Community Edition 2018.1.4\\helpers\\pydev\\pydevd.py\", line 1068, in run\n    pydev_imports.execfile(file, globals, locals)  # execute the script\n  File \"C:\\Program Files\\JetBrains\\PyCharm Community Edition 2018.1.4\\helpers\\pydev\\_pydev_imps\\_pydev_execfile.py\", line 18, in execfile\n    exec(compile(contents+\"\\n\", file, 'exec'), glob, loc)\n  File \"C:/Users/Toby/MSc_Project/MScFinalProject/Main.py\", line 193, in <module>\n    @ex.automain\n  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\experiment.py\", line 137, in automain\n    self.run_commandline()\n  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\experiment.py\", line 260, in run_commandline\n    return self.run(cmd_name, config_updates, named_configs, {}, args)\n  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\experiment.py\", line 209, in run\n    run()\n  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\run.py\", line 221, in __call__\n    self.result = self.main_function(*args)\n  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\config\\captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n  File \"C:/Users/Toby/MSc_Project/MScFinalProject/Main.py\", line 206, in do_experiment\n    mixed, voice = iterator.get_next()\n  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\data\\ops\\iterator_ops.py\", line 324, in get_next\n    name=name)), self._output_types,\n  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\ops\\gen_dataset_ops.py\", line 868, in iterator_get_next\n    output_shapes=output_shapes, name=name)\n  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\op_def_library.py\", line 787, in _apply_op_helper\n    op_def=op_def)\n  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\ops.py\", line 3160, in create_op\n    op_def=op_def)\n  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\ops.py\", line 1625, in __init__\n    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access\n\nOutOfRangeError (see above for traceback): End of sequence\n\t [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,256,513,2], [?,256,513,2]], output_types=[DT_FLOAT, DT_FLOAT], _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](IteratorFromStringHandle)]]\n\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\config\\captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"C:/Users/Toby/MSc_Project/MScFinalProject/Main.py\", line 241, in do_experiment\n    initial_test_loss = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\config\\captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"C:/Users/Toby/MSc_Project/MScFinalProject/Main.py\", line 170, in test\n    mean_cost = sum(test_costs) / len(test_costs)\n",
+    "ZeroDivisionError: division by zero\n"
+  ],
+  "heartbeat": "2018-07-23T13:43:45.354754",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Core(TM) i5-4200H CPU @ 2.80GHz",
+    "hostname": "tobyspc",
+    "os": [
+      "Windows",
+      "Windows-10-10.0.17134-SP0"
+    ],
+    "python_version": "3.6.1"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-07-23T13:38:57.145361",
+  "status": "FAILED",
+  "stop_time": "2018-07-23T13:43:45.412306"
+}

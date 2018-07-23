@@ -18,9 +18,9 @@ def cfg():
     model_config = {"model_base_dir": "C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints",  # Base folder for model checkpoints
                     "saving": False,  # Whether to take checkpoints
                     "loading": False,  # Whether to load an existing checkpoint
-                    "local_run": True,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "84569/84569-16",
                     "log_dir": "logs",  # Base folder for log files
+                    "data_root": 'C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/',  # Base folder of CHiME 3 dataset
                     'SAMPLE_RATE': 44100,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
@@ -36,12 +36,7 @@ def cfg():
                     'NUM_WORSE_VAL_CHECKS': 2  # Number of successively worse validation checks before early stopping
                     }
 
-    if model_config['local_run']:
-        model_config['data_root'] = 'C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/'
-    else:
-        model_config['data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
-
-    experiment_id = np.random.randint(0, 1000000)
+    experiment_id = np.random.randint(0,1000000)
 
 
 @ex.capture
@@ -181,6 +176,8 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                   'SIR:  {sir}\n'
                   'SAR:  {sar}'.format(l=mean_cost, sdr=mean_sdr, sir=mean_sir, sar=mean_sar))
             break
+    # TODO: Calculate audio loss metrics
+    # Transform output spectrogram back to audio
 
     return mean_cost
 

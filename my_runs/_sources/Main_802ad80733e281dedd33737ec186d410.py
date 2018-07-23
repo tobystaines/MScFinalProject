@@ -18,9 +18,9 @@ def cfg():
     model_config = {"model_base_dir": "C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints",  # Base folder for model checkpoints
                     "saving": False,  # Whether to take checkpoints
                     "loading": False,  # Whether to load an existing checkpoint
-                    "local_run": True,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "84569/84569-16",
                     "log_dir": "logs",  # Base folder for log files
+                    "data_root": 'C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/',  # Base folder of CHiME 3 dataset
                     'SAMPLE_RATE': 44100,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
@@ -36,12 +36,7 @@ def cfg():
                     'NUM_WORSE_VAL_CHECKS': 2  # Number of successively worse validation checks before early stopping
                     }
 
-    if model_config['local_run']:
-        model_config['data_root'] = 'C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/'
-    else:
-        model_config['data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
-
-    experiment_id = np.random.randint(0, 1000000)
+    experiment_id = np.random.randint(0,1000000)
 
 
 @ex.capture
@@ -133,7 +128,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 
 
 @ex.capture
-def test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count):
+def test(sess, model, model_config, handle, testing_iterator, testing_handle, writer):
 
     # Calculate L1 loss
     print('Starting testing')
@@ -153,7 +148,6 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
             for i in range(voice_mag.shape[0]):
                 voice_est = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T, model_config['N_FFT'],
                                                       model_config['FFT_HOP'], phase=np.squeeze(mixed_phase[i, :, :, :]).T)
-                # Should we use voice or the original audio? (Might be hard to split into matching patches)
                 voice = af.spectrogramToAudioFile(np.squeeze(voice_mag[i, :, :, :]).T, model_config['N_FFT'],
                                                   model_config['FFT_HOP'], phase=np.squeeze(mixed_phase[i, :, :, :]).T)
                 # TODO Pad to ensure equal length?
@@ -162,25 +156,27 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 voice = np.expand_dims(voice, 1).T
                 # Calculate audio quality statistics
                 sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice, voice_est)
-                sdrs.append(sdr[0])
-                sirs.append(sir[0])
-                sars.append(sar[0])
+                sdrs.append(sdr)
+                sirs.append(sir)
+                sars.append(sar)
             iteration += 1
         except tf.errors.OutOfRangeError:
             mean_cost = sum(test_costs) / len(test_costs)
             mean_sdr = sum(sdrs) / len(sdrs)
             mean_sir = sum(sirs) / len(sirs)
             mean_sar = sum(sars) / len(sars)
-            for var in [(mean_cost, 'mean_cost'), (mean_sdr, 'mean_sdr'), (mean_sir, 'mean_sir'), (mean_sar, 'mean_sar')]:
+            for var in [mean_cost, mean_sdr, mean_sir, mean_sar]:
                 summary = tf.Summary(
-                    value=[tf.Summary.Value(tag='Testing_{v}'.format(v=var[1]), simple_value=var[0])])
-                writer.add_summary(summary, test_count)
+                    value=[tf.Summary.Value(tag='Testing_{v}'.format(v=var), simple_value=var)])
+                writer.add_summary(summary, iteration)
             print('Testing complete. Mean results over test set:\n'
-                  'Loss: {l}\n'
-                  'SDR:  {sdr}\n'
-                  'SIR:  {sir}\n'
+                  'Loss: {l}'
+                  'SDR:  {sdr}'
+                  'SIR:  {sir}'
                   'SAR:  {sar}'.format(l=mean_cost, sdr=mean_sdr, sir=mean_sir, sar=mean_sar))
             break
+    # TODO: Calculate audio loss metrics
+    # Transform output spectrogram back to audio
 
     return mean_cost
 
@@ -234,21 +230,14 @@ def do_experiment(model_config, experiment_id):
     model_folder = str(experiment_id)
     writer = tf.summary.FileWriter(os.path.join(model_config["log_dir"], model_folder), graph=sess.graph)
 
-    # Get baseline metrics at initialisation
-    sess.run(tf.global_variables_initializer())
-    print('Running initialisation test')
-    test_count = 1
-    initial_test_loss = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count)
-    test_count += 1
-
     # Train the model
+    sess.run(tf.global_variables_initializer())
     model = train(sess, model, model_config, model_folder, handle, training_iterator, training_handle,
                   validation_iterator, validation_handle, writer)
 
     # Test trained model
-    mean_test_loss = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count)
-    print('All done!\nInitial test loss: {init}\nFinal test loss: {final}'
-          .format(init=initial_test_loss, final=mean_test_loss))
+    mean_test_loss = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer)
+    print(mean_test_loss, '\nAll done!')
 
 
 
