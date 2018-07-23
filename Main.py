@@ -10,7 +10,7 @@ import Audio_functions as af
 import UNet
 import Dataset
 
-ex = Experiment('UNet_Speech_Separation')
+ex = Experiment('UNet_Speech_Separation', interactive=True)
 ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
@@ -18,7 +18,7 @@ def cfg():
     model_config = {"model_base_dir": "C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints",  # Base folder for model checkpoints
                     "saving": False,  # Whether to take checkpoints
                     "loading": False,  # Whether to load an existing checkpoint
-                    "local_run": True,  # Whether experiment is running on laptop or server
+                    "local_run": False,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "84569/84569-16",
                     "log_dir": "logs",  # Base folder for log files
                     'SAMPLE_RATE': 44100,  # Desired sample rate of audio. Input will be resampled to this
@@ -28,18 +28,19 @@ def cfg():
                     'N_PARALLEL_READERS': 4,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
-                    'BATCH_SIZE': 32,
+                    'BATCH_SIZE': 100,
                     'N_SHUFFLE': 20,
-                    'EPOCHS': 1,  # Number of full passes through the dataset to train for
-                    'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
-                    'VAL_ITERS': 20,  # Number of training iterations between validation checks,
-                    'NUM_WORSE_VAL_CHECKS': 2  # Number of successively worse validation checks before early stopping
+                    'EPOCHS': 5,  # Number of full passes through the dataset to train for
+                    'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
+                    'VAL_ITERS': 100,  # Number of training iterations between validation checks,
+                    'NUM_WORSE_VAL_CHECKS': 3  # Number of successively worse validation checks before early stopping
                     }
 
     if model_config['local_run']:
         model_config['data_root'] = 'C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/'
     else:
         model_config['data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
+        #model_config['data_root'] = 'C:/Users/Toby/CHiME3/data/audio/16kHz/isolated/'
 
     experiment_id = np.random.randint(0, 1000000)
 

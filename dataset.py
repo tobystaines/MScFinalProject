@@ -13,8 +13,7 @@ def get_dataset(
         n_channels,
         patch_window,
         patch_hop,
-        n_parallel_readers
-):
+        n_parallel_readers):
     # TODO Still need to fix this to stop it producing a tuple
     return (
         tf.data.Dataset.list_files(data_folder + '/*.wav')  # TODO still uncertain if this is done in deterministic order or not
@@ -116,15 +115,15 @@ def prepare_datasets(model_config):
     else:
         sets = list()
         for string in ['bus_simu', 'caf_simu', 'ped_simu', 'str_simu']:
-            path = {'x_train': 'tr_05_' + string,
-                    'y_train': 'tr_05_bth',
-                    'x_val': 'dt_05_' + string,
-                    'y_val': 'dt_05_bth',
-                    'x_test': 'et_05_' + string,
-                    'y_test': 'et_05_bth'}
+            path = {'x_train': 'tr05_' + string,
+                    'y_train': 'tr05_bth',
+                    'x_val': 'dt05_' + string,
+                    'y_val': 'dt05_bth',
+                    'x_test': 'et05_' + string,
+                    'y_test': 'et05_bth'}
             sets.append(build_datasets(model_config, path))
-        train_data = sets[0][0].append(sets[1][0].append(sets[2][0].append(sets[3][0])))
-        val_data = sets[0][1].append(sets[1][1].append(sets[2][1].append(sets[3][1])))
-        test_data = sets[0][2].append(sets[1][2].append(sets[2][2].append(sets[3][2])))
+        train_data = sets[0][0].concatenate(sets[1][0].concatenate(sets[2][0].concatenate(sets[3][0])))
+        val_data = sets[0][1].concatenate(sets[1][1].concatenate(sets[2][1].concatenate(sets[3][1])))
+        test_data = sets[0][2].concatenate(sets[1][2].concatenate(sets[2][2].concatenate(sets[3][2])))
 
     return train_data, val_data, test_data
