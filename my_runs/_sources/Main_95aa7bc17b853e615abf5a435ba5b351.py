@@ -3,8 +3,6 @@ import tensorflow as tf
 from sacred import Experiment
 from sacred.observers import FileStorageObserver
 import mir_eval
-
-import sys
 import os
 import errno
 
@@ -12,21 +10,18 @@ import Audio_functions as af
 import UNet
 import Dataset
 
-
-sys.path.append(os.path.join(os.getcwd()))
 ex = Experiment('UNet_Speech_Separation', interactive=True)
 ex.observers.append(FileStorageObserver.create('my_runs'))
-
 
 @ex.config
 def cfg():
     model_config = {"model_base_dir": "C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints",  # Base folder for model checkpoints
                     "saving": False,  # Whether to take checkpoints
                     "loading": False,  # Whether to load an existing checkpoint
-                    "local_run": False,  # Whether experiment is running on laptop or server
+                    "local_run": True,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "84569/84569-16",
                     "log_dir": "logs",  # Base folder for log files
-                    'SAMPLE_RATE': 16000,  # Desired sample rate of audio. Input will be resampled to this
+                    'SAMPLE_RATE': 44100,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
                     'N_CHANNELS' : 1,  # May be removed - all data is single channel
@@ -34,9 +29,9 @@ def cfg():
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 100,
-                    'N_SHUFFLE': 200,
+                    'N_SHUFFLE': 20,
                     'EPOCHS': 1,  # Number of full passes through the dataset to train for
-                    'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
+                    'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
                     'VAL_ITERS': 100,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3  # Number of successively worse validation checks before early stopping
                     }
@@ -58,14 +53,10 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         print('Validating')
         sess.run(validation_iterator.initializer)
         val_costs = list()
-        iteration = 1
         while True:
             try:
                 val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
                 val_costs.append(val_cost)
-                if iteration % 50 == 0:
-                    print("       Validation iteration: {i}, Loss: {vc}".format(i=iteration, vc=val_cost))
-                iteration += 1
             except tf.errors.OutOfRangeError:
                 # Calculate and record mean loss over validation dataset
                 val_check_mean_cost = sum(val_costs) / len(val_costs)
@@ -102,8 +93,8 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     while epoch < model_config['EPOCHS'] + 1 and worse_val_checks < model_config['NUM_WORSE_VAL_CHECKS']:
         try:
             _, cost, summary = sess.run([model.train_op, model.cost, training_summary], {model.is_training: True, handle: training_handle})
-            if iteration % 50 == 0:
-                print("       Training iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
+            if iteration % 5 == 0:
+                print("       Training iteration: {i}, Loss: {l}".format(i=iteration, l=cost))
             writer.add_summary(summary, iteration)  # Record the loss at each iteration
 
             # If using early stopping, enter validation loop
@@ -125,7 +116,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         if iteration % model_config['VAL_ITERS'] != 1 or not model_config['EARLY_STOPPING']:
             min_val_cost, _ , best_model = validation(min_val_cost, worse_val_checks, best_model)
         print('Finished requested number of epochs. Training complete.')
-    print('Best validation loss: {mvc}'.format(mvc=min_val_cost))
+    print('Best validation loss: {l}'.format(l=min_val_cost))
     model = best_model
     # Make sure there is a folder to save the checkpoint in
     checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
@@ -158,8 +149,6 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
             cost, voice_est_mag, voice_mag, mixed_phase = sess.run([model.cost, model.gen_voice, model.voice,
                                                                     model.mixed_phase], {model.is_training: False,
                                                                                          handle: testing_handle})
-            if iteration % 10 == 0:
-                print("       Testing iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
             test_costs.append(cost)
             # Transform output back to audio
             for i in range(voice_mag.shape[0]):
@@ -188,10 +177,10 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                     value=[tf.Summary.Value(tag='Testing_{v}'.format(v=var[1]), simple_value=var[0])])
                 writer.add_summary(summary, test_count)
             print('Testing complete. Mean results over test set:\n'
-                  'Loss: {mc}\n'
+                  'Loss: {l}\n'
                   'SDR:  {sdr}\n'
                   'SIR:  {sir}\n'
-                  'SAR:  {sar}'.format(mc=mean_cost, sdr=mean_sdr, sir=mean_sir, sar=mean_sar))
+                  'SAR:  {sar}'.format(l=mean_cost, sdr=mean_sdr, sir=mean_sir, sar=mean_sar))
             break
 
     return mean_cost
@@ -205,7 +194,6 @@ def optimise():
 @ex.automain
 def do_experiment(model_config, experiment_id):
 
-    tf.reset_default_graph()
     # Prepare data
     print('Preparing dataset')
     train_data, val_data, test_data = Dataset.prepare_datasets(model_config)

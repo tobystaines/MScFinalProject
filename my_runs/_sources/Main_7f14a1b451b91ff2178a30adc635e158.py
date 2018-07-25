@@ -3,8 +3,6 @@ import tensorflow as tf
 from sacred import Experiment
 from sacred.observers import FileStorageObserver
 import mir_eval
-
-import sys
 import os
 import errno
 
@@ -12,16 +10,13 @@ import Audio_functions as af
 import UNet
 import Dataset
 
-
-sys.path.append(os.path.join(os.getcwd()))
 ex = Experiment('UNet_Speech_Separation', interactive=True)
 ex.observers.append(FileStorageObserver.create('my_runs'))
-
 
 @ex.config
 def cfg():
     model_config = {"model_base_dir": "C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints",  # Base folder for model checkpoints
-                    "saving": False,  # Whether to take checkpoints
+                    "saving": True,  # Whether to take checkpoints
                     "loading": False,  # Whether to load an existing checkpoint
                     "local_run": False,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "84569/84569-16",
@@ -205,7 +200,6 @@ def optimise():
 @ex.automain
 def do_experiment(model_config, experiment_id):
 
-    tf.reset_default_graph()
     # Prepare data
     print('Preparing dataset')
     train_data, val_data, test_data = Dataset.prepare_datasets(model_config)
