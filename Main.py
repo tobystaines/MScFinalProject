@@ -12,8 +12,8 @@ import Audio_functions as af
 import UNet
 import Dataset
 
-
-sys.path.append(os.path.join(os.getcwd()))
+assert sys.version_info >= (3,6)
+sys.path.append('/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site')
 ex = Experiment('UNet_Speech_Separation', interactive=True)
 ex.observers.append(FileStorageObserver.create('my_runs'))
 
