@@ -20,7 +20,8 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {"saving": True,  # Whether to take checkpoints
+    model_config = {"model_base_dir": "C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints",  # Base folder for model checkpoints
+                    "saving": False,  # Whether to take checkpoints
                     "loading": False,  # Whether to load an existing checkpoint
                     "local_run": False,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "84569/84569-16",
@@ -33,19 +34,18 @@ def cfg():
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 100,
-                    'N_SHUFFLE': 100,
-                    'EPOCHS': 20,  # Number of full passes through the dataset to train for
-                    'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
-                    'VAL_ITERS': 150,  # Number of training iterations between validation checks,
-                    'NUM_WORSE_VAL_CHECKS': 2  # Number of successively worse validation checks before early stopping
+                    'N_SHUFFLE': 200,
+                    'EPOCHS': 1,  # Number of full passes through the dataset to train for
+                    'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
+                    'VAL_ITERS': 100,  # Number of training iterations between validation checks,
+                    'NUM_WORSE_VAL_CHECKS': 3  # Number of successively worse validation checks before early stopping
                     }
 
-    if model_config['local_run']:  # Data and Checkpoint directories on my laptop
+    if model_config['local_run']:
         model_config['data_root'] = 'C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/'
-        model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
-    else:  # Data and Checkpoint directories on the uni server
+    else:
         model_config['data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
-        model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
+        #model_config['data_root'] = 'C:/Users/Toby/CHiME3/data/audio/16kHz/isolated/'
 
     experiment_id = np.random.randint(0, 1000000)
 
@@ -63,7 +63,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
             try:
                 val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
                 val_costs.append(val_cost)
-                if iteration % 25 == 0:
+                if iteration % 50 == 0:
                     print("       Validation iteration: {i}, Loss: {vc}".format(i=iteration, vc=val_cost))
                 iteration += 1
             except tf.errors.OutOfRangeError:
@@ -158,7 +158,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
             cost, voice_est_mag, voice_mag, mixed_phase = sess.run([model.cost, model.gen_voice, model.voice,
                                                                     model.mixed_phase], {model.is_training: False,
                                                                                          handle: testing_handle})
-            if iteration % 25 == 0:
+            if iteration % 10 == 0:
                 print("       Testing iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
             test_costs.append(cost)
             # Transform output back to audio
@@ -206,8 +206,6 @@ def optimise():
 def do_experiment(model_config, experiment_id):
 
     tf.reset_default_graph()
-    print('Experiment ID: {eid}'.format(eid=experiment_id))
-
     # Prepare data
     print('Preparing dataset')
     train_data, val_data, test_data = Dataset.prepare_datasets(model_config)
