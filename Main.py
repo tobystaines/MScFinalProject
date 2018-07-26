@@ -1,5 +1,5 @@
 import numpy as np
-import tensorflow-gpu as tf
+import tensorflow as tf
 from sacred import Experiment
 from sacred.observers import FileStorageObserver
 import mir_eval

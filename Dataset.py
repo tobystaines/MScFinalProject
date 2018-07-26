@@ -1,5 +1,5 @@
 from functools import partial
-import tensorflow-gpu as tf
+import tensorflow as tf
 import Audio_functions as af
 import Utils
 import re
@@ -16,7 +16,7 @@ def get_dataset(
         n_parallel_readers):
     # TODO Still need to fix this to stop it producing a tuple
     return (
-        tf.data.Dataset.list_files(data_folder + '/*.wav', shuffle=False)  # TODO still uncertain if this is done in deterministic order or not
+        tf.data.Dataset.list_files(data_folder + '/*.wav')  # TODO still uncertain if this is done in deterministic order or not
         .filter(lambda x: re.search('CH0', str(x)) is None)  # Filter out any files containing 'CH0' as these do not exist in the mixed data
         .map(partial(af.read_audio,
                      sample_rate=sample_rate,
