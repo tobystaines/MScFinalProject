@@ -16,7 +16,7 @@ def get_dataset(
         n_parallel_readers):
     # TODO Still need to fix this to stop it producing a tuple
     return (
-        tf.data.Dataset.list_files(data_folder + '/*.wav')  # TODO still uncertain if this is done in deterministic order or not
+        tf.data.Dataset.list_files(data_folder + '/*.wav', shuffle=False)  # TODO still uncertain if this is done in deterministic order or not
         .filter(lambda x: re.search('CH0', str(x)) is None)  # Filter out any files containing 'CH0' as these do not exist in the mixed data
         .map(partial(af.read_audio,
                      sample_rate=sample_rate,
@@ -82,7 +82,7 @@ def prepare_datasets(model_config):
                             model_config['PATCH_WINDOW'],
                             model_config['PATCH_HOP'],
                             model_config['N_PARALLEL_READERS'])
-        val = zip_datasets(x_val, y_val, model_config['N_SHUFFLE'], model_config['BATCH_SIZE'], shuffle=True)
+        val = zip_datasets(x_val, y_val, model_config['N_SHUFFLE'], model_config['BATCH_SIZE'], shuffle=False)
 
         x_test = get_dataset(model_config['data_root'] + path['x_test'],
                              model_config['SAMPLE_RATE'],
@@ -104,7 +104,7 @@ def prepare_datasets(model_config):
 
         return train, val, test
 
-    if model_config['local_run']:
+    if model_config['local_run']:  # If running on local machine, mini dataset is all in one folder
         path = {'x_train': 'train_sup/Mixed',
                 'y_train': 'train_sup/Voice',
                 'x_val': 'validation/Mixed',
@@ -112,7 +112,7 @@ def prepare_datasets(model_config):
                 'x_test': 'test/Mixed',
                 'y_test': 'test/Voice'}
         train_data, val_data, test_data = build_datasets(model_config, path)
-    else:
+    else:  # If running on server, data is in several folders and requires concatenation
         sets = list()
         for string in ['bus_simu', 'caf_simu', 'ped_simu', 'str_simu']:
             path = {'x_train': 'tr05_' + string,

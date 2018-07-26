@@ -33,10 +33,10 @@ def cfg():
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 100,
-                    'N_SHUFFLE': 100,
+                    'N_SHUFFLE': 50,
                     'EPOCHS': 20,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
-                    'VAL_ITERS': 150,  # Number of training iterations between validation checks,
+                    'VAL_ITERS': 200,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 2  # Number of successively worse validation checks before early stopping
                     }
 
