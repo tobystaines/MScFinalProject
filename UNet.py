@@ -1,4 +1,4 @@
-import tensorflow as tf
+import tensorflow-gpu as tf
 import Model_functions as mf
 
 

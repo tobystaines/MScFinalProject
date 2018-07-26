@@ -1,5 +1,5 @@
 from functools import partial
-import tensorflow as tf
+import tensorflow-gpu as tf
 import Audio_functions as af
 import Utils
 import re
