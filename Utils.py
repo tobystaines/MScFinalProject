@@ -1,4 +1,4 @@
-import tensorflow as tf
+import tensorflow-gpu as tf
 from functools import partial
 
 def partial_argv(func, *args, **kwargs):
