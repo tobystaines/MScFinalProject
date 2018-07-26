@@ -32,7 +32,7 @@ def cfg():
                     'N_PARALLEL_READERS': 4,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
-                    'BATCH_SIZE': 100,
+                    'BATCH_SIZE': 50,
                     'N_SHUFFLE': 50,
                     'EPOCHS': 20,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
