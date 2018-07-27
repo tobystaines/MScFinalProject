@@ -46,7 +46,7 @@ def cfg():
         model_config['data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
 
-    #experiment_id = np.random.randint(0, 1000000)
+    experiment_id = np.random.randint(0, 1000000)
 
 
 @ex.capture
@@ -201,10 +201,9 @@ def optimise():
 
 
 @ex.automain
-def do_experiment(model_config):
+def do_experiment(model_config, experiment_id):
 
     tf.reset_default_graph()
-    experiment_id = ex.current_run._id
     print('Experiment ID: {eid}'.format(eid=experiment_id))
 
     # Prepare data

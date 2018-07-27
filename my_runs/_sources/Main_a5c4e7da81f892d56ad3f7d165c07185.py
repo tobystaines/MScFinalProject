@@ -201,7 +201,7 @@ def optimise():
 
 
 @ex.automain
-def do_experiment(model_config):
+def do_experiment(model_config, experiment_id):
 
     tf.reset_default_graph()
     experiment_id = ex.current_run._id
