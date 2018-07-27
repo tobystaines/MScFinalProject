@@ -47,7 +47,7 @@ def cfg():
         model_config['data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
 
-    experiment_id = ex._id  #np.random.randint(0, 1000000)
+    experiment_id = ex.current_run  #np.random.randint(0, 1000000)
 
 
 @ex.capture
