@@ -21,9 +21,9 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 @ex.config
 def cfg():
     model_config = {"saving": True,  # Whether to take checkpoints
-                    "loading": False,  # Whether to load an existing checkpoint
+                    "loading": True,  # Whether to load an existing checkpoint
                     "local_run": False,  # Whether experiment is running on laptop or server
-                    "checkpoint_to_load": "84569/84569-16",
+                    "checkpoint_to_load": "196363/196363-1801",
                     "log_dir": "logs",  # Base folder for log files
                     'SAMPLE_RATE': 16000,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
@@ -34,8 +34,8 @@ def cfg():
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 50,
                     'N_SHUFFLE': 50,
-                    'EPOCHS': 20,  # Number of full passes through the dataset to train for
-                    'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
+                    'EPOCHS': 1,  # Number of full passes through the dataset to train for
+                    'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
                     'VAL_ITERS': 200,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 2  # Number of successively worse validation checks before early stopping
                     }
@@ -47,18 +47,17 @@ def cfg():
         model_config['data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
 
-    experiment_id = np.random.randint(0, 1000000)
+    experiment_id = ex._id  #np.random.randint(0, 1000000)
 
 
 @ex.capture
 def train(sess, model, model_config, model_folder, handle, training_iterator, training_handle, validation_iterator,
           validation_handle, writer):
 
-    def validation(min_val_cost, worse_val_checks, best_model):
+    def validation(min_val_cost, worse_val_checks, best_model, iteration):
         print('Validating')
         sess.run(validation_iterator.initializer)
         val_costs = list()
-        iteration = 1
         while True:
             try:
                 val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
@@ -108,7 +107,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 
             # If using early stopping, enter validation loop
             if model_config['EARLY_STOPPING'] and iteration % model_config['VAL_ITERS'] == 0:
-                min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model)
+                min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model, iteration)
 
             iteration += 1
 
@@ -123,7 +122,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     else:
         # Final validation check
         if iteration % model_config['VAL_ITERS'] != 1 or not model_config['EARLY_STOPPING']:
-            min_val_cost, _ , best_model = validation(min_val_cost, worse_val_checks, best_model)
+            min_val_cost, _ , best_model = validation(min_val_cost, worse_val_checks, best_model, iteration)
         print('Finished requested number of epochs. Training complete.')
     print('Best validation loss: {mvc}'.format(mvc=min_val_cost))
     model = best_model
@@ -235,15 +234,15 @@ def do_experiment(model_config, experiment_id):
     voice_mag = tf.expand_dims(voice[0][:, :, 1:, 0], 3)
 
     # Build U-Net model
+    print('Creating model')
+    model = UNet.UNetModel(mixed_mag, voice_mag, mixed_phase, is_training, name='U_Net_Model')
+
     if model_config['loading']:
-        # TODO - This doesn't quite work yet
+        # TODO - Think this works now but needs proper testing
         print('Loading checkpoint')
         checkpoint = os.path.join(model_config['model_base_dir'], model_config['checkpoint_to_load'])
-        restorer = tf.train.import_meta_graph(checkpoint+'.meta')
+        restorer = tf.train.Saver()
         restorer.restore(sess, checkpoint)
-    else:
-        print('Creating model')
-        model = UNet.UNetModel(mixed_mag, voice_mag, mixed_phase, is_training, name='U_Net_Model')
 
     # Summaries
     model_folder = str(experiment_id)
