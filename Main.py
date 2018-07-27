@@ -121,18 +121,19 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     else:
         # Final validation check
         if iteration % model_config['VAL_ITERS'] != 1 or not model_config['EARLY_STOPPING']:
-            min_val_cost, _ , best_model = validation(min_val_cost, worse_val_checks, best_model, iteration)
+            min_val_cost, _, best_model = validation(min_val_cost, worse_val_checks, best_model, iteration)
         print('Finished requested number of epochs. Training complete.')
     print('Best validation loss: {mvc}'.format(mvc=min_val_cost))
     model = best_model
-    # Make sure there is a folder to save the checkpoint in
-    checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
-    try:
-        os.makedirs(checkpoint_path)
-    except OSError as e:
-        if e.errno != errno.EEXIST:
-            raise
+
     if model_config['saving']:
+        # Make sure there is a folder to save the checkpoint in
+        checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
+        try:
+            os.makedirs(checkpoint_path)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
         # Save the final best model
         print('Checkpoint')
         saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(iteration))
