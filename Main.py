@@ -19,8 +19,8 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {"saving": True,  # Whether to take checkpoints
-                    "loading": True,  # Whether to load an existing checkpoint
+    model_config = {"saving": False,  # Whether to take checkpoints
+                    "loading": False,  # Whether to load an existing checkpoint
                     "local_run": False,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "196363/196363-1801",
                     "log_dir": "logs",  # Base folder for log files
@@ -92,6 +92,10 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     worse_val_checks = 0
     best_model = model
     training_summary = tf.summary.scalar('Training_loss', model.cost)
+    mix_summary = tf.summary.image('Mixture', model.mixed)
+    voice_summary = tf.summary.image('Voice', model.voice)
+    mask_summary = tf.summary.image('Voice_Mask', model.voice_mask)
+    gen_voice_summary = tf.summary.image('Generated_Voice', model.gen_voice)
     saver = tf.train.Saver(tf.global_variables(), write_version=tf.train.SaverDef.V2)
     sess.run(training_iterator.initializer)
 
@@ -99,11 +103,19 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     # Train for the specified number of epochs, unless early stopping is triggered
     while epoch < model_config['EPOCHS'] + 1 and worse_val_checks < model_config['NUM_WORSE_VAL_CHECKS']:
         try:
-            _, cost, summary = sess.run([model.train_op, model.cost, training_summary], {model.is_training: True, handle: training_handle})
-            if iteration % 50 == 0:
+            _, cost, summary, mix, voice, mask, gen_voice = sess.run([model.train_op, model.cost, training_summary,
+                                                                     mix_summary, voice_summary, mask_summary,
+                                                                     gen_voice_summary], {model.is_training: True,
+                                                                                         handle: training_handle})
+            if iteration % 5 == 0:
                 print("       Training iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
+                sample_idx = np.random.randint(0,model_config['BATCH_SIZE'],5)
+                #for idx in sample_idx:
             writer.add_summary(summary, iteration)  # Record the loss at each iteration
-
+            writer.add_summary(mix, iteration)
+            writer.add_summary(voice, iteration)
+            writer.add_summary(mask, iteration)
+            writer.add_summary(gen_voice, iteration)
             # If using early stopping, enter validation loop
             if model_config['EARLY_STOPPING'] and iteration % model_config['VAL_ITERS'] == 0:
                 min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model, iteration)
