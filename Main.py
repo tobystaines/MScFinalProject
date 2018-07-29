@@ -107,15 +107,13 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                      mix_summary, voice_summary, mask_summary,
                                                                      gen_voice_summary], {model.is_training: True,
                                                                                          handle: training_handle})
-            if iteration % 5 == 0:
+            if iteration % 200 == 0:
                 print("       Training iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
-                sample_idx = np.random.randint(0,model_config['BATCH_SIZE'],5)
-                #for idx in sample_idx:
-            writer.add_summary(summary, iteration)  # Record the loss at each iteration
-            writer.add_summary(mix, iteration)
-            writer.add_summary(voice, iteration)
-            writer.add_summary(mask, iteration)
-            writer.add_summary(gen_voice, iteration)
+                writer.add_summary(summary, iteration)  # Record the loss at each iteration
+                writer.add_summary(mix, iteration)
+                writer.add_summary(voice, iteration)
+                writer.add_summary(mask, iteration)
+                writer.add_summary(gen_voice, iteration)
             # If using early stopping, enter validation loop
             if model_config['EARLY_STOPPING'] and iteration % model_config['VAL_ITERS'] == 0:
                 min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model, iteration)

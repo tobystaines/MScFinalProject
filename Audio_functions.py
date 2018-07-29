@@ -44,10 +44,10 @@ def compute_spectrogram(audio, n_fft, fft_hop, n_channels=1):
         spec = librosa.stft(
             x, n_fft=n_fft, hop_length=fft_hop, window='hann')
         # TODO: normalize?
-        #mag = np.abs(spec)
-        #temp = mag - mag.min()
-        #mag_norm = temp / temp.max() # Return mag_norm for normalised spec.
-        return np.abs(spec), np.angle(spec)
+        mag = np.abs(spec)
+        temp = mag - mag.min()
+        mag_norm = temp / temp.max() # Return mag_norm for normalised spec.
+        return mag_norm, np.angle(spec)
 
     # def stereo_func(py_audio):
     #    left_mag, left_phase = stft(py_audio[:, 0])
