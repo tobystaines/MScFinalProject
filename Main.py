@@ -19,7 +19,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {"saving": False,  # Whether to take checkpoints
+    model_config = {"saving": True,  # Whether to take checkpoints
                     "loading": False,  # Whether to load an existing checkpoint
                     "local_run": False,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "196363/196363-1801",
@@ -33,10 +33,10 @@ def cfg():
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 50,
                     'N_SHUFFLE': 50,
-                    'EPOCHS': 1,  # Number of full passes through the dataset to train for
-                    'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
+                    'EPOCHS': 10,  # Number of full passes through the dataset to train for
+                    'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
                     'VAL_ITERS': 200,  # Number of training iterations between validation checks,
-                    'NUM_WORSE_VAL_CHECKS': 2  # Number of successively worse validation checks before early stopping
+                    'NUM_WORSE_VAL_CHECKS': 3  # Number of successively worse validation checks before early stopping
                     }
 
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop
