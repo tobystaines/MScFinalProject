@@ -12,11 +12,10 @@ import Audio_functions as af
 import UNet
 import Dataset
 
-assert sys.version_info >= (3, 5)
+assert sys.version_info >= (3,5)
 sys.path.append('/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site')
 ex = Experiment('UNet_Speech_Separation', interactive=True)
 ex.observers.append(FileStorageObserver.create('my_runs'))
-
 
 @ex.config
 def cfg():
@@ -31,13 +30,13 @@ def cfg():
                     'N_PARALLEL_READERS': 4,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
-                    'BATCH_SIZE': 50,
+                    'BATCH_SIZE': 10,
                     'N_SHUFFLE': 50,
-                    'EPOCHS': 5,  # Number of full passes through the dataset to train for
+                    'EPOCHS': 2,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
                     'VAL_ITERS': 200,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
-                    'NORMALISE_MAG': False
+                    'NORMALISE_MAG': True
                     }
 
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop
@@ -63,7 +62,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
             try:
                 val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
                 val_costs.append(val_cost)
-                if iteration % 50 == 0:
+                if iteration % 25 == 0:
                     print("       Validation iteration: {i}, Loss: {vc}".format(i=iteration, vc=val_cost))
                 iteration += 1
             except tf.errors.OutOfRangeError:
@@ -109,7 +108,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                      mix_summary, voice_summary, mask_summary,
                                                                      gen_voice_summary], {model.is_training: True,
                                                                                          handle: training_handle})
-            if iteration % 200 == 0:
+            if iteration % 5 == 0:
                 print("       Training iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
                 writer.add_summary(summary, iteration)  # Record the loss at each iteration
                 writer.add_summary(mix, iteration)
@@ -169,7 +168,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
             cost, voice_est_mag, voice_mag, mixed_phase = sess.run([model.cost, model.gen_voice, model.voice,
                                                                     model.mixed_phase], {model.is_training: False,
                                                                                          handle: testing_handle})
-            if iteration % 50 == 0:
+            if iteration % 25 == 0:
                 print("       Testing iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
             test_costs.append(cost)
             # Transform output back to audio
@@ -190,7 +189,6 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 sars.append(sar[0])
             iteration += 1
         except tf.errors.OutOfRangeError:
-            # At the end of the dataset, calculate, record and print mean results
             mean_cost = sum(test_costs) / len(test_costs)
             mean_sdr = sum(sdrs) / len(sdrs)
             mean_sir = sum(sirs) / len(sirs)
@@ -207,6 +205,11 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
             break
 
     return mean_cost
+
+
+@ex.capture
+def optimise():
+    pass
 
 
 @ex.automain

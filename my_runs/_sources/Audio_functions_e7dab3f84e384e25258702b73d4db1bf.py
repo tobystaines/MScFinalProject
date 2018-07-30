@@ -46,6 +46,8 @@ def compute_spectrogram(audio, n_fft, fft_hop, n_channels=1, normalise=False):
         mag = np.abs(spec)
         if normalise:
             # TODO: normalize?
+            #temp = mag - mag.min()
+            #mag = temp / temp.max() # Return mag_norm for normalised spec.
             mag = (mag-mag.min())/(mag.max()-mag.min())
         return mag, np.angle(spec)
 

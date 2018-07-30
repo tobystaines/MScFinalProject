@@ -1,0 +1,87 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "C:\\Users\\Toby\\MSc_Project\\MScFinalProject",
+    "dependencies": [
+      "mir-eval==0.4",
+      "numpy==1.15.0",
+      "sacred==0.7.4",
+      "tensorflow==1.8.0"
+    ],
+    "mainfile": "Main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "Audio_functions.py",
+        "_sources\\Audio_functions_81d36c97a0b65e03834fc5f9f3af3608.py"
+      ],
+      [
+        "Dataset.py",
+        "_sources\\Dataset_a65fc30e9cc0000679de132943650c66.py"
+      ],
+      [
+        "Main.py",
+        "_sources\\Main_49c0e7dbc2756ff6b24d219dd1615dc2.py"
+      ],
+      [
+        "UNet.py",
+        "_sources\\UNet_2dd1ab2b52260f79a03454be1b6d782b.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\config\\captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"Main.py\", line 261, in do_experiment\n    writer = tf.summary.FileWriter(os.path.join(model_config[\"log_dir\"], model_folder), graph=sess.graph)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\summary\\writer\\writer.py\", line 352, in __init__\n    filename_suffix)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\summary\\writer\\event_file_writer.py\", line 67, in __init__\n    gfile.MakeDirs(self._logdir)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\lib\\io\\file_io.py\", line 374, in recursive_create_dir\n    pywrap_tensorflow.RecursivelyCreateDir(compat.as_bytes(dirname), status)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\errors_impl.py\", line 519, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.NotFoundError: Failed to create a directory: logs/local\\1; No such file or directory\n"
+  ],
+  "heartbeat": "2018-07-30T09:45:27.111620",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Core(TM) i5-4200H CPU @ 2.80GHz",
+    "hostname": "tobyspc",
+    "os": [
+      "Windows",
+      "Windows-10-10.0.17134-SP0"
+    ],
+    "python_version": "3.6.1"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-07-30T09:45:20.795237",
+  "status": "FAILED",
+  "stop_time": "2018-07-30T09:45:27.127244"
+}
