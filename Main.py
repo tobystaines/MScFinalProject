@@ -22,7 +22,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {"saving": True,  # Whether to take checkpoints
                     "loading": False,  # Whether to load an existing checkpoint
-                    "local_run": True,  # Whether experiment is running on laptop or server
+                    "local_run": False,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "196363/196363-1801",
                     'SAMPLE_RATE': 16000,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
