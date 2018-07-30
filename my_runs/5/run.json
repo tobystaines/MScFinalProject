@@ -1,0 +1,110 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "mir-eval==0.4",
+      "numpy==1.13.3",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.4.1"
+    ],
+    "mainfile": "Main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "Audio_functions.py",
+        "_sources/Audio_functions_6de6a4f79806333fc34115d136f48dde.py"
+      ],
+      [
+        "Dataset.py",
+        "_sources/Dataset_bc37e44bd03ed2fe82db9f90f6e01ceb.py"
+      ],
+      [
+        "Main.py",
+        "_sources/Main_946af2be9b91be37e0e67c48becc6cd3.py"
+      ],
+      [
+        "UNet.py",
+        "_sources/UNet_f91af300a930532fb4fa18a77168b93b.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1323, in _do_call\n    return fn(*args)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1302, in _run_fn\n    status, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/errors_impl.py\", line 473, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.NotFoundError: C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/test/Voice; No such file or directory\n\t [[Node: MatchingFiles_5 = MatchingFiles[_device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](MatchingFiles_5/pattern)]]\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"Main.py\", line 264, in do_experiment\n    initial_test_loss = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"Main.py\", line 161, in test\n    sess.run(testing_iterator.initializer)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 889, in run\n    run_metadata_ptr)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1120, in _run\n    feed_dict_tensor, options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1317, in _do_run\n    options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1336, in _do_call\n    raise type(e)(node_def, op, message)\n",
+    "tensorflow.python.framework.errors_impl.NotFoundError: C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/test/Voice; No such file or directory\n\t [[Node: MatchingFiles_5 = MatchingFiles[_device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](MatchingFiles_5/pattern)]]\n\nCaused by op 'MatchingFiles_5', defined at:\n  File \"Main.py\", line 212, in <module>\n    @ex.automain\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 137, in automain\n    self.run_commandline()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 260, in run_commandline\n    return self.run(cmd_name, config_updates, named_configs, {}, args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 209, in run\n    run()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/run.py\", line 221, in __call__\n    self.result = self.main_function(*args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n  File \"Main.py\", line 221, in do_experiment\n    train_data, val_data, test_data = Dataset.prepare_datasets(model_config)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/Dataset.py\", line 122, in prepare_datasets\n    train_data, val_data, test_data = build_datasets(model_config, path)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/Dataset.py\", line 110, in build_datasets\n    model_config['NORMALISE_MAG'])\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/Dataset.py\", line 20, in get_dataset\n    tf.data.Dataset.list_files(data_folder + '/*.wav')  # TODO still uncertain if this is done in deterministic order or not\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/data/ops/dataset_ops.py\", line 501, in list_files\n    return Dataset.from_tensor_slices(gen_io_ops.matching_files(file_pattern))\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/gen_io_ops.py\", line 303, in matching_files\n    \"MatchingFiles\", pattern=pattern, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/op_def_library.py\", line 787, in _apply_op_helper\n    op_def=op_def)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 2956, in create_op\n    op_def=op_def)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 1470, in __init__\n    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access\n\nNotFoundError (see above for traceback): C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/test/Voice; No such file or directory\n\t [[Node: MatchingFiles_5 = MatchingFiles[_device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](MatchingFiles_5/pattern)]]\n\n"
+  ],
+  "heartbeat": "2018-07-30T10:18:37.503742",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz",
+    "gpus": {
+      "driver_version": "384.130",
+      "gpus": [
+        {
+          "model": "Quadro K4200",
+          "persistence_mode": false,
+          "total_memory": 4036
+        },
+        {
+          "model": "Quadro K4200",
+          "persistence_mode": false,
+          "total_memory": 4036
+        }
+      ]
+    },
+    "hostname": "seaford",
+    "os": [
+      "Linux",
+      "Linux-4.4.0-130-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-07-30T10:18:32.320974",
+  "status": "FAILED",
+  "stop_time": "2018-07-30T10:18:37.508299"
+}
