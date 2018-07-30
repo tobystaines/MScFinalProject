@@ -28,7 +28,7 @@ def fake_stereo(audio):
     return fake_stereo(mixed), fake_stereo(voice)
 
 
-def compute_spectrogram(audio, n_fft, fft_hop, n_channels=1):
+def compute_spectrogram(audio, n_fft, fft_hop, n_channels=1, normalise=False):
     '''
     Parameters
     ----------
@@ -40,14 +40,15 @@ def compute_spectrogram(audio, n_fft, fft_hop, n_channels=1):
         last dimension is (left_mag, right_mag, left_phase, right_phase)
     '''
 
-    def stft(x):
+    def stft(x, normalise):
         spec = librosa.stft(
             x, n_fft=n_fft, hop_length=fft_hop, window='hann')
-        # TODO: normalize?
         mag = np.abs(spec)
-        temp = mag - mag.min()
-        mag_norm = temp / temp.max() # Return mag_norm for normalised spec.
-        return mag_norm, np.angle(spec)
+        if normalise:
+            # TODO: normalize?
+            temp = mag - mag.min()
+            mag = temp / temp.max() # Return mag_norm for normalised spec.
+        return mag, np.angle(spec)
 
     # def stereo_func(py_audio):
     #    left_mag, left_phase = stft(py_audio[:, 0])
@@ -55,8 +56,8 @@ def compute_spectrogram(audio, n_fft, fft_hop, n_channels=1):
     #    ret = np.array([left_mag, right_mag, left_phase, right_phase]).T
     #    return ret.astype(np.float32)
 
-    def mono_func(py_audio):
-        mag, phase = stft(py_audio[:, 0])
+    def mono_func(py_audio, normalise):
+        mag, phase = stft(py_audio[:, 0], normalise)
         ret = np.array([mag, phase]).T
         return ret.astype(np.float32)
 
@@ -68,7 +69,7 @@ def compute_spectrogram(audio, n_fft, fft_hop, n_channels=1):
     #    raise ValueError('Invalid channels: %d' % n_channels)
 
     with tf.name_scope('read_spectrogram'):
-        ret = tf.py_func(mono_func, [audio], tf.float32, stateful=False)
+        ret = tf.py_func(mono_func, [audio, normalise], tf.float32, stateful=False)
         ret.set_shape([None, 1 + n_fft / 2, 2])   # n_channels * 2])
     return ret
 
