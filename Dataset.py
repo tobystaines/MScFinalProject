@@ -13,7 +13,8 @@ def get_dataset(
         n_channels,
         patch_window,
         patch_hop,
-        n_parallel_readers):
+        n_parallel_readers,
+        normalise):
     # TODO Still need to fix this to stop it producing a tuple
     return (
         tf.data.Dataset.list_files(data_folder + '/*.wav')  # TODO still uncertain if this is done in deterministic order or not
@@ -25,7 +26,8 @@ def get_dataset(
         .map(Utils.partial_argv(af.compute_spectrogram,
                                 n_fft=n_fft,
                                 fft_hop=fft_hop,
-                                n_channels=n_channels,),
+                                n_channels=n_channels,
+                                normalise=normalise),
              num_parallel_calls=n_parallel_readers)
         .map(Utils.partial_argv(af.extract_spectrogram_patches,
                                 n_fft=n_fft,
@@ -55,7 +57,8 @@ def prepare_datasets(model_config):
                               model_config['N_CHANNELS'],
                               model_config['PATCH_WINDOW'],
                               model_config['PATCH_HOP'],
-                              model_config['N_PARALLEL_READERS'])
+                              model_config['N_PARALLEL_READERS'],
+                              model_config['NORMALISE_MAG'])
         y_train = get_dataset(model_config['data_root'] + path['y_train'],
                               model_config['SAMPLE_RATE'],
                               model_config['N_FFT'],
@@ -63,7 +66,8 @@ def prepare_datasets(model_config):
                               model_config['N_CHANNELS'],
                               model_config['PATCH_WINDOW'],
                               model_config['PATCH_HOP'],
-                              model_config['N_PARALLEL_READERS'])
+                              model_config['N_PARALLEL_READERS'],
+                              model_config['NORMALISE_MAG'])
         train = zip_datasets(x_train, y_train, model_config['N_SHUFFLE'], model_config['BATCH_SIZE'], shuffle=True)
 
         x_val = get_dataset(model_config['data_root'] + path['x_val'],
@@ -81,7 +85,8 @@ def prepare_datasets(model_config):
                             model_config['N_CHANNELS'],
                             model_config['PATCH_WINDOW'],
                             model_config['PATCH_HOP'],
-                            model_config['N_PARALLEL_READERS'])
+                            model_config['N_PARALLEL_READERS'],
+                            model_config['NORMALISE_MAG'])
         val = zip_datasets(x_val, y_val, model_config['N_SHUFFLE'], model_config['BATCH_SIZE'], shuffle=False)
 
         x_test = get_dataset(model_config['data_root'] + path['x_test'],
@@ -99,7 +104,8 @@ def prepare_datasets(model_config):
                              model_config['N_CHANNELS'],
                              model_config['PATCH_WINDOW'],
                              model_config['PATCH_HOP'],
-                             model_config['N_PARALLEL_READERS'])
+                             model_config['N_PARALLEL_READERS'],
+                             model_config['NORMALISE_MAG'])
         test = zip_datasets(x_test, y_test, model_config['N_SHUFFLE'], model_config['BATCH_SIZE'], shuffle=False)
 
         return train, val, test

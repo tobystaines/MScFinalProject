@@ -33,10 +33,11 @@ def cfg():
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 50,
                     'N_SHUFFLE': 50,
-                    'EPOCHS': 10,  # Number of full passes through the dataset to train for
+                    'EPOCHS': 2,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
                     'VAL_ITERS': 200,  # Number of training iterations between validation checks,
-                    'NUM_WORSE_VAL_CHECKS': 3  # Number of successively worse validation checks before early stopping
+                    'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
+                    'NORMALISE_MAG': False
                     }
 
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop
@@ -45,8 +46,6 @@ def cfg():
     else:  # Data and Checkpoint directories on the uni server
         model_config['data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
-
-    #experiment_id = np.random.randint(0, 1000000)
 
 
 @ex.capture
