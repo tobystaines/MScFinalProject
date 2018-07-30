@@ -21,9 +21,8 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {"saving": True,  # Whether to take checkpoints
                     "loading": False,  # Whether to load an existing checkpoint
-                    "local_run": False,  # Whether experiment is running on laptop or server
+                    "local_run": True,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "196363/196363-1801",
-                    "log_dir": "logs",  # Base folder for log files
                     'SAMPLE_RATE': 16000,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
@@ -34,7 +33,7 @@ def cfg():
                     'BATCH_SIZE': 50,
                     'N_SHUFFLE': 50,
                     'EPOCHS': 2,  # Number of full passes through the dataset to train for
-                    'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
+                    'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
                     'VAL_ITERS': 200,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
                     'NORMALISE_MAG': False
@@ -43,9 +42,11 @@ def cfg():
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop
         model_config['data_root'] = 'C:/Users/Toby/MSc_Project/Test_Audio/GANdatasetsMini/'
         model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
+        model_config['log_dir'] = 'logs/local'
     else:  # Data and Checkpoint directories on the uni server
         model_config['data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
+        model_config['log_dir'] = 'logs/ssh'
 
 
 @ex.capture
