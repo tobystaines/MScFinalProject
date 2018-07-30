@@ -77,7 +77,8 @@ def prepare_datasets(model_config):
                             model_config['N_CHANNELS'],
                             model_config['PATCH_WINDOW'],
                             model_config['PATCH_HOP'],
-                            model_config['N_PARALLEL_READERS'])
+                            model_config['N_PARALLEL_READERS'],
+                            model_config['NORMALISE_MAG'])
         y_val = get_dataset(model_config['data_root'] + path['y_val'],
                             model_config['SAMPLE_RATE'],
                             model_config['N_FFT'],
@@ -96,7 +97,8 @@ def prepare_datasets(model_config):
                              model_config['N_CHANNELS'],
                              model_config['PATCH_WINDOW'],
                              model_config['PATCH_HOP'],
-                             model_config['N_PARALLEL_READERS'])
+                             model_config['N_PARALLEL_READERS'],
+                             model_config['NORMALISE_MAG'])
         y_test = get_dataset(model_config['data_root'] + path['y_test'],
                              model_config['SAMPLE_RATE'],
                              model_config['N_FFT'],
