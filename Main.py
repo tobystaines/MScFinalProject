@@ -59,20 +59,21 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         print('Validating')
         sess.run(validation_iterator.initializer)
         val_costs = list()
+        val_iteration = 1
         while True:
             try:
                 val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
                 val_costs.append(val_cost)
-                if iteration % 50 == 0:
-                    print("       Validation iteration: {i}, Loss: {vc}".format(i=iteration, vc=val_cost))
-                iteration += 1
+                if val_iteration % 50 == 0:
+                    print("       Validation iteration: {i}, Loss: {vc}".format(i=val_iteration, vc=val_cost))
+                val_iteration += 1
             except tf.errors.OutOfRangeError:
                 # Calculate and record mean loss over validation dataset
                 val_check_mean_cost = sum(val_costs) / len(val_costs)
                 print('Validation check mean loss: {l}'.format(l=val_check_mean_cost))
                 summary = tf.Summary(
                     value=[tf.Summary.Value(tag='Validation_mean_loss', simple_value=val_check_mean_cost)])
-                writer.add_summary(summary, iteration)
+                writer.add_summary(summary, val_check)
                 # If validation loss has worsened increment the counter, else, reset the counter
                 if val_check_mean_cost > min_val_cost:
                     worse_val_checks += 1
@@ -91,6 +92,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     epoch = 1
     iteration = 1
     min_val_cost = 1
+    val_check = 1
     worse_val_checks = 0
     best_model = model
     training_summary = tf.summary.scalar('Training_loss', model.cost)
@@ -119,6 +121,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
             # If using early stopping, enter validation loop
             if model_config['EARLY_STOPPING'] and iteration % model_config['VAL_ITERS'] == 0:
                 min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model, iteration)
+                val_check += 1
 
             iteration += 1
 
@@ -244,7 +247,7 @@ def do_experiment(model_config):
 
     # Build U-Net model
     print('Creating model')
-    model = UNet.UNetModel(mixed_mag, voice_mag, mixed_phase, is_training, name='U_Net_Model')
+    model = UNet.UNetModel(mixed_mag, voice_mag, mixed_phase, 'unet', is_training, name='U_Net_Model')
 
     if model_config['loading']:
         # TODO - Think this works now but needs proper testing
