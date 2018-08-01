@@ -73,7 +73,7 @@ def prepare_datasets(model_config):
                               model_config['PATCH_HOP'],
                               model_config['N_PARALLEL_READERS'],
                               model_config['NORMALISE_MAG'])
-        train = zip_datasets(x_train, y_train, model_config['N_SHUFFLE'], model_config['BATCH_SIZE'], shuffle=True)
+        train = zip_datasets(x_train, y_train, model_config['BATCH_SIZE'], True, model_config['N_SHUFFLE'])
 
         x_val = get_dataset(model_config['data_root'] + path['x_val'],
                             model_config['SAMPLE_RATE'],
@@ -93,7 +93,7 @@ def prepare_datasets(model_config):
                             model_config['PATCH_HOP'],
                             model_config['N_PARALLEL_READERS'],
                             model_config['NORMALISE_MAG'])
-        val = zip_datasets(x_val, y_val, model_config['N_SHUFFLE'], model_config['BATCH_SIZE'], shuffle=False)
+        val = zip_datasets(x_val, y_val, model_config['BATCH_SIZE'], False, model_config['N_SHUFFLE'])
 
         x_test = get_dataset(model_config['data_root'] + path['x_test'],
                              model_config['SAMPLE_RATE'],
@@ -113,7 +113,7 @@ def prepare_datasets(model_config):
                              model_config['PATCH_HOP'],
                              model_config['N_PARALLEL_READERS'],
                              model_config['NORMALISE_MAG'])
-        test = zip_datasets(x_test, y_test, model_config['N_SHUFFLE'], model_config['BATCH_SIZE'], shuffle=False)
+        test = zip_datasets(x_test, y_test, model_config['BATCH_SIZE'], False, model_config['N_SHUFFLE'])
 
         return train, val, test
 
