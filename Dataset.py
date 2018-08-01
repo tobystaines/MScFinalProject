@@ -16,8 +16,13 @@ def get_dataset(
         n_parallel_readers,
         normalise):
     # TODO Still need to fix this to stop it producing a tuple
+    if float(tf.__version__[0:3]) <= 1.5:
+        pipeline = tf.data.Dataset.list_files(data_folder + '/*.wav')
+    else:
+        pipeline = tf.data.Dataset.list_files(data_folder + '/*.wav', shuffle=False)
+
     return (
-        tf.data.Dataset.list_files(data_folder + '/*.wav')  # TODO still uncertain if this is done in deterministic order or not
+        pipeline  # TODO still uncertain if this is done in deterministic order or not
         .filter(lambda x: re.search('CH0', str(x)) is None)  # Filter out any files containing 'CH0' as these do not exist in the mixed data
         .map(partial(af.read_audio,
                      sample_rate=sample_rate,
@@ -37,7 +42,7 @@ def get_dataset(
         .flat_map(Utils.zip_tensor_slices))
 
 
-def zip_datasets(dataset_a, dataset_b, n_shuffle, batch_size, shuffle):
+def zip_datasets(dataset_a, dataset_b, batch_size, shuffle=False, n_shuffle=20):
     if shuffle:
         return tf.data.Dataset.zip((dataset_a, dataset_b))\
             .batch(batch_size)\

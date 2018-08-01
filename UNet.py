@@ -3,7 +3,16 @@ import Model_functions as mf
 
 
 class UNetModel(object):
-
+    """
+    Top level U-Net object.
+    Attributes:
+        mixed: Input placeholder for magnitude spectrogram of mixed signals (voice plus background noise) - X
+        voice: Input placeholder for magnitude spectrogram of isolated voice signal - Y
+        mixed_phase: Input placeholder for phase spectrogram of mixed signals (voice plus background noise)
+        variant: The type of U-Net model (Normal convolutional or capsule based)
+        is_training: Boolean - should the model be trained on the current input or not
+        name: Model instance name
+    """
     def __init__(self, mixed, voice, mixed_phase, variant, is_training, name):
         with tf.variable_scope(name):
             self.mixed = mixed
@@ -44,6 +53,9 @@ class UNet(object):
 
 
 class UNetEncoder(object):
+    """
+    The down-convolution side of a convoltional U-Net model.
+    """
 
     def __init__(self, input_tensor, is_training, reuse):
         net = input_tensor
@@ -84,7 +96,9 @@ class UNetEncoder(object):
 
 
 class UNetDecoder(object):
-
+    """
+    The up-convolution side of a convolutional U-Net model
+    """
     def __init__(self, input_tensor, encoder, is_training, reuse):
         net = input_tensor
 
@@ -125,7 +139,9 @@ class UNetDecoder(object):
 
 
 class CapsUNetEncoder(object):
-
+    """
+    The down-convolutional side of a capsule based U-Net model.
+    """
     def __init__(self, input_tensor, is_training, reuse):
         net = input_tensor
 
@@ -133,7 +149,9 @@ class CapsUNetEncoder(object):
 
 
 class CapsUNetDecoder(object):
-
+    """
+    The up-convolutional side of a capsule based U-Net model.
+    """
     def __init__(self, input_tensor, encoder, is_training, reuse):
         net = input_tensor
 
