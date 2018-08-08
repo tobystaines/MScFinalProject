@@ -18,6 +18,20 @@ def read_audio(path, sample_rate, n_channels=1):
     return tf.py_func(read_audio_py, [path], tf.float32, stateful=False)
 
 
+def read_audio_pair(path_a, path_b, sample_rate):
+    """
+    Takes in the path of two audio files and the required output sample rate,
+    returns a tuple of tensors of the wave form of the audio files.
+    """
+    def read_audio_py(py_path):
+
+        mono, _ = librosa.load(py_path, sr=sample_rate, mono=True)
+        return np.expand_dims(mono, 1)
+
+    return (tf.py_func(read_audio_py, [path_a], tf.float32, stateful=False),
+            tf.py_func(read_audio_py, [path_b], tf.float32, stateful=False))
+
+
 def fake_stereo(audio):
 
     def fake_stereo(x):
