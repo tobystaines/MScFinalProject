@@ -1,0 +1,94 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "C:\\Users\\Toby\\MSc_Project\\MScFinalProject",
+    "dependencies": [
+      "mir-eval==0.4",
+      "numpy==1.15.0",
+      "sacred==0.7.4",
+      "tensorflow==1.8.0"
+    ],
+    "mainfile": "Main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "Audio_functions.py",
+        "_sources\\Audio_functions_81eab6dff9b872caf03af0c9cd6ba8c4.py"
+      ],
+      [
+        "Dataset.py",
+        "_sources\\Dataset_4064fb8a76fd1434cb0788b205edba7c.py"
+      ],
+      [
+        "Main.py",
+        "_sources\\Main_bd340e0f63169cdf09b3c89ac5b2847d.py"
+      ],
+      [
+        "UNet.py",
+        "_sources\\UNet_f5e012effe7114d59dc8483334e1e06b.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\ops.py\", line 1567, in _create_c_op\n    c_op = c_api.TF_FinishOperation(op_desc)\n",
+    "tensorflow.python.framework.errors_impl.InvalidArgumentError: Index out of range using input dim 3; input has only 3 dims for 'strided_slice_1' (op: 'StridedSlice') with input shapes: [256,513,2], [4], [4], [4] and with computed input tensors: input[3] = <1 1 1 1>.\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\sacred\\config\\captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"Main.py\", line 244, in do_experiment\n    mixed_mag = tf.expand_dims(mixed[0][:, :, 1:, 0], 3)  # Yet more hacking to get around this tuple problem\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\ops\\array_ops.py\", line 597, in _slice_helper\n    name=name)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\ops\\array_ops.py\", line 763, in strided_slice\n    shrink_axis_mask=shrink_axis_mask)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\ops\\gen_array_ops.py\", line 10080, in strided_slice\n    name=name)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\op_def_library.py\", line 787, in _apply_op_helper\n    op_def=op_def)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\ops.py\", line 3392, in create_op\n    op_def=op_def)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\ops.py\", line 1734, in __init__\n    control_input_ops)\n",
+    "  File \"C:\\Program Files\\Anaconda3\\lib\\site-packages\\tensorflow\\python\\framework\\ops.py\", line 1570, in _create_c_op\n    raise ValueError(str(e))\n",
+    "ValueError: Index out of range using input dim 3; input has only 3 dims for 'strided_slice_1' (op: 'StridedSlice') with input shapes: [256,513,2], [4], [4], [4] and with computed input tensors: input[3] = <1 1 1 1>.\n"
+  ],
+  "heartbeat": "2018-08-08T10:40:14.719882",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Core(TM) i5-4200H CPU @ 2.80GHz",
+    "hostname": "tobyspc",
+    "os": [
+      "Windows",
+      "Windows-10-10.0.17134-SP0"
+    ],
+    "python_version": "3.6.1"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-08-08T10:40:14.344536",
+  "status": "FAILED",
+  "stop_time": "2018-08-08T10:40:14.736888"
+}

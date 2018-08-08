@@ -22,7 +22,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {"saving": True,  # Whether to take checkpoints
                     "loading": False,  # Whether to load an existing checkpoint
-                    "local_run": False,  # Whether experiment is running on laptop or server
+                    "local_run": True,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "196363/196363-1801",
                     'SAMPLE_RATE': 16000,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
@@ -31,9 +31,9 @@ def cfg():
                     'N_PARALLEL_READERS': 4,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
-                    'BATCH_SIZE': 50,
-                    'N_SHUFFLE': 50,
-                    'EPOCHS': 5,  # Number of full passes through the dataset to train for
+                    'BATCH_SIZE': 5,
+                    'N_SHUFFLE': 5,
+                    'EPOCHS': 3,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
                     'VAL_ITERS': 200,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
@@ -111,7 +111,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                      mix_summary, voice_summary, mask_summary,
                                                                      gen_voice_summary], {model.is_training: True,
                                                                                          handle: training_handle})
-            if iteration % 200 == 0:
+            if iteration % 20 == 0:
                 print("       Training iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
                 writer.add_summary(summary, iteration)  # Record the loss at each iteration
                 writer.add_summary(mix, iteration)
