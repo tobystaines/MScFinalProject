@@ -1,0 +1,101 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "mir-eval==0.4",
+      "numpy==1.13.3",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.4.1"
+    ],
+    "mainfile": "Main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "Audio_functions.py",
+        "_sources/Audio_functions_b1a4678214392b57cd425ac2bfa8cf62.py"
+      ],
+      [
+        "Dataset.py",
+        "_sources/Dataset_950cf2c155ffbbc68bc89be1fe0e0b52.py"
+      ],
+      [
+        "Main.py",
+        "_sources/Main_369213a5ee262ad9071d221d59ca45e7.py"
+      ],
+      [
+        "UNet.py",
+        "_sources/UNet_4f448d726c81096d0f2c58436c980860.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"Main.py\", line 224, in do_experiment\n    train_data, val_data, test_data = Dataset.prepare_datasets(model_config)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/Dataset.py\", line 175, in prepare_datasets\n    sets.append(build_datasets(model_config, path))\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/Dataset.py\", line 127, in build_datasets\n    model_config['NORMALISE_MAG'])\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/Dataset.py\", line 47, in get_paired_dataset\n    tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1]))\n",
+    "IndexError: too many indices for array\n"
+  ],
+  "heartbeat": "2018-08-09T10:10:40.430209",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz",
+    "gpus": {
+      "driver_version": "384.130",
+      "gpus": [
+        {
+          "model": "Quadro K4200",
+          "persistence_mode": false,
+          "total_memory": 4036
+        },
+        {
+          "model": "Quadro K4200",
+          "persistence_mode": false,
+          "total_memory": 4036
+        }
+      ]
+    },
+    "hostname": "seaford",
+    "os": [
+      "Linux",
+      "Linux-4.4.0-130-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-08-09T10:10:35.770109",
+  "status": "FAILED",
+  "stop_time": "2018-08-09T10:10:40.438303"
+}
