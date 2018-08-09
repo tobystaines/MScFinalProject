@@ -22,9 +22,10 @@ def zip_files(directory_a, directory_b):
 
     for file_a in filelist_a:
         for file_b in filelist_b:
-            if file_a[:13] == file_b[:13] and file_a[17:] == file_b[17:]:
+            if file_a[:13] == file_b[:13] and (file_a[17:] == file_b[17:] or len(file_a) != len(file_b)):
                 zipped_list.append((str(directory_a + '/' + file_a), str(directory_b + '/' + file_b)))
-                filelist_b.remove(file_b)
+                if len(file_a) == len(file_b):
+                    filelist_b.remove(file_b)
                 break
 
     zipped_list = np.array(zipped_list)
@@ -60,53 +61,6 @@ def get_paired_dataset(zipped_files,
                                     patch_window=patch_window,
                                     patch_hop=patch_hop, ))
             .flat_map(Utils.zip_tensor_slices)).batch(batch_size).shuffle(n_shuffle)
-
-
-def get_dataset(
-        data_folder,
-        sample_rate,
-        n_fft,
-        fft_hop,
-        n_channels,
-        patch_window,
-        patch_hop,
-        n_parallel_readers,
-        normalise):
-    # TODO Still need to fix this to stop it producing a tuple
-    if float(tf.__version__[0:3]) <= 1.5:
-        pipeline = tf.data.Dataset.list_files(data_folder + '/*.wav')
-    else:
-        pipeline = tf.data.Dataset.list_files(data_folder + '/*.wav', shuffle=False)
-
-    return (
-        pipeline  # TODO still uncertain if this is done in deterministic order or not
-        .filter(lambda x: re.search('CH0', str(x)) is None)  # Filter out any files containing 'CH0' as these do not exist in the mixed data
-        .map(partial(af.read_audio,
-                     sample_rate=sample_rate,
-                     n_channels=n_channels),
-             num_parallel_calls=n_parallel_readers)
-        .map(Utils.partial_argv(af.compute_spectrogram,
-                                n_fft=n_fft,
-                                fft_hop=fft_hop,
-                                n_channels=n_channels,
-                                normalise=normalise),
-             num_parallel_calls=n_parallel_readers)
-        .map(Utils.partial_argv(af.extract_spectrogram_patches,
-                                n_fft=n_fft,
-                                n_channels=n_channels,
-                                patch_window=patch_window,
-                                patch_hop=patch_hop,))
-        .flat_map(Utils.zip_tensor_slices))
-
-
-def zip_datasets(dataset_a, dataset_b, batch_size, shuffle=False, n_shuffle=20):
-    if shuffle:
-        return tf.data.Dataset.zip((dataset_a, dataset_b))\
-            .batch(batch_size)\
-            .shuffle(n_shuffle)
-    else:
-        return tf.data.Dataset.zip((dataset_a, dataset_b)) \
-            .batch(batch_size)
 
 
 def prepare_datasets(model_config):
@@ -167,7 +121,7 @@ def prepare_datasets(model_config):
         sets = list()
         for string in ['bus_simu', 'caf_simu', 'ped_simu', 'str_simu']:
             path = {'x_train': 'tr05_' + string,
-                    'y_train': 'tr05_bth',
+                    'y_train': 'tr05_org',
                     'x_val': 'dt05_' + string,
                     'y_val': 'dt05_bth',
                     'x_test': 'et05_' + string,
