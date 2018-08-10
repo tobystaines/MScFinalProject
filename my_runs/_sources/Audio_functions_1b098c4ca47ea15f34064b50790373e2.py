@@ -16,7 +16,8 @@ def read_audio(path, sample_rate, n_channels=1):
 def read_audio_pair(path_a, path_b, sample_rate):
     """
     Takes in the path of two audio files and the required output sample rate,
-    returns a tuple of tensors of the wave form of the audio files.
+    returns a tuple of test_pipelinensors of the wave form of the audio files, plus the
+    path to the original audio files.
     """
     def read_audio_py(py_path):
 

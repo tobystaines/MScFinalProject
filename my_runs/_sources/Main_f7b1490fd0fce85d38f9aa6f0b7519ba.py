@@ -22,7 +22,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {"saving": True,  # Whether to take checkpoints
                     "loading": False,  # Whether to load an existing checkpoint
-                    "local_run": False,  # Whether experiment is running on laptop or server
+                    "local_run": True,  # Whether experiment is running on laptop or server
                     "checkpoint_to_load": "196363/196363-1801",
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
@@ -30,13 +30,13 @@ def cfg():
                     'N_PARALLEL_READERS': 4,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
-                    'BATCH_SIZE': 50,
-                    'N_SHUFFLE': 50,
-                    'EPOCHS': 5,  # Number of full passes through the dataset to train for
+                    'BATCH_SIZE': 5,
+                    'N_SHUFFLE': 5,
+                    'EPOCHS': 2,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
                     'VAL_ITERS': 200,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
-                    'NORMALISE_MAG': True
+                    'NORMALISE_MAG': False
                     }
 
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop
@@ -54,7 +54,7 @@ def cfg():
 def train(sess, model, model_config, model_folder, handle, training_iterator, training_handle, validation_iterator,
           validation_handle, writer):
 
-    def validation(min_val_cost, worse_val_checks, best_model):
+    def validation(min_val_cost, worse_val_checks, best_model, iteration):
         print('Validating')
         sess.run(validation_iterator.initializer)
         val_costs = list()
@@ -171,9 +171,11 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
             cost, voice_est_mag, voice, mixed_phase = sess.run([model.cost, model.gen_voice, model.voice_audio,
                                                                 model.mixed_phase], {model.is_training: False,
                                                                                      handle: testing_handle})
+            if iteration % 10 == 0:
+                print("       Testing iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
             test_costs.append(cost)
+            # Transform output back to audio
             for i in range(voice_est_mag.shape[0]):
-                # Transform output back to audio
                 voice_est = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T, model_config['N_FFT'],
                                                       model_config['FFT_HOP'], phase=np.squeeze(mixed_phase[i, :, :, :]).T)
                 # Should we use voice or the original audio? (Might be hard to split into matching patches)
@@ -182,14 +184,12 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 # TODO Pad to ensure equal length?
                 # Reshape for mir_eval
                 voice_est = np.expand_dims(voice_est, 1).T
-                voice_patch = voice[i,:,:].T
+                voice = np.squeeze(voice, 0).T
                 # Calculate audio quality statistics
-                sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch, voice_est)
+                sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice, voice_est)
                 sdrs.append(sdr[0])
                 sirs.append(sir[0])
                 sars.append(sar[0])
-            if iteration % 10 == 0:
-                print("       Testing iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
             iteration += 1
         except tf.errors.OutOfRangeError:
             # At the end of the dataset, calculate, record and print mean results

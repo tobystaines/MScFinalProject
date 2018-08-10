@@ -45,7 +45,7 @@ def get_paired_dataset(zipped_files,
                        normalise):
 
     return (
-        tf.data.Dataset.from_tensor_slices((zipped_files[:,0],zipped_files[:,1]))
+        tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1]))
         .map(partial(af.read_audio_pair,
                      sample_rate=sample_rate),
              num_parallel_calls=n_parallel_readers)
@@ -56,11 +56,11 @@ def get_paired_dataset(zipped_files,
              num_parallel_calls=n_parallel_readers)
         .map(partial(af.extract_patches_map,
                      n_fft=n_fft,
-                     fft_hop = fft_hop,
                      patch_window=patch_window,
-                     patch_hop=patch_hop,),
-             num_parallel_calls=n_parallel_readers)
-        .flat_map(Utils.zip_tensor_slices).batch(batch_size).shuffle(n_shuffle))
+                     patch_hop=patch_hop,))
+        .flat_map(Utils.zip_tensor_slices)
+        .batch(batch_size)
+        .shuffle(n_shuffle))
 
 
 def prepare_datasets(model_config):

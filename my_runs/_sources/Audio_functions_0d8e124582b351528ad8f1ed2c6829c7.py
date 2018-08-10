@@ -37,14 +37,13 @@ def compute_spectrogram(audio, n_fft, fft_hop, normalise=False):
     -------
     Tensor of shape (n_frames, 1 + n_fft / 2, 2), where the last dimension is (magnitude, phase)
     '''
-
     def stft(x, normalise):
         spec = librosa.stft(
             x, n_fft=n_fft, hop_length=fft_hop, window='hann')
         mag = np.abs(spec)
         if normalise:
             # TODO: normalize?
-            mag = (mag - mag.min()) / (mag.max() - mag.min())
+            mag = (mag-mag.min())/(mag.max()-mag.min())
         return mag, np.angle(spec)
 
     def mono_func(py_audio, normalise):
@@ -97,7 +96,7 @@ def extract_audio_patches(audio, fft_hop, patch_window, patch_hop):
     Tensor of shape (n_patches, patch_window) containing patches from audio.
     '''
     with tf.name_scope('extract_audio_patches'):
-        audio4d = tf.expand_dims(tf.expand_dims(audio, 0), 0)
+        audio4d = tf.expand_dims(tf.expand_dims(audio, 0),0)
         patch_length = (patch_window - 1) * fft_hop
         patch_hop_length = (patch_hop - 1) * fft_hop
 
@@ -110,22 +109,24 @@ def extract_audio_patches(audio, fft_hop, patch_window, patch_hop):
 
         num_patches = tf.shape(patches)[2]
 
-        return tf.squeeze(tf.reshape(patches, [num_patches, 1, patch_length, 1]), 1)
+        return tf.squeeze(tf.reshape(patches, [num_patches, 1, patch_length, 1]),1)
 
 
 def compute_spectrogram_map(audio_a, audio_b, n_fft, fft_hop, normalise=False):
+
     spec_a = compute_spectrogram(audio_a, n_fft, fft_hop, normalise)
     spec_b = compute_spectrogram(audio_b, n_fft, fft_hop, normalise)
 
     return spec_a, spec_b, audio_a, audio_b
 
 
-def extract_patches_map(spec_a, spec_b, audio_a, audio_b, n_fft, fft_hop, patch_window, patch_hop):
+def extract_patches_map(spec_a, spec_b, audio_a, audio_b, n_fft, patch_window, patch_hop):
+
     patches_a = extract_spectrogram_patches(spec_a, n_fft, patch_window, patch_hop)
     patches_b = extract_spectrogram_patches(spec_b, n_fft, patch_window, patch_hop)
 
-    audio_patches_a = extract_audio_patches(audio_a, fft_hop, patch_window, patch_hop)
-    audio_patches_b = extract_audio_patches(audio_b, fft_hop, patch_window, patch_hop)
+    audio_patches_a = extract_audio_patches(audio_a, n_fft, patch_window, patch_hop)
+    audio_patches_b = extract_audio_patches(audio_b, n_fft, patch_window, patch_hop)
 
     return patches_a, patches_b, audio_patches_a, audio_patches_b
 
