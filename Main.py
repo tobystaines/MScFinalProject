@@ -32,8 +32,9 @@ def cfg():
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 50,
                     'N_SHUFFLE': 50,
-                    'EPOCHS': 5,  # Number of full passes through the dataset to train for
+                    'EPOCHS': 20,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
+                    'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
                     'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
                     'NORMALISE_MAG': True
@@ -99,7 +100,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     voice_summary = tf.summary.image('Voice', model.voice_mag)
     mask_summary = tf.summary.image('Voice_Mask', model.voice_mask)
     gen_voice_summary = tf.summary.image('Generated_Voice', model.gen_voice)
-    saver = tf.train.Saver(tf.global_variables(), write_version=tf.train.SaverDef.V2)
+    saver = tf.train.Saver(tf.global_variables(), max_to_keep=3, write_version=tf.train.SaverDef.V2)
     sess.run(training_iterator.initializer)
 
     # Begin training loop
@@ -111,14 +112,11 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                        gen_voice_summary], {model.is_training: True,
                                                                                             handle: training_handle})
             writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
-            if iteration % 500 == 0:
+            if iteration % 200 == 0:
                 print("       Training iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
-                writer.add_summary(mix, iteration)
-                writer.add_summary(voice, iteration)
-                writer.add_summary(mask, iteration)
-                writer.add_summary(gen_voice, iteration)
-            # If using early stopping, enter validation loop
-            if model_config['EARLY_STOPPING'] and iteration % model_config['VAL_ITERS'] == 0:
+
+            # If using early stopping by iterations, enter validation loop
+            if model_config['EARLY_STOPPING'] and not model_config['VAL_BY_EPOCHS'] and iteration % model_config['VAL_ITERS'] == 0:
                 min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model)
                 val_check += 1
 
@@ -126,7 +124,28 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 
         # When the dataset is exhausted, note the end of the epoch
         except tf.errors.OutOfRangeError:
-            print('Epoch {e} finished.'.format(e=epoch))
+            print('Epoch {e} finished after {i} iterations.'.format(e=epoch, i=iteration))
+            if model_config['saving']:
+                # Make sure there is a folder to save the checkpoint in
+                checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
+                try:
+                    os.makedirs(checkpoint_path)
+                except OSError as e:
+                    if e.errno != errno.EEXIST:
+                        raise
+                print('Checkpoint')
+                saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(iteration))
+            try:
+                writer.add_summary(mix, iteration)
+                writer.add_summary(voice, iteration)
+                writer.add_summary(mask, iteration)
+                writer.add_summary(gen_voice, iteration)
+            except NameError:
+                print('No images to record')
+            # If using early stopping by epochs, enter validation loop
+            if model_config['EARLY_STOPPING'] and model_config['VAL_BY_EPOCHS'] and epoch > 0:
+                min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model)
+                val_check += 1
             epoch += 1
             sess.run(training_iterator.initializer)
 
@@ -139,18 +158,6 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         print('Finished requested number of epochs. Training complete.')
     print('Best validation loss: {mvc}'.format(mvc=min_val_cost))
     model = best_model
-
-    if model_config['saving']:
-        # Make sure there is a folder to save the checkpoint in
-        checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
-        try:
-            os.makedirs(checkpoint_path)
-        except OSError as e:
-            if e.errno != errno.EEXIST:
-                raise
-        # Save the final best model
-        print('Checkpoint')
-        saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(iteration))
 
     return model
 
