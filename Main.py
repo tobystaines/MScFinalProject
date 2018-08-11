@@ -33,8 +33,8 @@ def cfg():
                     'BATCH_SIZE': 50,
                     'N_SHUFFLE': 50,
                     'EPOCHS': 5,  # Number of full passes through the dataset to train for
-                    'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
-                    'VAL_ITERS': 200,  # Number of training iterations between validation checks,
+                    'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
+                    'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
                     'NORMALISE_MAG': True
                     }
@@ -63,7 +63,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
             try:
                 val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
                 val_costs.append(val_cost)
-                if val_iteration % 50 == 0:
+                if val_iteration % 200 == 0:
                     print("       Validation iteration: {i}, Loss: {vc}".format(i=val_iteration, vc=val_cost))
                 val_iteration += 1
             except tf.errors.OutOfRangeError:
@@ -111,7 +111,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                        gen_voice_summary], {model.is_training: True,
                                                                                             handle: training_handle})
             writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
-            if iteration % 10 == 0:
+            if iteration % 500 == 0:
                 print("       Training iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
                 writer.add_summary(mix, iteration)
                 writer.add_summary(voice, iteration)
@@ -119,7 +119,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 writer.add_summary(gen_voice, iteration)
             # If using early stopping, enter validation loop
             if model_config['EARLY_STOPPING'] and iteration % model_config['VAL_ITERS'] == 0:
-                min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model, iteration)
+                min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model)
                 val_check += 1
 
             iteration += 1
@@ -135,7 +135,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     else:
         # Final validation check
         if iteration % model_config['VAL_ITERS'] != 1 or not model_config['EARLY_STOPPING']:
-            min_val_cost, _, best_model = validation(min_val_cost, worse_val_checks, best_model, iteration)
+            min_val_cost, _, best_model = validation(min_val_cost, worse_val_checks, best_model)
         print('Finished requested number of epochs. Training complete.')
     print('Best validation loss: {mvc}'.format(mvc=min_val_cost))
     model = best_model
@@ -182,13 +182,13 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 # TODO Pad to ensure equal length?
                 # Reshape for mir_eval
                 voice_est = np.expand_dims(voice_est, 1).T
-                voice_patch = voice[i,:,:].T
+                voice_patch = voice[i, :, :].T
                 # Calculate audio quality statistics
                 sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch, voice_est)
                 sdrs.append(sdr[0])
                 sirs.append(sir[0])
                 sars.append(sar[0])
-            if iteration % 10 == 0:
+            if iteration % 200 == 0:
                 print("       Testing iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
             iteration += 1
         except tf.errors.OutOfRangeError:
