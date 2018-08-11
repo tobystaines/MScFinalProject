@@ -1,0 +1,429 @@
+INFO - UNet_Speech_Separation - Running command 'do_experiment'
+INFO - UNet_Speech_Separation - Started run with ID "19"
+Experiment ID: 19
+Preparing dataset
+2018-08-10 21:12:30.915411: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2018-08-10 21:12:32.168891: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties: 
+name: Quadro K4200 major: 3 minor: 0 memoryClockRate(GHz): 0.784
+pciBusID: 0000:84:00.0
+totalMemory: 3.94GiB freeMemory: 3.90GiB
+2018-08-10 21:12:32.226078: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 1 with properties: 
+name: Quadro K4200 major: 3 minor: 0 memoryClockRate(GHz): 0.784
+pciBusID: 0000:88:00.0
+totalMemory: 3.94GiB freeMemory: 3.90GiB
+2018-08-10 21:12:32.226352: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1045] Device peer to peer matrix
+2018-08-10 21:12:32.226396: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1051] DMA: 0 1 
+2018-08-10 21:12:32.226407: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 0:   Y Y 
+2018-08-10 21:12:32.226412: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 1:   Y Y 
+2018-08-10 21:12:32.226425: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: Quadro K4200, pci bus id: 0000:84:00.0, compute capability: 3.0)
+2018-08-10 21:12:32.226432: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:1) -> (device: 1, name: Quadro K4200, pci bus id: 0000:88:00.0, compute capability: 3.0)
+Creating model
+Running initialisation test
+Starting testing
+2018-08-10 21:12:52.591578: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 4 of 50
+2018-08-10 21:13:02.394578: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 9 of 50
+2018-08-10 21:13:12.318579: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 13 of 50
+2018-08-10 21:13:23.789063: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 18 of 50
+2018-08-10 21:13:33.432162: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 22 of 50
+2018-08-10 21:13:42.532268: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 26 of 50
+2018-08-10 21:13:53.281400: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 31 of 50
+2018-08-10 21:14:03.814269: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 36 of 50
+2018-08-10 21:14:12.787129: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 40 of 50
+2018-08-10 21:14:23.590564: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 45 of 50
+2018-08-10 21:14:32.153418: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 49 of 50
+2018-08-10 21:14:34.162102: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+       Testing iteration: 10, Loss: 0.004591135308146477
+       Testing iteration: 20, Loss: 0.004566922318190336
+       Testing iteration: 30, Loss: 0.00448203319683671
+       Testing iteration: 40, Loss: 0.004901317413896322
+       Testing iteration: 50, Loss: 0.004204128868877888
+       Testing iteration: 60, Loss: 0.004845565650612116
+2018-08-10 21:21:58.749451: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 5 of 50
+2018-08-10 21:22:07.628265: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 9 of 50
+2018-08-10 21:22:19.286706: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 14 of 50
+2018-08-10 21:22:29.723111: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 18 of 50
+2018-08-10 21:22:38.607097: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 22 of 50
+2018-08-10 21:22:50.016068: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 27 of 50
+2018-08-10 21:22:58.625029: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 31 of 50
+2018-08-10 21:23:09.778534: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 36 of 50
+2018-08-10 21:23:19.597369: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 40 of 50
+2018-08-10 21:23:28.971998: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 44 of 50
+2018-08-10 21:23:38.138666: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 48 of 50
+2018-08-10 21:23:43.033942: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+       Testing iteration: 70, Loss: 0.005202304571866989
+       Testing iteration: 80, Loss: 0.004712855443358421
+       Testing iteration: 90, Loss: 0.004758397117257118
+       Testing iteration: 100, Loss: 0.005351470783352852
+       Testing iteration: 110, Loss: 0.004807858262211084
+       Testing iteration: 120, Loss: 0.004819184076040983
+       Testing iteration: 130, Loss: 0.00485154939815402
+2018-08-10 21:30:59.102232: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 5 of 50
+2018-08-10 21:31:09.247211: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 9 of 50
+2018-08-10 21:31:20.876671: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 14 of 50
+2018-08-10 21:31:30.271478: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 18 of 50
+2018-08-10 21:31:39.570300: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 22 of 50
+2018-08-10 21:31:48.941770: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 26 of 50
+2018-08-10 21:31:59.456273: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 30 of 50
+2018-08-10 21:32:09.906638: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 35 of 50
+2018-08-10 21:32:18.606360: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 39 of 50
+2018-08-10 21:32:29.579738: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 44 of 50
+2018-08-10 21:32:38.941222: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 48 of 50
+2018-08-10 21:32:43.770131: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+       Testing iteration: 140, Loss: 0.005241299979388714
+       Testing iteration: 150, Loss: 0.005368635058403015
+       Testing iteration: 160, Loss: 0.004537687171250582
+       Testing iteration: 170, Loss: 0.0046501606702804565
+       Testing iteration: 180, Loss: 0.005427641328424215
+       Testing iteration: 190, Loss: 0.004882680717855692
+2018-08-10 21:39:57.871252: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 5 of 50
+2018-08-10 21:40:09.066992: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 10 of 50
+2018-08-10 21:40:18.608831: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 14 of 50
+2018-08-10 21:40:27.287992: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 18 of 50
+2018-08-10 21:40:37.947498: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 23 of 50
+2018-08-10 21:40:47.271757: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 27 of 50
+2018-08-10 21:40:56.947522: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 31 of 50
+2018-08-10 21:41:08.492264: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 36 of 50
+2018-08-10 21:41:17.207117: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 40 of 50
+2018-08-10 21:41:27.504163: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 44 of 50
+2018-08-10 21:41:38.494424: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 49 of 50
+2018-08-10 21:41:40.917776: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+       Testing iteration: 200, Loss: 0.004944331012666225
+       Testing iteration: 210, Loss: 0.005120122339576483
+       Testing iteration: 220, Loss: 0.004430313594639301
+       Testing iteration: 230, Loss: 0.005418380722403526
+       Testing iteration: 240, Loss: 0.005141375120729208
+       Testing iteration: 250, Loss: 0.005008234176784754
+       Testing iteration: 260, Loss: 0.004563687834888697
+Testing complete. Mean results over test set:
+Loss: 0.004849758562452805
+SDR:  -9.691277785753424
+SIR:  inf
+SAR:  -9.691277785753424
+Starting training
+2018-08-10 21:48:58.873417: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 6 of 50
+2018-08-10 21:49:09.274817: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 12 of 50
+2018-08-10 21:49:19.929173: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 18 of 50
+2018-08-10 21:49:28.876565: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 23 of 50
+2018-08-10 21:49:38.562725: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 28 of 50
+2018-08-10 21:49:48.615670: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 33 of 50
+2018-08-10 21:49:58.982773: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 39 of 50
+2018-08-10 21:50:09.681986: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 45 of 50
+2018-08-10 21:50:18.881350: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+       Training iteration: 10, Loss: 0.004800173919647932
+       Training iteration: 20, Loss: 0.003755029523745179
+       Training iteration: 30, Loss: 0.003388072829693556
+       Training iteration: 40, Loss: 0.002954428782686591
+       Training iteration: 50, Loss: 0.0032235532999038696
+       Training iteration: 60, Loss: 0.0032140754628926516
+       Training iteration: 70, Loss: 0.0031180307269096375
+       Training iteration: 80, Loss: 0.0030276384204626083
+       Training iteration: 90, Loss: 0.0025082111824303865
+       Training iteration: 100, Loss: 0.0029302588663995266
+       Training iteration: 110, Loss: 0.0029088694136589766
+       Training iteration: 120, Loss: 0.0028035214636474848
+       Training iteration: 130, Loss: 0.003119870787486434
+       Training iteration: 140, Loss: 0.002774222753942013
+       Training iteration: 150, Loss: 0.0026584258303046227
+       Training iteration: 160, Loss: 0.002949016634374857
+       Training iteration: 170, Loss: 0.0027398893143981695
+       Training iteration: 180, Loss: 0.0024395331274718046
+       Training iteration: 190, Loss: 0.0026148080360144377
+       Training iteration: 200, Loss: 0.0028288844041526318
+       Training iteration: 210, Loss: 0.002516223816201091
+       Training iteration: 220, Loss: 0.0027068359777331352
+       Training iteration: 230, Loss: 0.002664005383849144
+       Training iteration: 240, Loss: 0.0030326119158416986
+       Training iteration: 250, Loss: 0.0027729251887649298
+       Training iteration: 260, Loss: 0.002450884087011218
+       Training iteration: 270, Loss: 0.0024280869401991367
+       Training iteration: 280, Loss: 0.0025077671743929386
+       Training iteration: 290, Loss: 0.0025216774083673954
+       Training iteration: 300, Loss: 0.002894667675718665
+       Training iteration: 310, Loss: 0.0027457764372229576
+       Training iteration: 320, Loss: 0.0024755955673754215
+       Training iteration: 330, Loss: 0.002322883578017354
+       Training iteration: 340, Loss: 0.002357329474762082
+       Training iteration: 350, Loss: 0.0030837198719382286
+       Training iteration: 360, Loss: 0.0031441778410226107
+       Training iteration: 370, Loss: 0.0028411142993718386
+       Training iteration: 380, Loss: 0.0024125403724610806
+       Training iteration: 390, Loss: 0.002506450517103076
+       Training iteration: 400, Loss: 0.002335362369194627
+       Training iteration: 410, Loss: 0.0022749430499970913
+       Training iteration: 420, Loss: 0.00236403732560575
+       Training iteration: 430, Loss: 0.002637538593262434
+       Training iteration: 440, Loss: 0.002534637227654457
+       Training iteration: 450, Loss: 0.0024560592137277126
+       Training iteration: 460, Loss: 0.002987838350236416
+       Training iteration: 470, Loss: 0.0027926918119192123
+       Training iteration: 480, Loss: 0.0025911342818289995
+       Training iteration: 490, Loss: 0.002747695427387953
+2018-08-10 22:14:57.532277: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 6 of 50
+2018-08-10 22:15:06.923999: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 11 of 50
+2018-08-10 22:15:16.470866: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 16 of 50
+2018-08-10 22:15:27.901822: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 22 of 50
+2018-08-10 22:15:36.629445: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 27 of 50
+2018-08-10 22:15:46.699626: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 32 of 50
+2018-08-10 22:15:57.146307: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 38 of 50
+2018-08-10 22:16:07.754454: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 44 of 50
+2018-08-10 22:16:16.097026: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 48 of 50
+2018-08-10 22:16:19.523096: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+       Training iteration: 500, Loss: 0.003283955855295062
+       Training iteration: 510, Loss: 0.0033005625009536743
+       Training iteration: 520, Loss: 0.002960451878607273
+       Training iteration: 530, Loss: 0.0035816975869238377
+       Training iteration: 540, Loss: 0.003134501865133643
+       Training iteration: 550, Loss: 0.003108144737780094
+       Training iteration: 560, Loss: 0.0031076320447027683
+       Training iteration: 570, Loss: 0.003305661492049694
+       Training iteration: 580, Loss: 0.0029415034223347902
+       Training iteration: 590, Loss: 0.003052474232390523
+       Training iteration: 600, Loss: 0.003072005230933428
+       Training iteration: 610, Loss: 0.0032103999983519316
+       Training iteration: 620, Loss: 0.0030489081982523203
+       Training iteration: 630, Loss: 0.0031094735022634268
+       Training iteration: 640, Loss: 0.0029094601050019264
+       Training iteration: 650, Loss: 0.003090318525210023
+       Training iteration: 660, Loss: 0.0031949153635650873
+       Training iteration: 670, Loss: 0.0028641566168516874
+       Training iteration: 680, Loss: 0.002944851526990533
+       Training iteration: 690, Loss: 0.0033509654458612204
+       Training iteration: 700, Loss: 0.0031359412241727114
+       Training iteration: 710, Loss: 0.0030776718631386757
+       Training iteration: 720, Loss: 0.0029196315445005894
+       Training iteration: 730, Loss: 0.0031039800960570574
+       Training iteration: 740, Loss: 0.002883040113374591
+       Training iteration: 750, Loss: 0.003201183630153537
+       Training iteration: 760, Loss: 0.0026684782933443785
+       Training iteration: 770, Loss: 0.003032613778486848
+       Training iteration: 780, Loss: 0.0032714009284973145
+       Training iteration: 790, Loss: 0.0030082715675234795
+       Training iteration: 800, Loss: 0.0031976199243217707
+       Training iteration: 810, Loss: 0.0025328160263597965
+       Training iteration: 820, Loss: 0.003244257066398859
+       Training iteration: 830, Loss: 0.003119956934824586
+       Training iteration: 840, Loss: 0.003076100954785943
+       Training iteration: 850, Loss: 0.0027574505656957626
+       Training iteration: 860, Loss: 0.0034552537836134434
+       Training iteration: 870, Loss: 0.002621162449941039
+       Training iteration: 880, Loss: 0.0029341282788664103
+       Training iteration: 890, Loss: 0.0028087429236620665
+       Training iteration: 900, Loss: 0.00277349422685802
+       Training iteration: 910, Loss: 0.002925651613622904
+       Training iteration: 920, Loss: 0.002987511456012726
+       Training iteration: 930, Loss: 0.0024431205820292234
+       Training iteration: 940, Loss: 0.002893648110330105
+       Training iteration: 950, Loss: 0.0025521651841700077
+       Training iteration: 960, Loss: 0.003084164811298251
+       Training iteration: 970, Loss: 0.002714364556595683
+       Training iteration: 980, Loss: 0.002876866376027465
+2018-08-10 22:41:18.593899: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 5 of 50
+2018-08-10 22:41:29.702201: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 11 of 50
+2018-08-10 22:41:38.788355: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 16 of 50
+2018-08-10 22:41:49.197451: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 21 of 50
+2018-08-10 22:41:58.439313: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 26 of 50
+2018-08-10 22:42:09.110435: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 32 of 50
+2018-08-10 22:42:18.727654: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 37 of 50
+2018-08-10 22:42:28.839488: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 43 of 50
+2018-08-10 22:42:38.160123: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 48 of 50
+2018-08-10 22:42:42.062943: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+       Training iteration: 990, Loss: 0.00309827271848917
+       Training iteration: 1000, Loss: 0.0031326664611697197
+       Training iteration: 1010, Loss: 0.0027348273433744907
+       Training iteration: 1020, Loss: 0.0028292539063841105
+       Training iteration: 1030, Loss: 0.0027728977147489786
+       Training iteration: 1040, Loss: 0.00278451363556087
+       Training iteration: 1050, Loss: 0.0027774341870099306
+       Training iteration: 1060, Loss: 0.0029017170891165733
+       Training iteration: 1070, Loss: 0.003164938883855939
+       Training iteration: 1080, Loss: 0.0027520025614649057
+       Training iteration: 1090, Loss: 0.0030510614160448313
+       Training iteration: 1100, Loss: 0.0028051051776856184
+       Training iteration: 1110, Loss: 0.0027529611252248287
+       Training iteration: 1120, Loss: 0.002598467282950878
+       Training iteration: 1130, Loss: 0.0031140497885644436
+       Training iteration: 1140, Loss: 0.003128328826278448
+       Training iteration: 1150, Loss: 0.0037513496354222298
+       Training iteration: 1160, Loss: 0.0028137757908552885
+       Training iteration: 1170, Loss: 0.003756557125598192
+       Training iteration: 1180, Loss: 0.0030966626945883036
+       Training iteration: 1190, Loss: 0.003407868789508939
+       Training iteration: 1200, Loss: 0.0032084437552839518
+       Training iteration: 1210, Loss: 0.0030702275689691305
+       Training iteration: 1220, Loss: 0.0032059652730822563
+       Training iteration: 1230, Loss: 0.003279484575614333
+       Training iteration: 1240, Loss: 0.0029391504358500242
+       Training iteration: 1250, Loss: 0.003284032456576824
+       Training iteration: 1260, Loss: 0.0034309581387788057
+       Training iteration: 1270, Loss: 0.0031789415515959263
+       Training iteration: 1280, Loss: 0.0031741780694574118
+       Training iteration: 1290, Loss: 0.0028503353241831064
+       Training iteration: 1300, Loss: 0.0032340604811906815
+       Training iteration: 1310, Loss: 0.002713310532271862
+       Training iteration: 1320, Loss: 0.0030103062745183706
+       Training iteration: 1330, Loss: 0.0031629835721105337
+       Training iteration: 1340, Loss: 0.002945033833384514
+       Training iteration: 1350, Loss: 0.0031649961601942778
+       Training iteration: 1360, Loss: 0.0033901811111718416
+       Training iteration: 1370, Loss: 0.003144393675029278
+       Training iteration: 1380, Loss: 0.002871273783966899
+       Training iteration: 1390, Loss: 0.0029931061435490847
+       Training iteration: 1400, Loss: 0.0030080049764364958
+       Training iteration: 1410, Loss: 0.0028031126130372286
+       Training iteration: 1420, Loss: 0.00313119450584054
+       Training iteration: 1430, Loss: 0.002937183016911149
+       Training iteration: 1440, Loss: 0.0032500000670552254
+       Training iteration: 1450, Loss: 0.002527926815673709
+       Training iteration: 1460, Loss: 0.0027341130189597607
+       Training iteration: 1470, Loss: 0.0029909731820225716
+       Training iteration: 1480, Loss: 0.002990611596032977
+2018-08-10 23:07:38.015493: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 6 of 50
+2018-08-10 23:07:46.565116: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 11 of 50
+2018-08-10 23:07:58.167872: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 17 of 50
+2018-08-10 23:08:07.493808: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 22 of 50
+2018-08-10 23:08:16.333481: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 26 of 50
+2018-08-10 23:08:26.763000: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 31 of 50
+2018-08-10 23:08:38.316838: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 37 of 50
+2018-08-10 23:08:46.964684: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 42 of 50
+2018-08-10 23:08:57.403422: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 47 of 50
+2018-08-10 23:09:02.944420: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+       Training iteration: 1490, Loss: 0.0030005043372511864
+       Training iteration: 1500, Loss: 0.0022930866107344627
+       Training iteration: 1510, Loss: 0.002467409474775195
+       Training iteration: 1520, Loss: 0.0028037820011377335
+       Training iteration: 1530, Loss: 0.0025495016016066074
+       Training iteration: 1540, Loss: 0.002739738905802369
+       Training iteration: 1550, Loss: 0.002574894344434142
+       Training iteration: 1560, Loss: 0.0023764746729284525
+       Training iteration: 1570, Loss: 0.0021144214551895857
+       Training iteration: 1580, Loss: 0.0027490442153066397
+       Training iteration: 1590, Loss: 0.002825942123308778
+       Training iteration: 1600, Loss: 0.0025722039863467216
+       Training iteration: 1610, Loss: 0.0026608207263052464
+       Training iteration: 1620, Loss: 0.002607085043564439
+       Training iteration: 1630, Loss: 0.0025278455577790737
+       Training iteration: 1640, Loss: 0.002909148344770074
+       Training iteration: 1650, Loss: 0.002756264293566346
+       Training iteration: 1660, Loss: 0.0027675649616867304
+       Training iteration: 1670, Loss: 0.0027910831850022078
+       Training iteration: 1680, Loss: 0.002152882982045412
+       Training iteration: 1690, Loss: 0.002848323667421937
+       Training iteration: 1700, Loss: 0.0025096379686146975
+       Training iteration: 1710, Loss: 0.0026373588480055332
+       Training iteration: 1720, Loss: 0.00250948965549469
+       Training iteration: 1730, Loss: 0.002713531954213977
+       Training iteration: 1740, Loss: 0.0025284895673394203
+       Training iteration: 1750, Loss: 0.002446507103741169
+       Training iteration: 1760, Loss: 0.002405732637271285
+       Training iteration: 1770, Loss: 0.002323050517588854
+       Training iteration: 1780, Loss: 0.0025547232944518328
+       Training iteration: 1790, Loss: 0.0027201378252357244
+       Training iteration: 1800, Loss: 0.0026293653063476086
+       Training iteration: 1810, Loss: 0.0033232939895242453
+       Training iteration: 1820, Loss: 0.002618108643218875
+       Training iteration: 1830, Loss: 0.002301500178873539
+       Training iteration: 1840, Loss: 0.0029180028941482306
+       Training iteration: 1850, Loss: 0.0026749763637781143
+       Training iteration: 1860, Loss: 0.002115457784384489
+       Training iteration: 1870, Loss: 0.002463196637108922
+       Training iteration: 1880, Loss: 0.0023424760438501835
+       Training iteration: 1890, Loss: 0.002213197760283947
+       Training iteration: 1900, Loss: 0.0026083202101290226
+       Training iteration: 1910, Loss: 0.0024478693958371878
+       Training iteration: 1920, Loss: 0.0023079265374690294
+       Training iteration: 1930, Loss: 0.0024321535602211952
+       Training iteration: 1940, Loss: 0.00222435942851007
+       Training iteration: 1950, Loss: 0.0021448133047670126
+       Training iteration: 1960, Loss: 0.0025246005970984697
+       Training iteration: 1970, Loss: 0.0024461981374770403
+       Training iteration: 1980, Loss: 0.002404509112238884
+       Training iteration: 1990, Loss: 0.002757167909294367
+       Training iteration: 2000, Loss: 0.002546929521486163
+Epoch 1 finished.
+2018-08-10 23:35:10.046431: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 6 of 50
+2018-08-10 23:35:19.386277: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 11 of 50
+2018-08-10 23:35:29.584958: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 17 of 50
+2018-08-10 23:35:40.525231: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 23 of 50
+2018-08-10 23:35:48.902373: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 27 of 50
+2018-08-10 23:35:59.787775: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 33 of 50
+2018-08-10 23:36:08.997390: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 38 of 50
+2018-08-10 23:36:19.029292: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 43 of 50
+2018-08-10 23:36:29.872771: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 49 of 50
+2018-08-10 23:36:31.899142: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+       Training iteration: 2010, Loss: 0.0028395589906722307
+       Training iteration: 2020, Loss: 0.0026273485273122787
+       Training iteration: 2030, Loss: 0.002606790978461504
+       Training iteration: 2040, Loss: 0.0026662058662623167
+       Training iteration: 2050, Loss: 0.0022689751349389553
+       Training iteration: 2060, Loss: 0.0026794455479830503
+       Training iteration: 2070, Loss: 0.0025612390600144863
+       Training iteration: 2080, Loss: 0.002903889399021864
+       Training iteration: 2090, Loss: 0.0021591009572148323
+       Training iteration: 2100, Loss: 0.002633202588185668
+       Training iteration: 2110, Loss: 0.0022365355398505926
+       Training iteration: 2120, Loss: 0.002963209990411997
+       Training iteration: 2130, Loss: 0.0022203989792615175
+       Training iteration: 2140, Loss: 0.002188469050452113
+       Training iteration: 2150, Loss: 0.0025865265633910894
+       Training iteration: 2160, Loss: 0.0020881546661257744
+       Training iteration: 2170, Loss: 0.002456755144521594
+       Training iteration: 2180, Loss: 0.0025455825962126255
+       Training iteration: 2190, Loss: 0.0020937167573720217
+       Training iteration: 2200, Loss: 0.002429042477160692
+       Training iteration: 2210, Loss: 0.00255829025991261
+       Training iteration: 2220, Loss: 0.0026709758676588535
+       Training iteration: 2230, Loss: 0.0022208914160728455
+       Training iteration: 2240, Loss: 0.003009902313351631
+       Training iteration: 2250, Loss: 0.0022511996794492006
+       Training iteration: 2260, Loss: 0.002414092654362321
+       Training iteration: 2270, Loss: 0.0022315061651170254
+       Training iteration: 2280, Loss: 0.0020861888770014048
+       Training iteration: 2290, Loss: 0.0026274072006344795
+       Training iteration: 2300, Loss: 0.0019767009653151035
+       Training iteration: 2310, Loss: 0.002204786753281951
+       Training iteration: 2320, Loss: 0.0023191615473479033
+       Training iteration: 2330, Loss: 0.0024783718399703503
+       Training iteration: 2340, Loss: 0.0018166331574320793
+       Training iteration: 2350, Loss: 0.0025414694100618362
+       Training iteration: 2360, Loss: 0.0023105167783796787
+       Training iteration: 2370, Loss: 0.002429553074762225
+       Training iteration: 2380, Loss: 0.002199216978624463
+       Training iteration: 2390, Loss: 0.0026350487023591995
+       Training iteration: 2400, Loss: 0.0021211530547589064
+       Training iteration: 2410, Loss: 0.0021159471943974495
+       Training iteration: 2420, Loss: 0.0027260330971330404
+       Training iteration: 2430, Loss: 0.0029629231430590153
+       Training iteration: 2440, Loss: 0.0025512664578855038
+       Training iteration: 2450, Loss: 0.002604500623419881
+       Training iteration: 2460, Loss: 0.0023978417739272118
+       Training iteration: 2470, Loss: 0.0021026162430644035
+       Training iteration: 2480, Loss: 0.0023057134822010994
+       Training iteration: 2490, Loss: 0.002457317430526018
+2018-08-11 00:01:08.639465: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 5 of 50
+2018-08-11 00:01:20.331885: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 11 of 50
+2018-08-11 00:01:29.608975: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 16 of 50
+2018-08-11 00:01:39.238864: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 21 of 50
+2018-08-11 00:01:50.148277: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 27 of 50
+2018-08-11 00:01:59.623471: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 32 of 50
+2018-08-11 00:02:08.647106: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 37 of 50
+2018-08-11 00:02:19.260280: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 43 of 50
+2018-08-11 00:02:28.959271: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 48 of 50
+2018-08-11 00:02:32.458265: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+       Training iteration: 2500, Loss: 0.0029878646600991488
+       Training iteration: 2510, Loss: 0.0031197986099869013
+       Training iteration: 2520, Loss: 0.0030283229425549507
+       Training iteration: 2530, Loss: 0.0028392872773110867
+       Training iteration: 2540, Loss: 0.003373171901330352
+       Training iteration: 2550, Loss: 0.0030202039051800966
+       Training iteration: 2560, Loss: 0.003125631483271718
+       Training iteration: 2570, Loss: 0.0028334513772279024
+       Training iteration: 2580, Loss: 0.003061328548938036
+       Training iteration: 2590, Loss: 0.002897693542763591
+       Training iteration: 2600, Loss: 0.002730501815676689
+       Training iteration: 2610, Loss: 0.003121250541880727
+       Training iteration: 2620, Loss: 0.002849770477041602
+       Training iteration: 2630, Loss: 0.002771994797512889
+       Training iteration: 2640, Loss: 0.003057965310290456
+       Training iteration: 2650, Loss: 0.00255666789598763
+       Training iteration: 2660, Loss: 0.003128406126052141
+       Training iteration: 2670, Loss: 0.0026321548502892256
