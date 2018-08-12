@@ -147,7 +147,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                     if e.errno != errno.EEXIST:
                         raise
                 print('Checkpoint')
-                saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(eopch))
+                saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(epoch))
             sess.run(training_iterator.initializer)
 
     if model_config['EARLY_STOPPING'] and worse_val_checks >= model_config['NUM_WORSE_VAL_CHECKS']:
