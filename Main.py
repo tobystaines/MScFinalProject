@@ -21,9 +21,9 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 @ex.config
 def cfg():
     model_config = {"saving": True,  # Whether to take checkpoints
-                    "loading": False,  # Whether to load an existing checkpoint
+                    "loading": True,  # Whether to load an existing checkpoint
                     "local_run": False,  # Whether experiment is running on laptop or server
-                    "checkpoint_to_load": "196363/196363-1801",
+                    "checkpoint_to_load": "21/21-2001",
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
@@ -125,16 +125,6 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         # When the dataset is exhausted, note the end of the epoch
         except tf.errors.OutOfRangeError:
             print('Epoch {e} finished after {i} iterations.'.format(e=epoch, i=iteration))
-            if model_config['saving']:
-                # Make sure there is a folder to save the checkpoint in
-                checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
-                try:
-                    os.makedirs(checkpoint_path)
-                except OSError as e:
-                    if e.errno != errno.EEXIST:
-                        raise
-                print('Checkpoint')
-                saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(iteration))
             try:
                 writer.add_summary(mix, iteration)
                 writer.add_summary(voice, iteration)
@@ -147,6 +137,16 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model)
                 val_check += 1
             epoch += 1
+            if model_config['saving']:
+                # Make sure there is a folder to save the checkpoint in
+                checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
+                try:
+                    os.makedirs(checkpoint_path)
+                except OSError as e:
+                    if e.errno != errno.EEXIST:
+                        raise
+                print('Checkpoint')
+                saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(eopch))
             sess.run(training_iterator.initializer)
 
     if model_config['EARLY_STOPPING'] and worse_val_checks >= model_config['NUM_WORSE_VAL_CHECKS']:
