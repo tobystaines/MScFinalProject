@@ -130,13 +130,14 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 writer.add_summary(voice, iteration)
                 writer.add_summary(mask, iteration)
                 writer.add_summary(gen_voice, iteration)
-            except NameError:
+            except NameError:  # Indicates the try has not been successfully executed at all
                 print('No images to record')
+                break
+            epoch += 1
             # If using early stopping by epochs, enter validation loop
-            if model_config['EARLY_STOPPING'] and model_config['VAL_BY_EPOCHS'] and epoch > 0:
+            if model_config['EARLY_STOPPING'] and model_config['VAL_BY_EPOCHS'] and iteration > 1:
                 min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model)
                 val_check += 1
-            epoch += 1
             if model_config['saving']:
                 # Make sure there is a folder to save the checkpoint in
                 checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
