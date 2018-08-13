@@ -7,6 +7,7 @@ import mir_eval
 import sys
 import os
 import errno
+import datetime
 
 import Audio_functions as af
 import UNet
@@ -65,7 +66,8 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
                 val_costs.append(val_cost)
                 if val_iteration % 200 == 0:
-                    print("       Validation iteration: {i}, Loss: {vc}".format(i=val_iteration, vc=val_cost))
+                    print("{ts}       Validation iteration: {i}, Loss: {vc}".format(ts=datetime.datetime.now(),
+                                                                                    i=val_iteration, vc=val_cost))
                 val_iteration += 1
             except tf.errors.OutOfRangeError:
                 # Calculate and record mean loss over validation dataset
@@ -113,7 +115,8 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                                             handle: training_handle})
             writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
             if iteration % 200 == 0:
-                print("       Training iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
+                print("{ts}       Training iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
+                                                                             i=iteration, c=cost))
 
             # If using early stopping by iterations, enter validation loop
             if model_config['EARLY_STOPPING'] and not model_config['VAL_BY_EPOCHS'] and iteration % model_config['VAL_ITERS'] == 0:
@@ -124,7 +127,8 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 
         # When the dataset is exhausted, note the end of the epoch
         except tf.errors.OutOfRangeError:
-            print('Epoch {e} finished after {i} iterations.'.format(e=epoch, i=iteration))
+            print('{ts}       Epoch {e} finished after {i} iterations.'.format(ts=datetime.datetime.now(),
+                                                                               e=epoch, i=iteration))
             try:
                 writer.add_summary(mix, iteration)
                 writer.add_summary(voice, iteration)
@@ -197,7 +201,8 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 sirs.append(sir[0])
                 sars.append(sar[0])
             if iteration % 200 == 0:
-                print("       Testing iteration: {i}, Loss: {c}".format(i=iteration, c=cost))
+                print("{ts}       Testing iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
+                                                                            i=iteration, c=cost))
             iteration += 1
         except tf.errors.OutOfRangeError:
             # At the end of the dataset, calculate, record and print mean results
@@ -280,8 +285,8 @@ def do_experiment(model_config):
 
     # Test trained model
     mean_test_loss = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count)
-    print('All done!\nInitial test loss: {init}\nFinal test loss: {final}'
-          .format(init=initial_test_loss, final=mean_test_loss))
+    print('{ts}\n   All done!\n   Initial test loss: {init}\n   Final test loss: {final}'
+          .format(ts=datetime.datetime.now(), init=initial_test_loss, final=mean_test_loss))
 
 
 
