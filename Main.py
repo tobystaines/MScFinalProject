@@ -21,10 +21,11 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {"saving": True,  # Whether to take checkpoints
-                    "loading": True,  # Whether to load an existing checkpoint
-                    "local_run": False,  # Whether experiment is running on laptop or server
-                    "checkpoint_to_load": "21/21-2001",
+    model_config = {'saving': True,  # Whether to take checkpoints
+                    'loading': True,  # Whether to load an existing checkpoint
+                    'local_run': False,  # Whether experiment is running on laptop or server
+                    'checkpoint_to_load': "22/22-3",  # Checkpoint format: run/run-epoch
+                    'INITIALISATION_TEST': False,  # Whether or not to calculate test metrics before training
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
@@ -173,6 +174,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
     # Calculate L1 loss
     print('Starting testing')
     sess.run(testing_iterator.initializer)
+    test_count += 1
     iteration = 1
     test_costs = list()
     sdrs = list()
@@ -221,7 +223,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                   'SAR:  {sar}'.format(mc=mean_cost, sdr=mean_sdr, sir=mean_sir, sar=mean_sar))
             break
 
-    return mean_cost
+    return mean_cost, test_count
 
 
 @ex.automain
@@ -274,17 +276,19 @@ def do_experiment(model_config):
 
     # Get baseline metrics at initialisation
     sess.run(tf.global_variables_initializer())
-    print('Running initialisation test')
-    test_count = 1
-    initial_test_loss = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count)
-    test_count += 1
+    test_count = 0
+    if model_config['INITIALISATION_TEST']:
+        print('Running initialisation test')
+        initial_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle,
+                                             writer, test_count)
 
     # Train the model
     model = train(sess, model, model_config, model_folder, handle, training_iterator, training_handle,
                   validation_iterator, validation_handle, writer)
 
     # Test trained model
-    mean_test_loss = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count)
+    mean_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer,
+                                      test_count)
     print('{ts}\n   All done!\n   Initial test loss: {init}\n   Final test loss: {final}'
           .format(ts=datetime.datetime.now(), init=initial_test_loss, final=mean_test_loss))
 
