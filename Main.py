@@ -39,7 +39,7 @@ def cfg():
                     'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
                     'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
-                    'NORMALISE_MAG': False
+                    'NORMALISE_MAG': True
                     }
 
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop
@@ -57,7 +57,7 @@ def cfg():
 def train(sess, model, model_config, model_folder, handle, training_iterator, training_handle, validation_iterator,
           validation_handle, writer):
 
-    def validation(min_val_cost, worse_val_checks, best_model, val_check):
+    def validation(last_val_cost, min_val_cost, min_val_check, worse_val_checks, model, val_check):
         print('Validating')
         sess.run(validation_iterator.initializer)
         val_costs = list()
@@ -78,23 +78,28 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                     value=[tf.Summary.Value(tag='Validation_mean_loss', simple_value=val_check_mean_cost)])
                 writer.add_summary(summary, val_check)
                 # If validation loss has worsened increment the counter, else, reset the counter
-                if val_check_mean_cost > min_val_cost:
+                if val_check_mean_cost > last_val_cost:
                     worse_val_checks += 1
                     print('Validation loss has worsened. worse_val_checks = {w}'.format(w=worse_val_checks))
                 else:
-                    min_val_cost = val_check_mean_cost
-                    best_model = model
                     worse_val_checks = 0
                     print('Validation loss has improved!')
+                if val_check_mean_cost < min_val_cost:
+                    min_val_cost = val_check_mean_cost
+                    print('New best validation cost!')
+                    min_val_check = val_check
+                last_val_cost = val_check_mean_cost
 
                 break
-        return min_val_cost, worse_val_checks, best_model
+        return last_val_cost, min_val_cost, min_val_check, worse_val_checks
 
     print('Starting training')
     # Initialise variables and define summary
     epoch = 1
     iteration = 1
+    last_val_cost = 1
     min_val_cost = 1
+    min_val_check = None
     val_check = 1
     worse_val_checks = 0
     best_model = model
@@ -121,7 +126,12 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 
             # If using early stopping by iterations, enter validation loop
             if model_config['EARLY_STOPPING'] and not model_config['VAL_BY_EPOCHS'] and iteration % model_config['VAL_ITERS'] == 0:
-                min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model, val_check)
+                last_val_cost, min_val_cost, min_val_check, worse_val_checks = validation(last_val_cost,
+                                                                                          min_val_cost,
+                                                                                          min_val_check,
+                                                                                          worse_val_checks,
+                                                                                          model,
+                                                                                          val_check)
                 val_check += 1
 
             iteration += 1
@@ -141,7 +151,12 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
             epoch += 1
             # If using early stopping by epochs, enter validation loop
             if model_config['EARLY_STOPPING'] and model_config['VAL_BY_EPOCHS'] and iteration > 1:
-                min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model, val_check)
+                last_val_cost, min_val_cost, min_val_check, worse_val_checks = validation(last_val_cost,
+                                                                                          min_val_cost,
+                                                                                          min_val_check,
+                                                                                          worse_val_checks,
+                                                                                          model,
+                                                                                          val_check)
                 val_check += 1
             if model_config['saving']:
                 # Make sure there is a folder to save the checkpoint in
@@ -160,9 +175,15 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     else:
         # Final validation check
         if iteration % model_config['VAL_ITERS'] != 1 or not model_config['EARLY_STOPPING']:
-            min_val_cost, _, best_model = validation(min_val_cost, worse_val_checks, best_model)
+            last_val_cost, min_val_cost, min_val_check, _ = validation(last_val_cost, min_val_cost, min_val_check,
+                                                                       worse_val_checks, model, val_check)
         print('Finished requested number of epochs. Training complete.')
-    print('Best validation loss: {mvc}'.format(mvc=min_val_cost))
+    print('Final validation loss: {lvc}'.format(lvc=last_val_cost))
+    if last_val_cost == min_val_cost:
+        print('This was the best validation loss achieved')
+    else:
+        print('Best validation loss ({mvc}) achieved at validation check {mvck}'.format(mvc=min_val_cost,
+                                                                                        mvck=min_val_check))
     model = best_model
 
     return model
