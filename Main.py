@@ -39,7 +39,7 @@ def cfg():
                     'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
                     'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
-                    'NORMALISE_MAG': True
+                    'NORMALISE_MAG': False
                     }
 
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop
@@ -57,7 +57,7 @@ def cfg():
 def train(sess, model, model_config, model_folder, handle, training_iterator, training_handle, validation_iterator,
           validation_handle, writer):
 
-    def validation(min_val_cost, worse_val_checks, best_model):
+    def validation(min_val_cost, worse_val_checks, best_model, val_check):
         print('Validating')
         sess.run(validation_iterator.initializer)
         val_costs = list()
@@ -121,7 +121,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 
             # If using early stopping by iterations, enter validation loop
             if model_config['EARLY_STOPPING'] and not model_config['VAL_BY_EPOCHS'] and iteration % model_config['VAL_ITERS'] == 0:
-                min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model)
+                min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model, val_check)
                 val_check += 1
 
             iteration += 1
@@ -141,7 +141,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
             epoch += 1
             # If using early stopping by epochs, enter validation loop
             if model_config['EARLY_STOPPING'] and model_config['VAL_BY_EPOCHS'] and iteration > 1:
-                min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model)
+                min_val_cost, worse_val_checks, best_model = validation(min_val_cost, worse_val_checks, best_model, val_check)
                 val_check += 1
             if model_config['saving']:
                 # Make sure there is a folder to save the checkpoint in
