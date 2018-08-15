@@ -29,7 +29,7 @@ def cfg():
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
-                    'N_PARALLEL_READERS': 4,
+                    'N_PARALLEL_READERS': 8,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 50,
@@ -67,8 +67,8 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
                 val_costs.append(val_cost)
                 if val_iteration % 200 == 0:
-                    print("{ts}       Validation iteration: {i}, Loss: {vc}".format(ts=datetime.datetime.now(),
-                                                                                    i=val_iteration, vc=val_cost))
+                    print("{ts}:\tValidation iteration: {i}, Loss: {vc}".format(ts=datetime.datetime.now(),
+                                                                                i=val_iteration, vc=val_cost))
                 val_iteration += 1
             except tf.errors.OutOfRangeError:
                 # Calculate and record mean loss over validation dataset
@@ -121,8 +121,8 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                                             handle: training_handle})
             writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
             if iteration % 200 == 0:
-                print("{ts}       Training iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
-                                                                             i=iteration, c=cost))
+                print("{ts}:\tTraining iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
+                                                                         i=iteration, c=cost))
 
             # If using early stopping by iterations, enter validation loop
             if model_config['EARLY_STOPPING'] and not model_config['VAL_BY_EPOCHS'] and iteration % model_config['VAL_ITERS'] == 0:
@@ -138,7 +138,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 
         # When the dataset is exhausted, note the end of the epoch
         except tf.errors.OutOfRangeError:
-            print('{ts}       Epoch {e} finished after {i} iterations.'.format(ts=datetime.datetime.now(),
+            print('{ts}:\tEpoch {e} finished after {i} iterations.'.format(ts=datetime.datetime.now(),
                                                                                e=epoch, i=iteration))
             try:
                 writer.add_summary(mix, iteration)
@@ -211,10 +211,6 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 # Transform output back to audio
                 voice_est = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T, model_config['N_FFT'],
                                                       model_config['FFT_HOP'], phase=np.squeeze(mixed_phase[i, :, :, :]).T)
-                # Should we use voice or the original audio? (Might be hard to split into matching patches)
-                #voice = af.spectrogramToAudioFile(np.squeeze(voice_mag[i, :, :, :]).T, model_config['N_FFT'],
-                #                                  model_config['FFT_HOP'], phase=np.squeeze(mixed_phase[i, :, :, :]).T)
-                # TODO Pad to ensure equal length?
                 # Reshape for mir_eval
                 voice_est = np.expand_dims(voice_est, 1).T
                 voice_patch = voice[i, :, :].T
@@ -224,8 +220,8 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 sirs.append(sir[0])
                 sars.append(sar[0])
             if iteration % 200 == 0:
-                print("{ts}       Testing iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
-                                                                            i=iteration, c=cost))
+                print("{ts}:\tTesting iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
+                                                                        i=iteration, c=cost))
             iteration += 1
         except tf.errors.OutOfRangeError:
             # At the end of the dataset, calculate, record and print mean results
@@ -259,7 +255,9 @@ def do_experiment(model_config):
     train_data, val_data, test_data = Dataset.prepare_datasets(model_config)
 
     # Start session
-    sess = tf.Session()
+    tf_config = tf.ConfigProto()
+    tf_config.gpu_options.allow_growth = True
+    sess = tf.Session(config=tf_config)
 
     # Create iterators
     handle = tf.placeholder(tf.string, shape=[])
@@ -310,8 +308,10 @@ def do_experiment(model_config):
     # Test trained model
     mean_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer,
                                       test_count)
-    print('{ts}\n   All done!\n   Initial test loss: {init}\n   Final test loss: {final}'
-          .format(ts=datetime.datetime.now(), init=initial_test_loss, final=mean_test_loss))
+    print('{ts}:\n\tAll done!'.format(ts=datetime.datetime.now()))
+    if model_config['INITIALISATION_TEST']:
+        print('\tInitial test loss: {init}'.format(init=initial_test_loss))
+    print('\tFinal test loss: {final}'.format(final=mean_test_loss))
 
 
 
