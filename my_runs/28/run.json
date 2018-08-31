@@ -1,0 +1,111 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "mir-eval==0.4",
+      "numpy==1.13.3",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.4.1"
+    ],
+    "mainfile": "Main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "Audio_functions.py",
+        "_sources/Audio_functions_c0d0c647f0d62f5bcd8a8ee042a4ccd1.py"
+      ],
+      [
+        "Dataset.py",
+        "_sources/Dataset_6af55b01157999f5235f4d8089fe5ee9.py"
+      ],
+      [
+        "Main.py",
+        "_sources/Main_a42b6d563a6a4065cbcb785cf167ba8c.py"
+      ],
+      [
+        "UNet.py",
+        "_sources/UNet_c842fd9701c2ecc3cab7cf427c86a118.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1323, in _do_call\n    return fn(*args)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1302, in _run_fn\n    status, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/errors_impl.py\", line 473, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.ResourceExhaustedError: OOM when allocating tensor of shape [5,5,256,512] and type float\n\t [[Node: U_Net_Model/U_Net_Model/voice-mask-unet/decoder/layer-1/conv2d_transpose/kernel/Adam/Initializer/zeros = Const[_class=[\"loc:@U_Net_Model/voice-mask-unet/decoder/layer-1/conv2d_transpose/kernel\"], dtype=DT_FLOAT, value=Tensor<type: float shape: [5,5,256,512] values: [[[0 0 0]]]...>, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"]()]]\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"Main.py\", line 297, in do_experiment\n    sess.run(tf.global_variables_initializer())\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 889, in run\n    run_metadata_ptr)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1120, in _run\n    feed_dict_tensor, options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1317, in _do_run\n    options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1336, in _do_call\n    raise type(e)(node_def, op, message)\n",
+    "tensorflow.python.framework.errors_impl.ResourceExhaustedError: OOM when allocating tensor of shape [5,5,256,512] and type float\n\t [[Node: U_Net_Model/U_Net_Model/voice-mask-unet/decoder/layer-1/conv2d_transpose/kernel/Adam/Initializer/zeros = Const[_class=[\"loc:@U_Net_Model/voice-mask-unet/decoder/layer-1/conv2d_transpose/kernel\"], dtype=DT_FLOAT, value=Tensor<type: float shape: [5,5,256,512] values: [[[0 0 0]]]...>, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"]()]]\n\nCaused by op 'U_Net_Model/U_Net_Model/voice-mask-unet/decoder/layer-1/conv2d_transpose/kernel/Adam/Initializer/zeros', defined at:\n  File \"Main.py\", line 246, in <module>\n    @ex.automain\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 137, in automain\n    self.run_commandline()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 260, in run_commandline\n    return self.run(cmd_name, config_updates, named_configs, {}, args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 209, in run\n    run()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/run.py\", line 221, in __call__\n    self.result = self.main_function(*args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n  File \"Main.py\", line 283, in do_experiment\n    model = UNet.UNetModel(mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio, 'unet', is_training, name='U_Net_Model')\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/UNet.py\", line 40, in __init__\n    self.train_op = self.optimizer.minimize(self.cost)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/optimizer.py\", line 353, in minimize\n    name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/optimizer.py\", line 474, in apply_gradients\n    self._create_slots([_get_variable_for(v) for v in var_list])\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/adam.py\", line 136, in _create_slots\n    self._zeros_slot(v, \"m\", self._name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/optimizer.py\", line 796, in _zeros_slot\n    named_slots[_var_key(var)] = slot_creator.create_zeros_slot(var, op_name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/slot_creator.py\", line 174, in create_zeros_slot\n    colocate_with_primary=colocate_with_primary)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/slot_creator.py\", line 148, in create_slot_with_initializer\n    dtype)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/slot_creator.py\", line 67, in _create_slot_var\n    validate_shape=validate_shape)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/variable_scope.py\", line 1203, in get_variable\n    constraint=constraint)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/variable_scope.py\", line 1092, in get_variable\n    constraint=constraint)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/variable_scope.py\", line 425, in get_variable\n    constraint=constraint)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/variable_scope.py\", line 394, in _true_getter\n    use_resource=use_resource, constraint=constraint)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/variable_scope.py\", line 805, in _get_single_variable\n    constraint=constraint)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/variables.py\", line 213, in __init__\n    constraint=constraint)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/variables.py\", line 303, in _init_from_args\n    initial_value(), name=\"initial_value\", dtype=dtype)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/variable_scope.py\", line 779, in <lambda>\n    shape.as_list(), dtype=dtype, partition_info=partition_info)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/init_ops.py\", line 93, in __call__\n    return array_ops.zeros(shape, dtype)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/array_ops.py\", line 1439, in zeros\n    output = constant(zero, shape=shape, dtype=dtype, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/constant_op.py\", line 214, in constant\n    name=name).outputs[0]\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 2956, in create_op\n    op_def=op_def)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 1470, in __init__\n    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access\n\nResourceExhaustedError (see above for traceback): OOM when allocating tensor of shape [5,5,256,512] and type float\n\t [[Node: U_Net_Model/U_Net_Model/voice-mask-unet/decoder/layer-1/conv2d_transpose/kernel/Adam/Initializer/zeros = Const[_class=[\"loc:@U_Net_Model/voice-mask-unet/decoder/layer-1/conv2d_transpose/kernel\"], dtype=DT_FLOAT, value=Tensor<type: float shape: [5,5,256,512] values: [[[0 0 0]]]...>, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"]()]]\n\n"
+  ],
+  "heartbeat": "2018-08-15T11:26:13.743257",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) CPU E5-2680 v3 @ 2.50GHz",
+    "gpus": {
+      "driver_version": "384.130",
+      "gpus": [
+        {
+          "model": "Quadro K4200",
+          "persistence_mode": false,
+          "total_memory": 4036
+        },
+        {
+          "model": "Quadro K4200",
+          "persistence_mode": false,
+          "total_memory": 4036
+        }
+      ]
+    },
+    "hostname": "seaford",
+    "os": [
+      "Linux",
+      "Linux-4.4.0-131-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "model_config.NORMALISE_MAG=False",
+        "model_config.N_SHUFFLE=20"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-08-15T11:25:21.792012",
+  "status": "FAILED",
+  "stop_time": "2018-08-15T11:26:13.749722"
+}
