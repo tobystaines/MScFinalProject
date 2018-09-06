@@ -31,7 +31,7 @@ class UNetModel(object):
 
             self.gen_voice = self.voice_mask * mixed_mag
 
-            self.cost = mf.l1_loss(self.gen_voice, voice_mag)
+            self.cost = mf.pw_l1_loss(self.gen_voice, voice_mag)
 
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=0.0002,

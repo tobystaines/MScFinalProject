@@ -4,7 +4,7 @@ from sacred import Experiment
 from sacred.observers import FileStorageObserver
 import mir_eval
 
-import sys
+#import sys
 import os
 import errno
 import datetime
@@ -13,8 +13,8 @@ import Audio_functions as af
 import UNet
 import Dataset
 
-assert sys.version_info >= (3, 5)
-sys.path.append('/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site')
+#assert sys.version_info >= (3, 5)
+#sys.path.append('/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site')
 ex = Experiment('UNet_Speech_Separation', interactive=True)
 ex.observers.append(FileStorageObserver.create('my_runs'))
 

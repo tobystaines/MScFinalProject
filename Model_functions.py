@@ -56,3 +56,6 @@ def lrelu(x, leak=0.2):
 def l1_loss(x, y):
     return tf.reduce_mean(tf.abs(x - y))
 
+
+def pw_l1_loss(x, y):
+    return tf.abs(x - y)
