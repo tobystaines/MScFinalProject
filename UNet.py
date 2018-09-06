@@ -31,13 +31,14 @@ class UNetModel(object):
 
             self.gen_voice = self.voice_mask * mixed_mag
 
-            self.cost = mf.pw_l1_loss(self.gen_voice, voice_mag)
+            self.pw_cost = mf.pw_l1_loss(self.gen_voice, voice_mag)
+            self.cost = tf.reduce_mean(self.pw_cost)
 
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=0.0002,
                 beta1=0.5,
             )
-            self.train_op = self.optimizer.minimize(self.cost)
+            self.train_op = self.optimizer.minimize(self.pw_cost)
 
 
 class UNet(object):

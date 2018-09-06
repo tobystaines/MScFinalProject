@@ -24,7 +24,7 @@ def cfg():
     model_config = {'saving': True,  # Whether to take checkpoints
                     'loading': True,  # Whether to load an existing checkpoint
                     'local_run': False,  # Whether experiment is running on laptop or server
-                    'checkpoint_to_load': "25/25-10",  # Checkpoint format: run/run-epoch
+                    'checkpoint_to_load': "26/26-20",  # Checkpoint format: run/run-epoch
                     'INITIALISATION_TEST': False,  # Whether or not to calculate test metrics before training
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
