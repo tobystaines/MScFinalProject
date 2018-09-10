@@ -23,7 +23,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {'saving': False,  # Whether to take checkpoints
                     'loading': False,  # Whether to load an existing checkpoint
-                    'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
+                    'dataset': 'both',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "26/26-20",  # Checkpoint format: run/run-epoch
                     'INITIALISATION_TEST': True,  # Whether or not to calculate test metrics before training
@@ -49,8 +49,8 @@ def cfg():
         model_config['log_dir'] = 'logs/local'
 
     else:  # Data and Checkpoint directories on the uni server
-        model_config['chime_data_root'] = 'data/CHiME3/data/audio/16kHz/isolated/'
-        model_config['librispeech_data_root'] = 'data//LibriSpeech/'
+        model_config['chime_data_root'] = 'C:/Users/Toby/Speech_Data/CHiME3/data/audio/16kHz/isolated/'
+        model_config['librispeech_data_root'] = 'C:/Users/Toby/Speech_Data/LibriSpeech/'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'
 

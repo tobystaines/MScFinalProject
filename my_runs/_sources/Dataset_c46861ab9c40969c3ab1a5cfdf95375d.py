@@ -31,14 +31,12 @@ def zip_files(directory_a, directory_b):
                         break
             else:
                 if file_a == file_b:
-                    zipped_list.append((str(directory_a + file_a), str(directory_b + file_b)))
+                    zipped_list.append((str(directory_a + '/' + file_a), str(directory_b + '/' + file_b)))
                     filelist_b.remove(file_b)
                     break
 
-    if len(zipped_list) == 0:
-        zipped_list = np.empty((0, 2))
-    else:
-        zipped_list = np.array(zipped_list)
+
+    zipped_list = np.array(zipped_list)
 
     return zipped_list
 
@@ -55,8 +53,7 @@ def get_paired_dataset(zipped_files,
                        normalise):
 
     return (
-        tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1]))
-        .shuffle(n_shuffle)
+        tf.data.Dataset.from_tensor_slices((zipped_files[:,0],zipped_files[:,1]))
         .map(partial(af.read_audio_pair,
                      sample_rate=sample_rate),
              num_parallel_calls=n_parallel_readers)
@@ -67,11 +64,11 @@ def get_paired_dataset(zipped_files,
              num_parallel_calls=n_parallel_readers)
         .map(partial(af.extract_patches_map,
                      n_fft=n_fft,
-                     fft_hop=fft_hop,
+                     fft_hop = fft_hop,
                      patch_window=patch_window,
                      patch_hop=patch_hop,),
              num_parallel_calls=n_parallel_readers)
-        .flat_map(Utils.zip_tensor_slices).batch(batch_size))
+        .flat_map(Utils.zip_tensor_slices).batch(batch_size).shuffle(n_shuffle))
 
 
 def prepare_datasets(model_config):
@@ -161,48 +158,48 @@ def prepare_datasets(model_config):
             train_file_list = np.empty((0, 2))
             for i in range(len(voice_train_dirs)):
                 train_file_list = np.concatenate((train_file_list, zip_files(voice_train_dirs[i], mix_train_dirs[i])), axis=0)
-            libri_train_data = get_paired_dataset(train_file_list,
-                                                  model_config['SAMPLE_RATE'],
-                                                  model_config['N_FFT'],
-                                                  model_config['FFT_HOP'],
-                                                  model_config['PATCH_WINDOW'],
-                                                  model_config['PATCH_HOP'],
-                                                  model_config['N_PARALLEL_READERS'],
-                                                  model_config['BATCH_SIZE'],
-                                                  model_config['N_SHUFFLE'],
-                                                  model_config['NORMALISE_MAG'])
+                libri_train_data = get_paired_dataset(train_file_list,
+                                                      model_config['SAMPLE_RATE'],
+                                                      model_config['N_FFT'],
+                                                      model_config['FFT_HOP'],
+                                                      model_config['PATCH_WINDOW'],
+                                                      model_config['PATCH_HOP'],
+                                                      model_config['N_PARALLEL_READERS'],
+                                                      model_config['BATCH_SIZE'],
+                                                      model_config['N_SHUFFLE'],
+                                                      model_config['NORMALISE_MAG'])
 
             val_file_list = np.empty((0, 2))
             for i in range(len(voice_val_dirs)):
                 val_file_list = np.concatenate((val_file_list, zip_files(voice_val_dirs[i], mix_val_dirs[i])), axis=0)
-            libri_val_data = get_paired_dataset(val_file_list,
-                                                model_config['SAMPLE_RATE'],
-                                                model_config['N_FFT'],
-                                                model_config['FFT_HOP'],
-                                                model_config['PATCH_WINDOW'],
-                                                model_config['PATCH_HOP'],
-                                                model_config['N_PARALLEL_READERS'],
-                                                model_config['BATCH_SIZE'],
-                                                model_config['N_SHUFFLE'],
-                                                model_config['NORMALISE_MAG'])
+                libri_val_data = get_paired_dataset(val_file_list,
+                                                    model_config['SAMPLE_RATE'],
+                                                    model_config['N_FFT'],
+                                                    model_config['FFT_HOP'],
+                                                    model_config['PATCH_WINDOW'],
+                                                    model_config['PATCH_HOP'],
+                                                    model_config['N_PARALLEL_READERS'],
+                                                    model_config['BATCH_SIZE'],
+                                                    model_config['N_SHUFFLE'],
+                                                    model_config['NORMALISE_MAG'])
 
             test_file_list = np.empty((0, 2))
             for i in range(len(voice_test_dirs)):
                 test_file_list = np.concatenate((test_file_list, zip_files(voice_test_dirs[i], mix_test_dirs[i])), axis=0)
-            libri_test_data = get_paired_dataset(test_file_list,
-                                                 model_config['SAMPLE_RATE'],
-                                                 model_config['N_FFT'],
-                                                 model_config['FFT_HOP'],
-                                                 model_config['PATCH_WINDOW'],
-                                                 model_config['PATCH_HOP'],
-                                                 model_config['N_PARALLEL_READERS'],
-                                                 model_config['BATCH_SIZE'],
-                                                 model_config['N_SHUFFLE'],
-                                                 model_config['NORMALISE_MAG'])
+                libri_test_data = get_paired_dataset(test_file_list,
+                                                     model_config['SAMPLE_RATE'],
+                                                     model_config['N_FFT'],
+                                                     model_config['FFT_HOP'],
+                                                     model_config['PATCH_WINDOW'],
+                                                     model_config['PATCH_HOP'],
+                                                     model_config['N_PARALLEL_READERS'],
+                                                     model_config['BATCH_SIZE'],
+                                                     model_config['N_SHUFFLE'],
+                                                     model_config['NORMALISE_MAG'])
 
         if model_config['dataset'] == 'CHiME':
             return chime_train_data, chime_val_data, chime_test_data
-        elif model_config['dataset'] == 'LibriSpeech':
+        elif model_config['dataset'] == 'librispeech':
             return libri_train_data, libri_val_data, libri_test_data
         elif model_config['dataset'] == 'both':
             return chime_train_data.concatenate(libri_train_data), \
