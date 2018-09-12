@@ -131,7 +131,7 @@ def prepare_datasets(model_config):
         if model_config['dataset'] in ['both', 'CHiME']:
             # Get CHiME data
             sets = list()
-            for string in ['bus_simu', 'caf_simu', 'ped_simu', 'str_simu']:
+            for string in ['bus_simu/', 'caf_simu/', 'ped_simu/', 'str_simu/']:
                 path = {'x_train': 'tr05_' + string,
                         'y_train': 'tr05_org',
                         'x_val': 'dt05_' + string,
