@@ -56,7 +56,7 @@ def get_paired_dataset(zipped_files,
 
     return (
         tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1]))
-        .shuffle(n_shuffle).prefetch(1)
+        .shuffle(n_shuffle).prefetch(batch_size)
         .map(partial(af.read_audio_pair,
                      sample_rate=sample_rate),
              num_parallel_calls=n_parallel_readers)
