@@ -49,8 +49,8 @@ def cfg():
         model_config['log_dir'] = 'logs/local'
 
     else:  # Data and Checkpoint directories on the uni server
-        model_config['chime_data_root'] = 'data/CHiME3/data/audio/16kHz/isolated/'
-        model_config['librispeech_data_root'] = 'data/Speech_Data/LibriSpeech/'
+        model_config['chime_data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
+        model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'
 
