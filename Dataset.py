@@ -71,7 +71,7 @@ def get_paired_dataset(zipped_files,
                      patch_window=patch_window,
                      patch_hop=patch_hop,),
              num_parallel_calls=n_parallel_readers)
-        .flat_map(Utils.zip_tensor_slices).batch(batch_size))
+        .flat_map(Utils.zip_tensor_slices).batch(batch_size).prefetch(1))
 
 
 def prepare_datasets(model_config):
