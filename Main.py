@@ -23,7 +23,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {'saving': False,  # Whether to take checkpoints
                     'loading': False,  # Whether to load an existing checkpoint
-                    'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
+                    'dataset': 'LibriSpeech',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "26/26-20",  # Checkpoint format: run/run-epoch
                     'INITIALISATION_TEST': True,  # Whether or not to calculate test metrics before training
@@ -35,7 +35,7 @@ def cfg():
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 50,
                     'N_SHUFFLE': 1000,
-                    'EPOCHS': 20,  # Number of full passes through the dataset to train for
+                    'EPOCHS': 1,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
                     'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
                     'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
@@ -50,7 +50,7 @@ def cfg():
 
     else:  # Data and Checkpoint directories on the uni server
         model_config['chime_data_root'] = 'data/CHiME3/data/audio/16kHz/isolated/'
-        model_config['librispeech_data_root'] = 'data//LibriSpeech/'
+        model_config['librispeech_data_root'] = 'data/Speech_Data/LibriSpeech/'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'
 
@@ -217,7 +217,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 voice_est = np.expand_dims(voice_est, 1).T
                 voice_patch = voice[i, :, :].T
                 # Calculate audio quality statistics
-                sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch, voice_est)
+                sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch, voice_est, compute_permutation=False)
                 sdrs.append(sdr[0])
                 sirs.append(sir[0])
                 sars.append(sar[0])
