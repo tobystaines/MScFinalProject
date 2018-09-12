@@ -255,11 +255,13 @@ def do_experiment(model_config):
     # Prepare data
     print('Preparing dataset')
     train_data, val_data, test_data = Dataset.prepare_datasets(model_config)
+    print('Dataset ready')
 
     # Start session
     tf_config = tf.ConfigProto()
     tf_config.gpu_options.allow_growth = True
     sess = tf.Session(config=tf_config)
+    print('Session started')
 
     # Create iterators
     handle = tf.placeholder(tf.string, shape=[])
@@ -273,7 +275,7 @@ def do_experiment(model_config):
     training_handle = sess.run(training_iterator.string_handle())
     validation_handle = sess.run(validation_iterator.string_handle())
     testing_handle = sess.run(testing_iterator.string_handle())
-
+    print('Iterators created')
     # Create variable placeholders
     is_training = tf.placeholder(shape=(), dtype=bool)
     mixed_mag = tf.expand_dims(mixed_spec[:, :, 1:, 0], 3)
