@@ -26,7 +26,7 @@ def cfg():
                     'dataset': 'LibriSpeech',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "26/26-20",  # Checkpoint format: run/run-epoch
-                    'INITIALISATION_TEST': False,  # Whether or not to calculate test metrics before training
+                    'INITIALISATION_TEST': True,  # Whether or not to calculate test metrics before training
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
@@ -64,13 +64,14 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         sess.run(validation_iterator.initializer)
         val_costs = list()
         val_iteration = 1
+        print('{ts}:\tEntering validation loop'.format(ts=datetime.datetime.now()))
         while True:
             try:
                 val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
                 val_costs.append(val_cost)
-                if val_iteration % 200 == 0:
-                    print("{ts}:\tValidation iteration: {i}, Loss: {vc}".format(ts=datetime.datetime.now(),
-                                                                                i=val_iteration, vc=val_cost))
+                #if val_iteration % 200 == 0:
+                print("{ts}:\tValidation iteration: {i}, Loss: {vc}".format(ts=datetime.datetime.now(),
+                                                                            i=val_iteration, vc=val_cost))
                 val_iteration += 1
             except tf.errors.OutOfRangeError:
                 # Calculate and record mean loss over validation dataset
@@ -203,27 +204,31 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
     sdrs = list()
     sirs = list()
     sars = list()
+    print('{ts}:\tEntering test loop'.format(ts=datetime.datetime.now()))
     while True:
         try:
             cost, voice_est_mag, voice, mixed_phase = sess.run([model.cost, model.gen_voice, model.voice_audio,
                                                                 model.mixed_phase], {model.is_training: False,
                                                                                      handle: testing_handle})
             test_costs.append(cost)
+            print('{ts}:\tBatch retrieved'.format(ts=datetime.datetime.now()))
             for i in range(voice_est_mag.shape[0]):
                 # Transform output back to audio
+                print('{ts}:\tConverting spectrogram to audio'.format(ts=datetime.datetime.now()))
                 voice_est = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T, model_config['N_FFT'],
                                                       model_config['FFT_HOP'], phase=np.squeeze(mixed_phase[i, :, :, :]).T)
                 # Reshape for mir_eval
                 voice_est = np.expand_dims(voice_est, 1).T
                 voice_patch = voice[i, :, :].T
                 # Calculate audio quality statistics
+                print('{ts}:\tCalculating audio quality metrics'.format(ts=datetime.datetime.now()))
                 sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch, voice_est, compute_permutation=False)
                 sdrs.append(sdr[0])
                 sirs.append(sir[0])
                 sars.append(sar[0])
-            if iteration % 200 == 0:
-                print("{ts}:\tTesting iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
-                                                                        i=iteration, c=cost))
+            #if iteration % 200 == 0:
+            print("{ts}:\tTesting iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
+                                                                    i=iteration, c=cost))
             iteration += 1
         except tf.errors.OutOfRangeError:
             # At the end of the dataset, calculate, record and print mean results
