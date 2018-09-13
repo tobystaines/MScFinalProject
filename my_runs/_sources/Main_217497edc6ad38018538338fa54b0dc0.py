@@ -4,6 +4,7 @@ from sacred import Experiment
 from sacred.observers import FileStorageObserver
 import mir_eval
 
+#import sys
 import os
 import errno
 import datetime
@@ -12,7 +13,8 @@ import Audio_functions as af
 import UNet
 import Dataset
 
-
+#assert sys.version_info >= (3, 5)
+#sys.path.append('/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site')
 ex = Experiment('UNet_Speech_Separation', interactive=True)
 ex.observers.append(FileStorageObserver.create('my_runs'))
 
@@ -31,8 +33,8 @@ def cfg():
                     'N_PARALLEL_READERS': 16,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
-                    'BATCH_SIZE': 50,
-                    'N_SHUFFLE': 2000,
+                    'BATCH_SIZE': 10,
+                    'N_SHUFFLE': 20,
                     'EPOCHS': 1,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
                     'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
@@ -48,7 +50,7 @@ def cfg():
 
     else:  # Data and Checkpoint directories on the uni server
         model_config['chime_data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
-        model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
+        model_config['librispeech_data_root'] = 'C:/Users/Toby/Speech_Data/LibriSpeechMini/'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'
 
@@ -224,7 +226,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 # Calculate audio quality statistics
                 print('{ts}:\tCalculating audio quality metrics'.format(ts=datetime.datetime.now()))
                 sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch, voice_est, compute_permutation=False)
-                sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(voice_patch, mixed_patch, compute_permutation=False)
+                sdr_mr = mir_eval.separation.bss_eval_sources(voice_patch, mixed_patch, compute_permutation=False)
                 nsdr = sdr[0] - sdr_mr[0]
                 sdrs.append(sdr[0])
                 sirs.append(sir[0])
