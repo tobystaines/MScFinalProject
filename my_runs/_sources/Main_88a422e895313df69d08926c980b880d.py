@@ -30,11 +30,11 @@ def cfg():
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
-                    'N_PARALLEL_READERS': 16,
+                    'N_PARALLEL_READERS': 2,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
-                    'BATCH_SIZE': 50,
-                    'N_SHUFFLE': 2000,
+                    'BATCH_SIZE': 10,
+                    'N_SHUFFLE': 20,
                     'EPOCHS': 1,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
                     'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
@@ -177,7 +177,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         print('Stopped early due to validation criteria.')
     else:
         # Final validation check
-        if (iteration % model_config['VAL_ITERS'] != 1 or not model_config['EARLY_STOPPING']) and not model_config['VAL_BY_EPOCHS']:
+        if iteration % model_config['VAL_ITERS'] != 1 or not model_config['EARLY_STOPPING']:
             last_val_cost, min_val_cost, min_val_check, _ = validation(last_val_cost, min_val_cost, min_val_check,
                                                                        worse_val_checks, model, val_check)
         print('Finished requested number of epochs. Training complete.')
