@@ -9,6 +9,7 @@ import errno
 import datetime
 from joblib import Parallel, delayed
 import multiprocessing
+import pickle
 
 import Audio_functions as af
 import UNet
@@ -215,11 +216,13 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
     sess.run(testing_iterator.initializer)
     test_count += 1
     iteration = 1
+    """
     test_costs = list()
     sdrs = list()
     sirs = list()
     sars = list()
     nsdrs = list()
+    """
     print('{ts}:\tEntering test loop'.format(ts=datetime.datetime.now()))
     while True:
         try:
@@ -227,13 +230,17 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                                                                              model.voice_audio, model.mixed_audio,
                                                                              model.mixed_phase], {model.is_training: False,
                                                                                                   handle: testing_handle})
-            test_costs.append(cost)
+            results = (cost, voice_est_mag, voice, mixed_audio, mixed_phase)
+            #test_costs.append(cost)
             print('{ts}:\tBatch retrieved'.format(ts=datetime.datetime.now()))
+            dump_name = 'dumps/test_count_' + str(test_count) + '_iteration_' + str(iteration)
+            pickle.dump(results, open(dump_name, 'wb'))
+
             """
             inputs = range(voice_est_mag.shape[0])
             num_cores = multiprocessing.cpu_count()
             results = Parallel(n_jobs=num_cores)(delayed(get_test_metrics)(i) for i in inputs)
-            """
+            
             for i in range(voice_est_mag.shape[0]):
                 # Transform output back to audio
                 print('{ts}:\tConverting spectrogram to audio'.format(ts=datetime.datetime.now()))
@@ -252,7 +259,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 sirs.append(sir[0])
                 sars.append(sar[0])
                 nsdrs.append(nsdr)
-            """
+            
             j = 0
             for res_list in [sdrs, sirs, sars, nsdrs]:
                 for i in range(voice_est_mag.shape[0]):
@@ -265,6 +272,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
             iteration += 1
         except tf.errors.OutOfRangeError:
             # At the end of the dataset, calculate, record and print mean results
+            """
             mean_cost = sum(test_costs) / len(test_costs)
             mean_sdr = sum(sdrs) / len(sdrs)
             mean_sir = sum(sirs) / len(sirs)
@@ -281,9 +289,11 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                   'SIR:  {sir}\n'
                   'SAR:  {sar}\n'
                   'NSDR: {nsdr}'.format(mc=mean_cost, sdr=mean_sdr, sir=mean_sir, sar=mean_sar, nsdr=mean_nsdr))
+            """
+            print('test pass complete')
             break
 
-    return mean_cost, test_count
+    return iteration, test_count #mean_cost, test_count
 
 
 @ex.automain
@@ -354,9 +364,9 @@ def do_experiment(model_config):
     mean_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer,
                                       test_count)
     print('{ts}:\n\tAll done!'.format(ts=datetime.datetime.now()))
-    if model_config['INITIALISATION_TEST']:
-        print('\tInitial test loss: {init}'.format(init=initial_test_loss))
-    print('\tFinal test loss: {final}'.format(final=mean_test_loss))
+    #if model_config['INITIALISATION_TEST']:
+    #    print('\tInitial test loss: {init}'.format(init=initial_test_loss))
+    #print('\tFinal test loss: {final}'.format(final=mean_test_loss))
 
 
 
