@@ -7,6 +7,8 @@ import mir_eval
 import os
 import errno
 import datetime
+from joblib import Parallel, delayed
+import multiprocessing
 
 import Audio_functions as af
 import UNet
@@ -193,6 +195,23 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 @ex.capture
 def test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count):
 
+    def get_test_metrics(i):
+        # Transform output back to audio
+        print('{ts}:\tConverting spectrogram to audio'.format(ts=datetime.datetime.now()))
+        voice_est = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T, model_config['N_FFT'],
+                                              model_config['FFT_HOP'], phase=np.squeeze(mixed_phase[i, :, :, :]).T)
+        # Reshape for mir_eval
+        voice_est = np.expand_dims(voice_est, 1).T
+        voice_patch = voice[i, :, :].T
+        mixed_patch = mixed_audio[i, :, :].T
+        # Calculate audio quality statistics
+        print('{ts}:\tCalculating audio quality metrics'.format(ts=datetime.datetime.now()))
+        sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch, voice_est, compute_permutation=False)
+        sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(voice_patch, mixed_patch, compute_permutation=False)
+        nsdr = sdr[0] - sdr_mr[0]
+
+        return sdr[0], sir[0], sar[0], nsdr
+
     # Calculate L1 loss
     print('Starting testing')
     sess.run(testing_iterator.initializer)
@@ -212,6 +231,10 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                                                                                                   handle: testing_handle})
             test_costs.append(cost)
             print('{ts}:\tBatch retrieved'.format(ts=datetime.datetime.now()))
+            inputs = range(voice_est_mag.shape[0])
+            num_cores = multiprocessing.cpu_count()
+            results = Parallel(n_jobs=num_cores)(delayed(get_test_metrics)(i) for i in inputs)
+            """
             for i in range(voice_est_mag.shape[0]):
                 # Transform output back to audio
                 print('{ts}:\tConverting spectrogram to audio'.format(ts=datetime.datetime.now()))
@@ -230,6 +253,12 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 sirs.append(sir[0])
                 sars.append(sar[0])
                 nsdrs.append(nsdr)
+            """
+            j = 0
+            for res_list in [sdrs, sirs, sars, nsdrs]:
+                for i in range(voice_est_mag.shape[0]):
+                    res_list.append(results[i][j])
+                j += 1
             #if iteration % 200 == 0:
             print("{ts}:\tTesting iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
                                                                     i=iteration, c=cost))
