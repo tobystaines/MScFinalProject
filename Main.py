@@ -197,7 +197,6 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
 
     def get_test_metrics(i):
         # Transform output back to audio
-        print('{ts}:\tConverting spectrogram to audio'.format(ts=datetime.datetime.now()))
         voice_est = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T, model_config['N_FFT'],
                                               model_config['FFT_HOP'], phase=np.squeeze(mixed_phase[i, :, :, :]).T)
         # Reshape for mir_eval
@@ -205,7 +204,6 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
         voice_patch = voice[i, :, :].T
         mixed_patch = mixed_audio[i, :, :].T
         # Calculate audio quality statistics
-        print('{ts}:\tCalculating audio quality metrics'.format(ts=datetime.datetime.now()))
         sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch, voice_est, compute_permutation=False)
         sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(voice_patch, mixed_patch, compute_permutation=False)
         nsdr = sdr[0] - sdr_mr[0]
@@ -231,6 +229,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                                                                                                   handle: testing_handle})
             test_costs.append(cost)
             print('{ts}:\tBatch retrieved'.format(ts=datetime.datetime.now()))
+            """
             inputs = range(voice_est_mag.shape[0])
             num_cores = multiprocessing.cpu_count()
             results = Parallel(n_jobs=num_cores)(delayed(get_test_metrics)(i) for i in inputs)
@@ -259,6 +258,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                 for i in range(voice_est_mag.shape[0]):
                     res_list.append(results[i][j])
                 j += 1
+            """
             #if iteration % 200 == 0:
             print("{ts}:\tTesting iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
                                                                     i=iteration, c=cost))
