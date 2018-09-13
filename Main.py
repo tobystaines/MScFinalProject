@@ -21,12 +21,12 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'saving': True,  # Whether to take checkpoints
+    model_config = {'saving': False,  # Whether to take checkpoints
                     'loading': False,  # Whether to load an existing checkpoint
                     'dataset': 'LibriSpeech',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "26/26-20",  # Checkpoint format: run/run-epoch
-                    'INITIALISATION_TEST': True,  # Whether or not to calculate test metrics before training
+                    'INITIALISATION_TEST': False,  # Whether or not to calculate test metrics before training
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
@@ -35,7 +35,7 @@ def cfg():
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 50,
                     'N_SHUFFLE': 2000,
-                    'EPOCHS': 20,  # Number of full passes through the dataset to train for
+                    'EPOCHS': 1,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
                     'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
                     'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
