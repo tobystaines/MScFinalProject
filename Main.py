@@ -23,11 +23,11 @@ def cfg():
                     'dataset': 'LibriSpeech',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "26/26-20",  # Checkpoint format: run/run-epoch
-                    'INITIALISATION_TEST': True,  # Whether or not to calculate test metrics before training
+                    'INITIALISATION_TEST': False,  # Whether or not to calculate test metrics before training
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
-                    'N_PARALLEL_READERS': 8,
+                    'N_PARALLEL_READERS': 16,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 50,
@@ -243,10 +243,11 @@ def do_experiment(model_config):
     print('Dataset ready')
 
     # Start session
-    tf_config = tf.ConfigProto()
-    tf_config.gpu_options.allow_growth = True
+    #tf_config = tf.ConfigProto()
+    #tf_config.gpu_options.allow_growth = True
     #tf_config.gpu_options.visible_device_list = "0"
-    sess = tf.Session(config=tf_config)
+    #sess = tf.Session(config=tf_config)
+    sess = tf.Session()
 
     print('Session started')
 
