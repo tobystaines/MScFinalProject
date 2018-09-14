@@ -2,16 +2,12 @@ import numpy as np
 import tensorflow as tf
 from sacred import Experiment
 from sacred.observers import FileStorageObserver
-import mir_eval
 
 import os
 import errno
 import datetime
-from joblib import Parallel, delayed
-import multiprocessing
 import pickle
 
-import Audio_functions as af
 import UNet
 import Dataset
 
@@ -31,7 +27,7 @@ def cfg():
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
-                    'N_PARALLEL_READERS': 16,
+                    'N_PARALLEL_READERS': 8,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
                     'BATCH_SIZE': 50,
@@ -248,6 +244,7 @@ def do_experiment(model_config):
     # Start session
     tf_config = tf.ConfigProto()
     tf_config.gpu_options.allow_growth = True
+    tf_config.gpu_options.visible_device_list = "0"
     sess = tf.Session(config=tf_config)
     print('Session started')
 
