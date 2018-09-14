@@ -1,4 +1,5 @@
 import sys
+import csv
 import pickle
 import datetime
 from glob import glob
@@ -13,7 +14,7 @@ def get_test_metrics(experiment_id):
     dump_folder = 'dumps/' + experiment_id
     file_list = glob(dump_folder + '/*')
     test_num = max([int(file.split('_')[2]) for file in file_list]) + 1
-    metrics = {}
+    metrics = list()
     for test in range(test_num):
         print('{ts}:\tProcessing test {t}'.format(ts=datetime.datetime.now(), t=test))
         test_files = [file for file in file_list if file.split('_')[2] == str(test)]
@@ -49,13 +50,21 @@ def get_test_metrics(experiment_id):
         mean_sir = sum(sirs) / len(sirs)
         mean_sar = sum(sars) / len(sars)
         mean_nsdr = sum(nsdrs) / len(nsdrs)
+        metrics.append({'test': test, 'mean_cost': mean_cost, 'mean_sdr': mean_sdr, 'mean_sir': mean_sir,
+                        'mean_sar': mean_sar, 'mean_nsdr': mean_nsdr})
 
-        metrics[test] = [mean_cost, mean_sdr, mean_sir, mean_sar, mean_nsdr]
+    file_name = 'test_metrics/' + experiment_id + '.csv'
+    with open(file_name, 'w') as csvfile:
+        fieldnames = ['test', 'mean_cost', 'mean_sdr', 'mean_sir', 'mean_sar', 'mean_nsdr']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for test in metrics:
+            writer.writerow(test)
 
     return metrics
 
 
 exp_id = str(sys.argv[1])
-#exp_id = '36'
 test_metrics = get_test_metrics(exp_id)
 print(test_metrics)
+
