@@ -56,6 +56,6 @@ def get_test_metrics(experiment_id):
     return metrics
 
 
-exp_id = sys.argv[1]
+exp_id = str(sys.argv[1])
 test_metrics = get_test_metrics(exp_id)
 print(test_metrics)
