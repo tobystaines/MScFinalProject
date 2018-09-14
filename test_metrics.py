@@ -16,6 +16,7 @@ This process causes a bottleneck and is not on the critical path towards trainin
 been dumped to pickle files by the main script, so that this script can be run on a different server.
 """
 
+
 def get_test_metrics(experiment_id):
 
     # Calculate number of test runs in experiment
@@ -54,6 +55,7 @@ def get_test_metrics(experiment_id):
                 sirs.append(sir[0])
                 sars.append(sar[0])
                 nsdrs.append(nsdr)
+            print('{} processed.'.format(file))
 
         #  Record mean results for each metric across all batches in the test
         mean_cost = sum(test_costs) / len(test_costs)
@@ -63,6 +65,7 @@ def get_test_metrics(experiment_id):
         mean_nsdr = sum(nsdrs) / len(nsdrs)
         metrics.append({'test': test, 'mean_cost': mean_cost, 'mean_sdr': mean_sdr, 'mean_sir': mean_sir,
                         'mean_sar': mean_sar, 'mean_nsdr': mean_nsdr})
+
 
     #  Write the results from the experiment to a CSV file, one row per test
 
@@ -81,5 +84,5 @@ def get_test_metrics(experiment_id):
 
 exp_id = str(sys.argv[1])
 test_metrics = get_test_metrics(exp_id)
-print(test_metrics)
+print('{ts}:\nProcessing complete\n{t}'.format(ts=datetime.datetime.now(), t=test_metrics))
 
