@@ -193,7 +193,8 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 def test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count, experiment_id):
 
     dump_folder = 'dumps/' + str(experiment_id)
-    os.mkdir(dump_folder)
+    if not os.path.isdir(dump_folder):
+        os.mkdir(dump_folder)
     # Calculate L1 loss
     print('Starting testing')
     sess.run(testing_iterator.initializer)
@@ -208,7 +209,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                                                                              model.voice_audio, model.mixed_audio,
                                                                              model.mixed_phase], {model.is_training: False,
                                                                                                   handle: testing_handle})
-            results = (cost, voice_est_mag, voice, mixed_audio, mixed_phase)
+            results = (cost, voice_est_mag, voice, mixed_audio, mixed_phase, model_config)
             test_costs.append(cost)
             print('{ts}:\tBatch retrieved'.format(ts=datetime.datetime.now()))
             dump_name = dump_folder + '/test_count_' + str(test_count) + '_iteration_' + str(iteration)
