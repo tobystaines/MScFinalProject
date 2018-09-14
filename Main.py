@@ -288,7 +288,7 @@ def do_experiment(model_config):
     if model_config['INITIALISATION_TEST']:
         print('Running initialisation test')
         initial_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle,
-                                             writer, test_count)
+                                             writer, test_count, experiment_id)
 
     # Train the model
     model = train(sess, model, model_config, model_folder, handle, training_iterator, training_handle,
@@ -296,11 +296,11 @@ def do_experiment(model_config):
 
     # Test trained model
     mean_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer,
-                                      test_count)
+                                      test_count, experiment_id)
     print('{ts}:\n\tAll done!'.format(ts=datetime.datetime.now()))
-    #if model_config['INITIALISATION_TEST']:
-    #    print('\tInitial test loss: {init}'.format(init=initial_test_loss))
-    #print('\tFinal test loss: {final}'.format(final=mean_test_loss))
+    if model_config['INITIALISATION_TEST']:
+        print('\tInitial test loss: {init}'.format(init=initial_test_loss))
+    print('\tFinal test loss: {final}'.format(final=mean_test_loss))
 
 
 
