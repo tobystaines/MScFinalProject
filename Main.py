@@ -66,9 +66,9 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
             try:
                 val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
                 val_costs.append(val_cost)
-                #if val_iteration % 200 == 0:
-                print("{ts}:\tValidation iteration: {i}, Loss: {vc}".format(ts=datetime.datetime.now(),
-                                                                            i=val_iteration, vc=val_cost))
+                if val_iteration % 200 == 0:
+                    print("{ts}:\tValidation iteration: {i}, Loss: {vc}".format(ts=datetime.datetime.now(),
+                                                                                i=val_iteration, vc=val_cost))
                 val_iteration += 1
             except tf.errors.OutOfRangeError:
                 # Calculate and record mean loss over validation dataset
@@ -198,8 +198,8 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
     # Calculate L1 loss
     print('Starting testing')
     sess.run(testing_iterator.initializer)
-    test_count += 1
-    iteration = 1
+
+    iteration = 0
     test_costs = list()
 
     print('{ts}:\tEntering test loop'.format(ts=datetime.datetime.now()))
@@ -211,7 +211,6 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                                                                                                   handle: testing_handle})
             results = (cost, voice_est_mag, voice, mixed_audio, mixed_phase, model_config)
             test_costs.append(cost)
-            print('{ts}:\tBatch retrieved'.format(ts=datetime.datetime.now()))
             dump_name = dump_folder + '/test_count_' + str(test_count) + '_iteration_' + str(iteration)
             pickle.dump(results, open(dump_name, 'wb'))
 
@@ -226,6 +225,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                   'Mean loss over test set: {}\n'
                   'Data saved to {} for later audio metric calculation'.format(mean_cost, dump_folder))
             break
+    test_count += 1
 
     return mean_cost, test_count
 
@@ -244,7 +244,7 @@ def do_experiment(model_config):
 
     # Start session
     tf_config = tf.ConfigProto()
-    tf_config.gpu_options.allow_growth = True
+    #tf_config.gpu_options.allow_growth = True
     tf_config.gpu_options.visible_device_list = "0"
     sess = tf.Session(config=tf_config)
     print('Session started')
