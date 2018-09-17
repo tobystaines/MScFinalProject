@@ -19,7 +19,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 @ex.config
 def cfg():
     model_config = {'saving': True,  # Whether to take checkpoints
-                    'loading': False,  # Whether to load an existing checkpoint
+                    'loading': True,  # Whether to load an existing checkpoint
                     'dataset': 'LibriSpeech',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "43/43-1001",  # Checkpoint format: run/run-epoch
@@ -27,12 +27,12 @@ def cfg():
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
-                    'N_PARALLEL_READERS': 24,
+                    'N_PARALLEL_READERS': 4,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
-                    'BATCH_SIZE': 5,
-                    'N_SHUFFLE': 5,
-                    'EPOCHS': 500,  # Number of full passes through the dataset to train for
+                    'BATCH_SIZE': 10,
+                    'N_SHUFFLE': 20,
+                    'EPOCHS': 150,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
                     'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
                     'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
@@ -47,10 +47,9 @@ def cfg():
 
     else:  # Data and Checkpoint directories on the uni server
         model_config['chime_data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
-        #model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeechMini/'
-        model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
-        #model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
-        model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
+        model_config['librispeech_data_root'] = 'C:/Users/Toby/Speech_Data/LibriSpeechMini/'
+        model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
+        #model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'
 
 

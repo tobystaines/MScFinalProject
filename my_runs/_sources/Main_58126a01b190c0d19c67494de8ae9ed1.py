@@ -22,17 +22,17 @@ def cfg():
                     'loading': False,  # Whether to load an existing checkpoint
                     'dataset': 'LibriSpeech',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
-                    'checkpoint_to_load': "43/43-1001",  # Checkpoint format: run/run-epoch
+                    'checkpoint_to_load': "26/26-20",  # Checkpoint format: run/run-epoch
                     'INITIALISATION_TEST': True,  # Whether or not to calculate test metrics before training
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
-                    'N_PARALLEL_READERS': 24,
+                    'N_PARALLEL_READERS': 4,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
-                    'BATCH_SIZE': 5,
-                    'N_SHUFFLE': 5,
-                    'EPOCHS': 500,  # Number of full passes through the dataset to train for
+                    'BATCH_SIZE': 10,
+                    'N_SHUFFLE': 20,
+                    'EPOCHS': 150,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
                     'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
                     'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
@@ -47,10 +47,9 @@ def cfg():
 
     else:  # Data and Checkpoint directories on the uni server
         model_config['chime_data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
-        #model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeechMini/'
-        model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
-        #model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
-        model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
+        model_config['librispeech_data_root'] = 'C:/Users/Speech_Data/LibriSpeechMini/'
+        model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
+        #model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'
 
 
@@ -275,7 +274,6 @@ def do_experiment(model_config):
     # Build U-Net model
     print('Creating model')
     model = UNet.UNetModel(mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio, 'unet', is_training, name='U_Net_Model')
-    sess.run(tf.global_variables_initializer())
 
     if model_config['loading']:
         # TODO - Think this works now but needs proper testing
@@ -289,6 +287,7 @@ def do_experiment(model_config):
     writer = tf.summary.FileWriter(os.path.join(model_config["log_dir"], model_folder), graph=sess.graph)
 
     # Get baseline metrics at initialisation
+    sess.run(tf.global_variables_initializer())
     test_count = 0
     if model_config['INITIALISATION_TEST']:
         print('Running initialisation test')

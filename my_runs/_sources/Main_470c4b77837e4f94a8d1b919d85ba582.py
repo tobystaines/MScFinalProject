@@ -18,22 +18,22 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'saving': True,  # Whether to take checkpoints
+    model_config = {'saving': False,  # Whether to take checkpoints
                     'loading': False,  # Whether to load an existing checkpoint
-                    'dataset': 'LibriSpeech',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
-                    'local_run': False,  # Whether experiment is running on laptop or server
-                    'checkpoint_to_load': "43/43-1001",  # Checkpoint format: run/run-epoch
-                    'INITIALISATION_TEST': True,  # Whether or not to calculate test metrics before training
+                    'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
+                    'local_run': True,  # Whether experiment is running on laptop or server
+                    'checkpoint_to_load': "26/26-20",  # Checkpoint format: run/run-epoch
+                    'INITIALISATION_TEST': False,  # Whether or not to calculate test metrics before training
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
-                    'N_PARALLEL_READERS': 24,
+                    'N_PARALLEL_READERS': 4,
                     'PATCH_WINDOW': 256,
                     'PATCH_HOP': 128,
-                    'BATCH_SIZE': 5,
-                    'N_SHUFFLE': 5,
-                    'EPOCHS': 500,  # Number of full passes through the dataset to train for
-                    'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
+                    'BATCH_SIZE': 50,
+                    'N_SHUFFLE': 2000,
+                    'EPOCHS': 20,  # Number of full passes through the dataset to train for
+                    'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
                     'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
                     'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
@@ -47,9 +47,7 @@ def cfg():
 
     else:  # Data and Checkpoint directories on the uni server
         model_config['chime_data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
-        #model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeechMini/'
-        model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
-        #model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
+        model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'
 
@@ -104,7 +102,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     min_val_check = None
     val_check = 1
     worse_val_checks = 0
-    #best_model = model
+    best_model = model
     cost_summary = tf.summary.scalar('Training_loss', model.cost)
     mix_summary = tf.summary.image('Mixture', model.mixed_mag)
     voice_summary = tf.summary.image('Voice', model.voice_mag)
@@ -186,7 +184,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     else:
         print('Best validation loss ({mvc}) achieved at validation check {mvck}'.format(mvc=min_val_cost,
                                                                                         mvck=min_val_check))
-    #model = best_model
+    model = best_model
 
     return model
 
@@ -275,7 +273,6 @@ def do_experiment(model_config):
     # Build U-Net model
     print('Creating model')
     model = UNet.UNetModel(mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio, 'unet', is_training, name='U_Net_Model')
-    sess.run(tf.global_variables_initializer())
 
     if model_config['loading']:
         # TODO - Think this works now but needs proper testing
@@ -289,6 +286,7 @@ def do_experiment(model_config):
     writer = tf.summary.FileWriter(os.path.join(model_config["log_dir"], model_folder), graph=sess.graph)
 
     # Get baseline metrics at initialisation
+    sess.run(tf.global_variables_initializer())
     test_count = 0
     if model_config['INITIALISATION_TEST']:
         print('Running initialisation test')
