@@ -142,7 +142,7 @@ def compute_acapella_diff(mixed, noise):
     return mixed, noise, tf.concat((voice_mag, voice_phase), axis=3)
 
 
-def spectrogramToAudioFile(magnitude, fftWindowSize, hopSize, phaseIterations=0, phase=None, length=None):
+def spectrogramToAudioFile(magnitude, fftWindowSize, hopSize, phaseIterations=10, phase=None, length=None):
     '''
     Computes an audio signal from the given magnitude spectrogram, and optionally an initial phase.
     Griffin-Lim is executed to recover/refine the given the phase from the magnitude spectrogram.
