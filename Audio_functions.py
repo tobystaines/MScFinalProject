@@ -185,7 +185,7 @@ def reconPhase(magnitude, fftWindowSize, hopSize, phaseIterations=0, initPhase=N
             else:
                 reconstruction = np.exp(initPhase * 1j) # e^(j*phase), so that angle => phase
         else:
-            reconstruction = librosa.stft(audio, fftWindowSize, hopSize)
+            reconstruction = librosa.stft(audio, fftWindowSize, hopSize)[:reconstruction.shape[0],:reconstruction.shape[1]] # Indexing to keep the output the same size
         spectrum = magnitude * np.exp(1j * np.angle(reconstruction))
         if i == phaseIterations - 1:
             audio = librosa.istft(spectrum, hopSize, length=length)
