@@ -129,6 +129,13 @@ def extract_patches_map(spec_a, spec_b, audio_a, audio_b, n_fft, fft_hop, patch_
     return patches_a, patches_b, audio_patches_a, audio_patches_b
 
 
+def extract_audio_patches_map(audio_a, audio_b, fft_hop, patch_window, patch_hop):
+    audio_patches_a = extract_audio_patches(audio_a, fft_hop, patch_window, patch_hop)
+    audio_patches_b = extract_audio_patches(audio_b, fft_hop, patch_window, patch_hop)
+
+    return audio_patches_a, audio_patches_b
+
+
 def hwr_tf(x):
     return x * tf.cast(x > 0.0, tf.float32)
 

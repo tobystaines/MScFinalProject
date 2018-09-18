@@ -27,17 +27,17 @@ def cfg():
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
-                    'N_PARALLEL_READERS': 4,
-                    'PATCH_WINDOW': 256,
-                    'PATCH_HOP': 128,
-                    'BATCH_SIZE': 5,
-                    'N_SHUFFLE': 10,
+                    'N_PARALLEL_READERS': 16,
+                    'PATCH_WINDOW': 256,  # Number of fourier transforms (rows) in each patch
+                    'PATCH_HOP': 128,  # Number of fourier transforms between the start of each patch
+                    'BATCH_SIZE': 5,  # Number of patches in each batch
+                    'N_SHUFFLE': 10,  # Number of patches buffered before batching
                     'EPOCHS': 500,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
                     'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
                     'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
-                    'NORMALISE_MAG': True
+                    'NORMALISE_MAG': True  # Are magnitude spectrograms normalised in pre-processing?
                     }
 
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop
