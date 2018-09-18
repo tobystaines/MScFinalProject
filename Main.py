@@ -19,21 +19,21 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 @ex.config
 def cfg():
     model_config = {'saving': True,  # Whether to take checkpoints
-                    'loading': True,  # Whether to load an existing checkpoint
-                    'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
+                    'loading': False,  # Whether to load an existing checkpoint
+                    'dataset': 'both',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "26/26-21",  # Checkpoint format: run/run-epoch
-                    'INITIALISATION_TEST': False,  # Whether or not to calculate test metrics before training
+                    'INITIALISATION_TEST': True,  # Whether or not to calculate test metrics before training
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
-                    'N_PARALLEL_READERS': 48,
+                    'N_PARALLEL_READERS': 16,
                     'PATCH_WINDOW': 256,  # Number of fourier transforms (rows) in each patch
                     'PATCH_HOP': 128,  # Number of fourier transforms between the start of each patch
                     'BATCH_SIZE': 50,  # Number of patches in each batch
                     'N_SHUFFLE': 1000,  # Number of patches buffered before batching
-                    'EPOCHS': 0,  # Number of full passes through the dataset to train for
-                    'EARLY_STOPPING': False,  # Should validation data checks be used for early stopping?
+                    'EPOCHS': 20,  # Number of full passes through the dataset to train for
+                    'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
                     'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
                     'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
@@ -46,9 +46,9 @@ def cfg():
         model_config['log_dir'] = 'logs/local'
 
     else:  # Data and Checkpoint directories on the uni server
-        model_config['chime_data_root'] = '/data/CHiME3/data/audio/16kHz/isolated/'
+        model_config['chime_data_root'] = '/data/Speech_Data/CHiME3/data/audio/16kHz/isolated/'
         #model_config['librispeech_data_root'] = 'C:/Users/Toby/Speech_Data/LibriSpeech/'
-        model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
+        model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
         #model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'
