@@ -46,11 +46,8 @@ def get_test_metrics(experiment_id):
                 voice_est = np.expand_dims(voice_est, 1).T
                 voice_patch = voice[i, :, :].T
                 mixed_patch = mixed_audio[i, :, :].T
-                # Something about the reconstruction or pre-processing steps causes the audio window to lag behind the
-                # reconstructed audio by (n_fft - fft_hop). This is a bit of a hack to get around this.
-                timeshift = model_config['N_FFT'] - model_config['FFT_HOP']
                 # Calculate audio quality statistics
-                sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch[timeshift:], voice_est[:-timeshift], compute_permutation=False)
+                sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch, voice_est, compute_permutation=False)
                 sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(voice_patch, mixed_patch, compute_permutation=False)
                 nsdr = sdr[0] - sdr_mr[0]
 
