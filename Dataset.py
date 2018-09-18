@@ -42,7 +42,7 @@ def zip_files(directory_a, directory_b):
 
     return zipped_list
 
-
+"""
 def get_paired_dataset(zipped_files,
                        sample_rate,
                        n_fft,
@@ -71,7 +71,36 @@ def get_paired_dataset(zipped_files,
                      patch_hop=patch_hop,),
              num_parallel_calls=n_parallel_readers)
         .flat_map(Utils.zip_tensor_slices).shuffle(n_shuffle).batch(batch_size).prefetch(3))
+"""
+def get_paired_dataset(zipped_files,
+                       sample_rate,
+                       n_fft,
+                       fft_hop,
+                       patch_window,
+                       patch_hop,
+                       n_parallel_readers,
+                       batch_size,
+                       n_shuffle,
+                       normalise):
 
+    return (
+        tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1]))
+        .map(partial(af.read_audio_pair,
+                     sample_rate=sample_rate),
+             num_parallel_calls=n_parallel_readers)
+        .map(partial(af.extract_audio_patches_map,
+                     fft_hop=fft_hop,
+                     patch_window=patch_window,
+                     patch_hop=patch_hop,),
+             num_parallel_calls=n_parallel_readers)
+        .flat_map(Utils.zip_tensor_slices)
+        .map(partial(af.compute_spectrogram_map,
+                     n_fft=n_fft,
+                     fft_hop=fft_hop,
+                     normalise=normalise),
+             num_parallel_calls=n_parallel_readers)
+        .shuffle(n_shuffle).batch(batch_size).prefetch(3)
+    )
 
 def prepare_datasets(model_config):
 
