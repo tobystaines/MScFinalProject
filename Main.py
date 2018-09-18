@@ -268,9 +268,9 @@ def do_experiment(model_config):
     print('Iterators created')
     # Create variable placeholders
     is_training = tf.placeholder(shape=(), dtype=bool)
-    mixed_mag = tf.expand_dims(mixed_spec[:, :, 1:, 0], 3)
-    mixed_phase = tf.expand_dims(mixed_spec[:, :, 1:, 1], 3)
-    voice_mag = tf.expand_dims(voice_spec[:, :, 1:, 0], 3)
+    mixed_mag = tf.expand_dims(mixed_spec[:, :, :-1, 0], 3)
+    mixed_phase = tf.expand_dims(mixed_spec[:, :, :-1, 1], 3)
+    voice_mag = tf.expand_dims(voice_spec[:, :, :-1, 0], 3)
 
     # Build U-Net model
     print('Creating model')
