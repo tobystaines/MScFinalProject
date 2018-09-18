@@ -1,0 +1,53 @@
+INFO - UNet_Speech_Separation - Running command 'do_experiment'
+INFO - UNet_Speech_Separation - Started run with ID "51"
+Experiment ID: 51
+Preparing dataset
+Dataset ready
+2018-09-18 15:28:29.125191: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2018-09-18 15:28:29.233509: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties: 
+name: Quadro K4200 major: 3 minor: 0 memoryClockRate(GHz): 0.784
+pciBusID: 0000:84:00.0
+totalMemory: 3.94GiB freeMemory: 3.81GiB
+2018-09-18 15:28:29.305328: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 1 with properties: 
+name: Quadro K4200 major: 3 minor: 0 memoryClockRate(GHz): 0.784
+pciBusID: 0000:88:00.0
+totalMemory: 3.94GiB freeMemory: 3.87GiB
+2018-09-18 15:28:29.305496: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1045] Device peer to peer matrix
+2018-09-18 15:28:29.305537: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1051] DMA: 0 1 
+2018-09-18 15:28:29.305548: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 0:   Y Y 
+2018-09-18 15:28:29.305553: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 1:   Y Y 
+2018-09-18 15:28:29.305568: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: Quadro K4200, pci bus id: 0000:84:00.0, compute capability: 3.0)
+2018-09-18 15:28:29.305577: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:1) -> (device: 1, name: Quadro K4200, pci bus id: 0000:88:00.0, compute capability: 3.0)
+Session started
+Iterators created
+Creating model
+Loading checkpoint
+INFO:tensorflow:Restoring parameters from /home/enterprise.internal.city.ac.uk/acvn728/checkpoints/26/26-21
+INFO - tensorflow - Restoring parameters from /home/enterprise.internal.city.ac.uk/acvn728/checkpoints/26/26-21
+Starting training
+Finished requested number of epochs. Training complete.
+Final validation loss: 1
+This was the best validation loss achieved
+Starting testing
+2018-09-18 15:28:40.989625:	Entering test loop
+2018-09-18 15:28:51.191200: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 292 of 1000
+2018-09-18 15:29:01.160822: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 713 of 1000
+2018-09-18 15:29:07.997574: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-18 15:29:12.973449:	Testing iteration: 0, Loss: 0.004249047487974167
+2018-09-18 15:30:57.157450: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 343 of 1000
+2018-09-18 15:31:07.169829: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 780 of 1000
+2018-09-18 15:31:12.283942: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-18 15:32:59.941377: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 342 of 1000
+2018-09-18 15:33:09.881852: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 780 of 1000
+2018-09-18 15:33:15.152151: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-18 15:35:03.805588: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 350 of 1000
+2018-09-18 15:35:13.686432: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 786 of 1000
+2018-09-18 15:35:18.333040: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-18 15:35:29.432376:	Testing iteration: 200, Loss: 0.00434699933975935
+Test pass complete
+Mean loss over test set: 0.0045447068629213255
+Data saved to dumps/51 for later audio metric calculation
+2018-09-18 15:36:56.024202:
+	All done!
+	Final test loss: 0.0045447068629213255
+INFO - UNet_Speech_Separation - Completed after 0:10:24
