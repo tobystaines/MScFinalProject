@@ -27,7 +27,7 @@ def cfg():
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
-                    'N_PARALLEL_READERS': 16,
+                    'N_PARALLEL_READERS': 48,
                     'PATCH_WINDOW': 256,  # Number of fourier transforms (rows) in each patch
                     'PATCH_HOP': 128,  # Number of fourier transforms between the start of each patch
                     'BATCH_SIZE': 50,  # Number of patches in each batch
