@@ -34,8 +34,8 @@ def cfg():
                     'N_SHUFFLE': 1000,  # Number of patches buffered before batching
                     'EPOCHS': 20,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
-                    'VAL_BY_EPOCHS': True,  # Validation at end of each epoch or every 'val_iters'?
-                    'VAL_ITERS': 2000,  # Number of training iterations between validation checks,
+                    'VAL_BY_EPOCHS': False,  # Validation at end of each epoch or every 'val_iters'?
+                    'VAL_ITERS': 3000,  # Number of training iterations between validation checks,
                     'NUM_WORSE_VAL_CHECKS': 3,  # Number of successively worse validation checks before early stopping,
                     'NORMALISE_MAG': True  # Are magnitude spectrograms normalised in pre-processing?
                     }
