@@ -1,0 +1,80 @@
+INFO - UNet_Speech_Separation - Running command 'do_experiment'
+INFO - UNet_Speech_Separation - Started run with ID "29"
+Experiment ID: 29
+Preparing dataset
+Dataset ready
+2018-09-19 13:37:42.042163: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2018-09-19 13:37:47.884411: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:892] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2018-09-19 13:37:47.885068: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.645
+pciBusID: 0000:23:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2018-09-19 13:37:47.985102: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:892] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2018-09-19 13:37:47.986122: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 1 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.645
+pciBusID: 0000:24:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2018-09-19 13:37:47.990496: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1045] Device peer to peer matrix
+2018-09-19 13:37:47.990564: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1051] DMA: 0 1 
+2018-09-19 13:37:47.990582: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 0:   Y Y 
+2018-09-19 13:37:47.990592: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 1:   Y Y 
+2018-09-19 13:37:47.990608: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:23:00.0, compute capability: 6.1)
+2018-09-19 13:37:47.990622: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:1) -> (device: 1, name: GeForce GTX 1080 Ti, pci bus id: 0000:24:00.0, compute capability: 6.1)
+Session started
+Iterators created
+Creating model
+Running initialisation test
+Starting testing
+2018-09-19 13:38:01.030540:	Entering test loop
+2018-09-19 13:38:11.177097: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 662 of 1000
+2018-09-19 13:38:15.567000: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 13:38:19.290274:	Testing iteration: 0, Loss: 0.005219851154834032
+2018-09-19 13:40:29.417258: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 677 of 1000
+2018-09-19 13:40:33.719199: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 13:42:40.240992: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 692 of 1000
+2018-09-19 13:42:44.314721: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 13:44:57.473704: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 703 of 1000
+2018-09-19 13:45:01.234527: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 13:45:23.162617:	Testing iteration: 200, Loss: 0.005515056662261486
+2018-09-19 13:47:18.103419: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 654 of 1000
+2018-09-19 13:47:22.381213: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+Test pass complete
+Mean loss over test set: 0.00584895181467162
+Data saved to dumps/29 for later audio metric calculation
+Starting training
+2018-09-19 13:51:22.686717: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 817 of 1000
+2018-09-19 13:51:24.854335: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 13:53:36.656118:	Training iteration: 200, Loss: 0.0030078021809458733
+2018-09-19 13:55:38.044144:	Training iteration: 400, Loss: 0.0034201880916953087
+2018-09-19 13:56:40.417034: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 786 of 1000
+2018-09-19 13:56:42.957413: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 13:57:47.939224:	Training iteration: 600, Loss: 0.0035660923458635807
+2018-09-19 13:59:57.448354:	Training iteration: 800, Loss: 0.0034911937545984983
+2018-09-19 14:02:01.361553: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 799 of 1000
+2018-09-19 14:02:03.680706: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 14:02:06.884337:	Training iteration: 1000, Loss: 0.0034572116564959288
+2018-09-19 14:04:17.009725:	Training iteration: 1200, Loss: 0.0033332037273794413
+2018-09-19 14:06:28.265923:	Training iteration: 1400, Loss: 0.0032730521634221077
+2018-09-19 14:07:54.764380: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 796 of 1000
+2018-09-19 14:07:56.961492: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 14:09:06.232723:	Training iteration: 1600, Loss: 0.0030091244261711836
+2018-09-19 14:11:18.785475:	Training iteration: 1800, Loss: 0.0029896884225308895
+2018-09-19 14:13:23.500683:	Training iteration: 2000, Loss: 0.002631803508847952
+2018-09-19 14:13:38.302456: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 860 of 1000
+2018-09-19 14:13:39.653085: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 14:15:17.813194:	Training iteration: 2200, Loss: 0.0025780873838812113
+2018-09-19 14:17:12.359798:	Training iteration: 2400, Loss: 0.0033001804258674383
+2018-09-19 14:19:05.349736:	Training iteration: 2600, Loss: 0.0019504482625052333
+2018-09-19 14:20:51.908928:	Training iteration: 2800, Loss: 0.00153712450992316
+2018-09-19 14:22:38.574434:	Training iteration: 3000, Loss: 0.0031538724433630705
+Validating
+2018-09-19 14:22:55.658818:	Entering validation loop
+2018-09-19 14:23:05.798281: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 736 of 1000
+2018-09-19 14:23:09.131955: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 14:24:09.933201: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 539 of 1000
+2018-09-19 14:24:16.188390: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 14:25:10.963402: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 741 of 1000
+2018-09-19 14:25:14.565376: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-09-19 14:25:38.037573:	Validation iteration: 200, Loss: 0.005499198567122221
+2018-09-19 14:26:12.303789: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 677 of 1000
+2018-09-19 14:26:16.713169: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
