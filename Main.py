@@ -18,12 +18,12 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'saving': False,  # Whether to take checkpoints
-                    'loading': False,  # Whether to load an existing checkpoint
-                    'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
-                    'local_run': True,  # Whether experiment is running on laptop or server
+    model_config = {'saving': True,  # Whether to take checkpoints
+                    'loading': True,  # Whether to load an existing checkpoint
+                    'dataset': 'both',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
+                    'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "36/36-6",  # Checkpoint format: run/run-epoch
-                    'INITIALISATION_TEST': False,  # Whether or not to calculate test metrics before training
+                    'INITIALISATION_TEST': True,  # Whether or not to calculate test metrics before training
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'N_FFT': 1024,  # Number of samples in each fourier transform
                     'FFT_HOP': 256,  # Number of samples between the start of each fourier transform
@@ -32,7 +32,7 @@ def cfg():
                     'PATCH_HOP': 128,  # Number of fourier transforms between the start of each patch
                     'BATCH_SIZE': 50,  # Number of patches in each batch
                     'N_SHUFFLE': 1000,  # Number of patches buffered before batching
-                    'EPOCHS': 20,  # Number of full passes through the dataset to train for
+                    'EPOCHS': 14,  # Number of full passes through the dataset to train for
                     'EARLY_STOPPING': True,  # Should validation data checks be used for early stopping?
                     'VAL_BY_EPOCHS': False,  # Validation at end of each epoch or every 'val_iters'?
                     'VAL_ITERS': 3000,  # Number of training iterations between validation checks,
