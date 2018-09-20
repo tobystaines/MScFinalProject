@@ -53,7 +53,7 @@ def compute_spectrogram(audio, n_fft, fft_hop, normalise=False):
 
     with tf.name_scope('read_spectrogram'):
         ret = tf.py_func(mono_func, [audio, normalise], tf.float32, stateful=False)
-        ret.set_shape([None, 1 + n_fft / 2, 2])
+        ret.set_shape([(audio.get_shape()[0].value/fft_hop) + 1, 1 + n_fft / 2, 2])
     return ret
 
 
