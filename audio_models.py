@@ -1,5 +1,5 @@
 import tensorflow as tf
-import Model_functions as mf
+import model_functions as mf
 
 
 class UNetModel(object):
@@ -31,7 +31,7 @@ class UNetModel(object):
 
             self.gen_voice = self.voice_mask * mixed_mag
 
-            self.pw_cost = mf.pw_l1_loss(self.gen_voice, voice_mag)
+            self.pw_cost = mf.l1_loss(self.gen_voice, voice_mag)
             self.cost = tf.reduce_mean(self.pw_cost)
 
             self.optimizer = tf.train.AdamOptimizer(
@@ -161,3 +161,5 @@ class CapsUNetDecoder(object):
         net = input_tensor
 
         self.output = net
+
+

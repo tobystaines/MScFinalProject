@@ -8,8 +8,8 @@ import errno
 import datetime
 import pickle
 
-import UNet
-import Dataset
+import audio_models
+import dataset
 
 
 ex = Experiment('UNet_Speech_Separation', interactive=True)
@@ -241,7 +241,7 @@ def do_experiment(model_config):
 
     # Prepare data
     print('Preparing dataset')
-    train_data, val_data, test_data = Dataset.prepare_datasets(model_config)
+    train_data, val_data, test_data = dataset.prepare_datasets(model_config)
     print('Dataset ready')
 
     # Start session
@@ -274,7 +274,7 @@ def do_experiment(model_config):
 
     # Build U-Net model
     print('Creating model')
-    model = UNet.UNetModel(mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio, 'unet', is_training, name='U_Net_Model')
+    model = audio_models.UNetModel(mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio, 'unet', is_training, name='U_Net_Model')
     sess.run(tf.global_variables_initializer())
 
     if model_config['loading']:

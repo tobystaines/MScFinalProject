@@ -6,7 +6,7 @@ import datetime
 from glob import glob
 import numpy as np
 import mir_eval
-import Audio_functions as af
+import audio_functions as af
 
 """
 This script takes the results of a test set being passed through a model, converts the relevant parts from spectrogram 

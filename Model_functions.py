@@ -1,5 +1,5 @@
 import tensorflow as tf
-from functools import partial
+
 
 def concat(x, y):
     return tf.concat([x, y], axis=3)
