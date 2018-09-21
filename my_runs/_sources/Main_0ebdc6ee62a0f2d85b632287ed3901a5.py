@@ -21,7 +21,7 @@ def cfg():
     model_config = {'saving': True,  # Whether to take checkpoints
                     'loading': False,  # Whether to load an existing checkpoint
                     'dataset': 'both',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
-                    'local_run': False,  # Whether experiment is running on laptop or server
+                    'local_run': True,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "36/36-6",  # Checkpoint format: run/run-epoch
                     'INITIALISATION_TEST': True,  # Whether or not to calculate test metrics before training
                     'SAMPLE_RATE': 16384,  # Desired sample rate of audio. Input will be resampled to this
