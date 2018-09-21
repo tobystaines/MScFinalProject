@@ -41,20 +41,20 @@ def get_test_metrics(experiment_id):
             test_costs.append(cost)
             for i in range(voice_est_mag.shape[0]):
                 # Transform output back to audio
-                print('{ts}:\treconstructing audio {i}.'.format(ts=datetime.datetime.now(), i=i))
+                #print('{ts}:\treconstructing audio {i}.'.format(ts=datetime.datetime.now(), i=i))
                 voice_est = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T, model_config['N_FFT'],
                                                       model_config['FFT_HOP'], phase=np.squeeze(mixed_phase[i, :, :, :]).T)
-                print('{ts}:\taudio reconstructed{i}.'.format(ts=datetime.datetime.now(), i=i))
+                #print('{ts}:\taudio reconstructed{i}.'.format(ts=datetime.datetime.now(), i=i))
                 # Reshape for mir_eval
                 voice_est = np.expand_dims(voice_est, 1).T
                 voice_patch = voice[i, :, :].T
                 mixed_patch = mixed_audio[i, :, :].T
                 # Calculate audio quality statistics
-                print('{ts}:\tcalculating metrics {i}.'.format(ts=datetime.datetime.now(), i=i))
+                #print('{ts}:\tcalculating metrics {i}.'.format(ts=datetime.datetime.now(), i=i))
                 sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch, voice_est, compute_permutation=False)
                 sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(voice_patch, mixed_patch, compute_permutation=False)
                 nsdr = sdr[0] - sdr_mr[0]
-                print('{ts}:\tmetrics calculated {i}.'.format(ts=datetime.datetime.now(), i=i))
+                #print('{ts}:\tmetrics calculated {i}.'.format(ts=datetime.datetime.now(), i=i))
 
                 sdrs.append(sdr[0])
                 sirs.append(sir[0])
