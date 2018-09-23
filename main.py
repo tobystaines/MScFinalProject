@@ -21,7 +21,7 @@ def cfg():
                     'saving': True,  # Whether to take checkpoints
                     'loading': False,  # Whether to load an existing checkpoint
                     'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
-                    'local_run': True,  # Whether experiment is running on laptop or server
+                    'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "36/36-6",  # Checkpoint format: run/run-epoch
                     'initialisation_test': True,  # Whether or not to calculate test metrics before training
                     'sample_rate': 16384,  # Desired sample rate of audio. Input will be resampled to this
@@ -31,8 +31,8 @@ def cfg():
                     'patch_window': 256,  # Number of fourier transforms (rows) in each patch
                     'patch_hop': 128,  # Number of fourier transforms between the start of each patch
                     'batch_size': 10,  # Number of patches in each batch
-                    'n_shuffle': 50,  # Number of patches buffered before batching
-                    'epochs': 5,  # Number of full passes through the dataset to train for
+                    'n_shuffle': 100,  # Number of patches buffered before batching
+                    'epochs': 15,  # Number of full passes through the dataset to train for
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
                     'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 3000,  # Number of training iterations between validation checks,
