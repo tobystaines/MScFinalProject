@@ -17,24 +17,24 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'model_variant': 'basic_capsnet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
-                    'saving': True,  # Whether to take checkpoints
+    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsent']
+                    'saving': False,  # Whether to take checkpoints
                     'loading': False,  # Whether to load an existing checkpoint
                     'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': True,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "36/36-6",  # Checkpoint format: run/run-epoch
-                    'initialisation_test': True,  # Whether or not to calculate test metrics before training
+                    'initilisation_test': False,  # Whether or not to calculate test metrics before training
                     'sample_rate': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'n_fft': 1024,  # Number of samples in each fourier transform
                     'fft_hop': 256,  # Number of samples between the start of each fourier transform
                     'n_parallel_readers': 16,
                     'patch_window': 256,  # Number of fourier transforms (rows) in each patch
                     'patch_hop': 128,  # Number of fourier transforms between the start of each patch
-                    'batch_size': 10,  # Number of patches in each batch
-                    'n_shuffle': 50,  # Number of patches buffered before batching
-                    'epochs': 5,  # Number of full passes through the dataset to train for
+                    'batch_size': 5,  # Number of patches in each batch
+                    'n_shuffle': 10,  # Number of patches buffered before batching
+                    'epochs': 1,  # Number of full passes through the dataset to train for
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
-                    'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
+                    'val_by_epochs': False,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 3000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
                     'normalise_mag': True  # Are magnitude spectrograms normalised in pre-processing?
@@ -113,7 +113,7 @@ def do_experiment(model_config):
 
     # Get baseline metrics at initialisation
     test_count = 0
-    if model_config['initialisation_test']:
+    if model_config['INITIALISATION_TEST']:
         print('Running initialisation test')
         initial_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle,
                                              writer, test_count, experiment_id)
@@ -126,7 +126,7 @@ def do_experiment(model_config):
     mean_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer,
                                       test_count, experiment_id)
     print('{ts}:\n\tAll done!'.format(ts=datetime.datetime.now()))
-    if model_config['initialisation_test']:
+    if model_config['INITIALISATION_TEST']:
         print('\tInitial test loss: {init}'.format(init=initial_test_loss))
     print('\tFinal test loss: {final}'.format(final=mean_test_loss))
 

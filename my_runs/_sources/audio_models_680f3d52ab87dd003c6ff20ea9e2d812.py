@@ -28,11 +28,11 @@ class AudioModel(object):
             self.is_training = is_training
 
             if self.variant in ['unet', 'capsunet']:
-                self.voice_mask_network = UNet(mixed_mag, variant, is_training=is_training, reuse=False, name='voice-mask-unet')
+                self.voice_mask_net = UNet(mixed_mag, variant, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant == 'basic_capsnet':
-                self.voice_mask_network = BasicCapsnet(mixed_mag, name='SegCaps_CapsNetBasic')
+                self.voice_mask_net = BasicCapsnet(mixed_mag)
 
-            self.voice_mask = self.voice_mask_network.output
+            self.voice_mask = self.voice_mask_net.output
 
             self.gen_voice = self.voice_mask * mixed_mag
 
@@ -170,7 +170,7 @@ class CapsUNetDecoder(object):
 
 class BasicCapsnet(object):
 
-    def __init__(self, mixed_mag, name):
+    def __init__(self, mixed_mag, name='SegCaps_CapsNetBasic'):
         """
         input_tensor: Tensor with shape [batch_size, height, width, channels]
         is_training:  Boolean - should the model be trained on the current input or not

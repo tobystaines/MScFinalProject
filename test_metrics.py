@@ -42,8 +42,8 @@ def get_test_metrics(experiment_id):
             for i in range(voice_est_mag.shape[0]):
                 # Transform output back to audio
                 #print('{ts}:\treconstructing audio {i}.'.format(ts=datetime.datetime.now(), i=i))
-                voice_est = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T, model_config['N_FFT'],
-                                                      model_config['FFT_HOP'], phase=np.squeeze(mixed_phase[i, :, :, :]).T)
+                voice_est = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T, model_config['n_fft'],
+                                                      model_config['fft_hop'], phase=np.squeeze(mixed_phase[i, :, :, :]).T)
                 #print('{ts}:\taudio reconstructed{i}.'.format(ts=datetime.datetime.now(), i=i))
                 # Reshape for mir_eval
                 voice_est = np.expand_dims(voice_est, 1).T
