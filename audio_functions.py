@@ -5,7 +5,6 @@ import soundfile as sf
 
 
 def read_audio_py(py_path, sample_rate):
-    #mono, _ = librosa.load(py_path, sr=sample_rate, mono=True)
     mono, native_sr = sf.read(py_path)
     if native_sr != sample_rate:
         mono = librosa.core.resample(mono, native_sr, sample_rate)
