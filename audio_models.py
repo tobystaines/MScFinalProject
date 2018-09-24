@@ -180,29 +180,29 @@ class BasicCapsnet(object):
             self.mixed_mag = mixed_mag
 
             with tf.variable_scope('Convolution'):
-                conv1 = mf.conv(mixed_mag, filters=128, kernel_size=5, stride=(1, 1))
+                net = mf.conv(mixed_mag, filters=128, kernel_size=5, stride=(1, 1))
 
                 # Reshape layer to be 1 capsule x [filters] atoms
-                _, H, W, C = conv1.get_shape()
-                conv1 = layers.Reshape((H.value, W.value, 1, C.value))(conv1)
-                self.conv1 = conv1
+                _, H, W, C = net.get_shape()
+                net = layers.Reshape((H.value, W.value, 1, C.value))(net)
+                #self.conv1 = conv1
 
             with tf.variable_scope('Primary_Caps'):
-                primary_caps = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=32, strides=1,
-                                                               padding='same',
-                                                               routings=1, name='primarycaps')(conv1)
-                self.primary_caps = primary_caps
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=32, strides=1,
+                                                      padding='same',
+                                                      routings=1, name='primarycaps')(net)
+                #self.primary_caps = primary_caps
 
             with tf.variable_scope('Seg_Caps'):
-                seg_caps = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=16, strides=1,
-                                                           padding='same',
-                                                           routings=3, name='seg_caps')(primary_caps)
-                self.seg_caps = seg_caps
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=16, strides=1,
+                                                      padding='same',
+                                                      routings=3, name='seg_caps')(net)
+                #self.seg_caps = seg_caps
 
             with tf.variable_scope('Reconstruction'):
-                reconstruction = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=1, strides=1,
-                                                                 padding='same',
-                                                                 routings=3, name='seg_caps')(primary_caps)
-                reconstruction = tf.squeeze(reconstruction, -1)
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=1, strides=1,
+                                                      padding='same',
+                                                      routings=3, name='seg_caps')(net)
+                net = tf.squeeze(net, -1)
 
-            self.output = reconstruction
+            self.output = net
