@@ -94,7 +94,6 @@ def get_test_metrics(argv):
     return metrics
 
 
-exp_id = str(sys.argv[1])
-test_metrics = get_test_metrics(exp_id)
+test_metrics = get_test_metrics(sys.argv)
 print('{ts}:\nProcessing complete\n{t}'.format(ts=datetime.datetime.now(), t=test_metrics))
 
