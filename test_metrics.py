@@ -21,9 +21,9 @@ def get_test_metrics(argv):
 
     experiment_id = argv[1]
     if len(argv) == 3:
-        phaseIterations = argv[2]
+        phase_iterations = int(argv[2])
     else:
-        phaseIterations = 0
+        phase_iterations = 0
 
 
     # Calculate number of test runs in experiment
@@ -50,7 +50,7 @@ def get_test_metrics(argv):
                 # Transform output back to audio
                 #print('{ts}:\treconstructing audio {i}.'.format(ts=datetime.datetime.now(), i=i))
                 voice_est = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T, model_config['n_fft'],
-                                                      model_config['fft_hop'], phaseIterations=phaseIterations, phase=np.squeeze(mixed_phase[i, :, :, :]).T)
+                                                      model_config['fft_hop'], phaseIterations=phase_iterations, phase=np.squeeze(mixed_phase[i, :, :, :]).T)
                 #print('{ts}:\taudio reconstructed{i}.'.format(ts=datetime.datetime.now(), i=i))
                 # Reshape for mir_eval
                 voice_est = np.expand_dims(voice_est, 1).T
