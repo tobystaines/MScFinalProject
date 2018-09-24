@@ -1,0 +1,108 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "numpy==1.15.1",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.4.1"
+    ],
+    "mainfile": "main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "audio_models.py",
+        "_sources/audio_models_65c562d1d647f7d62e19b095d4b79d4c.py"
+      ],
+      [
+        "dataset.py",
+        "_sources/dataset_c4af57787530fd9f325b3ddc2199e202.py"
+      ],
+      [
+        "main.py",
+        "_sources/main_ceba98a70061af77cec2f36a39eb60bf.py"
+      ],
+      [
+        "train.py",
+        "_sources/train_33dabdfa5962d3e08945dee7e800c2e8.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1323, in _do_call\n    return fn(*args)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1302, in _run_fn\n    status, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/errors_impl.py\", line 473, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.ResourceExhaustedError: OOM when allocating tensor with shape[10,256,512,8,32]\n\t [[Node: U_Net_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2 = Mul[T=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"](U_Net_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv, U_Net_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_1)]]\n\t [[Node: U_Net_Model/mul/_65 = _Recv[client_terminated=false, recv_device=\"/job:localhost/replica:0/task:0/device:CPU:0\", send_device=\"/job:localhost/replica:0/task:0/device:GPU:0\", send_device_incarnation=1, tensor_name=\"edge_1069_U_Net_Model/mul\", tensor_type=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"]()]]\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 123, in do_experiment\n    validation_iterator, validation_handle, writer)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 72, in train\n    handle: training_handle})\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 889, in run\n    run_metadata_ptr)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1120, in _run\n    feed_dict_tensor, options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1317, in _do_run\n    options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1336, in _do_call\n    raise type(e)(node_def, op, message)\n",
+    "tensorflow.python.framework.errors_impl.ResourceExhaustedError: OOM when allocating tensor with shape[10,256,512,8,32]\n\t [[Node: U_Net_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2 = Mul[T=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"](U_Net_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv, U_Net_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_1)]]\n\t [[Node: U_Net_Model/mul/_65 = _Recv[client_terminated=false, recv_device=\"/job:localhost/replica:0/task:0/device:CPU:0\", send_device=\"/job:localhost/replica:0/task:0/device:GPU:0\", send_device_incarnation=1, tensor_name=\"edge_1069_U_Net_Model/mul\", tensor_type=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"]()]]\n\nCaused by op 'U_Net_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2', defined at:\n  File \"main.py\", line 57, in <module>\n    @ex.automain\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 137, in automain\n    self.run_commandline()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 260, in run_commandline\n    return self.run(cmd_name, config_updates, named_configs, {}, args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 209, in run\n    run()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/run.py\", line 221, in __call__\n    self.result = self.main_function(*args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n  File \"main.py\", line 100, in do_experiment\n    model_config['model_variant'], is_training, name='U_Net_Model')\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 33, in __init__\n    self.voice_mask_network = BasicCapsnet(mixed_mag, name='SegCaps_CapsNetBasic')\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 193, in __init__\n    routings=1, name='primarycaps')(net)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/keras/engine/base_layer.py\", line 457, in __call__\n    output = self.call(inputs, **kwargs)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py\", line 154, in call\n    num_routing=self.routings)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py\", line 345, in update_routing\n    swap_memory=True)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/control_flow_ops.py\", line 2816, in while_loop\n    result = loop_context.BuildLoop(cond, body, loop_vars, shape_invariants)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/control_flow_ops.py\", line 2640, in BuildLoop\n    pred, body, original_loop_vars, loop_vars, shape_invariants)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/control_flow_ops.py\", line 2590, in _BuildLoop\n    body_result = body(*packed_vars_for_body)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py\", line 326, in _body\n    activation = _squash(preactivate)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py\", line 353, in _squash\n    return (input_tensor / norm) * (norm_squared / (1 + norm_squared))\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/math_ops.py\", line 894, in binary_op_wrapper\n    return func(x, y, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/math_ops.py\", line 1117, in _mul_dispatch\n    return gen_math_ops._mul(x, y, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/gen_math_ops.py\", line 2726, in _mul\n    \"Mul\", x=x, y=y, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/op_def_library.py\", line 787, in _apply_op_helper\n    op_def=op_def)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 2956, in create_op\n    op_def=op_def)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 1470, in __init__\n    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access\n\nResourceExhaustedError (see above for traceback): OOM when allocating tensor with shape[10,256,512,8,32]\n\t [[Node: U_Net_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2 = Mul[T=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"](U_Net_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv, U_Net_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_1)]]\n\t [[Node: U_Net_Model/mul/_65 = _Recv[client_terminated=false, recv_device=\"/job:localhost/replica:0/task:0/device:CPU:0\", send_device=\"/job:localhost/replica:0/task:0/device:GPU:0\", send_device_incarnation=1, tensor_name=\"edge_1069_U_Net_Model/mul\", tensor_type=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"]()]]\n\n"
+  ],
+  "heartbeat": "2018-09-24T08:09:50.277283",
+  "host": {
+    "ENV": {},
+    "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
+    "gpus": {
+      "driver_version": "396.44",
+      "gpus": [
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11177
+        },
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11178
+        }
+      ]
+    },
+    "hostname": "asia",
+    "os": [
+      "Linux",
+      "Linux-4.15.0-33-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-09-24T07:41:34.331400",
+  "status": "FAILED",
+  "stop_time": "2018-09-24T08:09:50.283836"
+}
