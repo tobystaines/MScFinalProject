@@ -17,7 +17,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
+    model_config = {'model_variant': 'basic_capsnet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'saving': True,  # Whether to take checkpoints
                     'loading': False,  # Whether to load an existing checkpoint
                     'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
