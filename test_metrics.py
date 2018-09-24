@@ -43,23 +43,43 @@ def get_test_metrics(argv):
 
         #  There will be one pickle file per batch. For each one, load it and calculate the metrics
         for file in test_files:
-            cost, voice_est_mag, voice, mixed_audio, mixed_phase, model_config = pickle.load(open(file, 'rb'))
+            cost, voice_est_mag, voice_ref_mag, voice_ref_audio, \
+                mixed_audio, mixed_mag, mixed_phase, model_config = pickle.load(open(file, 'rb'))
             print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
             test_costs.append(cost)
+            background_ref_mag = mixed_mag - voice_ref_mag
+            background_est_mag = mixed_mag - voice_est_mag
             for i in range(voice_est_mag.shape[0]):
                 # Transform output back to audio
                 #print('{ts}:\treconstructing audio {i}.'.format(ts=datetime.datetime.now(), i=i))
-                voice_est = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T, model_config['n_fft'],
-                                                      model_config['fft_hop'], phaseIterations=phase_iterations, phase=np.squeeze(mixed_phase[i, :, :, :]).T)
+                voice_est_audio = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T,
+                                                            model_config['n_fft'], model_config['fft_hop'],
+                                                            phaseIterations=phase_iterations,
+                                                            phase=np.squeeze(mixed_phase[i, :, :, :]).T)
+                background_ref_audio = af.spectrogramToAudioFile(np.squeeze(background_ref_mag[i, :, :, :]).T,
+                                                                 model_config['n_fft'], model_config['fft_hop'],
+                                                                 phaseIterations=phase_iterations,
+                                                                 phase=np.squeeze(mixed_phase[i, :, :, :]).T)
+                background_est_audio = af.spectrogramToAudioFile(np.squeeze(background_est_mag[i, :, :, :]).T,
+                                                                 model_config['n_fft'],  model_config['fft_hop'],
+                                                                 phaseIterations=phase_iterations,
+                                                                 phase=np.squeeze(mixed_phase[i, :, :, :]).T)
                 #print('{ts}:\taudio reconstructed{i}.'.format(ts=datetime.datetime.now(), i=i))
                 # Reshape for mir_eval
-                voice_est = np.expand_dims(voice_est, 1).T
-                voice_patch = voice[i, :, :].T
-                mixed_patch = mixed_audio[i, :, :].T
+                voice_est_audio = np.expand_dims(voice_est_audio, 1).T
+                background_ref_audio = np.expand_dims(background_ref_audio, 1).T
+                background_est_audio = np.expand_dims(background_est_audio, 1).T
+                voice_ref_audio_patch = voice_ref_audio[i, :, :].T
+                mixed_audio_patch = mixed_audio[i, :, :].T
+
+                ref_sources = np.concatenate((voice_ref_audio_patch, background_ref_audio), axis=0)
+                est_sources = np.concatenate((voice_est_audio, background_est_audio), axis=0)
+                mixed_sources = np.concatenate((mixed_audio_patch, mixed_audio_patch), axis=0)
+
                 # Calculate audio quality statistics
                 #print('{ts}:\tcalculating metrics {i}.'.format(ts=datetime.datetime.now(), i=i))
-                sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(voice_patch, voice_est, compute_permutation=False)
-                sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(voice_patch, mixed_patch, compute_permutation=False)
+                sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(ref_sources, est_sources, compute_permutation=False)
+                sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(ref_sources, mixed_sources, compute_permutation=False)
                 nsdr = sdr[0] - sdr_mr[0]
                 #print('{ts}:\tmetrics calculated {i}.'.format(ts=datetime.datetime.now(), i=i))
 
