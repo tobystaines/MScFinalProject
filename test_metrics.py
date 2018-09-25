@@ -25,7 +25,6 @@ def get_test_metrics(argv):
     else:
         phase_iterations = 0
 
-
     # Calculate number of test runs in experiment
     dump_folder = 'dumps/' + experiment_id
     file_list = glob(dump_folder + '/*')
@@ -36,10 +35,10 @@ def get_test_metrics(argv):
         print('{ts}:\tProcessing test {t}'.format(ts=datetime.datetime.now(), t=test))
         test_files = [file for file in file_list if file.split('_')[2] == str(test)]
         test_costs = list()
-        sdrs = list()
-        sirs = list()
-        sars = list()
-        nsdrs = list()
+        sdrs = np.empty((0, 2))
+        sirs = np.empty((0, 2))
+        sars = np.empty((0, 2))
+        nsdrs = np.empty((0, 2))
 
         #  There will be one pickle file per batch. For each one, load it and calculate the metrics
         for file in test_files:
@@ -80,24 +79,24 @@ def get_test_metrics(argv):
                 #print('{ts}:\tcalculating metrics {i}.'.format(ts=datetime.datetime.now(), i=i))
                 sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(ref_sources, est_sources, compute_permutation=False)
                 sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(ref_sources, mixed_sources, compute_permutation=False)
-                nsdr = sdr[0] - sdr_mr[0]
+                nsdr = sdr - sdr_mr
                 #print('{ts}:\tmetrics calculated {i}.'.format(ts=datetime.datetime.now(), i=i))
 
-                sdrs.append(sdr[0])
-                sirs.append(sir[0])
-                sars.append(sar[0])
-                nsdrs.append(nsdr)
+                sdrs = np.concatenate((sdrs, np.expand_dims(sdr, 1).T), axis=0)
+                sirs = np.concatenate((sirs, np.expand_dims(sir, 1).T), axis=0)
+                sars = np.concatenate((sars, np.expand_dims(sar, 1).T), axis=0)
+                nsdrs = np.concatenate((nsdrs, np.expand_dims(nsdr, 1).T), axis=0)
             print('{ts}:\t{f} processed.'.format(ts=datetime.datetime.now(), f=file))
 
         #  Record mean results for each metric across all batches in the test
         mean_cost = sum(test_costs) / len(test_costs)
-        mean_sdr = sum(sdrs) / len(sdrs)
-        mean_sir = sum(sirs) / len(sirs)
-        mean_sar = sum(sars) / len(sars)
+        mean_sdr = np.mean(sdrs, axis=0)
+        mean_sir = np.mean(sirs, axis=0)
+        mean_sar = np.mean(sars, axis=0)
         mean_nsdr = sum(nsdrs) / len(nsdrs)
-        metrics.append({'test': test, 'mean_cost': mean_cost, 'mean_sdr': mean_sdr, 'mean_sir': mean_sir,
-                        'mean_sar': mean_sar, 'mean_nsdr': mean_nsdr})
-
+        for (k, v) in (('voice', 0), ('background', 1)):
+            metrics.append({'test': str(test) + '_' + k, 'mean_cost': mean_cost, 'mean_sdr': mean_sdr[v],
+                            'mean_sir': mean_sir[v], 'mean_sar': mean_sar[v], 'mean_nsdr': mean_nsdr[v]})
 
     #  Write the results from the experiment to a CSV file, one row per test
 
@@ -106,7 +105,7 @@ def get_test_metrics(argv):
     file_name = 'test_metrics/' + experiment_id + '.csv'
     with open(file_name, 'w') as csvfile:
         fieldnames = ['test', 'mean_cost', 'mean_sdr', 'mean_sir', 'mean_sar', 'mean_nsdr']
-        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
         writer.writeheader()
         for test in metrics:
             writer.writerow(test)
@@ -114,6 +113,7 @@ def get_test_metrics(argv):
     return metrics
 
 
+#test_metrics = get_test_metrics(['test', '50'])
 test_metrics = get_test_metrics(sys.argv)
 print('{ts}:\nProcessing complete\n{t}'.format(ts=datetime.datetime.now(), t=test_metrics))
 

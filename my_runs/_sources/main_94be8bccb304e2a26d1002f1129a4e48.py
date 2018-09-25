@@ -19,19 +19,19 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'saving': False,  # Whether to take checkpoints
-                    'loading': True,  # Whether to load an existing checkpoint
-                    'dataset': 'both',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
-                    'local_run': False,  # Whether experiment is running on laptop or server
-                    'checkpoint_to_load': "36/36-6",  # Checkpoint format: run/run-epoch
-                    'initialisation_test': False,  # Whether or not to calculate test metrics before training
+                    'loading': False,  # Whether to load an existing checkpoint
+                    'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
+                    'local_run': True,  # Whether experiment is running on laptop or server
+                    'checkpoint_to_load': "26/26-21",  # Checkpoint format: run/run-epoch
+                    'initialisation_test': True,  # Whether or not to calculate test metrics before training
                     'sample_rate': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'n_fft': 1024,  # Number of samples in each fourier transform
                     'fft_hop': 256,  # Number of samples between the start of each fourier transform
-                    'n_parallel_readers': 16,
+                    'n_parallel_readers': 4,
                     'patch_window': 256,  # Number of fourier transforms (rows) in each patch
                     'patch_hop': 128,  # Number of fourier transforms between the start of each patch
-                    'batch_size': 50,  # Number of patches in each batch
-                    'n_shuffle': 1000,  # Number of patches buffered before batching
+                    'batch_size': 5,  # Number of patches in each batch
+                    'n_shuffle': 10,  # Number of patches buffered before batching
                     'epochs': 0,  # Number of full passes through the dataset to train for
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
                     'val_by_epochs': False,  # Validation at end of each epoch or every 'val_iters'?
@@ -67,11 +67,11 @@ def do_experiment(model_config):
     print('Dataset ready')
 
     # Start session
-    tf_config = tf.ConfigProto()
+    #tf_config = tf.ConfigProto()
     #tf_config.gpu_options.allow_growth = True
-    tf_config.gpu_options.visible_device_list = "1"
-    sess = tf.Session(config=tf_config)
-    #sess = tf.Session()
+    #tf_config.gpu_options.visible_device_list = "1"
+    #sess = tf.Session(config=tf_config)
+    sess = tf.Session()
 
     print('Session started')
 
