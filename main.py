@@ -18,12 +18,12 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 @ex.config
 def cfg():
     model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
-                    'saving': False,  # Whether to take checkpoints
-                    'loading': True,  # Whether to load an existing checkpoint
+                    'saving': True,  # Whether to take checkpoints
+                    'loading': False,  # Whether to load an existing checkpoint
                     'dataset': 'both',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "36/36-6",  # Checkpoint format: run/run-epoch
-                    'initialisation_test': False,  # Whether or not to calculate test metrics before training
+                    'initialisation_test': True,  # Whether or not to calculate test metrics before training
                     'sample_rate': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'n_fft': 1024,  # Number of samples in each fourier transform
                     'fft_hop': 256,  # Number of samples between the start of each fourier transform
@@ -32,9 +32,9 @@ def cfg():
                     'patch_hop': 128,  # Number of fourier transforms between the start of each patch
                     'batch_size': 50,  # Number of patches in each batch
                     'n_shuffle': 1000,  # Number of patches buffered before batching
-                    'epochs': 0,  # Number of full passes through the dataset to train for
+                    'epochs': 10,  # Number of full passes through the dataset to train for
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
-                    'val_by_epochs': False,  # Validation at end of each epoch or every 'val_iters'?
+                    'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 3000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
                     'normalise_mag': True  # Are magnitude spectrograms normalised in pre-processing?
