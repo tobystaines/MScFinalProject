@@ -17,10 +17,10 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
+    model_config = {'model_variant': 'basic_capsnet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'saving': True,  # Whether to take checkpoints
                     'loading': False,  # Whether to load an existing checkpoint
-                    'dataset': 'both',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
+                    'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "36/36-6",  # Checkpoint format: run/run-epoch
                     'initialisation_test': True,  # Whether or not to calculate test metrics before training
