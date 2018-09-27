@@ -25,7 +25,7 @@ def read_audio_pair(path_a, path_b, sample_rate):
             tf.py_func(read_audio_py, [path_b, sample_rate], tf.float32, stateful=False))
 
 
-def compute_spectrogram(audio, n_fft, fft_hop, normalise=False, mag_phase=True):
+def compute_spectrogram(audio, n_fft, fft_hop, normalise, mag_phase):
     '''
     Parameters
     ----------

@@ -17,10 +17,10 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
-                    'saving': False,  # Whether to take checkpoints
-                    'loading': True,  # Whether to load an existing checkpoint
-                    'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
+    model_config = {'model_variant': 'capsunet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
+                    'saving': True,  # Whether to take checkpoints
+                    'loading': False,  # Whether to load an existing checkpoint
+                    'dataset': 'LibriSpeech',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "52/52-11",  # Checkpoint format: run/run-epoch
                     'initialisation_test': False,  # Whether or not to calculate test metrics before training
@@ -30,14 +30,15 @@ def cfg():
                     'n_parallel_readers': 16,
                     'patch_window': 256,  # Number of fourier transforms (rows) in each patch
                     'patch_hop': 128,  # Number of fourier transforms between the start of each patch
-                    'batch_size': 50,  # Number of patches in each batch
-                    'n_shuffle': 1000,  # Number of patches buffered before batching
-                    'epochs': 0,  # Number of full passes through the dataset to train for
+                    'batch_size': 10,  # Number of patches in each batch
+                    'n_shuffle': 500,  # Number of patches buffered before batching
+                    'epochs': 500,  # Number of full passes through the dataset to train for
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
-                    'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
-                    'val_iters': 3000,  # Number of training iterations between validation checks,
+                    'val_by_epochs': False,  # Validation at end of each epoch or every 'val_iters'?
+                    'val_iters': 300000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
-                    'normalise_mag': True  # Are magnitude spectrograms normalised in pre-processing?
+                    'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
+                    'mag_phase': False,  # Whether to use a magnitude/phase, or complex number, representation of the spectrogram
                     }
 
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop
@@ -47,8 +48,8 @@ def cfg():
 
     else:  # Data and Checkpoint directories on the uni server
         model_config['chime_data_root'] = '/data/Speech_Data/CHiME3/data/audio/16kHz/isolated/'
-        #model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
-        model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
+        model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
+        #model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
         #model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'
@@ -88,16 +89,25 @@ def do_experiment(model_config):
     validation_handle = sess.run(validation_iterator.string_handle())
     testing_handle = sess.run(testing_iterator.string_handle())
     print('Iterators created')
-    # Create variable placeholders
-    is_training = tf.placeholder(shape=(), dtype=bool)
-    mixed_mag = tf.expand_dims(mixed_spec[:, :, :-1, 0], 3)
-    mixed_phase = tf.expand_dims(mixed_spec[:, :, :-1, 1], 3)
-    voice_mag = tf.expand_dims(voice_spec[:, :, :-1, 0], 3)
 
-    # Build U-Net model
-    print('Creating model')
-    model = audio_models.AudioModel(mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio,
-                                    model_config['model_variant'], is_training, name='U_Net_Model')
+    # Create variable placeholders and model
+    is_training = tf.placeholder(shape=(), dtype=bool)
+    if model_config['mag_phase']:
+        mixed_mag = tf.expand_dims(mixed_spec[:, :, :-1, 0], 3)
+        mixed_phase = tf.expand_dims(mixed_spec[:, :, :-1, 1], 3)
+        voice_mag = tf.expand_dims(voice_spec[:, :, :-1, 0], 3)
+
+        print('Creating model')
+        model = audio_models.MagnitudeModel(mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio,
+                                            model_config['model_variant'], is_training, name='U_Net_Model')
+    else:
+        mixed_spec_trim = mixed_spec[:, :, :-1, :]
+        voice_spec_trim = voice_spec[:, :, :-1, :]
+
+        print('Creating model')
+        model = audio_models.ComplexNumberModel(mixed_spec_trim, voice_spec_trim, mixed_audio, voice_audio,
+                                                model_config['model_variant'], is_training=True)
+
     sess.run(tf.global_variables_initializer())
 
     if model_config['loading']:
@@ -125,7 +135,7 @@ def do_experiment(model_config):
     # Test trained model
     mean_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer,
                                       test_count, experiment_id)
-    print('{ts}:\n\tAll done!'.format(ts=datetime.datetime.now()))
+    print('{ts}:\n\tAll done with experiment {exid}!'.format(ts=datetime.datetime.now(), exid=experiment_id))
     if model_config['initialisation_test']:
         print('\tInitial test loss: {init}'.format(init=initial_test_loss))
     print('\tFinal test loss: {final}'.format(final=mean_test_loss))

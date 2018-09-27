@@ -51,7 +51,8 @@ def get_paired_dataset(zipped_files,
                        n_parallel_readers,
                        batch_size,
                        n_shuffle,
-                       normalise):
+                       normalise,
+                       mag_phase):
 
     return (
         tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1]))
@@ -67,7 +68,8 @@ def get_paired_dataset(zipped_files,
         .map(partial(af.compute_spectrogram_map,
                      n_fft=n_fft,
                      fft_hop=fft_hop,
-                     normalise=normalise),
+                     normalise=normalise,
+                     mag_phase=mag_phase),
              num_parallel_calls=n_parallel_readers)
         .shuffle(n_shuffle).batch(batch_size).prefetch(3)
     )
@@ -86,7 +88,8 @@ def prepare_datasets(model_config):
                                    model_config['n_parallel_readers'],
                                    model_config['batch_size'],
                                    model_config['n_shuffle'],
-                                   model_config['normalise_mag'])
+                                   model_config['normalise_mag'],
+                                   model_config['mag_phase'])
 
         val_files = zip_files(os.path.join(root, path['x_val']),
                               os.path.join(root, path['y_val']))
@@ -99,7 +102,8 @@ def prepare_datasets(model_config):
                                  model_config['n_parallel_readers'],
                                  model_config['batch_size'],
                                  model_config['n_shuffle'],
-                                 model_config['normalise_mag'])
+                                 model_config['normalise_mag'],
+                                 model_config['mag_phase'])
 
         test_files = zip_files(os.path.join(root, path['x_test']),
                                os.path.join(root, path['y_test']))
@@ -112,7 +116,8 @@ def prepare_datasets(model_config):
                                   model_config['n_parallel_readers'],
                                   model_config['batch_size'],
                                   model_config['n_shuffle'],
-                                  model_config['normalise_mag'])
+                                  model_config['normalise_mag'],
+                                  model_config['mag_phase'])
         return train, val, test
 
     if model_config['local_run']:  # If running on local machine, mini dataset is all in one folder
@@ -176,7 +181,8 @@ def prepare_datasets(model_config):
                                                   model_config['n_parallel_readers'],
                                                   model_config['batch_size'],
                                                   model_config['n_shuffle'],
-                                                  model_config['normalise_mag'])
+                                                  model_config['normalise_mag'],
+                                                  model_config['mag_phase'])
 
             val_file_list = np.empty((0, 2))
             for i in range(len(voice_val_dirs)):
@@ -190,7 +196,8 @@ def prepare_datasets(model_config):
                                                 model_config['n_parallel_readers'],
                                                 model_config['batch_size'],
                                                 model_config['n_shuffle'],
-                                                model_config['normalise_mag'])
+                                                model_config['normalise_mag'],
+                                                model_config['mag_phase'])
 
             test_file_list = np.empty((0, 2))
             for i in range(len(voice_test_dirs)):
@@ -204,7 +211,8 @@ def prepare_datasets(model_config):
                                                  model_config['n_parallel_readers'],
                                                  model_config['batch_size'],
                                                  model_config['n_shuffle'],
-                                                 model_config['normalise_mag'])
+                                                 model_config['normalise_mag'],
+                                                 model_config['mag_phase'])
 
         if model_config['dataset'] == 'CHiME':
             return chime_train_data, chime_val_data, chime_test_data

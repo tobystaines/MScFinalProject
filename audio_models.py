@@ -4,7 +4,7 @@ from SegCaps import capsule_layers
 from keras import layers
 
 
-class AudioModel(object):
+class MagnitudeModel(object):
     """
     Top level U-Net object.
     Attributes:
@@ -208,47 +208,101 @@ class BasicCapsnet(object):
             self.output = net
 
 
-class ComplexNumberCapsNet(object):
+class ComplexNumberModel(object):
+    """
+    Top level U-Net object.
+    Attributes:
+        mixed_mag: Input placeholder for magnitude spectrogram of mixed signals (voice plus background noise) - X
+        voice_mag: Input placeholder for magnitude spectrogram of isolated voice signal - Y
+        mixed_phase: Input placeholder for phase spectrogram of mixed signals (voice plus background noise)
+        mixed_audio: Input placeholder for waveform audio of mixed signals (voice plus background noise)
+        voice_audio: Input placeholder for waveform audio of isolated voice signal
+        variant: The type of U-Net model (Normal convolutional or capsule based)
+        is_training: Boolean - should the model be trained on the current input or not
+        name: Model instance name
+    """
 
-    def __init__(self, mixed_spec, voice_spec, is_training, reuse=True, name='complex_number_capsnet'):
-        """
-        input_tensor: Tensor with shape [batch_size, height, width, 2], where the two channels are the real
-                      and imaginary parts of the spectrogram
-        is_training:  Boolean - should the model be trained on the current input or not
-        name:         Model instance name
-        """
+    def __init__(self, mixed_spec, voice_spec, mixed_audio, voice_audio, variant, is_training,
+                 name='complex_unet_model'):
         with tf.variable_scope(name):
             self.mixed_spec = mixed_spec
             self.voice_spec = voice_spec
 
-            with tf.variable_scope('Primary_Caps'):
-                # Reshape layer to be 1 capsule x [filters] atoms
-                _, H, W, C = mixed_spec.get_shape()
-                input_caps = layers.Reshape((H.value, W.value, 1, C.value))(mixed_spec)
-                self.input_caps = input_caps
+            self.input_shape = mixed_spec.get_shape().as_list()
+            self.mixed_audio = mixed_audio
+            self.voice_audio = voice_audio
+            self.variant = variant
+            self.is_training = is_training
 
-            with tf.variable_scope('Conv_Caps'):
-                conv_caps = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=2, strides=1,
-                                                            padding='same',
-                                                            routings=1, name='primarycaps')(input_caps)
-                self.conv_caps = conv_caps
+            self.voice_mask_unet = ComplexUNet(mixed_spec, variant, is_training=is_training, reuse=False,
+                                               name='voice-mask-unet')
 
-            #            with tf.variable_scope('Seg_Caps'):
-            #                seg_caps = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=16, num_atoms=2, strides=1, padding='same',
-            #                                                           routings=3, name='seg_caps')(conv_caps)
-            #                self.seg_caps = seg_caps
+            self.voice_mask = self.voice_mask_unet.output
 
-            with tf.variable_scope('Reconstruction'):
-                reconstruction = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=2, strides=1,
-                                                                 padding='same',
-                                                                 routings=3, name='seg_caps')(conv_caps)
-                reconstruction = layers.Reshape((H.value, W.value, C.value))(reconstruction)
-                self.reconstruction = reconstruction
+            self.gen_voice = self.voice_mask * mixed_spec
 
-            self.cost = mf.l1_loss(self.reconstruction, voice_spec)
+            self.cost = mf.l1_loss(self.gen_voice, voice_spec)
 
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=0.0002,
                 beta1=0.5,
             )
             self.train_op = self.optimizer.minimize(self.cost)
+
+
+class ComplexUNet(object):
+
+    def __init__(self, input_tensor, variant, is_training, reuse, name):
+        with tf.variable_scope(name, reuse=reuse):
+            self.variant = variant
+
+            if self.variant == 'unet':
+                self.encoder = UNetEncoder(input_tensor, is_training, reuse)
+                self.decoder = UNetDecoder(self.encoder.output, self.encoder, is_training, reuse)
+            elif self.variant == 'capsunet':
+                self.encoder = ComplexEncoder(input_tensor)
+                self.decoder = ComplexDecoder(self.encoder.output, self.encoder)
+
+            self.output = mf.tanh(self.decoder.output) / 2 + .5
+
+
+class ComplexEncoder(object):
+    def __init__(self, input_tensor):
+        net = input_tensor
+        with tf.variable_scope('encoder'):
+            with tf.variable_scope('layer-1'):
+                # Reshape layer to be 1 capsule x [filters] atoms
+                _, self.H, self.W, self.C = net.get_shape()
+                net = layers.Reshape((self.H.value, self.W.value, 1, self.C.value))(net)
+                self.l1 = net
+
+            with tf.variable_scope('layer-2'):
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=2, strides=2,
+                                                      padding='same',
+                                                      routings=1, name='primarycaps')(net)
+                self.l2 = net
+
+            with tf.variable_scope('layer-3'):
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=32, num_atoms=2, strides=2,
+                                                      padding='same',
+                                                      routings=1, name='primarycaps')(net)
+
+        self.output = net
+
+
+class ComplexDecoder(object):
+    def __init__(self, input_tensor, encoder):
+        net = input_tensor
+        with tf.variable_scope('decoder'):
+            with tf.variable_scope('layer-1'):
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=8, num_atoms=2, upsamp_type='deconv',
+                                                        scaling=2, padding='same', routings=3, name='deconv_cap_1_1')(
+                    net)
+                self.l1 = net
+
+            with tf.variable_scope('layer-2'):
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=1, num_atoms=2, upsamp_type='deconv',
+                                                        scaling=2, padding='same', routings=3, name='deconv_cap_1_1')(
+                    net)
+                net = layers.Reshape((encoder.H.value, encoder.W.value, encoder.C.value))(net)
+            self.output = net
