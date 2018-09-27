@@ -46,7 +46,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 
     print('Starting training')
     # Initialise variables and define summary
-    epoch = 1
+    epoch = 0
     iteration = 1
     last_val_cost = 1
     min_val_cost = 1
@@ -64,7 +64,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
 
     # Begin training loop
     # Train for the specified number of epochs, unless early stopping is triggered
-    while epoch < model_config['epochs'] + 1 and worse_val_checks < model_config['num_worse_val_checks']:
+    while epoch < model_config['epochs'] and worse_val_checks < model_config['num_worse_val_checks']:
         try:
             _, cost, cost_sum, mix, voice, mask, gen_voice = sess.run([model.train_op, model.cost, cost_summary,
                                                                        mix_summary, voice_summary, mask_summary,

@@ -153,9 +153,9 @@ def prepare_datasets(model_config):
 
             mix_train_dirs = glob(model_config['librispeech_data_root'] + 'Mixed/train-clean-100/**/', recursive=True)
             mix_train_dirs.extend(
-                glob(model_config['librispeech_data_root'] + 'Mixed/train-other-500/**/', recursive=True))
-            mix_train_dirs.extend(
                 glob(model_config['librispeech_data_root'] + 'Mixed/train-clean-360/**/', recursive=True))
+            mix_train_dirs.extend(
+                glob(model_config['librispeech_data_root'] + 'Mixed/train-other-500/**/', recursive=True))
             mix_val_dirs = glob(model_config['librispeech_data_root'] + 'Mixed/dev-clean/**/', recursive=True)
             mix_test_dirs = glob(model_config['librispeech_data_root'] + 'Mixed/test-clean/**/', recursive=True)
 

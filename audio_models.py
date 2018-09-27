@@ -188,7 +188,7 @@ class BasicCapsnet(object):
                 #self.conv1 = conv1
 
             with tf.variable_scope('Primary_Caps'):
-                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=32, strides=1,
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=16, strides=1,
                                                       padding='same',
                                                       routings=1, name='primarycaps')(net)
                 #self.primary_caps = primary_caps
@@ -206,3 +206,49 @@ class BasicCapsnet(object):
                 net = tf.squeeze(net, -1)
 
             self.output = net
+
+
+class ComplexNumberCapsNet(object):
+
+    def __init__(self, mixed_spec, voice_spec, is_training, reuse=True, name='complex_number_capsnet'):
+        """
+        input_tensor: Tensor with shape [batch_size, height, width, 2], where the two channels are the real
+                      and imaginary parts of the spectrogram
+        is_training:  Boolean - should the model be trained on the current input or not
+        name:         Model instance name
+        """
+        with tf.variable_scope(name):
+            self.mixed_spec = mixed_spec
+            self.voice_spec = voice_spec
+
+            with tf.variable_scope('Primary_Caps'):
+                # Reshape layer to be 1 capsule x [filters] atoms
+                _, H, W, C = mixed_spec.get_shape()
+                input_caps = layers.Reshape((H.value, W.value, 1, C.value))(mixed_spec)
+                self.input_caps = input_caps
+
+            with tf.variable_scope('Conv_Caps'):
+                conv_caps = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=2, strides=1,
+                                                            padding='same',
+                                                            routings=1, name='primarycaps')(input_caps)
+                self.conv_caps = conv_caps
+
+            #            with tf.variable_scope('Seg_Caps'):
+            #                seg_caps = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=16, num_atoms=2, strides=1, padding='same',
+            #                                                           routings=3, name='seg_caps')(conv_caps)
+            #                self.seg_caps = seg_caps
+
+            with tf.variable_scope('Reconstruction'):
+                reconstruction = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=2, strides=1,
+                                                                 padding='same',
+                                                                 routings=3, name='seg_caps')(conv_caps)
+                reconstruction = layers.Reshape((H.value, W.value, C.value))(reconstruction)
+                self.reconstruction = reconstruction
+
+            self.cost = mf.l1_loss(self.reconstruction, voice_spec)
+
+            self.optimizer = tf.train.AdamOptimizer(
+                learning_rate=0.0002,
+                beta1=0.5,
+            )
+            self.train_op = self.optimizer.minimize(self.cost)

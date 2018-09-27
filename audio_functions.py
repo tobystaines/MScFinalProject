@@ -25,7 +25,7 @@ def read_audio_pair(path_a, path_b, sample_rate):
             tf.py_func(read_audio_py, [path_b, sample_rate], tf.float32, stateful=False))
 
 
-def compute_spectrogram(audio, n_fft, fft_hop, normalise=False):
+def compute_spectrogram(audio, n_fft, fft_hop, normalise=False, mag_phase=True):
     '''
     Parameters
     ----------
@@ -36,22 +36,24 @@ def compute_spectrogram(audio, n_fft, fft_hop, normalise=False):
     Tensor of shape (n_frames, 1 + n_fft / 2, 2), where the last dimension is (magnitude, phase)
     '''
 
-    def stft(x, normalise):
+    def stft(x, normalise, mag_phase):
         spec = librosa.stft(
             x, n_fft=n_fft, hop_length=fft_hop, window='hann')
-        mag = np.abs(spec)
-        if normalise:
-            # TODO: normalize?
-            mag = (mag - mag.min()) / (mag.max() - mag.min())
-        return mag, np.angle(spec)
+        if mag_phase:
+            mag = np.abs(spec)
+            if normalise:
+                mag = (mag - mag.min()) / (mag.max() - mag.min())
+            return mag, np.angle(spec)
+        else:
+            return spec.real, spec.imag
 
-    def mono_func(py_audio, normalise):
-        mag, phase = stft(py_audio[:, 0], normalise)
+    def mono_func(py_audio, normalise, mag_phase):
+        mag, phase = stft(py_audio[:, 0], normalise, mag_phase)
         ret = np.array([mag, phase]).T
         return ret.astype(np.float32)
 
     with tf.name_scope('read_spectrogram'):
-        ret = tf.py_func(mono_func, [audio, normalise], tf.float32, stateful=False)
+        ret = tf.py_func(mono_func, [audio, normalise, mag_phase], tf.float32, stateful=False)
         ret.set_shape([(audio.get_shape()[0].value/fft_hop) + 1, 1 + n_fft / 2, 2])
     return ret
 
@@ -111,9 +113,9 @@ def extract_audio_patches(audio, fft_hop, patch_window, patch_hop):
         return tf.squeeze(tf.reshape(patches, [num_patches, 1, patch_length, 1]), 1)
 
 
-def compute_spectrogram_map(audio_a, audio_b, n_fft, fft_hop, normalise=False):
-    spec_a = compute_spectrogram(audio_a, n_fft, fft_hop, normalise)
-    spec_b = compute_spectrogram(audio_b, n_fft, fft_hop, normalise)
+def compute_spectrogram_map(audio_a, audio_b, n_fft, fft_hop, normalise=False, mag_phase=True):
+    spec_a = compute_spectrogram(audio_a, n_fft, fft_hop, normalise, mag_phase)
+    spec_b = compute_spectrogram(audio_b, n_fft, fft_hop, normalise, mag_phase)
 
     return spec_a, spec_b, audio_a, audio_b
 
