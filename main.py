@@ -106,7 +106,7 @@ def do_experiment(model_config):
 
         print('Creating model')
         model = audio_models.ComplexNumberModel(mixed_spec_trim, voice_spec_trim, mixed_audio, voice_audio,
-                                                model_config['model_variant'], is_training=True)
+                                                model_config['model_variant'], is_training)
 
     sess.run(tf.global_variables_initializer())
 
