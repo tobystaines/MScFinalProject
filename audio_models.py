@@ -279,13 +279,13 @@ class ComplexEncoder(object):
             with tf.variable_scope('layer-2'):
                 net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=2, strides=2,
                                                       padding='same',
-                                                      routings=1, name='primarycaps')(net)
+                                                      routings=1)(net)
                 self.l2 = net
 
             with tf.variable_scope('layer-3'):
                 net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=32, num_atoms=2, strides=2,
                                                       padding='same',
-                                                      routings=1, name='primarycaps')(net)
+                                                      routings=1)(net)
 
         self.output = net
 
@@ -296,13 +296,15 @@ class ComplexDecoder(object):
         with tf.variable_scope('decoder'):
             with tf.variable_scope('layer-1'):
                 net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=8, num_atoms=2, upsamp_type='deconv',
-                                                        scaling=2, padding='same', routings=3, name='deconv_cap_1_1')(
-                    net)
-                #self.l1 = net
+                                                        scaling=2, padding='same', routings=3)(net)
+                net = layers.Concatenate(axis=-2)([net, encoder.l2])
+                self.l1 = net
 
             with tf.variable_scope('layer-2'):
                 net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=1, num_atoms=2, upsamp_type='deconv',
-                                                        scaling=2, padding='same', routings=3, name='deconv_cap_1_1')(
-                    net)
+                                                        scaling=2, padding='same', routings=3)(net)
+                net = layers.Concatenate(axis=-2)([net, encoder.l1])
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=1, num_atoms=2, upsamp_type='deconv',
+                                                        scaling=1, padding='same', routings=3)(net)
                 net = layers.Reshape((encoder.H.value, encoder.W.value, encoder.C.value))(net)
             self.output = net
