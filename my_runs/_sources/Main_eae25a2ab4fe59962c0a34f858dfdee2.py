@@ -17,7 +17,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
+    model_config = {'model_variant': 'capsunet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'saving': True,  # Whether to take checkpoints
                     'loading': False,  # Whether to load an existing checkpoint
                     'dataset': 'CHiME',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
@@ -38,7 +38,7 @@ def cfg():
                     'val_iters': 300000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
                     'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
-                    'mag_phase': True,  # Whether to use a magnitude/phase, or complex number, representation of the spectrogram
+                    'mag_phase': False,  # Whether to use a magnitude/phase, or complex number, representation of the spectrogram
                     }
 
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop

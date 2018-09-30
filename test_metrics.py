@@ -6,6 +6,7 @@ import datetime
 from glob import glob
 import numpy as np
 import mir_eval
+import librosa
 import audio_functions as af
 
 """
@@ -20,8 +21,16 @@ been dumped to pickle files by the main script, so that this script can be run o
 def get_test_metrics(argv):
 
     experiment_id = argv[1]
-    if len(argv) == 3:
-        phase_iterations = int(argv[2])
+
+    if argv[2] == 'mag_phase':
+        mag_phase = True
+    elif argv[2] == 'complex':
+        mag_phase = False
+    else:
+        raise Exception("User must specify 'mag_phase' or 'complex' first argument")
+
+    if len(argv) == 4:
+        phase_iterations = int(argv[3])
     else:
         phase_iterations = 0
 
@@ -42,28 +51,40 @@ def get_test_metrics(argv):
 
         #  There will be one pickle file per batch. For each one, load it and calculate the metrics
         for file in test_files:
-            cost, voice_est_mag, voice_ref_mag, voice_ref_audio, \
-                mixed_audio, mixed_mag, mixed_phase, model_config = pickle.load(open(file, 'rb'))
-            print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
-            test_costs.append(cost)
-            background_ref_mag = mixed_mag - voice_ref_mag
-            background_est_mag = mixed_mag - voice_est_mag
-            for i in range(voice_est_mag.shape[0]):
+            if mag_phase:  # Data to be processed is from a magnitude spectrogram based model
+                cost, voice_est_mag, voice_ref_mag, voice_ref_audio, \
+                    mixed_audio, mixed_mag, mixed_phase, model_config = pickle.load(open(file, 'rb'))
+                print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
+                test_costs.append(cost)
+                background_ref_mag = mixed_mag - voice_ref_mag
+                background_est_mag = mixed_mag - voice_est_mag
+            else:  # Data to be processed is from a complex number spectrogram based model
+                cost, voice_est_spec, voice_ref_spec, \
+                voice_ref_audio, mixed_audio, mixed_spec, model_config = pickle.load(open(file, 'rb'))
+                print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
+                test_costs.append(cost)
+                background_ref_mag = np.abs(mixed_spec) - np.abs(voice_ref_spec)
+                background_est_mag = np.abs(mixed_spec) - np.abs(voice_est_spec)
+                mixed_phase = np.angle(mixed_spec)
+            for i in range(voice_ref_audio.shape[0]):
                 # Transform output back to audio
                 #print('{ts}:\treconstructing audio {i}.'.format(ts=datetime.datetime.now(), i=i))
-                voice_est_audio = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T,
-                                                            model_config['n_fft'], model_config['fft_hop'],
-                                                            phaseIterations=phase_iterations,
-                                                            phase=np.squeeze(mixed_phase[i, :, :, :]).T)
-                background_ref_audio = af.spectrogramToAudioFile(np.squeeze(background_ref_mag[i, :, :, :]).T,
+                if mag_phase:
+                    voice_est_audio = af.spectrogramToAudioFile(voice_est_mag[i, :, :].T,
+                                                                model_config['n_fft'], model_config['fft_hop'],
+                                                                phaseIterations=phase_iterations,
+                                                                phase=mixed_phase[i, :, :].T)
+                else:
+                    voice_est_audio = librosa.istft(voice_est_spec[i, :, :].T, model_config['fft_hop'])
+
+                background_ref_audio = af.spectrogramToAudioFile(background_ref_mag[i, :, :].T,
                                                                  model_config['n_fft'], model_config['fft_hop'],
                                                                  phaseIterations=phase_iterations,
-                                                                 phase=np.squeeze(mixed_phase[i, :, :, :]).T)
-                background_est_audio = af.spectrogramToAudioFile(np.squeeze(background_est_mag[i, :, :, :]).T,
+                                                                 phase=mixed_phase[i, :, :].T)
+                background_est_audio = af.spectrogramToAudioFile(background_est_mag[i, :, :].T,
                                                                  model_config['n_fft'],  model_config['fft_hop'],
                                                                  phaseIterations=phase_iterations,
-                                                                 phase=np.squeeze(mixed_phase[i, :, :, :]).T)
-                #print('{ts}:\taudio reconstructed{i}.'.format(ts=datetime.datetime.now(), i=i))
+                                                                 phase=mixed_phase[i, :, :].T)
                 # Reshape for mir_eval
                 voice_est_audio = np.expand_dims(voice_est_audio, 1).T
                 background_ref_audio = np.expand_dims(background_ref_audio, 1).T
@@ -76,12 +97,9 @@ def get_test_metrics(argv):
                 mixed_sources = np.concatenate((mixed_audio_patch, mixed_audio_patch), axis=0)
 
                 # Calculate audio quality statistics
-                #print('{ts}:\tcalculating metrics {i}.'.format(ts=datetime.datetime.now(), i=i))
                 sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(ref_sources, est_sources, compute_permutation=False)
                 sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(ref_sources, mixed_sources, compute_permutation=False)
                 nsdr = sdr - sdr_mr
-                #print('{ts}:\tmetrics calculated {i}.'.format(ts=datetime.datetime.now(), i=i))
-
                 sdrs = np.concatenate((sdrs, np.expand_dims(sdr, 1).T), axis=0)
                 sirs = np.concatenate((sirs, np.expand_dims(sir, 1).T), axis=0)
                 sars = np.concatenate((sars, np.expand_dims(sar, 1).T), axis=0)
@@ -113,7 +131,7 @@ def get_test_metrics(argv):
     return metrics
 
 
-#test_metrics = get_test_metrics(['test', '50'])
+#test_metrics = get_test_metrics(['test', '59', 'mag_phase'])
 test_metrics = get_test_metrics(sys.argv)
 print('{ts}:\nProcessing complete\n{t}'.format(ts=datetime.datetime.now(), t=test_metrics))
 
