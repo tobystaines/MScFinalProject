@@ -1,0 +1,108 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "numpy==1.15.2",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.4.1"
+    ],
+    "mainfile": "main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "audio_models.py",
+        "_sources/audio_models_22e5bcdec4ce5f23951c623d376acbfe.py"
+      ],
+      [
+        "dataset.py",
+        "_sources/dataset_220283a6739b74a3114fa48f41047292.py"
+      ],
+      [
+        "main.py",
+        "_sources/main_8bac208192ab7af4e7a67a54e73974fd.py"
+      ],
+      [
+        "train.py",
+        "_sources/train_d17f0411316668dba71d2b9819ea227a.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1323, in _do_call\n    return fn(*args)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1302, in _run_fn\n    status, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/errors_impl.py\", line 473, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.ResourceExhaustedError: OOM when allocating tensor with shape[10,32,128,256,8,2]\n\t [[Node: complex_unet_model/gradients/complex_unet_model/voice-mask-unet/decoder/layer-1/deconv_cap_1_1/while/mul_3_grad/mul_1 = Mul[T=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"](complex_unet_model/gradients/complex_unet_model/voice-mask-unet/decoder/layer-1/deconv_cap_1_1/while/mul_3_grad/mul_1/Enter, complex_unet_model/gradients/complex_unet_model/voice-mask-unet/decoder/layer-1/deconv_cap_1_1/while/Sum_1_grad/Tile)]]\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 133, in do_experiment\n    validation_iterator, validation_handle, writer)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 77, in train\n    {model.is_training: True, handle: training_handle})\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 889, in run\n    run_metadata_ptr)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1120, in _run\n    feed_dict_tensor, options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1317, in _do_run\n    options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1336, in _do_call\n    raise type(e)(node_def, op, message)\n",
+    "tensorflow.python.framework.errors_impl.ResourceExhaustedError: OOM when allocating tensor with shape[10,32,128,256,8,2]\n\t [[Node: complex_unet_model/gradients/complex_unet_model/voice-mask-unet/decoder/layer-1/deconv_cap_1_1/while/mul_3_grad/mul_1 = Mul[T=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"](complex_unet_model/gradients/complex_unet_model/voice-mask-unet/decoder/layer-1/deconv_cap_1_1/while/mul_3_grad/mul_1/Enter, complex_unet_model/gradients/complex_unet_model/voice-mask-unet/decoder/layer-1/deconv_cap_1_1/while/Sum_1_grad/Tile)]]\n\nCaused by op 'complex_unet_model/gradients/complex_unet_model/voice-mask-unet/decoder/layer-1/deconv_cap_1_1/while/mul_3_grad/mul_1', defined at:\n  File \"main.py\", line 58, in <module>\n    @ex.automain\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 137, in automain\n    self.run_commandline()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 260, in run_commandline\n    return self.run(cmd_name, config_updates, named_configs, {}, args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 209, in run\n    run()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/run.py\", line 221, in __call__\n    self.result = self.main_function(*args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n  File \"main.py\", line 109, in do_experiment\n    model_config['model_variant'], is_training)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 250, in __init__\n    self.train_op = self.optimizer.minimize(self.cost)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/optimizer.py\", line 343, in minimize\n    grad_loss=grad_loss)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/optimizer.py\", line 414, in compute_gradients\n    colocate_gradients_with_ops=colocate_gradients_with_ops)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/gradients_impl.py\", line 581, in gradients\n    grad_scope, op, func_call, lambda: grad_fn(op, *out_grads))\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/gradients_impl.py\", line 353, in _MaybeCompile\n    return grad_fn()  # Exit early\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/gradients_impl.py\", line 581, in <lambda>\n    grad_scope, op, func_call, lambda: grad_fn(op, *out_grads))\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/math_grad.py\", line 747, in _MulGrad\n    array_ops.reshape(math_ops.reduce_sum(x * grad, ry), sy))\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/math_ops.py\", line 894, in binary_op_wrapper\n    return func(x, y, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/math_ops.py\", line 1117, in _mul_dispatch\n    return gen_math_ops._mul(x, y, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/gen_math_ops.py\", line 2726, in _mul\n    \"Mul\", x=x, y=y, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/op_def_library.py\", line 787, in _apply_op_helper\n    op_def=op_def)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 2956, in create_op\n    op_def=op_def)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 1470, in __init__\n    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access\n\n...which was originally created as op 'complex_unet_model/voice-mask-unet/decoder/layer-1/deconv_cap_1_1/while/mul_3', defined at:\n  File \"main.py\", line 58, in <module>\n    @ex.automain\n[elided 5 identical lines from previous traceback]\n  File \"main.py\", line 109, in do_experiment\n    model_config['model_variant'], is_training)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 238, in __init__\n    name='voice-mask-unet')\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 264, in __init__\n    self.decoder = ComplexDecoder(self.encoder.output, self.encoder)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 300, in __init__\n    net)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/keras/engine/topology.py\", line 603, in __call__\n    output = self.call(inputs, **kwargs)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py\", line 276, in call\n    num_routing=self.routings)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py\", line 345, in update_routing\n    swap_memory=True)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/control_flow_ops.py\", line 2816, in while_loop\n    result = loop_context.BuildLoop(cond, body, loop_vars, shape_invariants)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/control_flow_ops.py\", line 2640, in BuildLoop\n    pred, body, original_loop_vars, loop_vars, shape_invariants)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/control_flow_ops.py\", line 2590, in _BuildLoop\n    body_result = body(*packed_vars_for_body)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py\", line 332, in _body\n    distances = tf.reduce_sum(votes * act_replicated, axis=-1)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/math_ops.py\", line 894, in binary_op_wrapper\n    return func(x, y, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/math_ops.py\", line 1117, in _mul_dispatch\n    return gen_math_ops._mul(x, y, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/gen_math_ops.py\", line 2726, in _mul\n    \"Mul\", x=x, y=y, name=name)\n\nResourceExhaustedError (see above for traceback): OOM when allocating tensor with shape[10,32,128,256,8,2]\n\t [[Node: complex_unet_model/gradients/complex_unet_model/voice-mask-unet/decoder/layer-1/deconv_cap_1_1/while/mul_3_grad/mul_1 = Mul[T=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"](complex_unet_model/gradients/complex_unet_model/voice-mask-unet/decoder/layer-1/deconv_cap_1_1/while/mul_3_grad/mul_1/Enter, complex_unet_model/gradients/complex_unet_model/voice-mask-unet/decoder/layer-1/deconv_cap_1_1/while/Sum_1_grad/Tile)]]\n\n"
+  ],
+  "heartbeat": "2018-09-30T13:28:45.887338",
+  "host": {
+    "ENV": {},
+    "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
+    "gpus": {
+      "driver_version": "396.44",
+      "gpus": [
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11177
+        },
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11178
+        }
+      ]
+    },
+    "hostname": "asia",
+    "os": [
+      "Linux",
+      "Linux-4.15.0-33-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-09-30T12:22:31.434150",
+  "status": "FAILED",
+  "stop_time": "2018-09-30T13:28:45.893184"
+}
