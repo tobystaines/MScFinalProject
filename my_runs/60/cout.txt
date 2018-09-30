@@ -1,0 +1,57 @@
+INFO - UNet_Speech_Separation - Running command 'do_experiment'
+INFO - UNet_Speech_Separation - Started run with ID "60"
+Experiment ID: 60
+Preparing dataset
+Dataset ready
+2018-09-30 12:09:51.107205: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2018-09-30 12:09:51.348963: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:892] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2018-09-30 12:09:51.349502: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.645
+pciBusID: 0000:27:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2018-09-30 12:09:51.349519: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 1, name: GeForce GTX 1080 Ti, pci bus id: 0000:27:00.0, compute capability: 6.1)
+Session started
+Iterators created
+Creating model
+Running initialisation test
+Starting testing
+2018-09-30 12:09:53.629598:	Entering test loop
+2018-09-30 12:09:56.413556:	Testing iteration: 0, Loss: 0.1633855402469635
+Test pass complete
+Mean loss over test set: 0.1490881472826004
+Data saved to dumps/60 for later audio metric calculation
+Starting training
+2018-09-30 12:10:03.589195:	Epoch 0 finished after 6 iterations.
+No images to record
+Checkpoint
+2018-09-30 12:10:07.524973:	Epoch 1 finished after 11 iterations.
+No images to record
+Checkpoint
+2018-09-30 12:10:11.431227:	Epoch 2 finished after 16 iterations.
+No images to record
+Checkpoint
+2018-09-30 12:10:15.314958:	Epoch 3 finished after 21 iterations.
+No images to record
+Checkpoint
+2018-09-30 12:10:19.234278:	Epoch 4 finished after 26 iterations.
+No images to record
+Checkpoint
+Validating
+2018-09-30 12:10:19.545898:	Entering validation loop
+Validation check mean loss: 0.2003227157725228
+Validation loss has improved!
+New best validation cost!
+Finished requested number of epochs. Training complete.
+Final validation loss: 0.2003227157725228
+This was the best validation loss achieved
+Starting testing
+2018-09-30 12:10:23.093261:	Entering test loop
+2018-09-30 12:10:24.207981:	Testing iteration: 0, Loss: 0.1281692534685135
+Test pass complete
+Mean loss over test set: 0.14845551550388336
+Data saved to dumps/60 for later audio metric calculation
+2018-09-30 12:10:26.723577:
+	All done with experiment 60!
+	Initial test loss: 0.1490881472826004
+	Final test loss: 0.14845551550388336
+INFO - UNet_Speech_Separation - Completed after 0:00:36

@@ -1,0 +1,44 @@
+INFO - UNet_Speech_Separation - Running command 'do_experiment'
+INFO - UNet_Speech_Separation - Started run with ID "59"
+Experiment ID: 59
+Preparing dataset
+Dataset ready
+2018-09-30 12:05:47.997064: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2018-09-30 12:05:48.213541: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:892] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2018-09-30 12:05:48.214255: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.645
+pciBusID: 0000:27:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2018-09-30 12:05:48.214273: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 1, name: GeForce GTX 1080 Ti, pci bus id: 0000:27:00.0, compute capability: 6.1)
+Session started
+Iterators created
+Creating model
+Running initialisation test
+Starting testing
+2018-09-30 12:05:50.500741:	Entering test loop
+2018-09-30 12:05:53.263727:	Testing iteration: 0, Loss: 0.12212314456701279
+Test pass complete
+Mean loss over test set: 0.14685189574956894
+Data saved to dumps/59 for later audio metric calculation
+Starting training
+2018-09-30 12:06:00.295242:	Epoch 0 finished after 6 iterations.
+No images to record
+Validating
+2018-09-30 12:06:00.317411:	Entering validation loop
+Validation check mean loss: 0.19826938211917877
+Validation loss has improved!
+New best validation cost!
+Finished requested number of epochs. Training complete.
+Final validation loss: 0.19826938211917877
+This was the best validation loss achieved
+Starting testing
+2018-09-30 12:06:03.865509:	Entering test loop
+2018-09-30 12:06:04.970720:	Testing iteration: 0, Loss: 0.1355254054069519
+Test pass complete
+Mean loss over test set: 0.146776881814003
+Data saved to dumps/59 for later audio metric calculation
+2018-09-30 12:06:07.498096:
+	All done with experiment 59!
+	Initial test loss: 0.14685189574956894
+	Final test loss: 0.146776881814003
+INFO - UNet_Speech_Separation - Completed after 0:00:20
