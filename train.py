@@ -103,7 +103,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 writer.add_summary(gen_voice, iteration)
             except NameError:  # Indicates the try has not been successfully executed at all
                 print('No images to record')
-                break
+                #break
             epoch += 1
             # If using early stopping by epochs, enter validation loop
             if model_config['early_stopping'] and model_config['val_by_epochs'] and iteration > 1:
