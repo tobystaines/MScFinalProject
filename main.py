@@ -68,11 +68,11 @@ def do_experiment(model_config):
     print('Dataset ready')
 
     # Start session
-    tf_config = tf.ConfigProto()
+    #tf_config = tf.ConfigProto()
     #tf_config.gpu_options.allow_growth = True
-    tf_config.gpu_options.visible_device_list = "0"
-    sess = tf.Session(config=tf_config)
-    #sess = tf.Session()
+    #tf_config.gpu_options.visible_device_list = "0"
+    #sess = tf.Session(config=tf_config)
+    sess = tf.Session()
 
     print('Session started')
 
