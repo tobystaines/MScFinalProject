@@ -40,7 +40,7 @@ class MagnitudeModel(object):
             self.cost = tf.reduce_mean(self.pw_cost)
 
             self.optimizer = tf.train.AdamOptimizer(
-                learning_rate=0.0002,
+                learning_rate=0.00002,
                 beta1=0.5,
             )
             self.train_op = self.optimizer.minimize(self.pw_cost)
@@ -188,13 +188,13 @@ class BasicCapsnet(object):
                 #self.conv1 = conv1
 
             with tf.variable_scope('Primary_Caps'):
-                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=16, strides=1,
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=8, strides=1,
                                                       padding='same',
                                                       routings=1, name='primarycaps')(net)
                 #self.primary_caps = primary_caps
 
             with tf.variable_scope('Seg_Caps'):
-                net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=16, strides=1,
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=8, strides=1,
                                                       padding='same',
                                                       routings=3, name='seg_caps')(net)
                 #self.seg_caps = seg_caps
@@ -202,7 +202,7 @@ class BasicCapsnet(object):
             with tf.variable_scope('Reconstruction'):
                 net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=1, strides=1,
                                                       padding='same',
-                                                      routings=3, name='seg_caps')(net)
+                                                      routings=3, name='reconstruction')(net)
                 net = tf.squeeze(net, -1)
 
             self.output = net
