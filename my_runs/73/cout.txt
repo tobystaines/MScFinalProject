@@ -1,0 +1,71 @@
+INFO - UNet_Speech_Separation - Running command 'do_experiment'
+INFO - UNet_Speech_Separation - Started run with ID "73"
+Experiment ID: 73
+Preparing dataset
+Dataset ready
+2018-10-02 15:59:45.759259: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2018-10-02 15:59:46.069407: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:892] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2018-10-02 15:59:46.069940: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.645
+pciBusID: 0000:26:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2018-10-02 15:59:46.156644: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:892] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2018-10-02 15:59:46.157182: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 1 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.645
+pciBusID: 0000:27:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2018-10-02 15:59:46.158466: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1045] Device peer to peer matrix
+2018-10-02 15:59:46.158496: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1051] DMA: 0 1 
+2018-10-02 15:59:46.158503: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 0:   Y Y 
+2018-10-02 15:59:46.158508: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 1:   Y Y 
+2018-10-02 15:59:46.158515: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:26:00.0, compute capability: 6.1)
+2018-10-02 15:59:46.158520: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:1) -> (device: 1, name: GeForce GTX 1080 Ti, pci bus id: 0000:27:00.0, compute capability: 6.1)
+Session started
+Iterators created
+Creating model
+Running initialisation test
+Starting testing
+2018-10-02 15:59:48.256198:	Entering test loop
+2018-10-02 15:59:51.231505:	Testing iteration: 0, Loss: 0.005122465081512928
+Test pass complete
+Mean loss over test set: 0.005172332748770714
+Data saved to dumps/73 for later audio metric calculation
+Starting training
+2018-10-02 15:59:57.028326:	Epoch 0 finished after 6 iterations.
+Checkpoint
+2018-10-02 16:00:00.250334:	Epoch 1 finished after 11 iterations.
+Checkpoint
+2018-10-02 16:00:03.470827:	Epoch 2 finished after 16 iterations.
+Checkpoint
+2018-10-02 16:00:06.632055:	Epoch 3 finished after 21 iterations.
+Checkpoint
+2018-10-02 16:00:09.829081:	Epoch 4 finished after 26 iterations.
+Checkpoint
+2018-10-02 16:00:12.970815:	Epoch 5 finished after 31 iterations.
+Checkpoint
+2018-10-02 16:00:16.155397:	Epoch 6 finished after 36 iterations.
+Checkpoint
+2018-10-02 16:00:19.351873:	Epoch 7 finished after 41 iterations.
+Checkpoint
+2018-10-02 16:00:22.533862:	Epoch 8 finished after 46 iterations.
+Checkpoint
+2018-10-02 16:00:25.681380:	Epoch 9 finished after 51 iterations.
+Checkpoint
+Validating
+2018-10-02 16:00:25.945884:	Entering validation loop
+Validation check mean loss: 0.005353222083714273
+Validation loss has improved!
+New best validation cost!
+Finished requested number of epochs. Training complete.
+Final validation loss: 0.005353222083714273
+This was the best validation loss achieved
+Starting testing
+2018-10-02 16:00:28.453817:	Entering test loop
+2018-10-02 16:00:29.348396:	Testing iteration: 0, Loss: 0.005671623162925243
+Test pass complete
+Mean loss over test set: 0.005167705472558737
+Data saved to dumps/73 for later audio metric calculation
+2018-10-02 16:00:30.928958:
+	All done with experiment 73!
+	Initial test loss: 0.005172332748770714
+	Final test loss: 0.005167705472558737
