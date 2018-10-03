@@ -17,7 +17,8 @@ class MagnitudeModel(object):
         is_training: Boolean - should the model be trained on the current input or not
         name: Model instance name
     """
-    def __init__(self, mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio, variant, is_training, name):
+    def __init__(self, mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio, variant, is_training, learning_rate,
+                 name):
         with tf.variable_scope(name):
             self.mixed_mag = mixed_mag
             self.voice_mag = voice_mag
@@ -40,7 +41,7 @@ class MagnitudeModel(object):
             self.cost = tf.reduce_mean(self.pw_cost)
 
             self.optimizer = tf.train.AdamOptimizer(
-                learning_rate=0.00002,
+                learning_rate=learning_rate,
                 beta1=0.5,
             )
             self.train_op = self.optimizer.minimize(self.pw_cost)
@@ -222,7 +223,7 @@ class ComplexNumberModel(object):
         name: Model instance name
     """
 
-    def __init__(self, mixed_spec, voice_spec, mixed_audio, voice_audio, variant, is_training,
+    def __init__(self, mixed_spec, voice_spec, mixed_audio, voice_audio, variant, is_training, learning_rate,
                  name='complex_unet_model'):
         with tf.variable_scope(name):
             self.mixed_spec = mixed_spec
@@ -244,7 +245,7 @@ class ComplexNumberModel(object):
             self.cost = mf.l1_loss(self.gen_voice, voice_spec)
 
             self.optimizer = tf.train.AdamOptimizer(
-                learning_rate=0.0002,
+                learning_rate=learning_rate,
                 beta1=0.5,
             )
             self.train_op = self.optimizer.minimize(self.cost)
