@@ -20,8 +20,9 @@ def cfg():
     model_config = {'model_variant': 'basic_capsnet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'mag_phase': True,  # Whether to use a magnitude/phase, or complex number, representation of the spectrogram
                     'saving': True,  # Whether to take checkpoints
+                    'save-by_epochs': False,  # Should checkpoints be taken each epoch or at each validation run?
                     'loading': False,  # Whether to load an existing checkpoint
-                    'dataset': 'LibriSpeech',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
+                    'dataset': 'both',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'checkpoint_to_load': "69/69-1000",  # Checkpoint format: run/run-epoch
                     'initialisation_test': True,  # Whether or not to calculate test metrics before training
@@ -31,12 +32,12 @@ def cfg():
                     'n_parallel_readers': 16,
                     'patch_window': 256,  # Number of fourier transforms (rows) in each patch
                     'patch_hop': 128,  # Number of fourier transforms between the start of each patch
-                    'batch_size': 5,  # Number of patches in each batch
-                    'n_shuffle': 10,  # Number of patches buffered before batching
-                    'epochs': 3000,  # Number of full passes through the dataset to train for
-                    'early_stopping': False,  # Should validation data checks be used for early stopping?
+                    'batch_size': 2,  # Number of patches in each batch
+                    'n_shuffle': 1000,  # Number of patches buffered before batching
+                    'epochs': 3,  # Number of full passes through the dataset to train for
+                    'early_stopping': True,  # Should validation data checks be used for early stopping?
                     'val_by_epochs': False,  # Validation at end of each epoch or every 'val_iters'?
-                    'val_iters': 300000,  # Number of training iterations between validation checks,
+                    'val_iters': 25000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
                     'normalise_mag': True  # Are magnitude spectrograms normalised in pre-processing?
                     }
@@ -48,8 +49,8 @@ def cfg():
 
     else:  # Data and Checkpoint directories on the uni server
         #model_config['chime_data_root'] = '/data/Speech_Data/CHiME3/data/audio/16kHz/isolated/'
-        model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
-        #model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
+        #model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
+        model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
         #model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'

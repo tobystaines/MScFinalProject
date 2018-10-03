@@ -1,6 +1,7 @@
 import datetime
 import os
 import errno
+import math
 import tensorflow as tf
 
 
@@ -29,7 +30,9 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                     value=[tf.Summary.Value(tag='Validation_mean_loss', simple_value=val_check_mean_cost)])
                 writer.add_summary(summary, val_check)
                 # If validation loss has worsened increment the counter, else, reset the counter
-                if val_check_mean_cost > last_val_cost:
+                if math.isnan(val_check_mean_cost):
+                    worse_val_checks = model_config['num_worse_val_checks'] + 1
+                elif val_check_mean_cost > last_val_cost:
                     worse_val_checks += 1
                     print('Validation loss has worsened. worse_val_checks = {w}'.format(w=worse_val_checks))
                 else:
@@ -42,7 +45,21 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 last_val_cost = val_check_mean_cost
 
                 break
+            if model_config['saving'] and not model_config['save_by_epochs']:
+                checkpoint(model_config, model_folder, saver, sess, val_check)
+
         return last_val_cost, min_val_cost, min_val_check, worse_val_checks
+
+    def checkpoint(model_config, model_folder, saver, sess, global_step):
+        # Make sure there is a folder to save the checkpoint in
+        checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
+        try:
+            os.makedirs(checkpoint_path)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+        print('Checkpoint')
+        saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(global_step))
 
     print('Starting training')
     # Initialise variables and define summary
@@ -114,16 +131,8 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                                           model,
                                                                                           val_check)
                 val_check += 1
-            if model_config['saving']:
-                # Make sure there is a folder to save the checkpoint in
-                checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
-                try:
-                    os.makedirs(checkpoint_path)
-                except OSError as e:
-                    if e.errno != errno.EEXIST:
-                        raise
-                print('Checkpoint')
-                saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(epoch))
+            if model_config['saving'] and model_config['save_by_epochs']:
+                checkpoint(model_config, model_folder, saver, sess, epoch)
             sess.run(training_iterator.initializer)
 
     if model_config['early_stopping'] and worse_val_checks >= model_config['num_worse_val_checks']:
