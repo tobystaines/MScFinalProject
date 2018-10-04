@@ -21,10 +21,10 @@ def cfg():
                     'mag_phase': True,  # Whether to use a magnitude/phase, or complex number, representation of the spectrogram
                     'saving': True,  # Whether to take checkpoints
                     'save_by_epochs': False,  # Should checkpoints be taken each epoch or at each validation run?
-                    'loading': False,  # Whether to load an existing checkpoint
+                    'loading': True,  # Whether to load an existing checkpoint
                     'dataset': 'both',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
-                    'checkpoint_to_load': "69/69-1000",  # Checkpoint format: run/run-epoch
+                    'checkpoint_to_load': "82/82-8",  # Checkpoint format: run/run-epoch
                     'initialisation_test': False,  # Whether or not to calculate test metrics before training
                     'sample_rate': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'n_fft': 1024,  # Number of samples in each fourier transform
@@ -37,7 +37,7 @@ def cfg():
                     'learning_rate': 0.00002,  # The learning rate to be used by the model
                     'epochs': 8,  # Number of full passes through the dataset to train for
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
-                    'val_by_epochs': False,  # Validation at end of each epoch or every 'val_iters'?
+                    'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 10000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
                     'normalise_mag': True  # Are magnitude spectrograms normalised in pre-processing?

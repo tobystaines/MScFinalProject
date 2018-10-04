@@ -45,8 +45,8 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 last_val_cost = val_check_mean_cost
 
                 break
-            if model_config['saving'] and not model_config['save_by_epochs']:
-                checkpoint(model_config, model_folder, saver, sess, val_check)
+        if model_config['saving'] and not model_config['save_by_epochs']:
+            checkpoint(model_config, model_folder, saver, sess, val_check)
 
         return last_val_cost, min_val_cost, min_val_check, worse_val_checks
 
