@@ -30,7 +30,24 @@
       ]
     ]
   },
-  "heartbeat": "2018-10-04T12:02:14.535812",
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1323, in _do_call\n    return fn(*args)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1302, in _run_fn\n    status, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/errors_impl.py\", line 473, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.InvalidArgumentError: ValueError: array is too big; `arr.size * arr.dtype.itemsize` is larger than the maximum possible size.\n\t [[Node: PyFuncStateless = PyFuncStateless[Tin=[DT_STRING, DT_INT32], Tout=[DT_FLOAT], token=\"pyfunc_48\"](arg0, PyFuncStateless/input_1)]]\n\t [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,256,513,2], [?,256,513,2], [?,65280,1], [?,65280,1]], output_types=[DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT], _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](IteratorFromStringHandle)]]\n\t [[Node: IteratorGetNext/_7 = _Recv[client_terminated=false, recv_device=\"/job:localhost/replica:0/task:0/device:GPU:0\", send_device=\"/job:localhost/replica:0/task:0/device:CPU:0\", send_device_incarnation=1, tensor_name=\"edge_154_IteratorGetNext\", tensor_type=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"]()]]\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 136, in do_experiment\n    validation_iterator, validation_handle, writer)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 91, in train\n    handle: training_handle})\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 889, in run\n    run_metadata_ptr)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1120, in _run\n    feed_dict_tensor, options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1317, in _do_run\n    options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1336, in _do_call\n    raise type(e)(node_def, op, message)\n",
+    "tensorflow.python.framework.errors_impl.InvalidArgumentError: ValueError: array is too big; `arr.size * arr.dtype.itemsize` is larger than the maximum possible size.\n\t [[Node: PyFuncStateless = PyFuncStateless[Tin=[DT_STRING, DT_INT32], Tout=[DT_FLOAT], token=\"pyfunc_48\"](arg0, PyFuncStateless/input_1)]]\n\t [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,256,513,2], [?,256,513,2], [?,65280,1], [?,65280,1]], output_types=[DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT], _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](IteratorFromStringHandle)]]\n\t [[Node: IteratorGetNext/_7 = _Recv[client_terminated=false, recv_device=\"/job:localhost/replica:0/task:0/device:GPU:0\", send_device=\"/job:localhost/replica:0/task:0/device:CPU:0\", send_device_incarnation=1, tensor_name=\"edge_154_IteratorGetNext\", tensor_type=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"]()]]\n"
+  ],
+  "heartbeat": "2018-10-04T12:36:56.224550",
   "host": {
     "ENV": {},
     "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
@@ -86,5 +103,6 @@
   "resources": [],
   "result": null,
   "start_time": "2018-10-04T07:10:28.930190",
-  "status": "RUNNING"
+  "status": "FAILED",
+  "stop_time": "2018-10-04T12:36:56.232276"
 }
