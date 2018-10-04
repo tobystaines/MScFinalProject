@@ -20,7 +20,7 @@ def cfg():
     model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'mag_phase': True,  # Whether to use a magnitude/phase, or complex number, representation of the spectrogram
                     'saving': True,  # Whether to take checkpoints
-                    'save_by_epochs': True,  # Should checkpoints be taken each epoch or at each validation run?
+                    'save_by_epochs': False,  # Should checkpoints be taken each epoch or at each validation run?
                     'loading': False,  # Whether to load an existing checkpoint
                     'dataset': 'both',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
@@ -37,8 +37,8 @@ def cfg():
                     'learning_rate': 0.00002,  # The learning rate to be used by the model
                     'epochs': 8,  # Number of full passes through the dataset to train for
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
-                    'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
-                    'val_iters': 25000,  # Number of training iterations between validation checks,
+                    'val_by_epochs': False,  # Validation at end of each epoch or every 'val_iters'?
+                    'val_iters': 10000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
                     'normalise_mag': True  # Are magnitude spectrograms normalised in pre-processing?
                     }
