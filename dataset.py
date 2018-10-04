@@ -131,7 +131,7 @@ def prepare_datasets(model_config):
         return train_data, val_data, test_data
 
     else:  # If running on server, data is in several folders and requires concatenation
-        if model_config['dataset'] in ['both', 'CHiME']:
+        if 'CHiME' in model_config['dataset']:
             # Get CHiME data
             sets = list()
             for string in ['bus_simu/', 'caf_simu/', 'ped_simu/', 'str_simu/']:
@@ -146,23 +146,35 @@ def prepare_datasets(model_config):
             chime_val_data = sets[0][1].concatenate(sets[1][1].concatenate(sets[2][1].concatenate(sets[3][1])))
             chime_test_data = sets[0][2].concatenate(sets[1][2].concatenate(sets[2][2].concatenate(sets[3][2])))
 
-        if model_config['dataset'] in ['both', 'LibriSpeech']:
+        if 'LibriSpeech' in model_config['dataset']:
             # Get list of LibriSpeech sub-directories
             voice_train_dirs = glob(model_config['librispeech_data_root'] + 'Voice/train-clean-100/**/', recursive=True)
-            voice_train_dirs.extend(
-                glob(model_config['librispeech_data_root'] + 'Voice/train-clean-360/**/', recursive=True))
-            voice_train_dirs.extend(
-                glob(model_config['librispeech_data_root'] + 'Voice/train-other-500/**/', recursive=True))
             voice_val_dirs = glob(model_config['librispeech_data_root'] + 'Voice/dev-clean/**/', recursive=True)
             voice_test_dirs = glob(model_config['librispeech_data_root'] + 'Voice/test-clean/**/', recursive=True)
 
             mix_train_dirs = glob(model_config['librispeech_data_root'] + 'Mixed/train-clean-100/**/', recursive=True)
-            mix_train_dirs.extend(
-                glob(model_config['librispeech_data_root'] + 'Mixed/train-clean-360/**/', recursive=True))
-            mix_train_dirs.extend(
-                glob(model_config['librispeech_data_root'] + 'Mixed/train-other-500/**/', recursive=True))
             mix_val_dirs = glob(model_config['librispeech_data_root'] + 'Mixed/dev-clean/**/', recursive=True)
             mix_test_dirs = glob(model_config['librispeech_data_root'] + 'Mixed/test-clean/**/', recursive=True)
+
+            if ('LibriSpeech_m' or 'LibriSpeech_l') in model_config['dataset']:
+                voice_train_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Voice/train-clean-360/**/', recursive=True))
+                mix_train_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Mixed/train-clean-360/**/', recursive=True))
+
+            if 'LibriSpeech_l' in model_config['dataset']:
+                voice_train_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Voice/train-other-500/**/', recursive=True))
+                voice_val_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Voice/dev-other/**/', recursive=True))
+                voice_test_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Voice/test-other/**/', recursive=True))
+                mix_train_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Mixed/train-other-500/**/', recursive=True))
+                mix_val_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Mixed/dev-other/**/', recursive=True))
+                mix_test_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Mixed/test-other/**/', recursive=True))
 
             # Check corresponding list are of equal length
             assert len(voice_train_dirs) == len(mix_train_dirs)
@@ -216,9 +228,9 @@ def prepare_datasets(model_config):
 
         if model_config['dataset'] == 'CHiME':
             return chime_train_data, chime_val_data, chime_test_data
-        elif model_config['dataset'] == 'LibriSpeech':
+        elif model_config['dataset'] in ['LibriSpeech_s', 'LibriSpeech_m', 'LibriSpeech_l']:
             return libri_train_data, libri_val_data, libri_test_data
-        elif model_config['dataset'] == 'both':
+        else:
             return chime_train_data.concatenate(libri_train_data), \
                    chime_val_data.concatenate(libri_val_data), \
                    chime_test_data.concatenate(libri_test_data)

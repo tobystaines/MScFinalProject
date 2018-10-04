@@ -77,7 +77,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         voice_summary = tf.summary.image('Voice', model.voice_mag)
         mask_summary = tf.summary.image('Voice_Mask', model.voice_mask)
         gen_voice_summary = tf.summary.image('Generated_Voice', model.gen_voice)
-    saver = tf.train.Saver(tf.global_variables(), max_to_keep=3, write_version=tf.train.SaverDef.V2)
+    saver = tf.train.Saver(tf.global_variables(), max_to_keep=5, write_version=tf.train.SaverDef.V2)
     sess.run(training_iterator.initializer)
 
     # Begin training loop
@@ -85,13 +85,24 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     while epoch < model_config['epochs'] and worse_val_checks < model_config['num_worse_val_checks']:
         try:
             if model_config['mag_phase']:
-                _, cost, cost_sum, mix, voice, mask, gen_voice = sess.run([model.train_op, model.cost, cost_summary,
-                                                                           mix_summary, voice_summary, mask_summary,
-                                                                           gen_voice_summary], {model.is_training: True,
-                                                                                                handle: training_handle})
+                try:
+                    _, cost, cost_sum, mix, voice, mask, gen_voice = sess.run([model.train_op, model.cost, cost_summary,
+                                                                               mix_summary, voice_summary, mask_summary,
+                                                                               gen_voice_summary], {model.is_training: True,
+                                                                                                    handle: training_handle})
+                except RuntimeWarning:
+                    print('Invalid value encountered. Ignoring batch.')
+                    continue
             else:
-                _, cost, cost_sum = sess.run([model.train_op, model.cost, cost_summary],
+                try:
+                    _, cost, cost_sum = sess.run([model.train_op, model.cost, cost_summary],
                                              {model.is_training: True, handle: training_handle})
+                except RuntimeWarning:
+                    print('Invalid value encountered. Ignoring batch.')
+                    continue
+            if math.isnan(cost):
+                print('Error: cost = nan')
+                break
             writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
             if iteration % 200 == 0:
                 print("{ts}:\tTraining iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
