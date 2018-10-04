@@ -9,10 +9,8 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
     dump_folder = 'dumps/' + str(experiment_id)
     if not os.path.isdir(dump_folder):
         os.mkdir(dump_folder)
-    # Calculate L1 loss
     print('Starting testing')
     sess.run(testing_iterator.initializer)
-
     iteration = 0
     test_costs = list()
 

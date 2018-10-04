@@ -112,7 +112,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         # When the dataset is exhausted, note the end of the epoch
         except tf.errors.OutOfRangeError:
             print('{ts}:\tEpoch {e} finished after {i} iterations.'.format(ts=datetime.datetime.now(),
-                                                                               e=epoch, i=iteration))
+                                                                           e=epoch, i=iteration))
             try:
                 writer.add_summary(mix, iteration)
                 writer.add_summary(voice, iteration)
