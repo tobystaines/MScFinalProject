@@ -20,7 +20,7 @@ def cfg():
     model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'mag_phase': True,  # Whether to use a magnitude/phase, or complex number, representation of the spectrogram
                     'saving': True,  # Whether to take checkpoints
-                    'save-by_epochs': True,  # Should checkpoints be taken each epoch or at each validation run?
+                    'save_by_epochs': True,  # Should checkpoints be taken each epoch or at each validation run?
                     'loading': False,  # Whether to load an existing checkpoint
                     'dataset': 'both',  # Choice of 'LibriSpeech', 'CHiME', or 'both'
                     'local_run': False,  # Whether experiment is running on laptop or server
@@ -115,7 +115,6 @@ def do_experiment(model_config):
     sess.run(tf.global_variables_initializer())
 
     if model_config['loading']:
-        # TODO - Think this works now but needs proper testing
         print('Loading checkpoint')
         checkpoint = os.path.join(model_config['model_base_dir'], model_config['checkpoint_to_load'])
         restorer = tf.train.Saver()
