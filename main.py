@@ -17,28 +17,28 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'model_variant': 'basic_capsnet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
+    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'mag_phase': True,  # Whether to use a magnitude/phase, or complex number, representation of the spectrogram
-                    'saving': True,  # Whether to take checkpoints
+                    'saving': False,  # Whether to take checkpoints
                     'save_by_epochs': True,  # Should checkpoints be taken each epoch or at each validation run?
-                    'loading': False,  # Whether to load an existing checkpoint
+                    'loading': True,  # Whether to load an existing checkpoint
                     'dataset': 'CHiME and LibriSpeech_m',  # Choice from ['CHiME', 'LibriSpeech_s', 'LibriSpeech_m',
                                         #               'LibriSpeech_l', 'CHiME and LibriSpeech_s',
                                         #               'CHiME and LibriSpeech_m', 'CHiME and LibriSpeech_l']
                     'local_run': False,  # Whether experiment is running on laptop or server
-                    'checkpoint_to_load': "",  # Checkpoint format: run/run-epoch
-                    'initialisation_test': True,  # Whether or not to calculate test metrics before training
+                    'checkpoint_to_load': "85/85-9",  # Checkpoint format: run/run-epoch
+                    'initialisation_test': False,  # Whether or not to calculate test metrics before training
                     'sample_rate': 8192,  # Desired sample rate of audio. Input will be resampled to this
                     'n_fft': 1024,  # Number of samples in each fourier transform
                     'fft_hop': 256,  # Number of samples between the start of each fourier transform
                     'n_parallel_readers': 16,
                     'patch_window': 128,  # Number of fourier transforms (rows) in each patch
                     'patch_hop': 64,  # Number of fourier transforms between the start of each patch
-                    'batch_size': 10,  # Number of patches in each batch
+                    'batch_size': 50,  # Number of patches in each batch
                     'n_shuffle': 1000,  # Number of patches buffered before batching
                     'learning_rate': 0.0002,  # The learning rate to be used by the model
-                    'epochs': 10,  # Number of full passes through the dataset to train for
-                    'early_stopping': True,  # Should validation data checks be used for early stopping?
+                    'epochs': 0,  # Number of full passes through the dataset to train for
+                    'early_stopping': False,  # Should validation data checks be used for early stopping?
                     'val_by_epochs': False,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 50000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
