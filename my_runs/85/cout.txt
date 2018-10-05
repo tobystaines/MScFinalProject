@@ -1,0 +1,904 @@
+INFO - UNet_Speech_Separation - Running command 'do_experiment'
+INFO - UNet_Speech_Separation - Started run with ID "85"
+Experiment ID: 85
+Preparing dataset
+Dataset ready
+2018-10-04 16:39:27.340558: I tensorflow/core/platform/cpu_feature_guard.cc:137] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 FMA
+2018-10-04 16:39:28.448385: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:892] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2018-10-04 16:39:28.448942: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.645
+pciBusID: 0000:26:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2018-10-04 16:39:28.538589: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:892] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2018-10-04 16:39:28.539137: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1030] Found device 1 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.645
+pciBusID: 0000:27:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2018-10-04 16:39:28.540215: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1045] Device peer to peer matrix
+2018-10-04 16:39:28.540252: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1051] DMA: 0 1 
+2018-10-04 16:39:28.540259: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 0:   Y Y 
+2018-10-04 16:39:28.540263: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1061] 1:   Y Y 
+2018-10-04 16:39:28.540271: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:0) -> (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:26:00.0, compute capability: 6.1)
+2018-10-04 16:39:28.540276: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1120] Creating TensorFlow device (/device:GPU:1) -> (device: 1, name: GeForce GTX 1080 Ti, pci bus id: 0000:27:00.0, compute capability: 6.1)
+Session started
+Iterators created
+Creating model
+Running initialisation test
+Starting testing
+2018-10-04 16:39:34.896254:	Entering test loop
+2018-10-04 16:39:45.128193: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 867 of 1000
+2018-10-04 16:39:46.454569: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 16:39:48.627757:	Testing iteration: 0, Loss: 0.0088529447093606
+2018-10-04 16:43:08.076373: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 735 of 1000
+2018-10-04 16:43:10.873114: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 16:45:21.224446: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 974 of 1000
+2018-10-04 16:45:21.458656: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 16:48:09.871141: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 923 of 1000
+2018-10-04 16:48:10.674113: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 16:48:32.694941:	Testing iteration: 200, Loss: 0.007853185757994652
+Test pass complete
+Mean loss over test set: 0.00887697102734819
+Data saved to dumps/85 for later audio metric calculation
+Starting training
+2018-10-04 16:55:05.541471: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 59 of 1000
+2018-10-04 16:55:15.651478: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 151 of 1000
+2018-10-04 16:55:25.513655: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 262 of 1000
+2018-10-04 16:55:31.955269: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 16:57:20.686966:	Training iteration: 200, Loss: 0.004535228945314884
+2018-10-04 16:59:02.588849:	Training iteration: 400, Loss: 0.004414632450789213
+2018-10-04 17:00:45.761469:	Training iteration: 600, Loss: 0.005016834940761328
+2018-10-04 17:02:19.904675:	Training iteration: 800, Loss: 0.004930262453854084
+2018-10-04 17:03:52.601919:	Training iteration: 1000, Loss: 0.005200843792408705
+2018-10-04 17:04:05.064025: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 428 of 1000
+2018-10-04 17:04:15.091613: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 520 of 1000
+2018-10-04 17:04:23.281111: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 602 of 1000
+2018-10-04 17:04:26.952011: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 17:06:48.741320:	Training iteration: 1200, Loss: 0.005230206064879894
+2018-10-04 17:08:20.981509:	Training iteration: 1400, Loss: 0.0054903714917600155
+2018-10-04 17:09:57.808811:	Training iteration: 1600, Loss: 0.00421205023303628
+2018-10-04 17:11:38.533628:	Training iteration: 1800, Loss: 0.004115584306418896
+2018-10-04 17:13:14.547475:	Training iteration: 2000, Loss: 0.004112166352570057
+2018-10-04 17:14:35.566327:	Training iteration: 2200, Loss: 0.006227357313036919
+2018-10-04 17:15:50.081865:	Training iteration: 2400, Loss: 0.005339591298252344
+2018-10-04 17:17:04.668626:	Training iteration: 2600, Loss: 0.005615525413304567
+2018-10-04 17:18:22.055278:	Training iteration: 2800, Loss: 0.004641509149223566
+2018-10-04 17:19:44.737307:	Training iteration: 3000, Loss: 0.004786440636962652
+2018-10-04 17:20:57.906298:	Training iteration: 3200, Loss: 0.004962313920259476
+2018-10-04 17:22:12.016887:	Training iteration: 3400, Loss: 0.004253387451171875
+2018-10-04 17:23:33.845342:	Training iteration: 3600, Loss: 0.005782615393400192
+2018-10-04 17:24:51.243286:	Training iteration: 3800, Loss: 0.005235584452748299
+2018-10-04 17:26:09.221970:	Training iteration: 4000, Loss: 0.005975782871246338
+2018-10-04 17:27:28.959246:	Training iteration: 4200, Loss: 0.005013594403862953
+2018-10-04 17:28:45.990425:	Training iteration: 4400, Loss: 0.004881431348621845
+2018-10-04 17:30:00.709402:	Training iteration: 4600, Loss: 0.004800308961421251
+2018-10-04 17:31:14.217368:	Training iteration: 4800, Loss: 0.005367488134652376
+2018-10-04 17:32:43.661495:	Training iteration: 5000, Loss: 0.0050333221442997456
+2018-10-04 17:34:04.848362:	Training iteration: 5200, Loss: 0.005273040384054184
+2018-10-04 17:35:21.199211:	Training iteration: 5400, Loss: 0.005361173301935196
+2018-10-04 17:36:49.424272:	Training iteration: 5600, Loss: 0.004018280189484358
+2018-10-04 17:38:05.238607:	Training iteration: 5800, Loss: 0.0046915579587221146
+2018-10-04 17:39:42.686973:	Training iteration: 6000, Loss: 0.0037581869401037693
+2018-10-04 17:41:02.578831:	Training iteration: 6200, Loss: 0.0034616985358297825
+2018-10-04 17:42:31.069091:	Training iteration: 6400, Loss: 0.004037092439830303
+2018-10-04 17:43:50.075073:	Training iteration: 6600, Loss: 0.003591937478631735
+2018-10-04 17:45:11.896155:	Training iteration: 6800, Loss: 0.004050809424370527
+2018-10-04 17:46:29.953166:	Training iteration: 7000, Loss: 0.004710093140602112
+2018-10-04 17:47:49.227714:	Training iteration: 7200, Loss: 0.004614362958818674
+2018-10-04 17:49:07.626236:	Training iteration: 7400, Loss: 0.004377376288175583
+2018-10-04 17:50:33.172440:	Training iteration: 7600, Loss: 0.0036567531060427427
+2018-10-04 17:52:03.661278:	Training iteration: 7800, Loss: 0.003705372801050544
+2018-10-04 17:53:26.588060:	Training iteration: 8000, Loss: 0.0037968552205711603
+2018-10-04 17:54:45.249199:	Training iteration: 8200, Loss: 0.004983894526958466
+2018-10-04 17:56:12.422065:	Training iteration: 8400, Loss: 0.006246419157832861
+2018-10-04 17:57:30.391893:	Training iteration: 8600, Loss: 0.005733081605285406
+2018-10-04 17:58:44.316975:	Training iteration: 8800, Loss: 0.0036231959238648415
+2018-10-04 18:00:03.212341:	Training iteration: 9000, Loss: 0.008452773094177246
+2018-10-04 18:01:17.737286:	Training iteration: 9200, Loss: 0.0042657325975596905
+2018-10-04 18:02:32.717195:	Training iteration: 9400, Loss: 0.00728957075625658
+2018-10-04 18:04:10.603160:	Training iteration: 9600, Loss: 0.00540143484249711
+2018-10-04 18:05:28.148667:	Training iteration: 9800, Loss: 0.005374173633754253
+2018-10-04 18:06:51.383208:	Training iteration: 10000, Loss: 0.008236926980316639
+2018-10-04 18:08:06.498652:	Training iteration: 10200, Loss: 0.004489094950258732
+2018-10-04 18:09:30.300625:	Training iteration: 10400, Loss: 0.0031996825709939003
+2018-10-04 18:10:48.546209:	Training iteration: 10600, Loss: 0.004349881783127785
+2018-10-04 18:12:33.229673:	Training iteration: 10800, Loss: 0.004959553014487028
+2018-10-04 18:13:56.042697:	Training iteration: 11000, Loss: 0.0035021996591240168
+2018-10-04 18:15:11.252785:	Training iteration: 11200, Loss: 0.00506163714453578
+2018-10-04 18:16:25.792419:	Training iteration: 11400, Loss: 0.006135076750069857
+2018-10-04 18:17:40.585845:	Training iteration: 11600, Loss: 0.0034081072080880404
+2018-10-04 18:18:55.046057:	Training iteration: 11800, Loss: 0.0040482161566615105
+2018-10-04 18:20:12.193282:	Training iteration: 12000, Loss: 0.0038503739051520824
+2018-10-04 18:21:31.061608:	Training iteration: 12200, Loss: 0.004406895488500595
+2018-10-04 18:22:48.038952:	Training iteration: 12400, Loss: 0.0037170518189668655
+2018-10-04 18:24:05.335885:	Training iteration: 12600, Loss: 0.0041791582480072975
+2018-10-04 18:25:23.284771:	Training iteration: 12800, Loss: 0.004597433377057314
+2018-10-04 18:26:54.458202:	Training iteration: 13000, Loss: 0.004711526446044445
+2018-10-04 18:28:24.863639:	Training iteration: 13200, Loss: 0.005109789781272411
+2018-10-04 18:29:41.472906:	Training iteration: 13400, Loss: 0.0032791956327855587
+2018-10-04 18:30:59.381281:	Training iteration: 13600, Loss: 0.004545371513813734
+2018-10-04 18:32:15.556886:	Training iteration: 13800, Loss: 0.004424755927175283
+2018-10-04 18:33:29.583672:	Training iteration: 14000, Loss: 0.0041387383826076984
+2018-10-04 18:35:02.659404:	Training iteration: 14200, Loss: 0.00487220985814929
+2018-10-04 18:36:19.606746:	Training iteration: 14400, Loss: 0.004816063679754734
+2018-10-04 18:37:37.553842:	Training iteration: 14600, Loss: 0.0047956532798707485
+2018-10-04 18:38:54.203065:	Training iteration: 14800, Loss: 0.005349975079298019
+2018-10-04 18:39:59.147866:	Epoch 0 finished after 14988 iterations.
+Validating
+2018-10-04 18:40:14.545796:	Entering validation loop
+2018-10-04 18:40:24.662389: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 905 of 1000
+2018-10-04 18:40:25.539647: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 18:41:08.640466: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 961 of 1000
+2018-10-04 18:41:09.008873: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 18:41:51.953292: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 970 of 1000
+2018-10-04 18:41:52.161129: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 18:42:07.346142:	Validation iteration: 200, Loss: 0.00692144175991416
+2018-10-04 18:42:41.564027: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 913 of 1000
+2018-10-04 18:42:42.520823: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 18:43:31.794386: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 995 of 1000
+2018-10-04 18:43:31.878552: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 18:44:08.696971:	Validation iteration: 400, Loss: 0.004168297164142132
+Validation check mean loss: 0.006554464822842921
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2018-10-04 18:44:47.356432:	Training iteration: 15000, Loss: 0.004295746795833111
+2018-10-04 18:46:21.984564:	Training iteration: 15200, Loss: 0.0036884176079183817
+2018-10-04 18:47:55.269156:	Training iteration: 15400, Loss: 0.003668274963274598
+2018-10-04 18:49:36.195635:	Training iteration: 15600, Loss: 0.004247120115906
+2018-10-04 18:51:14.969108:	Training iteration: 15800, Loss: 0.004700656980276108
+2018-10-04 18:53:02.093597:	Training iteration: 16000, Loss: 0.004609043709933758
+2018-10-04 18:54:54.946936:	Training iteration: 16200, Loss: 0.0044329166412353516
+2018-10-04 18:57:10.934134:	Training iteration: 16400, Loss: 0.004746154882013798
+2018-10-04 18:58:50.693048:	Training iteration: 16600, Loss: 0.003770844079554081
+2018-10-04 19:00:47.153298:	Training iteration: 16800, Loss: 0.004016647581011057
+2018-10-04 19:02:25.434768:	Training iteration: 17000, Loss: 0.003965869080275297
+2018-10-04 19:03:46.044471:	Training iteration: 17200, Loss: 0.0058700102381408215
+2018-10-04 19:04:59.785003:	Training iteration: 17400, Loss: 0.003993750084191561
+2018-10-04 19:06:13.609502:	Training iteration: 17600, Loss: 0.004151201341301203
+2018-10-04 19:07:30.768632:	Training iteration: 17800, Loss: 0.0048461477272212505
+2018-10-04 19:08:44.580880:	Training iteration: 18000, Loss: 0.0035878801718354225
+2018-10-04 19:10:04.026885:	Training iteration: 18200, Loss: 0.006228579208254814
+2018-10-04 19:11:28.899731:	Training iteration: 18400, Loss: 0.0031731906346976757
+2018-10-04 19:12:53.423793:	Training iteration: 18600, Loss: 0.004385124426335096
+2018-10-04 19:14:07.821651:	Training iteration: 18800, Loss: 0.004758263006806374
+2018-10-04 19:15:22.478130:	Training iteration: 19000, Loss: 0.0054357643239200115
+2018-10-04 19:16:34.838537:	Training iteration: 19200, Loss: 0.0036603454500436783
+2018-10-04 19:17:59.462648:	Training iteration: 19400, Loss: 0.004090146627277136
+2018-10-04 19:19:17.060320:	Training iteration: 19600, Loss: 0.004572033416479826
+2018-10-04 19:20:34.178513:	Training iteration: 19800, Loss: 0.004813560750335455
+2018-10-04 19:21:52.881183:	Training iteration: 20000, Loss: 0.0054487017914652824
+2018-10-04 19:23:13.934946:	Training iteration: 20200, Loss: 0.004296470433473587
+2018-10-04 19:24:26.313014:	Training iteration: 20400, Loss: 0.005053475499153137
+2018-10-04 19:25:43.281759:	Training iteration: 20600, Loss: 0.0032128682360053062
+2018-10-04 19:26:58.976408:	Training iteration: 20800, Loss: 0.003875978523865342
+2018-10-04 19:28:18.223699:	Training iteration: 21000, Loss: 0.0039420356042683125
+2018-10-04 19:29:42.090047:	Training iteration: 21200, Loss: 0.0032126917503774166
+2018-10-04 19:30:59.304966:	Training iteration: 21400, Loss: 0.0062924642115831375
+2018-10-04 19:32:19.222792:	Training iteration: 21600, Loss: 0.0034524935763329268
+2018-10-04 19:33:35.086371:	Training iteration: 21800, Loss: 0.005861553363502026
+2018-10-04 19:34:52.344583:	Training iteration: 22000, Loss: 0.003891191678121686
+2018-10-04 19:36:12.313053:	Training iteration: 22200, Loss: 0.003795732744038105
+2018-10-04 19:37:31.394641:	Training iteration: 22400, Loss: 0.004063192754983902
+2018-10-04 19:38:48.545480:	Training iteration: 22600, Loss: 0.003703018184751272
+2018-10-04 19:40:04.514048:	Training iteration: 22800, Loss: 0.005553700495511293
+2018-10-04 19:41:17.912083:	Training iteration: 23000, Loss: 0.003994966857135296
+2018-10-04 19:42:49.144157:	Training iteration: 23200, Loss: 0.0038024382665753365
+2018-10-04 19:44:05.188226:	Training iteration: 23400, Loss: 0.004991634748876095
+2018-10-04 19:45:26.220810:	Training iteration: 23600, Loss: 0.00476634269580245
+2018-10-04 19:46:45.079902:	Training iteration: 23800, Loss: 0.0036571654491126537
+2018-10-04 19:48:00.463246:	Training iteration: 24000, Loss: 0.007072627078741789
+2018-10-04 19:49:25.255606:	Training iteration: 24200, Loss: 0.004218616988509893
+2018-10-04 19:50:42.988179:	Training iteration: 24400, Loss: 0.006049692630767822
+2018-10-04 19:51:58.210461:	Training iteration: 24600, Loss: 0.004770105704665184
+2018-10-04 19:53:16.028092:	Training iteration: 24800, Loss: 0.0039041361305862665
+2018-10-04 19:54:30.450088:	Training iteration: 25000, Loss: 0.0063390606082975864
+2018-10-04 19:55:44.774923:	Training iteration: 25200, Loss: 0.004521436057984829
+2018-10-04 19:57:07.205060:	Training iteration: 25400, Loss: 0.0037721144035458565
+2018-10-04 19:58:28.103325:	Training iteration: 25600, Loss: 0.003303633304312825
+2018-10-04 19:59:41.690024:	Training iteration: 25800, Loss: 0.005017001647502184
+2018-10-04 20:00:57.641709:	Training iteration: 26000, Loss: 0.0036142116878181696
+2018-10-04 20:02:16.257218:	Training iteration: 26200, Loss: 0.004500595852732658
+2018-10-04 20:03:34.780413:	Training iteration: 26400, Loss: 0.00456277746707201
+2018-10-04 20:04:56.583611:	Training iteration: 26600, Loss: 0.002869081450626254
+2018-10-04 20:06:22.614068:	Training iteration: 26800, Loss: 0.006907404866069555
+2018-10-04 20:07:42.006896:	Training iteration: 27000, Loss: 0.005402089562267065
+2018-10-04 20:09:09.070833:	Training iteration: 27200, Loss: 0.00422273762524128
+2018-10-04 20:10:25.783718:	Training iteration: 27400, Loss: 0.0031033847481012344
+2018-10-04 20:11:47.243345:	Training iteration: 27600, Loss: 0.0043320562690496445
+2018-10-04 20:13:00.570605:	Training iteration: 27800, Loss: 0.0044124554842710495
+2018-10-04 20:14:21.728860:	Training iteration: 28000, Loss: 0.005567122716456652
+2018-10-04 20:15:36.334618:	Training iteration: 28200, Loss: 0.0045037418603897095
+2018-10-04 20:16:52.252259:	Training iteration: 28400, Loss: 0.003568509127944708
+2018-10-04 20:18:11.683893:	Training iteration: 28600, Loss: 0.00383970164693892
+2018-10-04 20:19:42.490491:	Training iteration: 28800, Loss: 0.005716247949749231
+2018-10-04 20:21:00.542150:	Training iteration: 29000, Loss: 0.0033143514301627874
+2018-10-04 20:22:22.239143:	Training iteration: 29200, Loss: 0.0037011385429650545
+2018-10-04 20:23:52.772436:	Training iteration: 29400, Loss: 0.00369250332005322
+2018-10-04 20:25:10.840081:	Training iteration: 29600, Loss: 0.004842077381908894
+2018-10-04 20:26:30.123512:	Training iteration: 29800, Loss: 0.006375329568982124
+2018-10-04 20:27:30.464449:	Epoch 1 finished after 29975 iterations.
+Validating
+2018-10-04 20:27:30.484888:	Entering validation loop
+2018-10-04 20:27:40.556153: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 921 of 1000
+2018-10-04 20:27:41.346442: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 20:28:27.770060: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 956 of 1000
+2018-10-04 20:28:28.199228: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 20:29:11.718717: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 871 of 1000
+2018-10-04 20:29:12.904889: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 20:29:28.088244:	Validation iteration: 200, Loss: 0.0072394441813230515
+2018-10-04 20:29:56.550555: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 886 of 1000
+2018-10-04 20:29:57.714854: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 20:30:43.019680: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 976 of 1000
+2018-10-04 20:30:43.185043: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 20:31:13.515231:	Validation iteration: 400, Loss: 0.004529676865786314
+Validation check mean loss: 0.006469787501972536
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2018-10-04 20:31:58.382988:	Training iteration: 30000, Loss: 0.003962248098105192
+2018-10-04 20:33:31.292375:	Training iteration: 30200, Loss: 0.004134124610573053
+2018-10-04 20:35:02.126123:	Training iteration: 30400, Loss: 0.003369695506989956
+2018-10-04 20:36:41.769431:	Training iteration: 30600, Loss: 0.0040605394169688225
+2018-10-04 20:38:15.417110:	Training iteration: 30800, Loss: 0.004374193027615547
+2018-10-04 20:39:55.076818:	Training iteration: 31000, Loss: 0.0045715500600636005
+2018-10-04 20:41:33.088050:	Training iteration: 31200, Loss: 0.004392377566546202
+2018-10-04 20:43:04.854390:	Training iteration: 31400, Loss: 0.004552705679088831
+2018-10-04 20:45:00.438473:	Training iteration: 31600, Loss: 0.003964292351156473
+2018-10-04 20:46:47.371982:	Training iteration: 31800, Loss: 0.0037507384549826384
+2018-10-04 20:48:25.259420:	Training iteration: 32000, Loss: 0.003912610001862049
+2018-10-04 20:49:45.434966:	Training iteration: 32200, Loss: 0.0038901150692254305
+2018-10-04 20:51:01.873718:	Training iteration: 32400, Loss: 0.004113961011171341
+2018-10-04 20:52:29.912498:	Training iteration: 32600, Loss: 0.003915983252227306
+2018-10-04 20:53:45.008025:	Training iteration: 32800, Loss: 0.005701746325939894
+2018-10-04 20:55:03.355055:	Training iteration: 33000, Loss: 0.0034632717724889517
+2018-10-04 20:56:16.203615:	Training iteration: 33200, Loss: 0.005583435297012329
+2018-10-04 20:57:32.139436:	Training iteration: 33400, Loss: 0.005354569759219885
+2018-10-04 20:58:54.434398:	Training iteration: 33600, Loss: 0.003690683748573065
+2018-10-04 21:00:17.750870:	Training iteration: 33800, Loss: 0.003545858897268772
+2018-10-04 21:01:42.775761:	Training iteration: 34000, Loss: 0.004774764645844698
+2018-10-04 21:02:57.052689:	Training iteration: 34200, Loss: 0.003423938062041998
+2018-10-04 21:04:16.463270:	Training iteration: 34400, Loss: 0.004329384304583073
+2018-10-04 21:05:35.175173:	Training iteration: 34600, Loss: 0.0037135735619813204
+2018-10-04 21:06:51.363345:	Training iteration: 34800, Loss: 0.0042588538490235806
+2018-10-04 21:08:12.879756:	Training iteration: 35000, Loss: 0.005083769094198942
+2018-10-04 21:09:44.562466:	Training iteration: 35200, Loss: 0.0051944321021437645
+2018-10-04 21:10:58.326062:	Training iteration: 35400, Loss: 0.0048878975212574005
+2018-10-04 21:12:13.566188:	Training iteration: 35600, Loss: 0.0037506758235394955
+2018-10-04 21:13:27.540672:	Training iteration: 35800, Loss: 0.004601248074322939
+2018-10-04 21:14:45.001125:	Training iteration: 36000, Loss: 0.0051633031107485294
+2018-10-04 21:16:01.693383:	Training iteration: 36200, Loss: 0.00382342585362494
+2018-10-04 21:17:19.709135:	Training iteration: 36400, Loss: 0.005201352294534445
+2018-10-04 21:18:43.313987:	Training iteration: 36600, Loss: 0.004107937682420015
+2018-10-04 21:20:11.653020:	Training iteration: 36800, Loss: 0.005069905426353216
+2018-10-04 21:21:28.285160:	Training iteration: 37000, Loss: 0.0037182243540883064
+2018-10-04 21:22:42.378802:	Training iteration: 37200, Loss: 0.0035871202126145363
+2018-10-04 21:23:57.222830:	Training iteration: 37400, Loss: 0.004448942840099335
+2018-10-04 21:25:16.083692:	Training iteration: 37600, Loss: 0.0047317189164459705
+2018-10-04 21:26:33.495843:	Training iteration: 37800, Loss: 0.004156613722443581
+2018-10-04 21:27:49.509483:	Training iteration: 38000, Loss: 0.003770513227209449
+2018-10-04 21:29:12.391386:	Training iteration: 38200, Loss: 0.004674900788813829
+2018-10-04 21:30:28.120506:	Training iteration: 38400, Loss: 0.005229061935096979
+2018-10-04 21:31:47.499172:	Training iteration: 38600, Loss: 0.0028412200044840574
+2018-10-04 21:33:03.089681:	Training iteration: 38800, Loss: 0.004808317869901657
+2018-10-04 21:34:19.199825:	Training iteration: 39000, Loss: 0.006721274461597204
+2018-10-04 21:35:46.923429:	Training iteration: 39200, Loss: 0.004727041814476252
+2018-10-04 21:37:06.227686:	Training iteration: 39400, Loss: 0.0048605287447571754
+2018-10-04 21:38:43.847760:	Training iteration: 39600, Loss: 0.003374717431142926
+2018-10-04 21:39:58.902039:	Training iteration: 39800, Loss: 0.002963587874546647
+2018-10-04 21:41:16.914296:	Training iteration: 40000, Loss: 0.007041058968752623
+2018-10-04 21:42:36.571833:	Training iteration: 40200, Loss: 0.003576572285965085
+2018-10-04 21:44:00.162184:	Training iteration: 40400, Loss: 0.004018059000372887
+2018-10-04 21:45:18.516379:	Training iteration: 40600, Loss: 0.0036220026668161154
+2018-10-04 21:46:41.881313:	Training iteration: 40800, Loss: 0.007604821119457483
+2018-10-04 21:48:10.369070:	Training iteration: 41000, Loss: 0.003820698242634535
+2018-10-04 21:49:27.948804:	Training iteration: 41200, Loss: 0.003923784010112286
+2018-10-04 21:50:40.026795:	Training iteration: 41400, Loss: 0.0041276211850345135
+2018-10-04 21:51:53.494561:	Training iteration: 41600, Loss: 0.003212869167327881
+2018-10-04 21:53:05.175639:	Training iteration: 41800, Loss: 0.006253368221223354
+2018-10-04 21:54:17.343242:	Training iteration: 42000, Loss: 0.004884972237050533
+2018-10-04 21:55:29.625033:	Training iteration: 42200, Loss: 0.003467438742518425
+2018-10-04 21:56:41.408628:	Training iteration: 42400, Loss: 0.0038607358001172543
+2018-10-04 21:57:54.281494:	Training iteration: 42600, Loss: 0.004894913174211979
+2018-10-04 21:59:06.965652:	Training iteration: 42800, Loss: 0.0052373576909303665
+2018-10-04 22:00:19.370967:	Training iteration: 43000, Loss: 0.00584767758846283
+2018-10-04 22:01:32.188325:	Training iteration: 43200, Loss: 0.004559912718832493
+2018-10-04 22:02:44.295836:	Training iteration: 43400, Loss: 0.003968092147260904
+2018-10-04 22:03:57.345581:	Training iteration: 43600, Loss: 0.0035210445057600737
+2018-10-04 22:05:08.535837:	Training iteration: 43800, Loss: 0.004110004752874374
+2018-10-04 22:06:21.300976:	Training iteration: 44000, Loss: 0.003007492981851101
+2018-10-04 22:07:34.140770:	Training iteration: 44200, Loss: 0.004719642456620932
+2018-10-04 22:08:47.244233:	Training iteration: 44400, Loss: 0.004512157291173935
+2018-10-04 22:09:59.412963:	Training iteration: 44600, Loss: 0.003592762863263488
+2018-10-04 22:11:13.200056:	Training iteration: 44800, Loss: 0.004803590476512909
+2018-10-04 22:12:07.609960: W tensorflow/core/framework/op_kernel.cc:1192] Out of range: End of sequence
+	 [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,128,513,2], [?,128,513,2], [?,32512,1], [?,32512,1]], output_types=[DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT], _device="/job:localhost/replica:0/task:0/device:CPU:0"](IteratorFromStringHandle)]]
+2018-10-04 22:12:07.609963: W tensorflow/core/framework/op_kernel.cc:1192] Out of range: End of sequence
+	 [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,128,513,2], [?,128,513,2], [?,32512,1], [?,32512,1]], output_types=[DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT], _device="/job:localhost/replica:0/task:0/device:CPU:0"](IteratorFromStringHandle)]]
+2018-10-04 22:12:07.610247:	Epoch 2 finished after 44962 iterations.
+Validating
+2018-10-04 22:12:07.625550:	Entering validation loop
+2018-10-04 22:12:17.638802: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 929 of 1000
+2018-10-04 22:12:18.307564: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 22:13:01.764509: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 957 of 1000
+2018-10-04 22:13:02.176282: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 22:13:44.912287: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 953 of 1000
+2018-10-04 22:13:45.293751: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 22:14:00.356775:	Validation iteration: 200, Loss: 0.006779063958674669
+2018-10-04 22:14:28.311308: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 946 of 1000
+2018-10-04 22:14:28.918413: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 22:15:41.446169:	Validation iteration: 400, Loss: 0.0040342616848647594
+Validation check mean loss: 0.006338848826664967
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2018-10-04 22:16:31.326340:	Training iteration: 45000, Loss: 0.003896379377692938
+2018-10-04 22:18:01.256979:	Training iteration: 45200, Loss: 0.003756721504032612
+2018-10-04 22:19:30.514111:	Training iteration: 45400, Loss: 0.00317524466663599
+2018-10-04 22:21:04.499427:	Training iteration: 45600, Loss: 0.003972130361944437
+2018-10-04 22:22:34.737924:	Training iteration: 45800, Loss: 0.004081428050994873
+2018-10-04 22:24:08.192816:	Training iteration: 46000, Loss: 0.00427837623283267
+2018-10-04 22:25:38.318192:	Training iteration: 46200, Loss: 0.004373062867671251
+2018-10-04 22:27:07.310579:	Training iteration: 46400, Loss: 0.004507956560701132
+2018-10-04 22:28:40.126790:	Training iteration: 46600, Loss: 0.004018360283225775
+2018-10-04 22:30:09.683933:	Training iteration: 46800, Loss: 0.0035213485825806856
+2018-10-04 22:31:41.595893:	Training iteration: 47000, Loss: 0.005183718167245388
+2018-10-04 22:32:54.136285:	Training iteration: 47200, Loss: 0.004423822276294231
+2018-10-04 22:34:06.351908:	Training iteration: 47400, Loss: 0.004252496175467968
+2018-10-04 22:35:18.643518:	Training iteration: 47600, Loss: 0.004024040419608355
+2018-10-04 22:36:31.813429:	Training iteration: 47800, Loss: 0.0040901778265833855
+2018-10-04 22:37:44.151459:	Training iteration: 48000, Loss: 0.004564373288303614
+2018-10-04 22:38:56.579189:	Training iteration: 48200, Loss: 0.005030849017202854
+2018-10-04 22:40:08.795974:	Training iteration: 48400, Loss: 0.00475166505202651
+2018-10-04 22:41:21.992233:	Training iteration: 48600, Loss: 0.003534769406542182
+2018-10-04 22:42:34.395144:	Training iteration: 48800, Loss: 0.003383881412446499
+2018-10-04 22:43:46.930034:	Training iteration: 49000, Loss: 0.0043073054403066635
+2018-10-04 22:44:58.414628:	Training iteration: 49200, Loss: 0.005826728418469429
+2018-10-04 22:46:11.681631:	Training iteration: 49400, Loss: 0.00557826180011034
+2018-10-04 22:47:24.311341:	Training iteration: 49600, Loss: 0.003994496539235115
+2018-10-04 22:48:37.441102:	Training iteration: 49800, Loss: 0.003756741527467966
+2018-10-04 22:49:50.912204:	Training iteration: 50000, Loss: 0.004537920467555523
+2018-10-04 22:51:02.928479:	Training iteration: 50200, Loss: 0.006040738895535469
+2018-10-04 22:52:14.521325:	Training iteration: 50400, Loss: 0.0040255384519696236
+2018-10-04 22:53:27.053753:	Training iteration: 50600, Loss: 0.0038939479272812605
+2018-10-04 22:54:39.108711:	Training iteration: 50800, Loss: 0.0052808248437941074
+2018-10-04 22:55:51.681556:	Training iteration: 51000, Loss: 0.006283223163336515
+2018-10-04 22:57:04.780699:	Training iteration: 51200, Loss: 0.003446299349889159
+2018-10-04 22:58:18.241953:	Training iteration: 51400, Loss: 0.0035141941625624895
+2018-10-04 22:59:32.002577:	Training iteration: 51600, Loss: 0.0036714179441332817
+2018-10-04 23:00:45.078897:	Training iteration: 51800, Loss: 0.00446295877918601
+2018-10-04 23:01:57.537132:	Training iteration: 52000, Loss: 0.005809818394482136
+2018-10-04 23:03:10.544904:	Training iteration: 52200, Loss: 0.003179214196279645
+2018-10-04 23:04:23.512340:	Training iteration: 52400, Loss: 0.0044558411464095116
+2018-10-04 23:05:37.022005:	Training iteration: 52600, Loss: 0.004391436465084553
+2018-10-04 23:06:51.077969:	Training iteration: 52800, Loss: 0.004688648972660303
+2018-10-04 23:08:03.056522:	Training iteration: 53000, Loss: 0.0030847066082060337
+2018-10-04 23:09:15.663753:	Training iteration: 53200, Loss: 0.00708812428638339
+2018-10-04 23:10:29.157139:	Training iteration: 53400, Loss: 0.004476132802665234
+2018-10-04 23:11:42.875161:	Training iteration: 53600, Loss: 0.0030782287940382957
+2018-10-04 23:12:55.547937:	Training iteration: 53800, Loss: 0.0065690381452441216
+2018-10-04 23:14:07.619585:	Training iteration: 54000, Loss: 0.0051310681737959385
+2018-10-04 23:15:20.509869:	Training iteration: 54200, Loss: 0.00493151880800724
+2018-10-04 23:16:32.992304:	Training iteration: 54400, Loss: 0.0031035200227051973
+2018-10-04 23:17:45.804938:	Training iteration: 54600, Loss: 0.004017012659460306
+2018-10-04 23:18:58.587223:	Training iteration: 54800, Loss: 0.0028785013128072023
+2018-10-04 23:20:10.411093:	Training iteration: 55000, Loss: 0.004886177368462086
+2018-10-04 23:21:23.217300:	Training iteration: 55200, Loss: 0.0033278793562203646
+2018-10-04 23:22:36.595444:	Training iteration: 55400, Loss: 0.003109619254246354
+2018-10-04 23:23:49.766809:	Training iteration: 55600, Loss: 0.00415525957942009
+2018-10-04 23:25:02.849629:	Training iteration: 55800, Loss: 0.006042676046490669
+2018-10-04 23:26:15.649825:	Training iteration: 56000, Loss: 0.0030176984146237373
+2018-10-04 23:27:28.944907:	Training iteration: 56200, Loss: 0.0040068128146231174
+2018-10-04 23:28:41.544485:	Training iteration: 56400, Loss: 0.004352678079158068
+2018-10-04 23:29:54.739956:	Training iteration: 56600, Loss: 0.0035541357938200235
+2018-10-04 23:31:06.268731:	Training iteration: 56800, Loss: 0.0075446246191859245
+2018-10-04 23:32:18.796336:	Training iteration: 57000, Loss: 0.005193402990698814
+2018-10-04 23:33:31.038641:	Training iteration: 57200, Loss: 0.004237995948642492
+2018-10-04 23:34:42.798949:	Training iteration: 57400, Loss: 0.004267575219273567
+2018-10-04 23:35:56.673971:	Training iteration: 57600, Loss: 0.003806369611993432
+2018-10-04 23:37:08.545963:	Training iteration: 57800, Loss: 0.0030859371181577444
+2018-10-04 23:38:21.416088:	Training iteration: 58000, Loss: 0.004802044481039047
+2018-10-04 23:39:33.954824:	Training iteration: 58200, Loss: 0.0028397238347679377
+2018-10-04 23:40:46.012481:	Training iteration: 58400, Loss: 0.003492394695058465
+2018-10-04 23:41:58.879829:	Training iteration: 58600, Loss: 0.003281024983152747
+2018-10-04 23:43:10.365922:	Training iteration: 58800, Loss: 0.005020143464207649
+2018-10-04 23:44:22.544696:	Training iteration: 59000, Loss: 0.003909958526492119
+2018-10-04 23:45:35.671547:	Training iteration: 59200, Loss: 0.006681018974632025
+2018-10-04 23:46:49.008716:	Training iteration: 59400, Loss: 0.0070510501973330975
+2018-10-04 23:48:01.180497:	Training iteration: 59600, Loss: 0.008754522539675236
+2018-10-04 23:49:15.261651:	Training iteration: 59800, Loss: 0.004288010764867067
+2018-10-04 23:50:04.586570:	Epoch 3 finished after 59949 iterations.
+Validating
+2018-10-04 23:50:04.610607:	Entering validation loop
+2018-10-04 23:50:14.638080: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 914 of 1000
+2018-10-04 23:50:15.397263: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 23:50:58.641081: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 948 of 1000
+2018-10-04 23:50:59.121161: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 23:51:41.916048: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 970 of 1000
+2018-10-04 23:51:42.153403: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 23:51:57.251959:	Validation iteration: 200, Loss: 0.007242458872497082
+2018-10-04 23:52:25.046551: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 933 of 1000
+2018-10-04 23:52:25.764979: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-04 23:53:37.859631:	Validation iteration: 400, Loss: 0.004715408198535442
+Validation check mean loss: 0.006368224215602066
+Validation loss has worsened. worse_val_checks = 1
+Checkpoint
+2018-10-04 23:54:33.198994:	Training iteration: 60000, Loss: 0.0035477287601679564
+2018-10-04 23:56:03.176921:	Training iteration: 60200, Loss: 0.0039256480522453785
+2018-10-04 23:57:31.978017:	Training iteration: 60400, Loss: 0.003704158589243889
+2018-10-04 23:59:05.650016:	Training iteration: 60600, Loss: 0.003737503895536065
+2018-10-05 00:00:36.287607:	Training iteration: 60800, Loss: 0.004147656727582216
+2018-10-05 00:02:09.457723:	Training iteration: 61000, Loss: 0.005126161500811577
+2018-10-05 00:03:39.609415:	Training iteration: 61200, Loss: 0.004152706824243069
+2018-10-05 00:05:09.217077:	Training iteration: 61400, Loss: 0.004079878795892
+2018-10-05 00:06:41.823036:	Training iteration: 61600, Loss: 0.004182448610663414
+2018-10-05 00:08:11.302312:	Training iteration: 61800, Loss: 0.0039582569152116776
+2018-10-05 00:09:41.653431:	Training iteration: 62000, Loss: 0.007184840273112059
+2018-10-05 00:10:54.287681:	Training iteration: 62200, Loss: 0.0037367709446698427
+2018-10-05 00:12:06.035235:	Training iteration: 62400, Loss: 0.004118943586945534
+2018-10-05 00:13:19.029323:	Training iteration: 62600, Loss: 0.0036491381470113993
+2018-10-05 00:14:32.935450:	Training iteration: 62800, Loss: 0.005746237002313137
+2018-10-05 00:15:43.999831:	Training iteration: 63000, Loss: 0.004384936299175024
+2018-10-05 00:16:56.731671:	Training iteration: 63200, Loss: 0.004041277337819338
+2018-10-05 00:18:08.502179:	Training iteration: 63400, Loss: 0.0057543558068573475
+2018-10-05 00:19:21.518244:	Training iteration: 63600, Loss: 0.0030348855070769787
+2018-10-05 00:20:34.268836:	Training iteration: 63800, Loss: 0.004364831373095512
+2018-10-05 00:21:46.737829:	Training iteration: 64000, Loss: 0.004155175760388374
+2018-10-05 00:22:58.436884:	Training iteration: 64200, Loss: 0.005128840915858746
+2018-10-05 00:24:11.529128:	Training iteration: 64400, Loss: 0.004387963563203812
+2018-10-05 00:25:24.724873:	Training iteration: 64600, Loss: 0.00579990167170763
+2018-10-05 00:26:36.602690:	Training iteration: 64800, Loss: 0.004513485822826624
+2018-10-05 00:27:50.606836:	Training iteration: 65000, Loss: 0.004091400653123856
+2018-10-05 00:29:02.313258:	Training iteration: 65200, Loss: 0.004358772188425064
+2018-10-05 00:30:14.106313:	Training iteration: 65400, Loss: 0.006287453230470419
+2018-10-05 00:31:26.567828:	Training iteration: 65600, Loss: 0.003664366202428937
+2018-10-05 00:32:38.859164:	Training iteration: 65800, Loss: 0.004609365947544575
+2018-10-05 00:33:51.934128:	Training iteration: 66000, Loss: 0.00390800042077899
+2018-10-05 00:35:05.167546:	Training iteration: 66200, Loss: 0.004236905369907618
+2018-10-05 00:36:18.400738:	Training iteration: 66400, Loss: 0.003720097476616502
+2018-10-05 00:37:32.365812:	Training iteration: 66600, Loss: 0.004109962843358517
+2018-10-05 00:38:44.839823:	Training iteration: 66800, Loss: 0.0050004031509160995
+2018-10-05 00:39:57.255556:	Training iteration: 67000, Loss: 0.003903266740962863
+2018-10-05 00:41:10.083642:	Training iteration: 67200, Loss: 0.002699990291148424
+2018-10-05 00:42:23.022842:	Training iteration: 67400, Loss: 0.0036389522720128298
+2018-10-05 00:43:36.556067:	Training iteration: 67600, Loss: 0.005084331147372723
+2018-10-05 00:44:50.167614:	Training iteration: 67800, Loss: 0.005139648914337158
+2018-10-05 00:46:02.533386:	Training iteration: 68000, Loss: 0.003405444324016571
+2018-10-05 00:47:14.631004:	Training iteration: 68200, Loss: 0.005910411011427641
+2018-10-05 00:48:28.400559:	Training iteration: 68400, Loss: 0.003939655143767595
+2018-10-05 00:49:42.128814:	Training iteration: 68600, Loss: 0.004257069434970617
+2018-10-05 00:50:54.992326:	Training iteration: 68800, Loss: 0.005682372488081455
+2018-10-05 00:52:07.035934:	Training iteration: 69000, Loss: 0.0036907782778143883
+2018-10-05 00:53:19.761883:	Training iteration: 69200, Loss: 0.003973011858761311
+2018-10-05 00:54:32.074374:	Training iteration: 69400, Loss: 0.0030042643193155527
+2018-10-05 00:55:44.862390:	Training iteration: 69600, Loss: 0.004625096917152405
+2018-10-05 00:56:57.401922:	Training iteration: 69800, Loss: 0.002767301397398114
+2018-10-05 00:58:09.468706:	Training iteration: 70000, Loss: 0.0037909226957708597
+2018-10-05 00:59:21.975691:	Training iteration: 70200, Loss: 0.0059332768432796
+2018-10-05 01:00:35.183975:	Training iteration: 70400, Loss: 0.0025430291425436735
+2018-10-05 01:01:48.154292:	Training iteration: 70600, Loss: 0.004344976041465998
+2018-10-05 01:03:01.601269:	Training iteration: 70800, Loss: 0.0049655199982225895
+2018-10-05 01:04:14.267600:	Training iteration: 71000, Loss: 0.003461322747170925
+2018-10-05 01:05:27.494394:	Training iteration: 71200, Loss: 0.0035835152957588434
+2018-10-05 01:06:40.381657:	Training iteration: 71400, Loss: 0.004726882558315992
+2018-10-05 01:07:53.489909:	Training iteration: 71600, Loss: 0.003614856395870447
+2018-10-05 01:09:05.623198:	Training iteration: 71800, Loss: 0.005114457104355097
+2018-10-05 01:10:18.286308:	Training iteration: 72000, Loss: 0.0039735836908221245
+2018-10-05 01:11:30.878922:	Training iteration: 72200, Loss: 0.006481317803263664
+2018-10-05 01:12:42.368365:	Training iteration: 72400, Loss: 0.005281167570501566
+2018-10-05 01:13:55.519086:	Training iteration: 72600, Loss: 0.0032589449547231197
+2018-10-05 01:15:07.470076:	Training iteration: 72800, Loss: 0.0028591924346983433
+2018-10-05 01:16:20.432203:	Training iteration: 73000, Loss: 0.006209808401763439
+2018-10-05 01:17:32.838238:	Training iteration: 73200, Loss: 0.0026227126363664865
+2018-10-05 01:18:44.823591:	Training iteration: 73400, Loss: 0.0035807557869702578
+2018-10-05 01:19:57.651137:	Training iteration: 73600, Loss: 0.0031626983545720577
+2018-10-05 01:21:08.804730:	Training iteration: 73800, Loss: 0.00517722312361002
+2018-10-05 01:22:21.060457:	Training iteration: 74000, Loss: 0.005156616680324078
+2018-10-05 01:23:33.061297:	Training iteration: 74200, Loss: 0.005107741802930832
+2018-10-05 01:24:45.959533:	Training iteration: 74400, Loss: 0.008180612698197365
+2018-10-05 01:25:58.037425:	Training iteration: 74600, Loss: 0.005406433716416359
+2018-10-05 01:27:11.537045:	Training iteration: 74800, Loss: 0.0041847191751003265
+2018-10-05 01:27:56.074895:	Epoch 4 finished after 74936 iterations.
+Validating
+2018-10-05 01:27:56.099276:	Entering validation loop
+2018-10-05 01:28:06.124539: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 925 of 1000
+2018-10-05 01:28:06.817737: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 01:28:49.883849: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 961 of 1000
+2018-10-05 01:28:50.242530: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 01:29:32.873258: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 966 of 1000
+2018-10-05 01:29:33.121230: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 01:29:48.126047:	Validation iteration: 200, Loss: 0.0070567382499575615
+2018-10-05 01:30:15.814655: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 950 of 1000
+2018-10-05 01:30:16.360276: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 01:31:28.180749:	Validation iteration: 400, Loss: 0.004372091498225927
+Validation check mean loss: 0.006332247038585841
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2018-10-05 01:32:29.597325:	Training iteration: 75000, Loss: 0.0037693879567086697
+2018-10-05 01:33:58.789193:	Training iteration: 75200, Loss: 0.0035773059353232384
+2018-10-05 01:35:26.987696:	Training iteration: 75400, Loss: 0.004080945625901222
+2018-10-05 01:37:00.312293:	Training iteration: 75600, Loss: 0.004025506321340799
+2018-10-05 01:38:29.942739:	Training iteration: 75800, Loss: 0.004203454125672579
+2018-10-05 01:40:02.930551:	Training iteration: 76000, Loss: 0.00471717631444335
+2018-10-05 01:41:32.441135:	Training iteration: 76200, Loss: 0.004292119760066271
+2018-10-05 01:43:01.260723:	Training iteration: 76400, Loss: 0.004385196138173342
+2018-10-05 01:44:34.274772:	Training iteration: 76600, Loss: 0.003676517866551876
+2018-10-05 01:46:04.095159:	Training iteration: 76800, Loss: 0.003645621007308364
+2018-10-05 01:47:32.754246:	Training iteration: 77000, Loss: 0.006602238863706589
+2018-10-05 01:48:45.163221:	Training iteration: 77200, Loss: 0.004204604774713516
+2018-10-05 01:49:56.801779:	Training iteration: 77400, Loss: 0.0036014188081026077
+2018-10-05 01:51:08.824863:	Training iteration: 77600, Loss: 0.0031768300104886293
+2018-10-05 01:52:21.852074:	Training iteration: 77800, Loss: 0.004074078053236008
+2018-10-05 01:53:33.718457:	Training iteration: 78000, Loss: 0.0036367292050272226
+2018-10-05 01:54:45.332452:	Training iteration: 78200, Loss: 0.0034291939809918404
+2018-10-05 01:55:56.735017:	Training iteration: 78400, Loss: 0.00505537586286664
+2018-10-05 01:57:09.313874:	Training iteration: 78600, Loss: 0.004546750336885452
+2018-10-05 01:58:20.700072:	Training iteration: 78800, Loss: 0.003568843239918351
+2018-10-05 01:59:32.678234:	Training iteration: 79000, Loss: 0.004126887768507004
+2018-10-05 02:00:44.140908:	Training iteration: 79200, Loss: 0.003888339502736926
+2018-10-05 02:01:56.360453:	Training iteration: 79400, Loss: 0.003381976392120123
+2018-10-05 02:03:09.475422:	Training iteration: 79600, Loss: 0.004585531540215015
+2018-10-05 02:04:20.460739:	Training iteration: 79800, Loss: 0.005427338648587465
+2018-10-05 02:05:34.057815:	Training iteration: 80000, Loss: 0.004771061707288027
+2018-10-05 02:06:44.898163:	Training iteration: 80200, Loss: 0.006688528228551149
+2018-10-05 02:07:56.201119:	Training iteration: 80400, Loss: 0.004406703170388937
+2018-10-05 02:09:08.084306:	Training iteration: 80600, Loss: 0.003954049665480852
+2018-10-05 02:10:19.698074:	Training iteration: 80800, Loss: 0.005493117496371269
+2018-10-05 02:11:33.084159:	Training iteration: 81000, Loss: 0.004576779901981354
+2018-10-05 02:12:45.809564:	Training iteration: 81200, Loss: 0.005009220913052559
+2018-10-05 02:13:58.504446:	Training iteration: 81400, Loss: 0.004325229208916426
+2018-10-05 02:15:12.047092:	Training iteration: 81600, Loss: 0.005475063808262348
+2018-10-05 02:16:24.121442:	Training iteration: 81800, Loss: 0.00493371719494462
+2018-10-05 02:17:36.235663:	Training iteration: 82000, Loss: 0.003624382894486189
+2018-10-05 02:18:48.369163:	Training iteration: 82200, Loss: 0.0027743587270379066
+2018-10-05 02:20:00.698374:	Training iteration: 82400, Loss: 0.0027165443170815706
+2018-10-05 02:21:13.533118:	Training iteration: 82600, Loss: 0.005083558149635792
+2018-10-05 02:22:26.349327:	Training iteration: 82800, Loss: 0.004504483193159103
+2018-10-05 02:23:38.532983:	Training iteration: 83000, Loss: 0.004124707542359829
+2018-10-05 02:24:50.395514:	Training iteration: 83200, Loss: 0.0043815551325678825
+2018-10-05 02:26:04.084032:	Training iteration: 83400, Loss: 0.0033266544342041016
+2018-10-05 02:27:17.256561:	Training iteration: 83600, Loss: 0.004587054718285799
+2018-10-05 02:28:29.315523:	Training iteration: 83800, Loss: 0.006334743462502956
+2018-10-05 02:29:40.782037:	Training iteration: 84000, Loss: 0.0034791738726198673
+2018-10-05 02:30:53.299830:	Training iteration: 84200, Loss: 0.004960112739354372
+2018-10-05 02:32:05.502280:	Training iteration: 84400, Loss: 0.004058360122144222
+2018-10-05 02:33:17.926939:	Training iteration: 84600, Loss: 0.0047310455702245235
+2018-10-05 02:34:30.077864:	Training iteration: 84800, Loss: 0.0036945370957255363
+2018-10-05 02:35:42.046562:	Training iteration: 85000, Loss: 0.004898952320218086
+2018-10-05 02:36:53.793169:	Training iteration: 85200, Loss: 0.006212472915649414
+2018-10-05 02:38:06.463473:	Training iteration: 85400, Loss: 0.00474063865840435
+2018-10-05 02:39:19.333541:	Training iteration: 85600, Loss: 0.004444893449544907
+2018-10-05 02:40:31.541973:	Training iteration: 85800, Loss: 0.005830938927829266
+2018-10-05 02:41:44.124614:	Training iteration: 86000, Loss: 0.0042533571831882
+2018-10-05 02:42:56.579739:	Training iteration: 86200, Loss: 0.0036878837272524834
+2018-10-05 02:44:08.883211:	Training iteration: 86400, Loss: 0.005403413902968168
+2018-10-05 02:45:21.456811:	Training iteration: 86600, Loss: 0.0032917738426476717
+2018-10-05 02:46:32.795535:	Training iteration: 86800, Loss: 0.005658409558236599
+2018-10-05 02:47:45.137543:	Training iteration: 87000, Loss: 0.0029526192229241133
+2018-10-05 02:48:57.189510:	Training iteration: 87200, Loss: 0.00580973457545042
+2018-10-05 02:50:08.466070:	Training iteration: 87400, Loss: 0.00536001194268465
+2018-10-05 02:51:21.037067:	Training iteration: 87600, Loss: 0.0035166339948773384
+2018-10-05 02:52:32.178954:	Training iteration: 87800, Loss: 0.002510393038392067
+2018-10-05 02:53:45.005412:	Training iteration: 88000, Loss: 0.0073191141709685326
+2018-10-05 02:54:56.979049:	Training iteration: 88200, Loss: 0.00320761208422482
+2018-10-05 02:56:08.697424:	Training iteration: 88400, Loss: 0.0033693534787744284
+2018-10-05 02:57:21.254161:	Training iteration: 88600, Loss: 0.0032778894528746605
+2018-10-05 02:58:32.436282:	Training iteration: 88800, Loss: 0.004860712680965662
+2018-10-05 02:59:44.455837:	Training iteration: 89000, Loss: 0.004837040789425373
+2018-10-05 03:00:57.134638:	Training iteration: 89200, Loss: 0.005014366470277309
+2018-10-05 03:02:09.913935:	Training iteration: 89400, Loss: 0.007562898565083742
+2018-10-05 03:03:21.965920:	Training iteration: 89600, Loss: 0.006055047735571861
+2018-10-05 03:04:34.687596:	Training iteration: 89800, Loss: 0.004007393028587103
+2018-10-05 03:05:14.466535:	Epoch 5 finished after 89923 iterations.
+Validating
+2018-10-05 03:05:14.479916:	Entering validation loop
+2018-10-05 03:05:24.511832: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 923 of 1000
+2018-10-05 03:05:25.201208: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 03:06:08.459953: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 967 of 1000
+2018-10-05 03:06:08.784671: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 03:06:51.687827: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 982 of 1000
+2018-10-05 03:06:51.838882: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 03:07:06.855046:	Validation iteration: 200, Loss: 0.00719812884926796
+2018-10-05 03:07:34.525201: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 950 of 1000
+2018-10-05 03:07:35.064646: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 03:08:47.513141:	Validation iteration: 400, Loss: 0.004265616647899151
+Validation check mean loss: 0.006365676965315865
+Validation loss has worsened. worse_val_checks = 1
+Checkpoint
+2018-10-05 03:09:54.666707:	Training iteration: 90000, Loss: 0.003828302724286914
+2018-10-05 03:11:23.873749:	Training iteration: 90200, Loss: 0.0036700943019241095
+2018-10-05 03:12:52.248632:	Training iteration: 90400, Loss: 0.003620932810008526
+2018-10-05 03:14:26.472014:	Training iteration: 90600, Loss: 0.004237896762788296
+2018-10-05 03:15:56.002110:	Training iteration: 90800, Loss: 0.004664775915443897
+2018-10-05 03:17:29.311968:	Training iteration: 91000, Loss: 0.004396157804876566
+2018-10-05 03:18:58.703475:	Training iteration: 91200, Loss: 0.00395893445238471
+2018-10-05 03:20:27.599162:	Training iteration: 91400, Loss: 0.00416609225794673
+2018-10-05 03:21:59.580573:	Training iteration: 91600, Loss: 0.004241259302943945
+2018-10-05 03:23:28.662890:	Training iteration: 91800, Loss: 0.0036879759281873703
+2018-10-05 03:24:56.180470:	Training iteration: 92000, Loss: 0.004669319372624159
+2018-10-05 03:26:08.438808:	Training iteration: 92200, Loss: 0.004792414139956236
+2018-10-05 03:27:19.746030:	Training iteration: 92400, Loss: 0.004743981175124645
+2018-10-05 03:28:32.154435:	Training iteration: 92600, Loss: 0.0047364686615765095
+2018-10-05 03:29:45.134882:	Training iteration: 92800, Loss: 0.004002935253083706
+2018-10-05 03:30:56.389272:	Training iteration: 93000, Loss: 0.002939698053523898
+2018-10-05 03:32:08.596406:	Training iteration: 93200, Loss: 0.004953709430992603
+2018-10-05 03:33:19.963794:	Training iteration: 93400, Loss: 0.004560612607747316
+2018-10-05 03:34:32.227335:	Training iteration: 93600, Loss: 0.003500431077554822
+2018-10-05 03:35:43.862879:	Training iteration: 93800, Loss: 0.004777493886649609
+2018-10-05 03:36:56.227512:	Training iteration: 94000, Loss: 0.006925861816853285
+2018-10-05 03:38:07.103953:	Training iteration: 94200, Loss: 0.0036755723413079977
+2018-10-05 03:39:19.265052:	Training iteration: 94400, Loss: 0.0035832286812365055
+2018-10-05 03:40:32.493089:	Training iteration: 94600, Loss: 0.004175426438450813
+2018-10-05 03:41:43.570360:	Training iteration: 94800, Loss: 0.00639431644231081
+2018-10-05 03:42:56.713323:	Training iteration: 95000, Loss: 0.0046752020716667175
+2018-10-05 03:44:07.826578:	Training iteration: 95200, Loss: 0.004634758457541466
+2018-10-05 03:45:19.298986:	Training iteration: 95400, Loss: 0.003895931178703904
+2018-10-05 03:46:31.337135:	Training iteration: 95600, Loss: 0.004216666799038649
+2018-10-05 03:47:43.003859:	Training iteration: 95800, Loss: 0.006077559199184179
+2018-10-05 03:48:55.652953:	Training iteration: 96000, Loss: 0.003111654194071889
+2018-10-05 03:50:08.758399:	Training iteration: 96200, Loss: 0.0045191883109509945
+2018-10-05 03:51:21.265397:	Training iteration: 96400, Loss: 0.0051002176478505135
+2018-10-05 03:52:34.783027:	Training iteration: 96600, Loss: 0.0048041208647191525
+2018-10-05 03:53:46.832077:	Training iteration: 96800, Loss: 0.004009170923382044
+2018-10-05 03:54:58.704650:	Training iteration: 97000, Loss: 0.0031141333747655153
+2018-10-05 03:56:11.050170:	Training iteration: 97200, Loss: 0.003630830440670252
+2018-10-05 03:57:23.280995:	Training iteration: 97400, Loss: 0.003571649780496955
+2018-10-05 03:58:36.621921:	Training iteration: 97600, Loss: 0.004022466484457254
+2018-10-05 03:59:49.585401:	Training iteration: 97800, Loss: 0.004407600965350866
+2018-10-05 04:01:01.327138:	Training iteration: 98000, Loss: 0.004096681252121925
+2018-10-05 04:02:13.006715:	Training iteration: 98200, Loss: 0.007016187999397516
+2018-10-05 04:03:26.450916:	Training iteration: 98400, Loss: 0.0049025313928723335
+2018-10-05 04:04:39.822412:	Training iteration: 98600, Loss: 0.004444069229066372
+2018-10-05 04:05:51.887625:	Training iteration: 98800, Loss: 0.005013986025005579
+2018-10-05 04:07:03.262867:	Training iteration: 99000, Loss: 0.003584647784009576
+2018-10-05 04:08:15.317777:	Training iteration: 99200, Loss: 0.003527493216097355
+2018-10-05 04:09:27.557184:	Training iteration: 99400, Loss: 0.004291770048439503
+2018-10-05 04:10:39.966052:	Training iteration: 99600, Loss: 0.004819918889552355
+2018-10-05 04:11:51.891943:	Training iteration: 99800, Loss: 0.00394080113619566
+2018-10-05 04:13:03.857936:	Training iteration: 100000, Loss: 0.005136847961694002
+2018-10-05 04:14:15.170074:	Training iteration: 100200, Loss: 0.004771005362272263
+2018-10-05 04:15:29.011000:	Training iteration: 100400, Loss: 0.005231006070971489
+2018-10-05 04:16:41.293777:	Training iteration: 100600, Loss: 0.006271283142268658
+2018-10-05 04:17:53.593998:	Training iteration: 100800, Loss: 0.004134124610573053
+2018-10-05 04:19:06.504112:	Training iteration: 101000, Loss: 0.004871583078056574
+2018-10-05 04:20:18.915887:	Training iteration: 101200, Loss: 0.004792811349034309
+2018-10-05 04:21:31.445270:	Training iteration: 101400, Loss: 0.004428379703313112
+2018-10-05 04:22:44.146671:	Training iteration: 101600, Loss: 0.003765207016840577
+2018-10-05 04:23:55.741444:	Training iteration: 101800, Loss: 0.004879870917648077
+2018-10-05 04:25:07.881913:	Training iteration: 102000, Loss: 0.002675848314538598
+2018-10-05 04:26:19.958940:	Training iteration: 102200, Loss: 0.0043897973373532295
+2018-10-05 04:27:30.948043:	Training iteration: 102400, Loss: 0.00375797925516963
+2018-10-05 04:28:43.627742:	Training iteration: 102600, Loss: 0.004099659156054258
+2018-10-05 04:29:54.321175:	Training iteration: 102800, Loss: 0.00410658260807395
+2018-10-05 04:31:07.299620:	Training iteration: 103000, Loss: 0.006234989035874605
+2018-10-05 04:32:19.013363:	Training iteration: 103200, Loss: 0.0036444813013076782
+2018-10-05 04:33:30.786812:	Training iteration: 103400, Loss: 0.003197481855750084
+2018-10-05 04:34:43.840941:	Training iteration: 103600, Loss: 0.00451574195176363
+2018-10-05 04:35:54.716677:	Training iteration: 103800, Loss: 0.003972713835537434
+2018-10-05 04:37:06.853188:	Training iteration: 104000, Loss: 0.006244303192943335
+2018-10-05 04:38:19.314771:	Training iteration: 104200, Loss: 0.005510847084224224
+2018-10-05 04:39:31.911766:	Training iteration: 104400, Loss: 0.004849350545555353
+2018-10-05 04:40:44.151932:	Training iteration: 104600, Loss: 0.007639020681381226
+2018-10-05 04:41:57.295571:	Training iteration: 104800, Loss: 0.0029097639489918947
+2018-10-05 04:42:32.745924:	Epoch 6 finished after 104910 iterations.
+Validating
+2018-10-05 04:42:32.758502:	Entering validation loop
+2018-10-05 04:42:42.769007: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 936 of 1000
+2018-10-05 04:42:43.315491: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 04:43:26.445276: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 975 of 1000
+2018-10-05 04:43:26.693426: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 04:44:09.328455: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 970 of 1000
+2018-10-05 04:44:09.538284: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 04:44:24.582170:	Validation iteration: 200, Loss: 0.007167737931013107
+2018-10-05 04:44:52.305934: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 952 of 1000
+2018-10-05 04:44:52.837750: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 04:46:04.595091:	Validation iteration: 400, Loss: 0.0037822246085852385
+Validation check mean loss: 0.006370228949090551
+Validation loss has worsened. worse_val_checks = 2
+Checkpoint
+2018-10-05 04:47:17.269107:	Training iteration: 105000, Loss: 0.0035589104518294334
+2018-10-05 04:48:46.590801:	Training iteration: 105200, Loss: 0.003257910255342722
+2018-10-05 04:50:11.729439:	Training iteration: 105400, Loss: 0.0037203289102762938
+2018-10-05 04:51:49.264859:	Training iteration: 105600, Loss: 0.004258145112544298
+2018-10-05 04:53:19.154538:	Training iteration: 105800, Loss: 0.004061463288962841
+2018-10-05 04:54:52.111085:	Training iteration: 106000, Loss: 0.004368457943201065
+2018-10-05 04:56:21.637563:	Training iteration: 106200, Loss: 0.004434831906110048
+2018-10-05 04:57:49.244100:	Training iteration: 106400, Loss: 0.004376816563308239
+2018-10-05 04:59:23.477520:	Training iteration: 106600, Loss: 0.0039941417053341866
+2018-10-05 05:00:52.451595:	Training iteration: 106800, Loss: 0.0036840680986642838
+2018-10-05 05:02:18.667036:	Training iteration: 107000, Loss: 0.004662737250328064
+2018-10-05 05:03:30.994459:	Training iteration: 107200, Loss: 0.0035177161917090416
+2018-10-05 05:04:42.750209:	Training iteration: 107400, Loss: 0.0042854188941419125
+2018-10-05 05:05:55.405104:	Training iteration: 107600, Loss: 0.005173251498490572
+2018-10-05 05:07:07.648322:	Training iteration: 107800, Loss: 0.0032269833609461784
+2018-10-05 05:08:18.978131:	Training iteration: 108000, Loss: 0.002683291444554925
+2018-10-05 05:09:30.975675:	Training iteration: 108200, Loss: 0.0051672011613845825
+2018-10-05 05:10:42.534328:	Training iteration: 108400, Loss: 0.008369029499590397
+2018-10-05 05:11:55.571745:	Training iteration: 108600, Loss: 0.004022145178169012
+2018-10-05 05:13:06.917231:	Training iteration: 108800, Loss: 0.00805368460714817
+2018-10-05 05:14:18.839374:	Training iteration: 109000, Loss: 0.006560222711414099
+2018-10-05 05:15:30.082985:	Training iteration: 109200, Loss: 0.0049344920553267
+2018-10-05 05:16:42.533622:	Training iteration: 109400, Loss: 0.003730496857315302
+2018-10-05 05:17:55.313185:	Training iteration: 109600, Loss: 0.004254564642906189
+2018-10-05 05:19:07.193854:	Training iteration: 109800, Loss: 0.004846634343266487
+2018-10-05 05:20:19.975994:	Training iteration: 110000, Loss: 0.0038729114457964897
+2018-10-05 05:21:31.293864:	Training iteration: 110200, Loss: 0.004131391178816557
+2018-10-05 05:22:43.172615:	Training iteration: 110400, Loss: 0.005446325056254864
+2018-10-05 05:23:54.916690:	Training iteration: 110600, Loss: 0.0051512811332941055
+2018-10-05 05:25:06.375169:	Training iteration: 110800, Loss: 0.005578313954174519
+2018-10-05 05:26:19.603247:	Training iteration: 111000, Loss: 0.0035821988712996244
+2018-10-05 05:27:32.330791:	Training iteration: 111200, Loss: 0.003933125175535679
+2018-10-05 05:28:44.608962:	Training iteration: 111400, Loss: 0.0038089973386377096
+2018-10-05 05:29:58.299946:	Training iteration: 111600, Loss: 0.0043014418333768845
+2018-10-05 05:31:10.271183:	Training iteration: 111800, Loss: 0.0036056831013411283
+2018-10-05 05:32:22.286483:	Training iteration: 112000, Loss: 0.004451151937246323
+2018-10-05 05:33:34.993206:	Training iteration: 112200, Loss: 0.0038175261579453945
+2018-10-05 05:34:47.843341:	Training iteration: 112400, Loss: 0.0040369462221860886
+2018-10-05 05:36:00.777698:	Training iteration: 112600, Loss: 0.0037422734312713146
+2018-10-05 05:37:13.267249:	Training iteration: 112800, Loss: 0.004362877923995256
+2018-10-05 05:38:25.442671:	Training iteration: 113000, Loss: 0.0033545098267495632
+2018-10-05 05:39:37.577647:	Training iteration: 113200, Loss: 0.00609188387170434
+2018-10-05 05:40:50.976080:	Training iteration: 113400, Loss: 0.005659297574311495
+2018-10-05 05:42:04.566658:	Training iteration: 113600, Loss: 0.0038171433843672276
+2018-10-05 05:43:16.258721:	Training iteration: 113800, Loss: 0.004559335298836231
+2018-10-05 05:44:28.412607:	Training iteration: 114000, Loss: 0.0034965353552252054
+2018-10-05 05:45:40.043583:	Training iteration: 114200, Loss: 0.003932617139071226
+2018-10-05 05:46:52.206883:	Training iteration: 114400, Loss: 0.003751375712454319
+2018-10-05 05:48:04.684699:	Training iteration: 114600, Loss: 0.0034297979436814785
+2018-10-05 05:49:16.003078:	Training iteration: 114800, Loss: 0.004565597977489233
+2018-10-05 05:50:28.207342:	Training iteration: 115000, Loss: 0.005058374255895615
+2018-10-05 05:51:39.814961:	Training iteration: 115200, Loss: 0.004512110259383917
+2018-10-05 05:52:53.684015:	Training iteration: 115400, Loss: 0.00670260563492775
+2018-10-05 05:54:06.205514:	Training iteration: 115600, Loss: 0.006320452783256769
+2018-10-05 05:55:19.098075:	Training iteration: 115800, Loss: 0.005503232590854168
+2018-10-05 05:56:30.775222:	Training iteration: 116000, Loss: 0.0035986686125397682
+2018-10-05 05:57:43.242041:	Training iteration: 116200, Loss: 0.006215615198016167
+2018-10-05 05:58:55.522652:	Training iteration: 116400, Loss: 0.004692048765718937
+2018-10-05 06:00:07.902051:	Training iteration: 116600, Loss: 0.003752667922526598
+2018-10-05 06:01:19.934779:	Training iteration: 116800, Loss: 0.00609371904283762
+2018-10-05 06:02:31.879758:	Training iteration: 117000, Loss: 0.003500903258100152
+2018-10-05 06:03:44.209977:	Training iteration: 117200, Loss: 0.003902147524058819
+2018-10-05 06:04:55.652960:	Training iteration: 117400, Loss: 0.004514663014560938
+2018-10-05 06:06:08.172242:	Training iteration: 117600, Loss: 0.004987187217921019
+2018-10-05 06:07:19.487773:	Training iteration: 117800, Loss: 0.0034218081273138523
+2018-10-05 06:08:32.400845:	Training iteration: 118000, Loss: 0.005296819377690554
+2018-10-05 06:09:44.250394:	Training iteration: 118200, Loss: 0.0036223726347088814
+2018-10-05 06:10:56.048821:	Training iteration: 118400, Loss: 0.003591968212276697
+2018-10-05 06:12:08.528255:	Training iteration: 118600, Loss: 0.004818933084607124
+2018-10-05 06:13:19.469788:	Training iteration: 118800, Loss: 0.004586936440318823
+2018-10-05 06:14:31.824490:	Training iteration: 119000, Loss: 0.005129390396177769
+2018-10-05 06:15:44.316602:	Training iteration: 119200, Loss: 0.0066094789654016495
+2018-10-05 06:16:57.277846:	Training iteration: 119400, Loss: 0.003955051302909851
+2018-10-05 06:18:09.245188:	Training iteration: 119600, Loss: 0.0071923695504665375
+2018-10-05 06:19:22.796748:	Training iteration: 119800, Loss: 0.004005169961601496
+2018-10-05 06:19:52.726752:	Epoch 7 finished after 119897 iterations.
+Validating
+2018-10-05 06:19:52.754024:	Entering validation loop
+2018-10-05 06:20:02.776221: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 932 of 1000
+2018-10-05 06:20:03.396683: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 06:20:46.601910: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 956 of 1000
+2018-10-05 06:20:47.016972: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 06:21:29.803337: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 958 of 1000
+2018-10-05 06:21:30.125062: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 06:21:45.042149:	Validation iteration: 200, Loss: 0.006453399546444416
+2018-10-05 06:22:12.833403: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 949 of 1000
+2018-10-05 06:22:13.396532: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 06:23:25.274592:	Validation iteration: 400, Loss: 0.004024602938443422
+Validation check mean loss: 0.0062680490359794385
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2018-10-05 06:24:44.029034:	Training iteration: 120000, Loss: 0.0041632805950939655
+2018-10-05 06:26:13.061198:	Training iteration: 120200, Loss: 0.0038317323196679354
+2018-10-05 06:27:45.507202:	Training iteration: 120400, Loss: 0.0047101909294724464
+2018-10-05 06:29:15.801742:	Training iteration: 120600, Loss: 0.004458703100681305
+2018-10-05 06:30:45.775354:	Training iteration: 120800, Loss: 0.004111002199351788
+2018-10-05 06:32:18.853508:	Training iteration: 121000, Loss: 0.00433505792170763
+2018-10-05 06:33:48.032145:	Training iteration: 121200, Loss: 0.004531465470790863
+2018-10-05 06:35:11.856134:	Training iteration: 121400, Loss: 0.004284958820790052
+2018-10-05 06:36:49.475728:	Training iteration: 121600, Loss: 0.003993231803178787
+2018-10-05 06:38:18.955036:	Training iteration: 121800, Loss: 0.003484924091026187
+2018-10-05 06:39:44.367140:	Training iteration: 122000, Loss: 0.004344600718468428
+2018-10-05 06:40:56.590668:	Training iteration: 122200, Loss: 0.003832306945696473
+2018-10-05 06:42:08.019778:	Training iteration: 122400, Loss: 0.004142364952713251
+2018-10-05 06:43:20.630754:	Training iteration: 122600, Loss: 0.0027551797684282064
+2018-10-05 06:44:33.168209:	Training iteration: 122800, Loss: 0.0045426348224282265
+2018-10-05 06:45:44.563120:	Training iteration: 123000, Loss: 0.0026756986044347286
+2018-10-05 06:46:56.428249:	Training iteration: 123200, Loss: 0.004185000900179148
+2018-10-05 06:48:07.991685:	Training iteration: 123400, Loss: 0.006159080658107996
+2018-10-05 06:49:21.036451:	Training iteration: 123600, Loss: 0.004372176714241505
+2018-10-05 06:50:32.778274:	Training iteration: 123800, Loss: 0.007072725798934698
+2018-10-05 06:51:44.302530:	Training iteration: 124000, Loss: 0.0039722309447824955
+2018-10-05 06:52:55.572779:	Training iteration: 124200, Loss: 0.004978655371814966
+2018-10-05 06:54:07.831892:	Training iteration: 124400, Loss: 0.0032797541934996843
+2018-10-05 06:55:20.866616:	Training iteration: 124600, Loss: 0.005570969078689814
+2018-10-05 06:56:32.503434:	Training iteration: 124800, Loss: 0.003474628319963813
+2018-10-05 06:57:45.162625:	Training iteration: 125000, Loss: 0.004547590389847755
+2018-10-05 06:58:56.446030:	Training iteration: 125200, Loss: 0.003280774923041463
+2018-10-05 07:00:08.019603:	Training iteration: 125400, Loss: 0.005636083893477917
+2018-10-05 07:01:19.762751:	Training iteration: 125600, Loss: 0.006542557384818792
+2018-10-05 07:02:31.406952:	Training iteration: 125800, Loss: 0.004559095483273268
+2018-10-05 07:03:44.743976:	Training iteration: 126000, Loss: 0.004023789893835783
+2018-10-05 07:04:57.344431:	Training iteration: 126200, Loss: 0.0033459446858614683
+2018-10-05 07:06:10.205915:	Training iteration: 126400, Loss: 0.003073134459555149
+2018-10-05 07:07:24.677651:	Training iteration: 126600, Loss: 0.003757840720936656
+2018-10-05 07:08:36.395385:	Training iteration: 126800, Loss: 0.0042978134006261826
+2018-10-05 07:09:48.184759:	Training iteration: 127000, Loss: 0.003309001913294196
+2018-10-05 07:11:00.749872:	Training iteration: 127200, Loss: 0.0031780502758920193
+2018-10-05 07:12:13.863179:	Training iteration: 127400, Loss: 0.0033550069201737642
+2018-10-05 07:13:26.671304:	Training iteration: 127600, Loss: 0.003805248998105526
+2018-10-05 07:14:39.603927:	Training iteration: 127800, Loss: 0.003206426277756691
+2018-10-05 07:15:51.968211:	Training iteration: 128000, Loss: 0.004183726850897074
+2018-10-05 07:17:03.795423:	Training iteration: 128200, Loss: 0.004689039662480354
+2018-10-05 07:18:17.067530:	Training iteration: 128400, Loss: 0.004129226319491863
+2018-10-05 07:19:30.586432:	Training iteration: 128600, Loss: 0.004806721583008766
+2018-10-05 07:20:43.021158:	Training iteration: 128800, Loss: 0.00460081035271287
+2018-10-05 07:21:54.867459:	Training iteration: 129000, Loss: 0.003301373915746808
+2018-10-05 07:23:06.306799:	Training iteration: 129200, Loss: 0.003369569545611739
+2018-10-05 07:24:18.549306:	Training iteration: 129400, Loss: 0.0023766758386045694
+2018-10-05 07:25:31.148466:	Training iteration: 129600, Loss: 0.002567544812336564
+2018-10-05 07:26:42.812912:	Training iteration: 129800, Loss: 0.004593339283019304
+2018-10-05 07:27:54.903405:	Training iteration: 130000, Loss: 0.004883072804659605
+2018-10-05 07:29:06.474742:	Training iteration: 130200, Loss: 0.0031730937771499157
+2018-10-05 07:30:20.158145:	Training iteration: 130400, Loss: 0.005356792826205492
+2018-10-05 07:31:32.505550:	Training iteration: 130600, Loss: 0.004333029966801405
+2018-10-05 07:32:45.686182:	Training iteration: 130800, Loss: 0.005556386895477772
+2018-10-05 07:33:57.589560:	Training iteration: 131000, Loss: 0.003910900559276342
+2018-10-05 07:35:10.825322:	Training iteration: 131200, Loss: 0.005548312794417143
+2018-10-05 07:36:23.154020:	Training iteration: 131400, Loss: 0.004884295165538788
+2018-10-05 07:37:35.515390:	Training iteration: 131600, Loss: 0.004291358403861523
+2018-10-05 07:38:47.277456:	Training iteration: 131800, Loss: 0.004787683952599764
+2018-10-05 07:39:59.429750:	Training iteration: 132000, Loss: 0.0032387105748057365
+2018-10-05 07:41:11.400733:	Training iteration: 132200, Loss: 0.0035046995617449284
+2018-10-05 07:42:23.265641:	Training iteration: 132400, Loss: 0.004388262517750263
+2018-10-05 07:43:35.659630:	Training iteration: 132600, Loss: 0.004528920166194439
+2018-10-05 07:44:47.033951:	Training iteration: 132800, Loss: 0.007331905420869589
+2018-10-05 07:45:59.959860:	Training iteration: 133000, Loss: 0.004685676656663418
+2018-10-05 07:47:12.002855:	Training iteration: 133200, Loss: 0.002914849203079939
+2018-10-05 07:48:23.775543:	Training iteration: 133400, Loss: 0.0050341845490038395
+2018-10-05 07:49:36.431708:	Training iteration: 133600, Loss: 0.004932031966745853
+2018-10-05 07:50:47.714337:	Training iteration: 133800, Loss: 0.00416408060118556
+2018-10-05 07:52:00.033776:	Training iteration: 134000, Loss: 0.004213028121739626
+2018-10-05 07:53:12.521228:	Training iteration: 134200, Loss: 0.005541895050555468
+2018-10-05 07:54:25.507209:	Training iteration: 134400, Loss: 0.004218879155814648
+2018-10-05 07:55:37.342146:	Training iteration: 134600, Loss: 0.00434132618829608
+2018-10-05 07:56:50.569918:	Training iteration: 134800, Loss: 0.0038200116250663996
+2018-10-05 07:57:16.368783:	Epoch 8 finished after 134884 iterations.
+Validating
+2018-10-05 07:57:16.395321:	Entering validation loop
+2018-10-05 07:57:26.404292: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 911 of 1000
+2018-10-05 07:57:27.263394: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 07:58:10.158890: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 981 of 1000
+2018-10-05 07:58:10.388208: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 07:58:53.239461: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 968 of 1000
+2018-10-05 07:58:53.470881: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 07:59:08.459048:	Validation iteration: 200, Loss: 0.007099934853613377
+2018-10-05 07:59:36.144194: I tensorflow/core/kernels/shuffle_dataset_op.cc:110] Filling up shuffle buffer (this may take a while): 929 of 1000
+2018-10-05 07:59:36.894201: I tensorflow/core/kernels/shuffle_dataset_op.cc:121] Shuffle buffer filled.
+2018-10-05 08:00:49.066040:	Validation iteration: 400, Loss: 0.004651218187063932
+Validation check mean loss: 0.0063419900559443226
+Validation loss has worsened. worse_val_checks = 1
+Checkpoint
+2018-10-05 08:02:13.462805:	Training iteration: 135000, Loss: 0.0036318430211395025
+2018-10-05 08:03:42.164942:	Training iteration: 135200, Loss: 0.003726551542058587
+2018-10-05 08:05:14.220869:	Training iteration: 135400, Loss: 0.003977717831730843
+2018-10-05 08:06:44.737453:	Training iteration: 135600, Loss: 0.004144902806729078
+2018-10-05 08:08:14.741023:	Training iteration: 135800, Loss: 0.004368928261101246
+2018-10-05 08:09:47.524241:	Training iteration: 136000, Loss: 0.004291189834475517
+2018-10-05 08:11:16.857392:	Training iteration: 136200, Loss: 0.004397932440042496
+2018-10-05 08:12:48.828111:	Training iteration: 136400, Loss: 0.004239007364958525
+2018-10-05 08:14:18.060254:	Training iteration: 136600, Loss: 0.0037079143803566694
+2018-10-05 08:15:47.271399:	Training iteration: 136800, Loss: 0.003965252544730902
+2018-10-05 08:17:11.524577:	Training iteration: 137000, Loss: 0.005422526970505714
+2018-10-05 08:18:23.567940:	Training iteration: 137200, Loss: 0.003072116058319807
+2018-10-05 08:19:34.835695:	Training iteration: 137400, Loss: 0.003649710910394788
+2018-10-05 08:20:47.412968:	Training iteration: 137600, Loss: 0.0035241455771028996
+2018-10-05 08:22:00.006789:	Training iteration: 137800, Loss: 0.0070992582477629185
+2018-10-05 08:23:11.027187:	Training iteration: 138000, Loss: 0.0029661008156836033
+2018-10-05 08:24:22.901037:	Training iteration: 138200, Loss: 0.003932104911655188
+2018-10-05 08:25:34.528963:	Training iteration: 138400, Loss: 0.004899413790553808
+2018-10-05 08:26:47.436014:	Training iteration: 138600, Loss: 0.00433544535189867
+2018-10-05 08:27:58.993502:	Training iteration: 138800, Loss: 0.005322914570569992
+2018-10-05 08:29:11.037066:	Training iteration: 139000, Loss: 0.0023816993925720453
+2018-10-05 08:30:22.822878:	Training iteration: 139200, Loss: 0.004627415910363197
+2018-10-05 08:31:35.550427:	Training iteration: 139400, Loss: 0.0060685849748551846
