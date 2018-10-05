@@ -17,7 +17,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
+    model_config = {'model_variant': 'basic_capsnet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'mag_phase': True,  # Whether to use a magnitude/phase, or complex number, representation of the spectrogram
                     'saving': True,  # Whether to take checkpoints
                     'save_by_epochs': True,  # Should checkpoints be taken each epoch or at each validation run?
@@ -34,13 +34,13 @@ def cfg():
                     'n_parallel_readers': 16,
                     'patch_window': 128,  # Number of fourier transforms (rows) in each patch
                     'patch_hop': 64,  # Number of fourier transforms between the start of each patch
-                    'batch_size': 50,  # Number of patches in each batch
+                    'batch_size': 10,  # Number of patches in each batch
                     'n_shuffle': 1000,  # Number of patches buffered before batching
                     'learning_rate': 0.0002,  # The learning rate to be used by the model
                     'epochs': 10,  # Number of full passes through the dataset to train for
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
-                    'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
-                    'val_iters': 10000,  # Number of training iterations between validation checks,
+                    'val_by_epochs': False,  # Validation at end of each epoch or every 'val_iters'?
+                    'val_iters': 50000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
                     'normalise_mag': True  # Are magnitude spectrograms normalised in pre-processing?
                     }
