@@ -27,7 +27,7 @@ def get_test_metrics(argv):
     elif argv[2] == 'complex':
         mag_phase = False
     else:
-        raise Exception("User must specify 'mag_phase' or 'complex' first argument")
+        raise Exception("User must specify 'mag_phase' or 'complex' as second argument")
 
     if len(argv) == 4:
         phase_iterations = int(argv[3])
