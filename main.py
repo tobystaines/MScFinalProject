@@ -104,7 +104,7 @@ def do_experiment(model_config):
         print('Creating model')
         model = audio_models.MagnitudeModel(mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio,
                                             model_config['model_variant'], is_training, model_config['learning_rate'],
-                                            name='U_Net_Model')
+                                            name='Magnitude_Model')
     else:
         mixed_spec_trim = mixed_spec[:, :, :-1, :]
         voice_spec_trim = voice_spec[:, :, :-1, :]
@@ -112,7 +112,7 @@ def do_experiment(model_config):
         print('Creating model')
         model = audio_models.ComplexNumberModel(mixed_spec_trim, voice_spec_trim, mixed_audio, voice_audio,
                                                 model_config['model_variant'], is_training,
-                                                model_config['learning_rate'])
+                                                model_config['learning_rate'], name='Complex_Model')
 
     sess.run(tf.global_variables_initializer())
 

@@ -37,8 +37,8 @@ class MagnitudeModel(object):
 
             self.gen_voice = self.voice_mask * mixed_mag
 
-            self.pw_cost = mf.l1_loss(self.gen_voice, voice_mag)
-            self.cost = tf.reduce_mean(self.pw_cost)
+            self.cost = mf.l1_loss(self.gen_voice, voice_mag)
+            #self.cost = tf.reduce_mean(self.pw_cost)
 
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=learning_rate,
@@ -186,19 +186,19 @@ class BasicCapsnet(object):
                 # Reshape layer to be 1 capsule x [filters] atoms
                 _, H, W, C = net.get_shape()
                 net = layers.Reshape((H.value, W.value, 1, C.value))(net)
-                #self.conv1 = conv1
+                self.conv1 = net
 
             with tf.variable_scope('Primary_Caps'):
                 net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=8, strides=1,
                                                       padding='same',
                                                       routings=1, name='primarycaps')(net)
-                #self.primary_caps = primary_caps
+                self.primary_caps = net
 
             with tf.variable_scope('Seg_Caps'):
                 net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=8, strides=1,
                                                       padding='same',
                                                       routings=3, name='seg_caps')(net)
-                #self.seg_caps = seg_caps
+                self.seg_caps = net
 
             with tf.variable_scope('Reconstruction'):
                 net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=1, strides=1,

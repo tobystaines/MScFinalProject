@@ -350,4 +350,4 @@ def update_routing(votes, biases, logit_shape, num_dims, input_dim, output_dim,
 def _squash(input_tensor):
     norm = tf.norm(input_tensor, axis=-1, keep_dims=True)
     norm_squared = norm * norm
-    return (input_tensor / norm) * (norm_squared / (1 + norm_squared))
+    return (input_tensor / norm) * (norm_squared / (1 + norm_squared)) + K.epsilon()
