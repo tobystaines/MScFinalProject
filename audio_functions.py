@@ -16,13 +16,14 @@ def read_audio(path, sample_rate, n_channels=1):
     return tf.py_func(read_audio_py, [path, sample_rate], tf.float32, stateful=False)
 
 
-def read_audio_pair(path_a, path_b, sample_rate):
+def read_audio_pair(path_a, path_b, path_c, sample_rate):
     """
     Takes in the path of two audio files and the required output sample rate,
     returns a tuple of tensors of the wave form of the audio files.
     """
     return (tf.py_func(read_audio_py, [path_a, sample_rate], tf.float32, stateful=False),
-            tf.py_func(read_audio_py, [path_b, sample_rate], tf.float32, stateful=False))
+            tf.py_func(read_audio_py, [path_b, sample_rate], tf.float32, stateful=False),
+            tf.py_func(read_audio_py, [path_c, sample_rate], tf.float32, stateful=False))
 
 
 def compute_spectrogram(audio, n_fft, fft_hop, normalise, mag_phase):
@@ -113,11 +114,12 @@ def extract_audio_patches(audio, fft_hop, patch_window, patch_hop):
         return tf.squeeze(tf.reshape(patches, [num_patches, 1, patch_length, 1]), 1)
 
 
-def compute_spectrogram_map(audio_a, audio_b, n_fft, fft_hop, normalise=False, mag_phase=True):
+def compute_spectrogram_map(audio_a, audio_b, audio_c, n_fft, fft_hop, normalise=False, mag_phase=True):
     spec_a = compute_spectrogram(audio_a, n_fft, fft_hop, normalise, mag_phase)
     spec_b = compute_spectrogram(audio_b, n_fft, fft_hop, normalise, mag_phase)
+    spec_c = compute_spectrogram(audio_c, n_fft, fft_hop, normalise, mag_phase)
 
-    return spec_a, spec_b, audio_a, audio_b
+    return spec_a, spec_b, spec_c, audio_a, audio_b, audio_c
 
 
 def extract_patches_map(spec_a, spec_b, audio_a, audio_b, n_fft, fft_hop, patch_window, patch_hop):
@@ -130,11 +132,12 @@ def extract_patches_map(spec_a, spec_b, audio_a, audio_b, n_fft, fft_hop, patch_
     return patches_a, patches_b, audio_patches_a, audio_patches_b
 
 
-def extract_audio_patches_map(audio_a, audio_b, fft_hop, patch_window, patch_hop):
+def extract_audio_patches_map(audio_a, audio_b, audio_c, fft_hop, patch_window, patch_hop):
     audio_patches_a = extract_audio_patches(audio_a, fft_hop, patch_window, patch_hop)
     audio_patches_b = extract_audio_patches(audio_b, fft_hop, patch_window, patch_hop)
+    audio_patches_c = extract_audio_patches(audio_c, fft_hop, patch_window, patch_hop)
 
-    return audio_patches_a, audio_patches_b
+    return audio_patches_a, audio_patches_b, audio_patches_c
 
 
 def hwr_tf(x):

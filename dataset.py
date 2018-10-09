@@ -7,7 +7,7 @@ import os
 from glob import glob
 
 
-def zip_files(directory_a, directory_b):
+def zip_files_pair(directory_a, directory_b):
     """
     Takes in two directories (a and b) and returns an array, where each row is a pair of matching file paths,
     one from each directory, with directory a in col 0 and directory b in col 1
@@ -42,6 +42,28 @@ def zip_files(directory_a, directory_b):
     return zipped_list
 
 
+def zip_files(directory_a, directory_b, directory_c):
+    """
+    Takes in three directories (a, b and c) and returns an array, where each row is a pair of matching file paths,
+    one from each directory, with directory a in col 0, directory b in col 1, and directory c in col 2.
+    """
+
+    filelist_a = [f for f in os.listdir(directory_a) if
+                  os.path.isfile(os.path.join(directory_a, f))]
+
+    zipped_list = list()
+
+    for file_a in filelist_a:
+        zipped_list.append((str(directory_a + file_a), str(directory_b + file_a), str(directory_c + file_a)))
+        break
+
+    if len(zipped_list) == 0:
+        zipped_list = np.empty((0, 3))
+    else:
+        zipped_list = np.array(zipped_list)
+
+    return zipped_list
+
 def get_paired_dataset(zipped_files,
                        sample_rate,
                        n_fft,
@@ -55,7 +77,7 @@ def get_paired_dataset(zipped_files,
                        mag_phase):
 
     return (
-        tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1]))
+        tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1], zipped_files[:, 2]))
         .map(partial(af.read_audio_pair,
                      sample_rate=sample_rate),
              num_parallel_calls=n_parallel_readers)

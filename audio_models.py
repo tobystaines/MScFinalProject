@@ -38,13 +38,12 @@ class MagnitudeModel(object):
             self.gen_voice = self.voice_mask * mixed_mag
 
             self.cost = mf.l1_loss(self.gen_voice, voice_mag)
-            #self.cost = tf.reduce_mean(self.pw_cost)
 
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=learning_rate,
                 beta1=0.5,
             )
-            self.train_op = self.optimizer.minimize(self.pw_cost)
+            self.train_op = self.optimizer.minimize(self.cost)
 
 
 class UNet(object):
