@@ -58,7 +58,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 raise
         print('Checkpoint')
         saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(global_step))
-        return os.path.join(checkpoint_path, model_folder + '-' + global_step)
+        return os.path.join(checkpoint_path, model_folder + '-' + str(global_step))
 
     print('Starting training')
     # Initialise variables and define summary
