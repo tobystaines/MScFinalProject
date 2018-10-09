@@ -45,8 +45,6 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 last_val_cost = val_check_mean_cost
 
                 break
-        if model_config['saving'] and not model_config['save_by_epochs']:
-            checkpoint(model_config, model_folder, saver, sess, val_check)
 
         return last_val_cost, min_val_cost, min_val_check, worse_val_checks
 
@@ -60,6 +58,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 raise
         print('Checkpoint')
         saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(global_step))
+        return os.path.join(checkpoint_path, model_folder + '-' + global_step)
 
     print('Starting training')
     # Initialise variables and define summary
@@ -102,11 +101,18 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                     continue
             if math.isnan(cost):
                 print('Error: cost = nan')
-                break
+                print('Loading latest checkpoint')
+                restorer = tf.train.Saver()
+                restorer.restore(sess, latest_checkpoint_path)
+                continue
             writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
             if iteration % 200 == 0:
                 print("{ts}:\tTraining iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
                                                                          i=iteration, c=cost))
+
+            # If saving by iterations, take a checkpoint
+            if model_config['saving'] and not model_config['save_by_epochs'] and iteration % model_config['save_iters'] == 0:
+                latest_checkpoint_path = checkpoint(model_config, model_folder, saver, sess, iteration)
 
             # If using early stopping by iterations, enter validation loop
             if model_config['early_stopping'] and not model_config['val_by_epochs'] and iteration % model_config['val_iters'] == 0:
@@ -143,7 +149,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                                           val_check)
                 val_check += 1
             if model_config['saving'] and model_config['save_by_epochs']:
-                checkpoint(model_config, model_folder, saver, sess, epoch)
+                latest_checkpoint_path = checkpoint(model_config, model_folder, saver, sess, epoch)
             sess.run(training_iterator.initializer)
 
     if model_config['early_stopping'] and worse_val_checks >= model_config['num_worse_val_checks']:
