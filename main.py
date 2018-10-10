@@ -18,12 +18,12 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 @ex.config
 def cfg():
     model_config = {'model_variant': 'basic_capsnet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
-                    'mag_phase': True,  # Whether to use a magnitude/phase, or complex number, representation of the spectrogram
-                    'initialisation_test': False,  # Whether or not to calculate test metrics before training
-                    'loading': False,  # Whether to load an existing checkpoint
-                    'checkpoint_to_load': "85/85-9",  # Checkpoint format: run/run-epoch
+                    'mag_phase': True,  # Whether to use a magnitude/phase or complex number representation of the spectrogram
+                    'initialisation_test': True,  # Whether or not to calculate test metrics before training
+                    'loading': True,  # Whether to load an existing checkpoint
+                    'checkpoint_to_load': "91/91-149000",  # Checkpoint format: run/run-step
                     'saving': True,  # Whether to take checkpoints
-                    'save_by_epochs': False,  # Should checkpoints be taken each epoch or at each validation run?
+                    'save_by_epochs': False,  # Checkpoints at end of each epoch or every 'save_iters'?
                     'save_iters': 1000,  # Number of training iterations between checkpoints
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
                     'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
