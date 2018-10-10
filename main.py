@@ -20,7 +20,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {'model_variant': 'basic_capsnet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'mag_phase': True,  # Whether to use a magnitude/phase or complex number representation of the spectrogram
-                    'initialisation_test': True,  # Whether or not to calculate test metrics before training
+                    'initialisation_test': False,  # Whether or not to calculate test metrics before training
                     'loading': True,  # Whether to load an existing checkpoint
                     'checkpoint_to_load': "91/91-149000",  # Checkpoint format: run/run-step
                     'saving': True,  # Whether to take checkpoints
@@ -79,7 +79,7 @@ def do_experiment(model_config):
     #tf_config.gpu_options.visible_device_list = "0"
     #sess = tf.Session(config=tf_config)
     sess = tf.Session()
-    sess = tf_debug.LocalCLIDebugWrapperSession(sess)
+    #sess = tf_debug.LocalCLIDebugWrapperSession(sess)
 
     print('Session started')
 
