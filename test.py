@@ -1,6 +1,7 @@
 import datetime
 import os
 import pickle
+import math
 import tensorflow as tf
 
 
@@ -34,14 +35,16 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
                                            tf.complex(model.mixed_spec[:, :, :, 0], model.mixed_spec[:, :, :, 1])],
                                           {model.is_training: False, handle: testing_handle})
                 results = (cost, voice_est_spec, voice_ref_spec, voice_ref_audio, mixed_audio, mixed_spec, model_config)
-            test_costs.append(cost)
-            dump_name = dump_folder + '/test_count_' + str(test_count) + '_iteration_' + str(iteration)
-            pickle.dump(results, open(dump_name, 'wb'))
-
-            if iteration % 200 == 0:
-                print("{ts}:\tTesting iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
-                                                                        i=iteration, c=cost))
-            iteration += 1
+            if math.isnan(cost):
+                print('Error: cost = nan\nDiscarding batch')
+            else:
+                test_costs.append(cost)
+                dump_name = dump_folder + '/test_count_' + str(test_count) + '_iteration_' + str(iteration)
+                pickle.dump(results, open(dump_name, 'wb'))
+                if iteration % 200 == 0:
+                    print("{ts}:\tTesting iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
+                                                                            i=iteration, c=cost))
+                iteration += 1
         except tf.errors.OutOfRangeError:
             # At the end of the dataset, calculate, record and print mean results
             mean_cost = sum(test_costs) / len(test_costs)

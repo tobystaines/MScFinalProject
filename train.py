@@ -17,11 +17,14 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         while True:
             try:
                 val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
-                val_costs.append(val_cost)
                 if val_iteration % 200 == 0:
                     print("{ts}:\tValidation iteration: {i}, Loss: {vc}".format(ts=datetime.datetime.now(),
                                                                                 i=val_iteration, vc=val_cost))
-                val_iteration += 1
+                if math.isnan(val_cost):
+                    print('Error: cost = nan\nDiscarding batch')
+                else:
+                    val_costs.append(val_cost)
+                    val_iteration += 1
             except tf.errors.OutOfRangeError:
                 # Calculate and record mean loss over validation dataset
                 val_check_mean_cost = sum(val_costs) / len(val_costs)
@@ -30,9 +33,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                     value=[tf.Summary.Value(tag='Validation_mean_loss', simple_value=val_check_mean_cost)])
                 writer.add_summary(summary, val_check)
                 # If validation loss has worsened increment the counter, else, reset the counter
-                if math.isnan(val_check_mean_cost):
-                    worse_val_checks = model_config['num_worse_val_checks'] + 1
-                elif val_check_mean_cost > last_val_cost:
+                if val_check_mean_cost > last_val_cost:
                     worse_val_checks += 1
                     print('Validation loss has worsened. worse_val_checks = {w}'.format(w=worse_val_checks))
                 else:
@@ -151,7 +152,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
             if model_config['saving'] and model_config['save_by_epochs']:
                 latest_checkpoint_path = checkpoint(model_config, model_folder, saver, sess, epoch)
             sess.run(training_iterator.initializer)
-
+    print('Training complete after {e} epochs.'.format(e=epoch))
     if model_config['early_stopping'] and worse_val_checks >= model_config['num_worse_val_checks']:
         print('Stopped early due to validation criteria.')
     else:
@@ -159,7 +160,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         if (iteration % model_config['val_iters'] != 1 or not model_config['early_stopping']) and not model_config['val_by_epochs']:
             last_val_cost, min_val_cost, min_val_check, _ = validation(last_val_cost, min_val_cost, min_val_check,
                                                                        worse_val_checks, model, val_check)
-        print('Finished requested number of epochs. Training complete.')
+    print('Finished requested number of epochs.')
     print('Final validation loss: {lvc}'.format(lvc=last_val_cost))
     if last_val_cost == min_val_cost:
         print('This was the best validation loss achieved')
