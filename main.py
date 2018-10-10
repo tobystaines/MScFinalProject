@@ -79,7 +79,7 @@ def do_experiment(model_config):
     #tf_config.gpu_options.visible_device_list = "0"
     #sess = tf.Session(config=tf_config)
     sess = tf.Session()
-    sess = tf_debug.LocalCLIDebugWrapperSession(sess)
+    #sess = tf_debug.LocalCLIDebugWrapperSession(sess)
 
     print('Session started')
 

@@ -87,10 +87,10 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         try:
             if model_config['mag_phase']:
                 try:
-                    _, cost, cost_sum, mix, voice, mask, gen_voice = sess.run([model.train_op, model.cost, cost_summary,
-                                                                               mix_summary, voice_summary, mask_summary,
-                                                                               gen_voice_summary], {model.is_training: True,
-                                                                                                    handle: training_handle})
+                    _, _, cost, cost_sum, mix, voice, mask, gen_voice = sess.run([model.train_op, model.check_op, model.cost, cost_summary,
+                                                                                  mix_summary, voice_summary, mask_summary,
+                                                                                  gen_voice_summary], {model.is_training: True,
+                                                                                                       handle: training_handle})
                 except RuntimeWarning:
                     print('Invalid value encountered. Ignoring batch.')
                     continue

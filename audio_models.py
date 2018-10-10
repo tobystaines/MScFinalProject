@@ -44,6 +44,7 @@ class MagnitudeModel(object):
                 beta1=0.5,
             )
             self.train_op = self.optimizer.minimize(self.cost)
+            self.check_op = tf.add_check_numerics_ops()
 
 
 class UNet(object):
