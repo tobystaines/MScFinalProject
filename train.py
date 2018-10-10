@@ -70,7 +70,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     min_val_check = None
     val_check = 1
     worse_val_checks = 0
-    latest_checkpoint_path = model_config['checkpoint_to_load']
+    latest_checkpoint_path = checkpoint = os.path.join(model_config['model_base_dir'], model_config['checkpoint_to_load'])
 
     cost_summary = tf.summary.scalar('Training_loss', model.cost)
     if model_config['mag_phase']:
