@@ -153,7 +153,7 @@ class ConvCapsuleLayer(layers.Layer):
             output_dim=self.num_capsule,
             num_routing=self.routings)
 
-        if tf.is_nan(activations):
+        if tf.is_nan(activations) is not None:
             return activations + K.epsilon()
         else:
             return activations
@@ -278,7 +278,7 @@ class DeconvCapsuleLayer(layers.Layer):
             output_dim=self.num_capsule,
             num_routing=self.routings)
 
-        if tf.is_nan(activations):
+        if tf.is_nan(activations) is not None:
             return activations + K.epsilon()
         else:
             return activations
