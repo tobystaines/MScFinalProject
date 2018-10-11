@@ -1,0 +1,102 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "numpy==1.15.2",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.4.1"
+    ],
+    "mainfile": "main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "audio_models.py",
+        "_sources/audio_models_f18f61db39939ae190ffb11515e74407.py"
+      ],
+      [
+        "dataset.py",
+        "_sources/dataset_a83ad44a54b843a850f6c265244adb8b.py"
+      ],
+      [
+        "main.py",
+        "_sources/main_3baa26a80c6696d9895690003232f5eb.py"
+      ],
+      [
+        "train.py",
+        "_sources/train_d2e701aa0284d81acb72fd6aad8b6f09.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 95, in do_experiment\n    training_handle = sess.run(training_iterator.string_handle())\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/debug/wrappers/framework.py\", line 455, in run\n    is_callable_runner=bool(callable_runner)))\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/debug/wrappers/local_cli_wrapper.py\", line 255, in on_run_start\n    self._run_start_response = self._launch_cli()\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/debug/wrappers/local_cli_wrapper.py\", line 431, in _launch_cli\n    title_color=self._title_color)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/debug/cli/curses_ui.py\", line 492, in run_ui\n    self._screen_launch(enable_mouse_on_start=enable_mouse_on_start)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/debug/cli/curses_ui.py\", line 445, in _screen_launch\n    curses.cbreak()\n",
+    "_curses.error: cbreak() returned ERR\n"
+  ],
+  "heartbeat": "2018-10-10T17:15:35.482411",
+  "host": {
+    "ENV": {},
+    "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
+    "gpus": {
+      "driver_version": "396.44",
+      "gpus": [
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11176
+        },
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11178
+        }
+      ]
+    },
+    "hostname": "america",
+    "os": [
+      "Linux",
+      "Linux-4.4.0-134-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": true,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-10-10T17:13:15.166320",
+  "status": "FAILED",
+  "stop_time": "2018-10-10T17:15:35.488260"
+}
