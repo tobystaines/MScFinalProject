@@ -22,15 +22,21 @@
       ],
       [
         "main.py",
-        "_sources/main_02dcf1712db757b10e1a72cf59b20625.py"
+        "_sources/main_c93964f09eb5559b8d5c2bc36d6b1214.py"
       ],
       [
         "train.py",
-        "_sources/train_d2e701aa0284d81acb72fd6aad8b6f09.py"
+        "_sources/train_1399828d34d01ba155c9568c558ef375.py"
       ]
     ]
   },
-  "heartbeat": "2018-10-11T21:09:47.803847",
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 80, in do_experiment\n    tf_config.gpu_options.visible_device_list = model_config['GPU']\n",
+    "TypeError: 1 has type int, but expected one of: bytes, unicode\n"
+  ],
+  "heartbeat": "2018-10-11T12:43:31.298688",
   "host": {
     "ENV": {},
     "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
@@ -40,7 +46,7 @@
         {
           "model": "GeForce GTX 1080 Ti",
           "persistence_mode": false,
-          "total_memory": 11176
+          "total_memory": 11177
         },
         {
           "model": "GeForce GTX 1080 Ti",
@@ -49,7 +55,7 @@
         }
       ]
     },
-    "hostname": "america",
+    "hostname": "africa",
     "os": [
       "Linux",
       "Linux-4.4.0-137-generic-x86_64-with-Ubuntu-16.04-xenial"
@@ -62,7 +68,7 @@
       "--beat_interval": null,
       "--capture": null,
       "--comment": null,
-      "--debug": true,
+      "--debug": false,
       "--enforce_clean": false,
       "--file_storage": null,
       "--force": false,
@@ -78,13 +84,16 @@
       "--tiny_db": null,
       "--unobserved": false,
       "COMMAND": null,
-      "UPDATE": [],
+      "UPDATE": [
+        "model_config.GPU=1"
+      ],
       "help": false,
-      "with": false
+      "with": true
     }
   },
   "resources": [],
   "result": null,
-  "start_time": "2018-10-11T08:45:31.406760",
-  "status": "RUNNING"
+  "start_time": "2018-10-11T12:41:21.557235",
+  "status": "FAILED",
+  "stop_time": "2018-10-11T12:43:31.305840"
 }
