@@ -44,7 +44,8 @@ def cfg():
                     'n_shuffle': 1000,  # Number of patches buffered before batching
                     'learning_rate': 0.0002,  # The learning rate to be used by the model
                     'epochs': 5,  # Number of full passes through the dataset to train for
-                    'normalise_mag': True  # Are magnitude spectrograms normalised in pre-processing?
+                    'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
+                    'GPU': '0'
                     }
 
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop
@@ -74,11 +75,11 @@ def do_experiment(model_config):
     print('Dataset ready')
 
     # Start session
-    #tf_config = tf.ConfigProto()
+    tf_config = tf.ConfigProto()
     #tf_config.gpu_options.allow_growth = True
-    #tf_config.gpu_options.visible_device_list = "0"
-    #sess = tf.Session(config=tf_config)
-    sess = tf.Session()
+    tf_config.gpu_options.visible_device_list = model_config['GPU']
+    sess = tf.Session(config=tf_config)
+    #sess = tf.Session()
     sess = tf_debug.LocalCLIDebugWrapperSession(sess, ui_type="readline")
 
     print('Session started')
