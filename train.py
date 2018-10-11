@@ -106,7 +106,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 print('Loading latest checkpoint')
                 restorer = tf.train.Saver()
                 restorer.restore(sess, latest_checkpoint_path)
-                break
+                continue
             writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
             #if iteration % 200 == 0:
             print("{ts}:\tTraining iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
