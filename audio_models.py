@@ -150,22 +150,128 @@ class UNetDecoder(object):
 
 class CapsUNetEncoder(object):
     """
-    The down-convolutional side of a capsule based U-Net model.
+    The down-convolutional side of a capsule based U-Net model (based on SegCaps R3 model).
     """
-    def __init__(self, input_tensor, is_training, reuse):
-        net = input_tensor
 
-        self.output = net
+    def __init__(self, input_tensor, is_training, reuse):
+        # net = layers.Input(shape=input_tensor)
+        net = input_tensor
+        with tf.variable_scope('Encoder'):
+            with tf.variable_scope('Convolution'):
+                # Layer 1: A conventional Conv2D layer
+                net = layers.Conv2D(filters=16, kernel_size=5, strides=1, padding='same', activation='relu',
+                                    name='conv1')(net)
+
+                # Reshape layer to be 1 capsule x [filters] atoms
+                _, H, W, C = net.get_shape()
+                net = layers.Reshape((H.value, W.value, 1, C.value))(net)
+                self.conv1 = net
+
+            with tf.variable_scope('Primary_Caps'):
+                # Layer 1: Primary Capsule: Conv cap with routing 1
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=2, num_atoms=16, strides=2,
+                                                      padding='same',
+                                                      routings=1, name='primarycaps')(net)
+                self.primary_caps = net
+
+            with tf.variable_scope('Conv_caps_2'):
+                # Layer 2: Convolutional Capsules
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=16, strides=1,
+                                                      padding='same',
+                                                      routings=3, name='conv_cap_2_1')(net)
+                self.conv_cap_2_1 = net
+
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=32, strides=2,
+                                                      padding='same',
+                                                      routings=3, name='conv_cap_2_2')(net)
+                self.conv_cap_2_2 = net
+
+            with tf.variable_scope('Conv_caps_3'):
+                # Layer 3: Convolutional Capsules
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=32, strides=1,
+                                                      padding='same',
+                                                      routings=3, name='conv_cap_3_1')(net)
+                self.conv_cap_3_1 = net
+
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=64, strides=2,
+                                                      padding='same',
+                                                      routings=3, name='conv_cap_3_2')(net)
+                self.conv_cap_3_2 = net
+
+            with tf.variable_scope('Conv_caps_4'):
+                # Layer 4: Convolutional Capsules
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=32, strides=1,
+                                                      padding='same',
+                                                      routings=3, name='conv_cap_4_1')(net)
+
+            self.output = net
 
 
 class CapsUNetDecoder(object):
     """
     The up-convolutional side of a capsule based U-Net model.
     """
+
     def __init__(self, input_tensor, encoder, is_training, reuse):
         net = input_tensor
+        with tf.variable_scope('Decoder'):
+            with tf.variable_scope('UpCaps_1'):
+                # Layer 1 Up: Deconvolutional capsules, skip connection, convolutional capsules
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=8, num_atoms=32,
+                                                        upsamp_type='deconv',
+                                                        scaling=2, padding='same', routings=3, name='deconv_cap_1_1')(
+                    net)
+                self.upcap_1_1 = net
 
-        self.output = net
+                net = layers.Concatenate(axis=-2, name='up_1')([net, encoder.conv_cap_3_1])
+
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=32, strides=1,
+                                                      padding='same', routings=3, name='deconv_cap_1_2')(net)
+                self.upcap_1_2 = net
+
+            with tf.variable_scope('UpCaps_2'):
+                # Layer 2 Up: Deconvolutional capsules, skip connection, convolutional capsules
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=4, num_atoms=16,
+                                                        upsamp_type='deconv',
+                                                        scaling=2, padding='same', routings=3, name='deconv_cap_2_1')(
+                    net)
+                self.upcap_2_1 = net
+
+                net = layers.Concatenate(axis=-2, name='up_2')([net, encoder.conv_cap_2_1])
+
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=16, strides=1,
+                                                      padding='same', routings=3, name='deconv_cap_2_2')(net)
+                self.upcap_2_2 = net
+
+            with tf.variable_scope('UpCaps_3'):
+                # Layer 3 Up: Deconvolutional capsules, skip connection
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=2, num_atoms=16,
+                                                        upsamp_type='deconv',
+                                                        scaling=2, padding='same', routings=3, name='deconv_cap_3_1')(
+                    net)
+                self.upcap_3_1 = net
+
+                net = layers.Concatenate(axis=-2, name='up_3')([net, encoder.conv1])
+            with tf.variable_scope('Reconstruction'):
+                # Layer 4: Reconstruction - Convolutional Capsule: 1x1, 3x conventional Conv2D layers
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=16, strides=1,
+                                                      padding='same',
+                                                      routings=3, name='seg_caps')(net)
+
+                _, H, W, C, D = net.get_shape()
+
+                net = layers.Reshape((H.value, W.value, D.value))(net)
+
+                net = layers.Conv2D(filters=64, kernel_size=1, padding='same', kernel_initializer='he_normal',
+                                    activation='relu', name='recon_1')(net)
+
+                net = layers.Conv2D(filters=128, kernel_size=1, padding='same', kernel_initializer='he_normal',
+                                    activation='relu', name='recon_2')(net)
+
+                net = layers.Conv2D(filters=1, kernel_size=1, padding='same', kernel_initializer='he_normal',
+                                    activation='sigmoid', name='out_recon')(net)
+
+            self.output = net
 
 
 class BasicCapsnet(object):
