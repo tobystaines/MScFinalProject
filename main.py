@@ -22,10 +22,10 @@ def cfg():
                     'mag_phase': True,  # Whether to use a magnitude/phase or complex number representation of the spectrogram
                     'initialisation_test': False,  # Whether or not to calculate test metrics before training
                     'loading': True,  # Whether to load an existing checkpoint
-                    'checkpoint_to_load': "99/99-21000",  # Checkpoint format: run/run-step
+                    'checkpoint_to_load': "114/114-473",  # Checkpoint format: run/run-step
                     'saving': True,  # Whether to take checkpoints
                     'save_by_epochs': False,  # Checkpoints at end of each epoch or every 'save_iters'?
-                    'save_iters': 1,  # Number of training iterations between checkpoints
+                    'save_iters': 1000,  # Number of training iterations between checkpoints
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
                     'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 50000,  # Number of training iterations between validation checks,
@@ -80,7 +80,7 @@ def do_experiment(model_config):
     tf_config.gpu_options.visible_device_list = str(model_config['GPU'])
     sess = tf.Session(config=tf_config)
     #sess = tf.Session()
-    #sess = tf_debug.LocalCLIDebugWrapperSession(sess, ui_type="readline")
+    sess = tf_debug.LocalCLIDebugWrapperSession(sess, ui_type="readline")
 
     print('Session started')
 
