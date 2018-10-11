@@ -25,7 +25,7 @@ def cfg():
                     'checkpoint_to_load': "99/99-21000",  # Checkpoint format: run/run-step
                     'saving': True,  # Whether to take checkpoints
                     'save_by_epochs': False,  # Checkpoints at end of each epoch or every 'save_iters'?
-                    'save_iters': 1000,  # Number of training iterations between checkpoints
+                    'save_iters': 1,  # Number of training iterations between checkpoints
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
                     'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 50000,  # Number of training iterations between validation checks,
