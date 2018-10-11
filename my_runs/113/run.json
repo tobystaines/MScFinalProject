@@ -1,0 +1,109 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "numpy==1.15.2",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.4.1"
+    ],
+    "mainfile": "main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "audio_models.py",
+        "_sources/audio_models_f18f61db39939ae190ffb11515e74407.py"
+      ],
+      [
+        "dataset.py",
+        "_sources/dataset_a83ad44a54b843a850f6c265244adb8b.py"
+      ],
+      [
+        "main.py",
+        "_sources/main_32435a31b0a7712dfaaed07a7794c79d.py"
+      ],
+      [
+        "train.py",
+        "_sources/train_6592c55bfcebb0e102c1a58c5c3fb6d7.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 142, in do_experiment\n    validation_iterator, validation_handle, writer)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 117, in train\n    latest_checkpoint_path = checkpoint(model_config, model_folder, saver, sess, iteration)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 61, in checkpoint\n    saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(global_step))\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/saver.py\", line 1601, in save\n    self.export_meta_graph(meta_graph_filename)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/saver.py\", line 1639, in export_meta_graph\n    clear_extraneous_savers=clear_extraneous_savers)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/saver.py\", line 1883, in export_meta_graph\n    **kwargs)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/meta_graph.py\", line 843, in export_scoped_meta_graph\n    as_text=as_text)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/graph_io.py\", line 71, in write_graph\n    file_io.atomic_write_string_to_file(path, graph_def.SerializeToString())\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/lib/io/file_io.py\", line 421, in atomic_write_string_to_file\n    write_string_to_file(temp_pathname, contents)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/lib/io/file_io.py\", line 306, in write_string_to_file\n    f.write(file_content)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/lib/io/file_io.py\", line 202, in __exit__\n    self.close()\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/lib/io/file_io.py\", line 234, in close\n    pywrap_tensorflow.Set_TF_Status_from_Status(status, ret_status)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/errors_impl.py\", line 473, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.InvalidArgumentError: /home/enterprise.internal.city.ac.uk/acvn728/checkpoints/113/113-123.meta.tmpc09c5cc7bfee483b9d5b23bf6b8305ad; Invalid argument\n"
+  ],
+  "heartbeat": "2018-10-11T18:49:24.288492",
+  "host": {
+    "ENV": {},
+    "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
+    "gpus": {
+      "driver_version": "396.44",
+      "gpus": [
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11177
+        },
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11178
+        }
+      ]
+    },
+    "hostname": "africa",
+    "os": [
+      "Linux",
+      "Linux-4.4.0-137-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-10-11T18:28:15.761576",
+  "status": "FAILED",
+  "stop_time": "2018-10-11T18:49:24.317678"
+}
