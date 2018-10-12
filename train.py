@@ -108,10 +108,9 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 #restorer.restore(sess, latest_checkpoint_path)
                 break
             writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
-            #if iteration % 200 == 0:
-            print("{ts}:\tTraining iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
-                                                                     i=iteration, c=cost))
-
+            if iteration % 200 == 0:
+                print("{ts}:\tTraining iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
+                                                                         i=iteration, c=cost))
             # If saving by iterations, take a checkpoint
             if model_config['saving'] and not model_config['save_by_epochs'] and iteration % model_config['save_iters'] == 0:
                 latest_checkpoint_path = checkpoint(model_config, model_folder, saver, sess, iteration)
