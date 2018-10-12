@@ -325,7 +325,7 @@ def update_routing(votes, biases, logit_shape, num_dims, input_dim, output_dim,
     def _body(i, logits, activations):
         """Routing while loop."""
         # route: [batch, input_dim, output_dim, ...]
-        route = tf.nn.softmax(logits, div=-1)
+        route = tf.nn.softmax(logits, dim=-1)
         preactivate_unrolled = route * votes_trans
         preact_trans = tf.transpose(preactivate_unrolled, r_t_shape)
         preactivate = tf.reduce_sum(preact_trans, axis=1) + biases
@@ -364,7 +364,7 @@ def div_no_nan(x, y):
 
     :param x: tensor
     :param y: tensor
-    :return: elementwise division of x by y, where dividing by 0 returns 0
+    :retur res: Elementwise division of x by y, where dividing by 0 returns 0 instead of nan
     """
     res = x / y
     res = tf.where(tf.is_nan(res), 0., res)
