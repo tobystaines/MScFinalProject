@@ -367,6 +367,6 @@ def div_no_nan(x, y):
     :retur res: Elementwise division of x by y, where dividing by 0 returns 0 instead of nan
     """
     res = x / y
-    res = tf.where(tf.is_nan(res), tf.zeros(res.shape), res)
+    res = tf.where(tf.is_nan(res), tf.zeros(res.get_shape().as_list()), res)
 
     return res
