@@ -354,9 +354,10 @@ def update_routing(votes, biases, logit_shape, num_dims, input_dim, output_dim,
 
 
 def _squash(input_tensor):
-    norm = tf.norm(input_tensor, axis=-1, keep_dims=True)
+    norm = tf.norm(input_tensor, axis=-1, keep_dims=True) + K.epsilon()
     norm_squared = norm * norm
-    return div_no_nan(input_tensor, norm) * div_no_nan(norm_squared, (1 + norm_squared))
+    #return div_no_nan(input_tensor, norm) * div_no_nan(norm_squared, (1 + norm_squared))
+    return (input_tensor / norm) * (norm_squared / (1 + norm_squared))# + K.epsilon()
 
 
 def div_no_nan(x, y):
