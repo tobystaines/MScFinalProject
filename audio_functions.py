@@ -5,6 +5,10 @@ import soundfile as sf
 
 
 def normalise_audio(audio):
+    """
+    Nomralises an ndarray to the interval[-1 1]. For use on 1 dimensional audio waveforms (although will work on higher
+    dimensional arrays as well).
+    """
     norm_audio = 2*((audio - audio.min())/(audio.max()-audio.min())) - 1
     return norm_audio
 
