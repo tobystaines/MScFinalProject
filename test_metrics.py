@@ -67,12 +67,12 @@ def get_test_metrics(argv):
             for i in range(voice_est_audio.shape[0]):
                 # Transform output back to audio
                 if mag_phase:
-                    wave = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T,
+                    wave = af.spectrogramToAudioFile(voice_est_mag[i, :, :].T,
                                                      model_config['n_fft'], model_config['fft_hop'],
                                                      phaseIterations=phase_iterations,
-                                                     phase=np.squeeze(mixed_phase[i, :, :, :]).T)
+                                                     phase=mixed_phase[i, :, :].T)
                 else:
-                    wave = librosa.istft(np.squeeze(voice_est_spec[i, :, :, :]).T, model_config['fft_hop'])
+                    wave = librosa.istft(voice_est_spec[i, :, :].T, model_config['fft_hop'])
 
                 voice_est_audio[i, :, :] = np.expand_dims(wave, axis=1)
 
