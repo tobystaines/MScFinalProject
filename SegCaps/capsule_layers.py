@@ -356,18 +356,6 @@ def update_routing(votes, biases, logit_shape, num_dims, input_dim, output_dim,
 def _squash(input_tensor):
     norm = tf.norm(input_tensor + K.epsilon(), axis=-1, keep_dims=True)
     norm_squared = norm * norm
-    return div_no_nan(input_tensor, norm) * div_no_nan(norm_squared, (1 + norm_squared))
+    return tf.div_no_nan(input_tensor, norm) * tf.div_no_nan(norm_squared, (1 + norm_squared))
     #return (input_tensor / norm) * (norm_squared / (1 + norm_squared))# + K.epsilon()
 
-
-def div_no_nan(x, y):
-    """
-
-    :param x: tensor
-    :param y: tensor
-    :retur res: Elementwise division of x by y, where dividing by 0 returns 0 instead of nan
-    """
-    res = x / y
-    res = tf.where(tf.is_nan(res), tf.zeros(res.get_shape().as_list()), res)
-
-    return res
