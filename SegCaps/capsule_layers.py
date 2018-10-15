@@ -153,9 +153,6 @@ class ConvCapsuleLayer(layers.Layer):
             output_dim=self.num_capsule,
             num_routing=self.routings)
 
-        #if tf.is_nan(activations) is not None:
-        #    return activations + K.epsilon()
-        #else:
         return activations
 
     def compute_output_shape(self, input_shape):
@@ -278,9 +275,6 @@ class DeconvCapsuleLayer(layers.Layer):
             output_dim=self.num_capsule,
             num_routing=self.routings)
 
-        #if tf.is_nan(activations) is not None:
-        #    return activations + K.epsilon()
-        #else:
         return activations
 
     def compute_output_shape(self, input_shape):
@@ -356,6 +350,5 @@ def update_routing(votes, biases, logit_shape, num_dims, input_dim, output_dim,
 def _squash(input_tensor):
     norm = tf.norm(input_tensor + K.epsilon(), axis=-1, keep_dims=True)
     norm_squared = norm * norm
-    return tf.div_no_nan(input_tensor, norm) * tf.div_no_nan(norm_squared, (1 + norm_squared))
-    #return (input_tensor / norm) * (norm_squared / (1 + norm_squared))# + K.epsilon()
+    return (input_tensor / norm) * (norm_squared / (1 + norm_squared))
 
