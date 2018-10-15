@@ -389,3 +389,1910 @@ Starting training
 /home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/debug/lib/debug_data.py:226: FutureWarning: Conversion of the second argument of issubdtype from `complex` to `np.complexfloating` is deprecated. In future, it will be treated as `np.complex128 == np.dtype(complex).type`.
   np.issubdtype(tensor.dtype, np.complex) or
 2018-10-11 16:06:54.763160:	Training iteration: 200, Loss: 0.004811419639736414
+2018-10-11 22:14:59.196791:	Training iteration: 400, Loss: 0.008198264054954052
+run-end: run #423: 7 fetches; 2 feeds
+929 dumped tensor(s) passing filter "has_inf_or_nan":
+
+t (ms)       Size (B) Op type              Tensor name
+[9555.084]   1.25M    RealDiv              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv:0
+[9559.018]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul_1/StackPushV2:0
+[9571.874]   1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2:0
+[9582.956]   1.25M    Add                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2:0
+[9586.729]   1.25M    ExpandDims           Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/ExpandDims:0
+[9591.103]   1.25M    Tile                 Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Tile:0
+[9596.340]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/mul/StackPushV2:0
+[9596.574]   1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3:0
+[9601.905]   1.25M    Sum                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_1:0
+[9607.181]   1.25M    Add                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3:0
+[9615.064]   1.25M    NextIteration        Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/NextIteration_1:0
+[9624.382]   1.25M    Merge                Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Merge_1:0
+[9630.050]   1.25M    Switch               Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Switch_1:1
+[9638.123]   1.25M    Reshape              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Reshape:0
+[9643.979]   1.25M    Softmax              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax:0
+[9648.543]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/mul/StackPushV2:0
+[9651.698]   1.25M    Reshape              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Reshape_1:0
+[9655.776]   1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul:0
+[9655.782]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/mul_1/StackPushV2:0
+[9659.500]   1.25M    Transpose            Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/transpose:0
+[9662.585]   1.25M    Sum                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum:0
+[9667.024]   1.25M    Add                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add:0
+[9673.270]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Neg/StackPushV2:0
+[9673.530]   1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul:0
+[9676.544]   1.25M    Sum                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sum:0
+[9796.460]   1.25M    Sqrt                 Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sqrt:0
+[9799.558]   1.25M    RealDiv              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv:0
+[9799.654]   1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1:0
+[9799.865]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv/StackPushV2:0
+[9801.818]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul_1/StackPushV2:0
+[9802.702]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Neg/StackPushV2:0
+[9802.887]   1.25M    Add                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1:0
+[9805.780]   1.25M    RealDiv              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1:0
+[9805.884]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/RealDiv/StackPushV2:0
+[9808.559]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul/StackPushV2:0
+[9808.953]   1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2:0
+[9811.600]   1.25M    Add                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2:0
+[9813.547]   1.25M    ExpandDims           Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/ExpandDims:0
+[9815.394]   1.25M    Tile                 Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Tile:0
+[9931.570]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/mul/StackPushV2:0
+[9931.729]   1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3:0
+[9944.379]   1.25M    Sum                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_1:0
+[9946.807]   1.25M    Add                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3:0
+[9949.769]   1.25M    NextIteration        Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/NextIteration_1:0
+[9954.091]   1.25M    Merge                Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Merge_1:0
+[9957.945]   1.25M    Switch               Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Switch_1:1
+[9961.159]   1.25M    Reshape              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Reshape:0
+[9963.829]   1.25M    Softmax              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax:0
+[9965.687]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/mul/StackPushV2:0
+[9965.797]   1.25M    Reshape              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Reshape_1:0
+[9968.610]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/mul_1/StackPushV2:0
+[9968.717]   1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul:0
+[9970.799]   1.25M    Transpose            Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/transpose:0
+[9972.575]   1.25M    Sum                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum:0
+[9975.185]   1.25M    Add                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add:0
+[9977.452]   1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Neg/StackPushV2:0
+[9977.614]   1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul:0
+[9979.608]   1.25M    Sum                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sum:0
+[9981.257]   1.25M    Sqrt                 Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sqrt:0
+[10008.028]  1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1:0
+[10008.172]  1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv/StackPushV2:0
+[10008.315]  1.25M    RealDiv              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv:0
+[10011.560]  1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul_1/StackPushV2:0
+[10011.966]  1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Neg/StackPushV2:0
+[10011.973]  1.25M    Add                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1:0
+[10015.562]  1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/RealDiv/StackPushV2:0
+[10015.569]  1.25M    RealDiv              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1:0
+[10018.654]  1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul/StackPushV2:0
+[10018.974]  1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2:0
+[10021.988]  1.25M    Add                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2:0
+[10024.778]  1.25M    ExpandDims           Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/ExpandDims:0
+[10026.674]  1.25M    Tile                 Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Tile:0
+[10028.591]  1.25M    StackPushV2          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/mul/StackPushV2:0
+[10028.775]  1.25M    Mul                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3:0
+[10030.974]  1.25M    Sum                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_1:0
+[10032.971]  1.25M    Add                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3:0
+[10035.203]  1.25M    NextIteration        Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/NextIteration_1:0
+[10407.561]  1.25M    Merge                Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Merge_1:0
+[10411.187]  1.25M    Switch               Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Switch_1:0
+[10411.872]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul/StackPopV2:0
+[10411.992]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul_1/StackPopV2:0
+[10416.562]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Neg/StackPopV2:0
+[10416.582]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv/StackPopV2:0
+[10417.059]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/RealDiv/StackPopV2:0
+[10419.562]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/mul/StackPopV2:0
+[10419.575]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Neg/StackPopV2:0
+[10419.593]  1.25M    TensorArrayReadV3    Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/TensorArrayReadV3:0
+[10419.604]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/mul_1/StackPopV2:0
+[10419.621]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/mul/StackPopV2:0
+[10419.636]  1.25M    Exit                 Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Exit_1:0
+[10419.651]  1.25M    Neg                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Neg:0
+[10424.829]  1.25M    Neg                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Neg:0
+[10430.374]  1.25M    Add                  Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/add:0
+[10430.389]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv_1:0
+[10443.622]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/RealDiv_1:0
+[10443.759]  1.25M    Squeeze              Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/Squeeze:0
+[10448.296]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv_2:0
+[10448.313]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/RealDiv_2:0
+[10461.635]  1.25M    Mul                  Magnitude_Model/mul:0
+[10465.345]  1.25M    Sub                  Magnitude_Model/sub:0
+[10468.548]  1.25M    Abs                  Magnitude_Model/Abs:0
+[10471.156]  204      Mean                 Magnitude_Model/Mean:0
+[10479.253]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/mul:0
+[10482.538]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/Sum:0
+[10485.467]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/Reshape:0
+[10488.967]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/tuple/control_dependency:0
+[10489.170]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/mul_grad/mul_1:0
+[10491.632]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/mul_grad/Sum_1:0
+[10492.773]  1.25M    Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/Add:0
+[10493.890]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/mul_grad/Reshape_1:0
+[10519.853]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul:0
+[10520.036]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul_1:0
+[10522.097]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Sum_1:0
+[10523.552]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Sum:0
+[10523.892]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Reshape_1:0
+[10527.071]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Reshape:0
+[10527.236]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/tuple/control_dependency_1:0
+[10529.471]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/RealDiv:0
+[10529.603]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/mul:0
+[10529.889]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/tuple/control_dependency:0
+[10531.999]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Sum_1:0
+[10532.274]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Sum:0
+[10532.535]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/mul:0
+[10532.751]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv:0
+[10534.683]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Reshape_1:0
+[10535.547]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Sum_1:0
+[10535.761]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Reshape:0
+[10536.704]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Sum:0
+[10537.084]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/tuple/control_dependency_1:0
+[10538.038]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Reshape_1:0
+[10538.408]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/tuple/control_dependency:0
+[10539.201]  391      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Sum:0
+[10539.484]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Sum_1:0
+[10539.525]  399      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Reshape:0
+[10540.060]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Reshape:0
+[10540.271]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/tuple/control_dependency_1:0
+[10541.603]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Reshape_1:0
+[10542.264]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/tuple/control_dependency:0
+[10544.250]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/tuple/control_dependency_1:0
+[10546.047]  1.25M    AddN                 Magnitude_Model/gradients/AddN_1:0
+[10547.795]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/mul:0
+[10549.550]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Sum:0
+[10549.755]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Sum_1:0
+[10551.723]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Reshape:0
+[10551.935]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Reshape_1:0
+[10554.085]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/tuple/control_dependency:0
+[10554.219]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/tuple/control_dependency_1:0
+[10556.582]  1.25M    AddN                 Magnitude_Model/gradients/AddN_2:0
+[10558.536]  1.25M    SqrtGrad             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sqrt_grad/SqrtGrad:0
+[10560.521]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sum_grad/Reshape:0
+[10562.397]  1.25M    Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sum_grad/Tile:0
+[10564.298]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/mul:0
+[10566.223]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Sum:0
+[10566.421]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Sum_1:0
+[10568.756]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Reshape_1:0
+[10569.280]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Reshape:0
+[10570.715]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/tuple/control_dependency_1:0
+[10572.049]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/tuple/control_dependency:0
+[10575.048]  1.25M    AddN                 Magnitude_Model/gradients/AddN_3:0
+[10577.773]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Sum:0
+[10577.779]  256.39k  Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Sum_1:0
+[10578.709]  256.41k  Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Reshape_1:0
+[10580.417]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Reshape:0
+[10580.421]  256.44k  Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/tuple/control_dependency_1:0
+[10581.760]  256.41k  Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/Add:0
+[10582.933]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/tuple/control_dependency:0
+[10585.389]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_grad/Reshape:0
+[10587.848]  1.25M    Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_grad/Tile:0
+[10589.996]  1.25M    Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/transpose_grad/transpose:0
+[10592.264]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/mul:0
+[10592.460]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/mul_1:0
+[10595.177]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Sum_1:0
+[10595.180]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Sum:0
+[10598.152]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Reshape:0
+[10598.156]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Reshape_1:0
+[10601.256]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/tuple/control_dependency:0
+[10601.260]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/tuple/control_dependency_1:0
+[10604.244]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Reshape_1_grad/Reshape:0
+[10604.379]  1.25M    Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/Add:0
+[10607.042]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/mul:0
+[10609.400]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/Sum:0
+[10611.724]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/Reshape:0
+[10613.630]  1.25M    Sub                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/sub:0
+[10615.665]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/mul_1:0
+[10617.634]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Reshape_grad/Reshape:0
+[10619.617]  1.25M    AddN                 Magnitude_Model/gradients/AddN_5:0
+[10622.577]  256.43k  NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/NextIteration:0
+[10622.806]  1.25M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Switch_1_grad_1/NextIteration:0
+[10623.036]  1.25M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/NextIteration:0
+[10623.210]  1.25M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/NextIteration:0
+[10628.403]  256.42k  Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/b_acc_2:0
+[10628.437]  1.25M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/b_acc_1:0
+[10628.530]  1.25M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/b_acc_1:0
+[10629.554]  1.25M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Switch_1_grad/b_switch:0
+[10633.143]  256.42k  Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/Switch:1
+[10633.151]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul/StackPopV2:0
+[10633.177]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Neg/StackPopV2:0
+[10633.192]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/RealDiv/StackPopV2:0
+[10633.200]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Neg/StackPopV2:0
+[10633.226]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/mul_1/StackPopV2:0
+[10633.355]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv/StackPopV2:0
+[10633.408]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/mul/StackPopV2:0
+[10633.756]  1.25M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Merge_1_grad/Switch:1
+[10634.632]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/mul/StackPopV2:0
+[10635.686]  1.25M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/Switch:1
+[10637.397]  1.25M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/Switch:1
+[10637.454]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul_1/StackPopV2:0
+[10642.822]  1.25M    Neg                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Neg:0
+[10642.834]  1.25M    Neg                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Neg:0
+[10644.987]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Merge_1_grad/tuple/control_dependency_1:0
+[10646.299]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/RealDiv_1:0
+[10646.727]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv_1:0
+[10647.980]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/Sum:0
+[10648.184]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/Sum_1:0
+[10649.474]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/RealDiv_2:0
+[10649.949]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv_2:0
+[10650.805]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/Reshape:0
+[10651.063]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/Reshape_1:0
+[10653.400]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/tuple/control_dependency_1:0
+[10653.602]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/tuple/control_dependency:0
+[10655.603]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_1_grad/Reshape:0
+[10657.532]  1.25M    Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_1_grad/Tile:0
+[10672.047]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/mul:0
+[10672.271]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/mul_1:0
+[10674.026]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/Sum:0
+[10674.232]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/Sum_1:0
+[10676.072]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/Reshape:0
+[10676.297]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/Reshape_1:0
+[10678.987]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/tuple/control_dependency:0
+[10679.219]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/tuple/control_dependency_1:0
+[10682.001]  1.25M    Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/Add:0
+[10682.155]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Tile_grad/Reshape_1:0
+[10684.824]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Tile_grad/Sum:0
+[10686.510]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/ExpandDims_grad/Reshape:0
+[10688.186]  1.25M    AddN                 Magnitude_Model/gradients/AddN:0
+[10689.868]  395      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2_grad/Sum_1:0
+[10689.872]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2_grad/Sum:0
+[10690.053]  403      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2_grad/Reshape_1:0
+[10703.985]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2_grad/Reshape:0
+[10705.886]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2_grad/tuple/control_dependency:0
+[10707.662]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul:0
+[10707.870]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul_1:0
+[10710.670]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Sum:0
+[10710.853]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Sum_1:0
+[10713.566]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Reshape:0
+[10713.881]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Reshape_1:0
+[10716.459]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/tuple/control_dependency:0
+[10716.857]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/tuple/control_dependency_1:0
+[10719.413]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv:0
+[10719.598]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/mul:0
+[10719.979]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/RealDiv:0
+[10720.170]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/mul:0
+[10722.493]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Sum_1:0
+[10722.899]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Sum:0
+[10723.116]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Sum_1:0
+[10724.809]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Sum:0
+[10725.081]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Reshape_1:0
+[10725.866]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Reshape_1:0
+[10726.645]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Reshape:0
+[10728.269]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/tuple/control_dependency_1:0
+[10729.988]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/tuple/control_dependency_1:0
+[10730.419]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Reshape:0
+[10730.420]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/tuple/control_dependency:0
+[10730.430]  391      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Sum:0
+[10730.615]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Sum_1:0
+[10730.659]  399      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Reshape:0
+[10733.399]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/tuple/control_dependency:0
+[10734.529]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Reshape_1:0
+[10737.279]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/tuple/control_dependency_1:0
+[10739.971]  1.25M    AddN                 Magnitude_Model/gradients/AddN_1:0
+[10742.599]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/mul:0
+[10745.268]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Sum:0
+[10745.455]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Sum_1:0
+[10748.311]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Reshape:0
+[10748.528]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Reshape_1:0
+[10750.111]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/tuple/control_dependency:0
+[10751.317]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/tuple/control_dependency_1:0
+[10753.970]  1.25M    AddN                 Magnitude_Model/gradients/AddN_2:0
+[10756.875]  1.25M    SqrtGrad             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sqrt_grad/SqrtGrad:0
+[10759.731]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sum_grad/Reshape:0
+[10761.926]  1.25M    Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sum_grad/Tile:0
+[10764.011]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/mul:0
+[10766.128]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Sum:0
+[10766.250]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Sum_1:0
+[10768.759]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Reshape_1:0
+[10769.406]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Reshape:0
+[10771.129]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/tuple/control_dependency_1:0
+[10772.430]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/tuple/control_dependency:0
+[10774.577]  1.25M    AddN                 Magnitude_Model/gradients/AddN_3:0
+[10776.669]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Sum:0
+[10776.740]  256.39k  Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Sum_1:0
+[10777.469]  256.41k  Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Reshape_1:0
+[10778.846]  256.44k  Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/tuple/control_dependency_1:0
+[10778.851]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Reshape:0
+[10779.584]  256.41k  Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/Add:0
+[10781.029]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/tuple/control_dependency:0
+[10783.319]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_grad/Reshape:0
+[10785.485]  1.25M    Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_grad/Tile:0
+[10787.584]  1.25M    Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/transpose_grad/transpose:0
+[10789.820]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/mul:0
+[10790.026]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/mul_1:0
+[10792.741]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Sum_1:0
+[10792.936]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Sum:0
+[10795.299]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Reshape:0
+[10795.991]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Reshape_1:0
+[10797.574]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/tuple/control_dependency:0
+[10799.007]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/tuple/control_dependency_1:0
+[10799.653]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Reshape_1_grad/Reshape:0
+[10801.858]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/mul:0
+[10802.148]  1.25M    Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/Add:0
+[10804.313]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/Sum:0
+[10806.338]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/Reshape:0
+[10808.361]  1.25M    Sub                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/sub:0
+[10810.360]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/mul_1:0
+[10812.341]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Reshape_grad/Reshape:0
+[10814.312]  1.25M    AddN                 Magnitude_Model/gradients/AddN_5:0
+[10816.981]  1.25M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/NextIteration:0
+[10817.138]  1.25M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Switch_1_grad_1/NextIteration:0
+[10817.412]  1.25M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/NextIteration:0
+[10817.440]  256.43k  NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/NextIteration:0
+[10821.275]  1.25M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/b_acc_1:0
+[10821.296]  256.42k  Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/b_acc_2:0
+[10821.320]  1.25M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/b_acc_1:0
+[10825.758]  1.25M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Switch_1_grad/b_switch:0
+[10825.831]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/mul/StackPopV2:0
+[10825.858]  256.42k  Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/Switch:1
+[10825.972]  1.25M    StackPopV2           Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul_1/StackPopV2:0
+[10829.275]  1.25M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/Switch:1
+[10834.288]  1.25M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Merge_1_grad/Switch:1
+[10834.329]  1.25M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/Switch:1
+[10839.468]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Merge_1_grad/tuple/control_dependency_1:0
+[10841.571]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv_1:0
+[10843.357]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/Sum:0
+[10843.535]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/Sum_1:0
+[10844.659]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv_2:0
+[10846.655]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/Reshape:0
+[10846.858]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/Reshape_1:0
+[10849.334]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/tuple/control_dependency_1:0
+[10849.342]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_3_grad/tuple/control_dependency:0
+[10851.635]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_1_grad/Reshape:0
+[10853.683]  1.25M    Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_1_grad/Tile:0
+[10855.727]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/mul_1:0
+[10855.929]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/mul:0
+[10858.074]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/Sum_1:0
+[10858.296]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/Sum:0
+[10860.465]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/Reshape_1:0
+[10860.658]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/Reshape:0
+[10862.410]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/tuple/control_dependency:0
+[10864.200]  1.25M    Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/Add:0
+[10877.913]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3_grad/tuple/control_dependency_1:0
+[10880.973]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Tile_grad/Reshape_1:0
+[10883.723]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Tile_grad/Sum:0
+[10886.462]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/ExpandDims_grad/Reshape:0
+[10889.232]  1.25M    AddN                 Magnitude_Model/gradients/AddN:0
+[10892.000]  395      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2_grad/Sum_1:0
+[10892.011]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2_grad/Sum:0
+[10892.214]  403      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2_grad/Reshape_1:0
+[10893.767]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2_grad/Reshape:0
+[10907.540]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_2_grad/tuple/control_dependency:0
+[10909.439]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul:0
+[10909.637]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul_1:0
+[10911.727]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Sum:0
+[10911.930]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Sum_1:0
+[10913.849]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Reshape:0
+[10914.947]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Reshape_1:0
+[10915.679]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/tuple/control_dependency:0
+[10916.939]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/tuple/control_dependency_1:0
+[10917.764]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/RealDiv:0
+[10917.937]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/mul:0
+[10919.155]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/RealDiv:0
+[10919.250]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/mul:0
+[10920.598]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Sum_1:0
+[10921.716]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Sum_1:0
+[10922.233]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Sum:0
+[10922.918]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Reshape_1:0
+[10923.556]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Sum:0
+[10924.098]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Reshape_1:0
+[10926.112]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/Reshape:0
+[10926.324]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/tuple/control_dependency_1:0
+[10926.772]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/Reshape:0
+[10926.944]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/tuple/control_dependency_1:0
+[10929.219]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_grad/tuple/control_dependency:0
+[10929.549]  391      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Sum:0
+[10929.923]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Sum_1:0
+[10929.934]  399      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Reshape:0
+[10930.198]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv_1_grad/tuple/control_dependency:0
+[10932.382]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/Reshape_1:0
+[10934.177]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_1_grad/tuple/control_dependency_1:0
+[10935.901]  1.25M    AddN                 Magnitude_Model/gradients/AddN_1:0
+[10937.615]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/mul:0
+[10939.337]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Sum:0
+[10939.544]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Sum_1:0
+[10941.836]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Reshape_1:0
+[10942.484]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/Reshape:0
+[10943.891]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/tuple/control_dependency_1:0
+[10945.367]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_1_grad/tuple/control_dependency:0
+[10948.057]  1.25M    AddN                 Magnitude_Model/gradients/AddN_2:0
+[10950.706]  1.25M    SqrtGrad             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sqrt_grad/SqrtGrad:0
+[10952.867]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sum_grad/Reshape:0
+[10954.541]  1.25M    Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sum_grad/Tile:0
+[10956.226]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/mul:0
+[10957.930]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Sum:0
+[10958.125]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Sum_1:0
+[10960.252]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Reshape_1:0
+[10960.456]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/Reshape:0
+[10962.240]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/tuple/control_dependency_1:0
+[10962.522]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/mul_grad/tuple/control_dependency:0
+[10964.452]  1.25M    AddN                 Magnitude_Model/gradients/AddN_3:0
+[10966.352]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Sum:0
+[10966.411]  256.39k  Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Sum_1:0
+[10967.223]  256.41k  Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Reshape_1:0
+[10968.502]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/Reshape:0
+[10968.559]  256.44k  Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/tuple/control_dependency_1:0
+[10969.336]  256.41k  Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/Add:0
+[10970.622]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add_grad/tuple/control_dependency:0
+[10972.609]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_grad/Reshape:0
+[10974.609]  1.25M    Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Sum_grad/Tile:0
+[10976.651]  1.25M    Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/transpose_grad/transpose:0
+[10978.768]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/mul:0
+[10978.968]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/mul_1:0
+[10981.608]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Sum_1:0
+[10981.612]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Sum:0
+[10984.514]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Reshape_1:0
+[10984.521]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/Reshape:0
+[10987.109]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/tuple/control_dependency_1:0
+[10987.687]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_grad/tuple/control_dependency:0
+[10989.624]  1.25M    Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/Add:0
+[10990.667]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Reshape_1_grad/Reshape:0
+[10993.444]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/mul:0
+[10996.099]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/Sum:0
+[10998.008]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/Reshape:0
+[11000.175]  1.25M    Sub                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/sub:0
+[11002.236]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Softmax_grad/mul_1:0
+[11004.268]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Reshape_grad/Reshape:0
+[11006.277]  1.25M    AddN                 Magnitude_Model/gradients/AddN_5:0
+[11008.819]  1.25M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/NextIteration:0
+[11008.874]  256.43k  NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/NextIteration:0
+[11009.228]  1.25M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/NextIteration:0
+[11011.752]  1.25M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Switch_1_grad_1/NextIteration:0
+[11013.108]  1.25M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/b_acc_1:0
+[11013.210]  256.42k  Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/b_acc_2:0
+[11016.770]  1.25M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/b_acc_1:0
+[11016.778]  1.25M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Switch_1_grad/b_switch:0
+[11016.796]  256.42k  Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/Switch:0
+[11017.824]  1.25M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/Switch:0
+[11018.340]  256.42k  Exit                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add/Enter_grad/b_acc_3:0
+[11019.583]  256.42k  Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/Tile_grad/Reshape_1:0
+[11020.545]  1.25M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/Switch:0
+[11020.586]  392      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/Tile_grad/Sum:0
+[11021.670]  1.25M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/Merge_1_grad/Switch:0
+[11021.682]  392      ApplyAdam            Magnitude_Model/Adam/update_Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/b/ApplyAdam:0
+[11022.942]  1.25M    Exit                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_3/Enter_grad/b_acc_2:0
+[11023.636]  1.25M    Exit                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul/Enter_grad/b_acc_2:0
+[11026.238]  1.25M    Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/transpose_1_grad/transpose:0
+[11028.676]  1.25M    AddN                 Magnitude_Model/gradients/AddN_4:0
+[11030.845]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/Reshape_1_grad/Reshape:0
+[11036.176]  10.00M   Conv2DBackpropInput  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/convolution_grad/Conv2DBackpropInput:0
+[11036.185]  470      Conv2DBackpropFilter Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/convolution_grad/Conv2DBackpropFilter:0
+[11036.563]  482      Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/convolution_grad/tuple/control_dependency_1:0
+[11036.866]  420      ApplyAdam            Magnitude_Model/Adam/update_Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/W/ApplyAdam:0
+[11051.215]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/convolution_grad/tuple/control_dependency:0
+[11066.318]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/Reshape_grad/Reshape:0
+[11089.816]  10.00M   Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/transpose_grad/transpose:0
+[11110.475]  354      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/add_grad/Sum_1:0
+[11110.485]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/add_grad/Sum:0
+[11110.777]  362      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/add_grad/Reshape_1:0
+[11129.954]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/add_grad/Reshape:0
+[11147.804]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/add_grad/tuple/control_dependency:0
+[11168.446]  10.00M   TensorArrayReadV3    Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/TensorArrayWrite/TensorArrayWriteV3_grad/TensorArrayReadV3:0
+[11184.258]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/TensorArrayWrite/TensorArrayWriteV3_grad/tuple/control_dependency:0
+[11299.206]  10.00M   AddN                 Magnitude_Model/gradients/AddN_6:0
+[11310.428]  370      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Sum_1:0
+[11310.449]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Sum:0
+[11310.682]  378      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Reshape_1:0
+[11324.414]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Reshape:0
+[11335.576]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/tuple/control_dependency:0
+[11347.613]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/mul:0
+[11349.276]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/mul_1:0
+[11361.641]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Sum_1:0
+[11363.290]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Sum:0
+[11363.422]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Reshape_1:0
+[11373.356]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/tuple/control_dependency_1:0
+[11374.827]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Reshape:0
+[11375.118]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/RealDiv:0
+[11375.266]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/mul:0
+[11377.406]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Sum_1:0
+[11377.556]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Sum:0
+[11379.668]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Reshape_1:0
+[11380.719]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Reshape:0
+[11382.504]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/tuple/control_dependency_1:0
+[11383.434]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/tuple/control_dependency:0
+[11385.025]  366      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Sum:0
+[11385.235]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Sum_1:0
+[11385.424]  374      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Reshape:0
+[11387.795]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Reshape_1:0
+[11389.765]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/tuple/control_dependency:0
+[11390.180]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/tuple/control_dependency_1:0
+[11392.643]  1.25M    AddN                 Magnitude_Model/gradients/AddN_7:0
+[11394.608]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/mul:0
+[11396.067]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Sum:0
+[11396.273]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Sum_1:0
+[11398.108]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Reshape_1:0
+[11398.313]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Reshape:0
+[11400.124]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/tuple/control_dependency:0
+[11400.328]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/tuple/control_dependency_1:0
+[11403.620]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/mul:0
+[11405.170]  10.00M   RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/RealDiv:0
+[11415.851]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Sum_1:0
+[11418.783]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Sum:0
+[11418.922]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Reshape_1:0
+[11428.944]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/tuple/control_dependency_1:0
+[11430.480]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Reshape:0
+[11431.573]  1.25M    AddN                 Magnitude_Model/gradients/AddN_8:0
+[11434.292]  1.25M    SqrtGrad             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/Sqrt_grad/SqrtGrad:0
+[11436.855]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/Sum_grad/Reshape:0
+[11440.144]  10.00M   Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/Sum_grad/Tile:0
+[11443.580]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/tuple/control_dependency:0
+[11452.694]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/mul:0
+[11463.815]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Sum:0
+[11465.333]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Sum_1:0
+[11476.609]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Reshape:0
+[11482.341]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Reshape_1:0
+[11489.002]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/tuple/control_dependency:0
+[11495.901]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/tuple/control_dependency_1:0
+[11508.679]  10.00M   AddN                 Magnitude_Model/gradients/AddN_9:0
+[11520.830]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Sum:0
+[11521.139]  2.00M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Sum_1:0
+[11524.065]  2.00M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Reshape_1:0
+[11534.305]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Reshape:0
+[11534.308]  2.00M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/tuple/control_dependency_1:0
+[11537.252]  2.00M    Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/Add:0
+[11547.283]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/tuple/control_dependency:0
+[11574.543]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Sum_grad/Reshape:0
+[11611.677]  80.00M   Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Sum_grad/Tile:0
+[11831.356]  80.00M   Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/transpose_grad/transpose:0
+[12022.992]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/mul:0
+[12035.391]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/mul_1:0
+[12214.608]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Sum:0
+[12229.053]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Reshape:0
+[12332.912]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Sum_1:0
+[12525.904]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/tuple/control_dependency:0
+[12538.415]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Reshape_1:0
+[12539.815]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Reshape_1_grad/Reshape:0
+[12557.991]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/mul:0
+[12581.671]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/Sum:0
+[12606.419]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/Reshape:0
+[12631.065]  10.00M   Sub                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/sub:0
+[12655.173]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/mul_1:0
+[12688.602]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/tuple/control_dependency_1:0
+[12690.064]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Reshape_grad/Reshape:0
+[12705.389]  10.00M   AddN                 Magnitude_Model/gradients/AddN_11:0
+[12895.530]  80.00M   Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/Add:0
+[13098.351]  2.00M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/NextIteration:0
+[13110.721]  10.00M   NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Switch_1_grad_1/NextIteration:0
+[13110.725]  80.00M   NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/NextIteration:0
+[13148.131]  2.00M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/b_acc_2:0
+[13150.077]  10.00M   Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Switch_1_grad/b_switch:0
+[13164.539]  80.00M   Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/b_acc_1:0
+[13197.890]  10.00M   Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Merge_1_grad/Switch:1
+[13200.654]  2.00M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/Switch:1
+[13246.162]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Merge_1_grad/tuple/control_dependency_1:0
+[13286.880]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/Sum:0
+[13286.881]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/Sum_1:0
+[13329.400]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/Reshape_1:0
+[13329.402]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/Reshape:0
+[13367.537]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/tuple/control_dependency_1:0
+[13370.075]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/tuple/control_dependency:0
+[13395.416]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Sum_1_grad/Reshape:0
+[13431.128]  80.00M   Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Sum_1_grad/Tile:0
+[13650.220]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/mul_1:0
+[13786.679]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/mul:0
+[13798.906]  80.00M   Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/Switch:1
+[13932.357]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/Sum_1:0
+[14206.994]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/Sum:0
+[14353.998]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/Reshape_1:0
+[14565.685]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/Reshape:0
+[14715.570]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/tuple/control_dependency_1:0
+[14915.990]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/tuple/control_dependency:0
+[15034.741]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Tile_grad/Reshape_1:0
+[15205.401]  80.00M   Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3/Enter_grad/Add:0
+[15298.945]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Tile_grad/Sum:0
+[15366.565]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/ExpandDims_grad/Reshape:0
+[15379.231]  10.00M   AddN                 Magnitude_Model/gradients/AddN_6:0
+[15403.067]  370      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Sum_1:0
+[15403.072]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Sum:0
+[15403.360]  378      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Reshape_1:0
+[15430.923]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Reshape:0
+[15463.727]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/tuple/control_dependency:0
+[15496.853]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/mul:0
+[15498.373]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/mul_1:0
+[15511.838]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Sum_1:0
+[15513.418]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Reshape_1:0
+[15541.536]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Sum:0
+[15573.105]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/tuple/control_dependency_1:0
+[15574.647]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Reshape:0
+[15575.587]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/RealDiv:0
+[15575.773]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/mul:0
+[15578.305]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Sum:0
+[15578.495]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Sum_1:0
+[15580.882]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Reshape:0
+[15581.165]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Reshape_1:0
+[15583.740]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/tuple/control_dependency:0
+[15583.944]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/tuple/control_dependency_1:0
+[15587.157]  366      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Sum:0
+[15587.165]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Sum_1:0
+[15588.715]  374      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Reshape:0
+[15588.737]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/tuple/control_dependency:0
+[15589.623]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Reshape_1:0
+[15601.643]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/mul:0
+[15603.083]  10.00M   RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/RealDiv:0
+[15604.793]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/tuple/control_dependency_1:0
+[15608.076]  1.25M    AddN                 Magnitude_Model/gradients/AddN_7:0
+[15611.095]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/mul:0
+[15613.930]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Sum_1:0
+[15613.937]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Sum:0
+[15617.657]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Reshape_1:0
+[15617.663]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Reshape:0
+[15619.561]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Sum:0
+[15619.767]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Sum_1:0
+[15620.732]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/tuple/control_dependency:0
+[15620.735]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/tuple/control_dependency_1:0
+[15622.838]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Reshape_1:0
+[15630.290]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/tuple/control_dependency_1:0
+[15631.830]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Reshape:0
+[15632.038]  1.25M    AddN                 Magnitude_Model/gradients/AddN_8:0
+[15633.981]  1.25M    SqrtGrad             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/Sqrt_grad/SqrtGrad:0
+[15635.672]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/Sum_grad/Reshape:0
+[15638.946]  10.00M   Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/Sum_grad/Tile:0
+[15644.760]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/tuple/control_dependency:0
+[15672.078]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/mul:0
+[15708.779]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Sum:0
+[15710.337]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Sum_1:0
+[15726.802]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Reshape_1:0
+[15759.615]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/tuple/control_dependency_1:0
+[15759.619]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Reshape:0
+[15778.108]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/tuple/control_dependency:0
+[15794.896]  10.00M   AddN                 Magnitude_Model/gradients/AddN_9:0
+[15918.974]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Sum:0
+[15919.214]  2.00M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Sum_1:0
+[15923.546]  2.00M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Reshape_1:0
+[15932.402]  2.00M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/tuple/control_dependency_1:0
+[15933.968]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Reshape:0
+[15936.507]  2.00M    Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/Add:0
+[15946.178]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/tuple/control_dependency:0
+[15957.548]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Sum_grad/Reshape:0
+[15980.439]  80.00M   Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Sum_grad/Tile:0
+[16288.964]  80.00M   Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/transpose_grad/transpose:0
+[16571.547]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/mul:0
+[16583.827]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/mul_1:0
+[16747.491]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Sum_1:0
+[16827.678]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Sum:0
+[16843.730]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Reshape:0
+[16898.078]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/tuple/control_dependency:0
+[16910.499]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Reshape_1:0
+[16914.607]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Reshape_1_grad/Reshape:0
+[16962.267]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/mul:0
+[16995.543]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/Sum:0
+[17028.791]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/Reshape:0
+[17059.260]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/tuple/control_dependency_1:0
+[17061.225]  10.00M   Sub                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/sub:0
+[17106.089]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/mul_1:0
+[17139.043]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Reshape_grad/Reshape:0
+[17172.519]  10.00M   AddN                 Magnitude_Model/gradients/AddN_11:0
+[17207.515]  80.00M   Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/Add:0
+[17502.103]  10.00M   NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Switch_1_grad_1/NextIteration:0
+[17502.353]  2.00M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/NextIteration:0
+[17514.852]  80.00M   NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/NextIteration:0
+[17527.222]  80.00M   NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3/Enter_grad/NextIteration:0
+[17564.381]  80.00M   Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3/Enter_grad/b_acc_1:0
+[17564.696]  2.00M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/b_acc_2:0
+[17566.312]  10.00M   Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Switch_1_grad/b_switch:0
+[17580.426]  80.00M   Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/b_acc_1:0
+[17607.686]  2.00M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/Switch:1
+[17611.244]  10.00M   Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Merge_1_grad/Switch:1
+[17640.395]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Merge_1_grad/tuple/control_dependency_1:0
+[17670.220]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/Sum_1:0
+[17670.220]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/Sum:0
+[17695.928]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/Reshape:0
+[17697.978]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/Reshape_1:0
+[17727.300]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/tuple/control_dependency_1:0
+[17729.758]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_3_grad/tuple/control_dependency:0
+[17760.918]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Sum_1_grad/Reshape:0
+[17801.720]  80.00M   Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Sum_1_grad/Tile:0
+[18223.777]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/mul_1:0
+[18386.796]  80.00M   Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3/Enter_grad/Switch:1
+[18520.692]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/mul:0
+[18541.042]  80.00M   Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/Switch:1
+[18955.225]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/Sum_1:0
+[19167.032]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/Sum:0
+[19462.241]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/Reshape_1:0
+[19612.340]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/Reshape:0
+[19874.629]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/tuple/control_dependency_1:0
+[20021.732]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3_grad/tuple/control_dependency:0
+[20353.049]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Tile_grad/Reshape_1:0
+[20388.104]  80.00M   Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3/Enter_grad/Add:0
+[20604.294]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Tile_grad/Sum:0
+[20645.818]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/ExpandDims_grad/Reshape:0
+[20660.670]  10.00M   AddN                 Magnitude_Model/gradients/AddN_6:0
+[20721.633]  370      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Sum_1:0
+[20721.779]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Sum:0
+[20722.034]  378      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Reshape_1:0
+[20756.931]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/Reshape:0
+[20804.630]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_2_grad/tuple/control_dependency:0
+[20852.053]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/mul:0
+[20853.653]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/mul_1:0
+[20868.791]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Sum:0
+[20879.571]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Reshape:0
+[20898.022]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Sum_1:0
+[20901.903]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/tuple/control_dependency:0
+[20902.073]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/Reshape_1:0
+[20904.590]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_2_grad/tuple/control_dependency_1:0
+[20915.592]  10.00M   RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/RealDiv:0
+[20916.984]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/mul:0
+[20920.716]  1.25M    RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/RealDiv:0
+[20920.909]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/mul:0
+[20923.971]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Sum:0
+[20924.460]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Sum_1:0
+[20925.782]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Reshape:0
+[20927.154]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/Reshape_1:0
+[20927.577]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/tuple/control_dependency:0
+[20930.053]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_1_grad/tuple/control_dependency_1:0
+[20932.538]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Sum_1:0
+[20932.776]  366      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Sum:0
+[20932.777]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Sum_1:0
+[20933.115]  374      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Reshape:0
+[20935.606]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Sum:0
+[20935.611]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Reshape_1:0
+[20935.784]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/Reshape_1:0
+[20937.898]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_1_grad/tuple/control_dependency_1:0
+[20939.594]  1.25M    AddN                 Magnitude_Model/gradients/AddN_7:0
+[20941.353]  1.25M    Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/mul:0
+[20943.015]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Sum:0
+[20943.128]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Sum_1:0
+[20945.156]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Reshape_1:0
+[20945.701]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/Reshape:0
+[20946.789]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/tuple/control_dependency_1:0
+[20948.070]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_1_grad/tuple/control_dependency:0
+[20977.742]  1.25M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/tuple/control_dependency_1:0
+[20979.276]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/Reshape:0
+[20980.350]  1.25M    AddN                 Magnitude_Model/gradients/AddN_8:0
+[20983.271]  1.25M    SqrtGrad             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/Sqrt_grad/SqrtGrad:0
+[20985.883]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/Sum_grad/Reshape:0
+[20989.934]  10.00M   Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/Sum_grad/Tile:0
+[21022.820]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/truediv_grad/tuple/control_dependency:0
+[21037.852]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/mul:0
+[21064.441]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Sum:0
+[21065.981]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Sum_1:0
+[21080.974]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Reshape:0
+[21113.608]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/tuple/control_dependency:0
+[21115.022]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/Reshape_1:0
+[21161.038]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/norm/mul_grad/tuple/control_dependency_1:0
+[21207.090]  10.00M   AddN                 Magnitude_Model/gradients/AddN_9:0
+[21255.811]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Sum:0
+[21256.046]  2.00M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Sum_1:0
+[21260.096]  2.00M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Reshape_1:0
+[21272.769]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/Reshape:0
+[21277.205]  2.00M    Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/tuple/control_dependency_1:0
+[21281.171]  2.00M    Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/Add:0
+[21284.102]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add_grad/tuple/control_dependency:0
+[21295.210]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Sum_grad/Reshape:0
+[21317.656]  80.00M   Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Sum_grad/Tile:0
+[21484.576]  80.00M   Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/transpose_grad/transpose:0
+[21794.723]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/mul:0
+[21806.929]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/mul_1:0
+[21943.698]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Sum:0
+[21954.200]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Reshape:0
+[22098.088]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Sum_1:0
+[22383.049]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/tuple/control_dependency:0
+[22395.399]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/Reshape_1:0
+[22399.329]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Reshape_1_grad/Reshape:0
+[22411.211]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/mul:0
+[22423.940]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/Sum:0
+[22436.784]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/Reshape:0
+[22449.860]  10.00M   Sub                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/sub:0
+[22463.339]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Softmax_grad/mul_1:0
+[22476.735]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Reshape_grad/Reshape:0
+[22491.205]  10.00M   AddN                 Magnitude_Model/gradients/AddN_11:0
+[22693.955]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_grad/tuple/control_dependency_1:0
+[22999.579]  80.00M   Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/Add:0
+[23288.513]  2.00M    NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/NextIteration:0
+[23313.344]  80.00M   NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/NextIteration:0
+[23314.836]  10.00M   NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Switch_1_grad_1/NextIteration:0
+[23314.873]  80.00M   NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3/Enter_grad/NextIteration:0
+[23352.072]  80.00M   Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3/Enter_grad/b_acc_1:0
+[23352.455]  2.00M    Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/b_acc_2:0
+[23354.114]  10.00M   Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Switch_1_grad/b_switch:0
+[23366.527]  80.00M   Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/b_acc_1:0
+[23366.669]  2.00M    Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/Switch:0
+[23371.432]  2.00M    Exit                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/add/Enter_grad/b_acc_3:0
+[23375.920]  2.00M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/Tile_grad/Reshape_1:0
+[23380.263]  396      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/Tile_grad/Sum:0
+[23380.519]  396      ApplyAdam            Magnitude_Model/Adam/update_Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/b/ApplyAdam:0
+[23386.624]  10.00M   Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/Merge_1_grad/Switch:0
+[23627.742]  80.00M   Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3/Enter_grad/Switch:0
+[23870.935]  80.00M   Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/Switch:0
+[23896.874]  80.00M   Exit                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul_3/Enter_grad/b_acc_2:0
+[24112.296]  80.00M   Exit                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/while/mul/Enter_grad/b_acc_2:0
+[24423.398]  80.00M   Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/transpose_1_grad/transpose:0
+[24717.160]  80.00M   AddN                 Magnitude_Model/gradients/AddN_10:0
+[25016.326]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/Reshape_1_grad/Reshape:0
+[25265.426]  80.00M   Conv2DBackpropInput  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/convolution_grad/Conv2DBackpropInput:0
+[25265.444]  671      Conv2DBackpropFilter Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/convolution_grad/Conv2DBackpropFilter:0
+[25265.871]  683      Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/convolution_grad/tuple/control_dependency_1:0
+[25266.322]  622      ApplyAdam            Magnitude_Model/Adam/update_Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/W/ApplyAdam:0
+[25613.324]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/convolution_grad/tuple/control_dependency:0
+[25783.605]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/Reshape_grad/Reshape:0
+[25950.441]  80.00M   Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Seg_Caps/seg_caps/transpose_grad/transpose:0
+[26113.988]  368      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/add_grad/Sum_1:0
+[26114.004]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/add_grad/Sum:0
+[26114.295]  376      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/add_grad/Reshape_1:0
+[26258.645]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/add_grad/Reshape:0
+[26402.763]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/add_grad/tuple/control_dependency:0
+[26625.360]  80.00M   TensorArrayReadV3    Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/TensorArrayWrite/TensorArrayWriteV3_grad/TensorArrayReadV3:0
+[26807.892]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/TensorArrayWrite/TensorArrayWriteV3_grad/tuple/control_dependency:0
+[26963.256]  80.00M   AddN                 Magnitude_Model/gradients/AddN_12:0
+[27116.428]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_2_grad/Sum:0
+[27116.458]  384      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_2_grad/Sum_1:0
+[27116.878]  393      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_2_grad/Reshape_1:0
+[27258.530]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_2_grad/Reshape:0
+[27406.121]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_2_grad/tuple/control_dependency:0
+[27552.436]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2_grad/mul:0
+[27564.823]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2_grad/mul_1:0
+[27746.767]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2_grad/Sum:0
+[27748.286]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2_grad/Sum_1:0
+[27763.775]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2_grad/Reshape_1:0
+[27908.426]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2_grad/tuple/control_dependency_1:0
+[27920.963]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2_grad/Reshape:0
+[27924.507]  10.00M   RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_1_grad/RealDiv:0
+[27926.052]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_1_grad/mul:0
+[27941.256]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_1_grad/Sum_1:0
+[27943.490]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_1_grad/Sum:0
+[27956.833]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_1_grad/Reshape_1:0
+[27958.368]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_1_grad/Reshape:0
+[27972.098]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_1_grad/tuple/control_dependency_1:0
+[27974.165]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_1_grad/tuple/control_dependency:0
+[27986.474]  380      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_1_grad/Sum:0
+[27988.051]  389      Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_1_grad/Reshape:0
+[27988.069]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_1_grad/Sum_1:0
+[28004.731]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_1_grad/Reshape_1:0
+[28017.588]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_1_grad/tuple/control_dependency_1:0
+[28032.830]  10.00M   AddN                 Magnitude_Model/gradients/AddN_13:0
+[28047.090]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_1_grad/mul:0
+[28061.857]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_1_grad/Sum:0
+[28063.368]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_1_grad/Sum_1:0
+[28080.962]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_1_grad/Reshape:0
+[28080.973]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_1_grad/Reshape_1:0
+[28094.411]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_2_grad/tuple/control_dependency:0
+[28097.484]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_1_grad/tuple/control_dependency:0
+[28099.021]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_1_grad/tuple/control_dependency_1:0
+[28237.022]  80.00M   RealDiv              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_grad/RealDiv:0
+[28249.359]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_grad/mul:0
+[28412.440]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_grad/Sum:0
+[28413.981]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_grad/Sum_1:0
+[28427.010]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_grad/Reshape_1:0
+[28544.281]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_grad/tuple/control_dependency_1:0
+[28556.676]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_grad/Reshape:0
+[28560.529]  10.00M   AddN                 Magnitude_Model/gradients/AddN_14:0
+[28572.785]  10.00M   SqrtGrad             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/norm/Sqrt_grad/SqrtGrad:0
+[28585.680]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/norm/Sum_grad/Reshape:0
+[28610.594]  80.00M   Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/norm/Sum_grad/Tile:0
+[28712.975]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/truediv_grad/tuple/control_dependency:0
+[28783.526]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/norm/mul_grad/mul:0
+[28934.482]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/norm/mul_grad/Sum:0
+[28946.983]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/norm/mul_grad/Sum_1:0
+[29108.458]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/norm/mul_grad/Reshape_1:0
+[29139.731]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/norm/mul_grad/Reshape:0
+[29286.855]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/norm/mul_grad/tuple/control_dependency_1:0
+[29350.141]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/norm/mul_grad/tuple/control_dependency:0
+[29563.306]  80.00M   AddN                 Magnitude_Model/gradients/AddN_15:0
+[29776.574]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_grad/Sum:0
+[29778.981]  16.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_grad/Sum_1:0
+[29799.218]  16.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_grad/Reshape_1:0
+[29917.342]  16.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_grad/tuple/control_dependency_1:0
+[29929.772]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_grad/Reshape:0
+[29941.200]  16.00M   Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add/Enter_grad/Add:0
+[30076.156]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add_grad/tuple/control_dependency:0
+[30220.264]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Sum_grad/Reshape:0
+[30362.777]  80.00M   Tile                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Sum_grad/Tile:0
+[30626.921]  80.00M   Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/transpose_grad/transpose:0
+[30813.058]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_grad/mul:0
+[30825.457]  80.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_grad/mul_1:0
+[30973.216]  10.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_grad/Sum:0
+[30985.079]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_grad/Reshape:0
+[31042.659]  80.00M   Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_grad/Sum_1:0
+[31249.413]  10.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_grad/tuple/control_dependency:0
+[31261.902]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_grad/Reshape_1:0
+[31263.213]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Reshape_1_grad/Reshape:0
+[31276.112]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Softmax_grad/mul:0
+[31316.309]  1.25M    Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Softmax_grad/Sum:0
+[31319.112]  1.25M    Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Softmax_grad/Reshape:0
+[31323.305]  10.00M   Sub                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Softmax_grad/sub:0
+[31336.935]  10.00M   Mul                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Softmax_grad/mul_1:0
+[31370.007]  10.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Reshape_grad/Reshape:0
+[31402.161]  10.00M   AddN                 Magnitude_Model/gradients/AddN_17:0
+[31495.930]  80.00M   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul_grad/tuple/control_dependency_1:0
+[31702.298]  80.00M   Add                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul/Enter_grad/Add:0
+[31936.964]  80.00M   NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul/Enter_grad/NextIteration:0
+[31938.503]  10.00M   NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Switch_1_grad_1/NextIteration:0
+[31938.506]  16.00M   NextIteration        Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add/Enter_grad/NextIteration:0
+[31978.261]  16.00M   Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add/Enter_grad/b_acc_2:0
+[31980.216]  10.00M   Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Switch_1_grad/b_switch:0
+[31996.832]  80.00M   Merge                Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul/Enter_grad/b_acc_1:0
+[32008.127]  10.00M   Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/Merge_1_grad/Switch:0
+[32018.327]  16.00M   Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add/Enter_grad/Switch:0
+[32057.137]  16.00M   Exit                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/add/Enter_grad/b_acc_3:0
+[32088.552]  16.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/Tile_grad/Reshape_1:0
+[32118.489]  636      Sum                  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/Tile_grad/Sum:0
+[32118.995]  636      ApplyAdam            Magnitude_Model/Adam/update_Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/b/ApplyAdam:0
+[32451.625]  80.00M   Switch               Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul/Enter_grad/Switch:0
+[32646.959]  80.00M   Exit                 Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/while/mul/Enter_grad/b_acc_2:0
+[32846.041]  80.00M   Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/transpose_1_grad/transpose:0
+[33053.785]  80.00M   AddN                 Magnitude_Model/gradients/AddN_16:0
+[33257.906]  80.00M   Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/Reshape_1_grad/Reshape:0
+[33506.761]  160.00M  Conv2DBackpropInput  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/convolution_grad/Conv2DBackpropInput:0
+[33506.814]  800.42k  Conv2DBackpropFilter Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/convolution_grad/Conv2DBackpropFilter:0
+[33508.706]  800.44k  Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/convolution_grad/tuple/control_dependency_1:0
+[33510.493]  800.38k  ApplyAdam            Magnitude_Model/Adam/update_Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/W/ApplyAdam:0
+[34112.139]  160.00M  Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/convolution_grad/tuple/control_dependency:0
+[34489.040]  160.00M  Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/Reshape_grad/Reshape:0
+[34823.235]  160.00M  Transpose            Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Primary_Caps/primarycaps/transpose_grad/transpose:0
+[35094.516]  160.00M  Reshape              Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Convolution/reshape_1/Reshape_grad/Reshape:0
+[35387.733]  160.00M  Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Convolution/conv2d/BiasAdd_grad/tuple/control_dependency:0
+[35387.754]  891      BiasAddGrad          Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Convolution/conv2d/BiasAdd_grad/BiasAddGrad:0
+[35388.072]  922      Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Convolution/conv2d/BiasAdd_grad/tuple/control_dependency_1:0
+[35388.293]  875      ApplyAdam            Magnitude_Model/Adam/update_Magnitude_Model/SegCaps_CapsNetBasic/Convolution/conv2d/bias/ApplyAdam:0
+[35837.764]  12.90k   Conv2DBackpropFilter Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Convolution/conv2d/Conv2D_grad/Conv2DBackpropFilter:0
+[35837.777]  1.25M    Conv2DBackpropInput  Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Convolution/conv2d/Conv2D_grad/Conv2DBackpropInput:0
+[35838.143]  12.91k   Identity             Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Convolution/conv2d/Conv2D_grad/tuple/control_dependency_1:0
+[35838.558]  12.87k   ApplyAdam            Magnitude_Model/Adam/update_Magnitude_Model/SegCaps_CapsNetBasic/Convolution/conv2d/kernel/ApplyAdam:0
+
+tfdbg> Tensor "Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv:0" generated 3 dumps:
+#0 [9555.084 ms] Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv:0:DebugIdentity
+#1 [9799.558 ms] Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv:0:DebugIdentity
+#2 [10008.315 ms] Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv:0:DebugIdentity
+
+You can use the -n (--number) flag to specify which dump to print.
+For example:
+  print_tensor Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv:0 -n 0
+
+tfdbg> Tensor "Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv:0:DebugIdentity (dump #0)":
+  dtype: float32
+  shape: (5, 128, 512, 1, 1)
+
+array([[[[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        ...,
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]]],
+
+
+
+       [[[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        ...,
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]]],
+
+
+
+       [[[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        ...,
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]]],
+
+
+
+       [[[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        ...,
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]]],
+
+
+
+       [[[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        ...,
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]]]], dtype=float32)
+
+tfdbg> Tensor "Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv:0:DebugIdentity (dump #0)":
+  dtype: float32
+  shape: (5, 128, 512, 1, 1)
+
+array([[[[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        ...,
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]]],
+
+
+
+       [[[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        ...,
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]]],
+
+
+
+       [[[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        ...,
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]]],
+
+
+
+       [[[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        ...,
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]]],
+
+
+
+       [[[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        ...,
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]],
+
+
+        [[[1.]],
+
+         [[1.]],
+
+         [[1.]],
+
+         ...,
+
+         [[1.]],
+
+         [[1.]],
+
+         [[1.]]]]], dtype=float32)
+
+tfdbg> Node Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/truediv
+
+  Op: RealDiv
+  Device: /job:localhost/replica:0/task:0/device:GPU:0
+
+  2 input(s) + 0 control input(s):
+    2 input(s):
+      [Add] Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/add
+      [Sqrt] Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/norm/Sqrt
+
+  3 recipient(s) + 0 control recipient(s):
+    3 recipient(s):
+      [Shape] Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/Shape
+      [StackPushV2] Magnitude_Model/gradients/Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2_grad/mul_1/StackPushV2
+      [Mul] Magnitude_Model/SegCaps_CapsNetBasic/Reconstruction/reconstruction/while/mul_2
+
+tfdbg> ERROR: Invalid command prefix "x"
+
+tfdbg> 
