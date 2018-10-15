@@ -6,7 +6,7 @@
     "dependencies": [
       "numpy==1.15.2",
       "sacred==0.7.4",
-      "tensorflow-gpu==1.4.1"
+      "tensorflow-gpu==1.11.0"
     ],
     "mainfile": "main.py",
     "name": "UNet_Speech_Separation",
@@ -22,26 +22,22 @@
       ],
       [
         "main.py",
-        "_sources/main_02dcf1712db757b10e1a72cf59b20625.py"
+        "_sources/main_86f3cd032ec613acd4e5a09a8dfccab4.py"
       ],
       [
         "train.py",
-        "_sources/train_d2e701aa0284d81acb72fd6aad8b6f09.py"
+        "_sources/train_ac3950bf487bd618b79d27ec5ead97fb.py"
       ]
     ]
   },
   "fail_trace": [
     "Traceback (most recent call last):\n",
     "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
-    "  File \"main.py\", line 141, in do_experiment\n    model = train(sess, model, model_config, model_folder, handle, training_iterator, training_handle,\n",
-    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 108, in train\n    #restorer.restore(sess, latest_checkpoint_path)\n",
-    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/saver.py\", line 1666, in restore\n    meta_graph_or_file, clear_devices, import_scope, **kwargs)[0]\n",
-    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/debug/wrappers/framework.py\", line 455, in run\n    raise ValueError(\n",
-    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/debug/wrappers/local_cli_wrapper.py\", line 237, in on_run_start\n",
-    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/debug/wrappers/local_cli_wrapper.py\", line 270, in _exit_if_requested_by_user\n    self._prep_cli_for_run_start()\n",
-    "SystemExit: 1\n"
+    "  File \"main.py\", line 127, in do_experiment\n    restorer.restore(sess, checkpoint)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/training/saver.py\", line 1530, in restore\n    + compat.as_text(save_path))\n",
+    "ValueError: The passed save_path is not a valid checkpoint: /home/enterprise.internal.city.ac.uk/acvn728/checkpoints/114/114-473\n"
   ],
-  "heartbeat": "2018-10-12T10:28:52.291724",
+  "heartbeat": "2018-10-12T07:07:02.843078",
   "host": {
     "ENV": {},
     "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
@@ -51,7 +47,7 @@
         {
           "model": "GeForce GTX 1080 Ti",
           "persistence_mode": false,
-          "total_memory": 11176
+          "total_memory": 11177
         },
         {
           "model": "GeForce GTX 1080 Ti",
@@ -60,7 +56,7 @@
         }
       ]
     },
-    "hostname": "america",
+    "hostname": "africa",
     "os": [
       "Linux",
       "Linux-4.4.0-137-generic-x86_64-with-Ubuntu-16.04-xenial"
@@ -73,7 +69,7 @@
       "--beat_interval": null,
       "--capture": null,
       "--comment": null,
-      "--debug": true,
+      "--debug": false,
       "--enforce_clean": false,
       "--file_storage": null,
       "--force": false,
@@ -96,7 +92,7 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2018-10-11T08:45:31.406760",
+  "start_time": "2018-10-12T07:04:19.353449",
   "status": "FAILED",
-  "stop_time": "2018-10-12T10:28:52.313678"
+  "stop_time": "2018-10-12T07:07:02.856725"
 }
