@@ -56,45 +56,44 @@ def get_test_metrics(argv):
                     mixed_audio, mixed_mag, mixed_phase, model_config = pickle.load(open(file, 'rb'))
                 print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
                 test_costs.append(cost)
-                background_ref_mag = mixed_mag - voice_ref_mag
-                background_est_mag = mixed_mag - voice_est_mag
             else:  # Data to be processed is from a complex number spectrogram based model
                 cost, voice_est_spec, voice_ref_spec, \
-                voice_ref_audio, mixed_audio, mixed_spec, model_config = pickle.load(open(file, 'rb'))
+                    voice_ref_audio, mixed_audio, mixed_spec, model_config = pickle.load(open(file, 'rb'))
                 print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
                 test_costs.append(cost)
-                background_ref_mag = np.abs(mixed_spec) - np.abs(voice_ref_spec)
-                background_est_mag = np.abs(mixed_spec) - np.abs(voice_est_spec)
                 mixed_phase = np.angle(mixed_spec)
-            for i in range(voice_ref_audio.shape[0]):
+
+            voice_est_audio = np.empty(voice_ref_audio.shape)
+            for i in range(voice_est_audio.shape[0]):
                 # Transform output back to audio
-                #print('{ts}:\treconstructing audio {i}.'.format(ts=datetime.datetime.now(), i=i))
                 if mag_phase:
-                    voice_est_audio = af.spectrogramToAudioFile(voice_est_mag[i, :, :].T,
-                                                                model_config['n_fft'], model_config['fft_hop'],
-                                                                phaseIterations=phase_iterations,
-                                                                phase=mixed_phase[i, :, :].T)
+                    wave = af.spectrogramToAudioFile(np.squeeze(voice_est_mag[i, :, :, :]).T,
+                                                     model_config['n_fft'], model_config['fft_hop'],
+                                                     phaseIterations=phase_iterations,
+                                                     phase=np.squeeze(mixed_phase[i, :, :, :]).T)
                 else:
-                    voice_est_audio = librosa.istft(voice_est_spec[i, :, :].T, model_config['fft_hop'])
+                    wave = librosa.istft(np.squeeze(voice_est_spec[i, :, :, :]).T, model_config['fft_hop'])
 
-                background_ref_audio = af.spectrogramToAudioFile(background_ref_mag[i, :, :].T,
-                                                                 model_config['n_fft'], model_config['fft_hop'],
-                                                                 phaseIterations=phase_iterations,
-                                                                 phase=mixed_phase[i, :, :].T)
-                background_est_audio = af.spectrogramToAudioFile(background_est_mag[i, :, :].T,
-                                                                 model_config['n_fft'],  model_config['fft_hop'],
-                                                                 phaseIterations=phase_iterations,
-                                                                 phase=mixed_phase[i, :, :].T)
-                # Reshape for mir_eval
-                voice_est_audio = np.expand_dims(voice_est_audio, 1).T
-                background_ref_audio = np.expand_dims(background_ref_audio, 1).T
-                background_est_audio = np.expand_dims(background_est_audio, 1).T
-                voice_ref_audio_patch = voice_ref_audio[i, :, :].T
-                mixed_audio_patch = mixed_audio[i, :, :].T
+                voice_est_audio[i, :, :] = np.expand_dims(wave, axis=1)
 
-                ref_sources = np.concatenate((voice_ref_audio_patch, background_ref_audio), axis=0)
-                est_sources = np.concatenate((voice_est_audio, background_est_audio), axis=0)
-                mixed_sources = np.concatenate((mixed_audio_patch, mixed_audio_patch), axis=0)
+                # Normalise the waveforms to enable background noise calculation by subtraction
+                voice_ref_audio[i, :, :] = af.normalise_audio(voice_ref_audio[i, :, :])
+                voice_est_audio[i, :, :] = af.normalise_audio(voice_est_audio[i, :, :])
+                mixed_audio[i, :, :] = af.normalise_audio(mixed_audio[i, :, :])
+
+            # Reshape for mir_eval
+            voice_ref_audio = np.transpose(voice_ref_audio, (0, 2, 1))
+            voice_est_audio = np.transpose(voice_est_audio, (0, 2, 1))
+            mixed_audio = np.transpose(mixed_audio, (0, 2, 1))
+
+            # Subtract voice to calculate background noise
+            background_ref_audio = mixed_audio - voice_ref_audio
+            background_est_audio = mixed_audio - voice_est_audio
+
+            for i in range(voice_est_audio.shape[0]):
+                ref_sources = np.concatenate((voice_ref_audio[i, :, :], background_ref_audio[i, :, :]), axis=0)
+                est_sources = np.concatenate((voice_est_audio[i, :, :], background_est_audio[i, :, :]), axis=0)
+                mixed_sources = np.concatenate((mixed_audio[i, :, :], mixed_audio[i, :, :]), axis=0)
 
                 # Calculate audio quality statistics
                 sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(ref_sources, est_sources, compute_permutation=False)
@@ -131,7 +130,7 @@ def get_test_metrics(argv):
     return metrics
 
 
-#test_metrics = get_test_metrics(['test', '59', 'mag_phase'])
+#test_metrics = get_test_metrics(['test', '50', 'mag_phase'])
 test_metrics = get_test_metrics(sys.argv)
 print('{ts}:\nProcessing complete\n{t}'.format(ts=datetime.datetime.now(), t=test_metrics))
 

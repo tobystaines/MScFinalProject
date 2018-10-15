@@ -4,6 +4,11 @@ import librosa
 import soundfile as sf
 
 
+def normalise_audio(audio):
+    norm_audio = 2*((audio - audio.min())/(audio.max()-audio.min())) - 1
+    return norm_audio
+
+
 def read_audio_py(py_path, sample_rate):
     mono, native_sr = sf.read(py_path)
     if native_sr != sample_rate:
