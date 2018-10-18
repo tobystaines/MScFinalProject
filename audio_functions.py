@@ -123,6 +123,9 @@ def extract_audio_patches(audio, fft_hop, patch_window, patch_hop):
 
 
 def compute_spectrogram_map(audio_a, audio_b, n_fft, fft_hop, normalise=False, mag_phase=True):
+    """
+    Take a pair of audio waveform arrays and return the corresponding spectrograms, and the original arrays.
+    """
     spec_a = compute_spectrogram(audio_a, n_fft, fft_hop, normalise, mag_phase)
     spec_b = compute_spectrogram(audio_b, n_fft, fft_hop, normalise, mag_phase)
 
@@ -140,6 +143,9 @@ def extract_patches_map(spec_a, spec_b, audio_a, audio_b, n_fft, fft_hop, patch_
 
 
 def extract_audio_patches_map(audio_a, audio_b, fft_hop, patch_window, patch_hop):
+    """
+    Take a pair of audio waveform arrays and split them each into overlapping patches of matching shape.
+    """
     audio_patches_a = extract_audio_patches(audio_a, fft_hop, patch_window, patch_hop)
     audio_patches_b = extract_audio_patches(audio_b, fft_hop, patch_window, patch_hop)
 
