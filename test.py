@@ -6,7 +6,9 @@ import tensorflow as tf
 
 
 def test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count, experiment_id):
-
+    """
+    Test an audio_models.py model, saving the outputs to a pickle file.
+    """
     dump_folder = 'dumps/' + str(experiment_id)
     if not os.path.isdir(dump_folder):
         os.mkdir(dump_folder)
