@@ -18,15 +18,15 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'model_variant': 'basic_capsnet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
+    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'mag_phase': True,  # Whether to use a magnitude/phase or complex number representation of the spectrogram
-                    'initialisation_test': True,  # Whether or not to calculate test metrics before training
-                    'loading': False,  # Whether to load an existing checkpoint
-                    'checkpoint_to_load': "115/115-473",  # Checkpoint format: run/run-step
-                    'saving': True,  # Whether to take checkpoints
+                    'initialisation_test': False,  # Whether or not to calculate test metrics before training
+                    'loading': True,  # Whether to load an existing checkpoint
+                    'checkpoint_to_load': "136/136-6",  # Checkpoint format: run/run-step
+                    'saving': False,  # Whether to take checkpoints
                     'save_by_epochs': True,  # Checkpoints at end of each epoch or every 'save_iters'?
                     'save_iters': 1000,  # Number of training iterations between checkpoints
-                    'early_stopping': True,  # Should validation data checks be used for early stopping?
+                    'early_stopping': False,  # Should validation data checks be used for early stopping?
                     'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 50000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
@@ -40,10 +40,10 @@ def cfg():
                     'n_parallel_readers': 16,
                     'patch_window': 256,  # Number of fourier transforms (rows) in each patch
                     'patch_hop': 128,  # Number of fourier transforms between the start of each patch
-                    'batch_size': 5,  # Number of patches in each batch
+                    'batch_size': 50,  # Number of patches in each batch
                     'n_shuffle': 1000,  # Number of patches buffered before batching
                     'learning_rate': 0.0002,  # The learning rate to be used by the model
-                    'epochs': 7,  # Number of full passes through the dataset to train for
+                    'epochs': 0,  # Number of full passes through the dataset to train for
                     'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
                     'GPU': '0'
                     }
