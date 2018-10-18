@@ -6,7 +6,7 @@ from keras import layers
 
 class MagnitudeModel(object):
     """
-    Top level U-Net object.
+    Top level object for models working on magnitude spectrograms.
     Attributes:
         mixed_mag: Input placeholder for magnitude spectrogram of mixed signals (voice plus background noise) - X
         voice_mag: Input placeholder for magnitude spectrogram of isolated voice signal - Y
@@ -15,6 +15,7 @@ class MagnitudeModel(object):
         voice_audio: Input placeholder for waveform audio of isolated voice signal
         variant: The type of U-Net model (Normal convolutional or capsule based)
         is_training: Boolean - should the model be trained on the current input or not
+        learning_rate: The learning rate the model should be trained with.
         name: Model instance name
     """
     def __init__(self, mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio, variant, is_training, learning_rate,
@@ -47,7 +48,9 @@ class MagnitudeModel(object):
 
 
 class UNet(object):
-
+    """
+    Magnitude model U-Net
+    """
     def __init__(self, input_tensor, variant, is_training, reuse, name):
         with tf.variable_scope(name, reuse=reuse):
             self.variant = variant
@@ -278,9 +281,7 @@ class BasicCapsnet(object):
 
     def __init__(self, mixed_mag, name):
         """
-        input_tensor: Tensor with shape [batch_size, height, width, channels]
-        is_training:  Boolean - should the model be trained on the current input or not
-        name:         Model instance name
+        A basic capsule network operating on magnitude spectrograms.
         """
         with tf.variable_scope(name):
             self.mixed_mag = mixed_mag
@@ -316,15 +317,16 @@ class BasicCapsnet(object):
 
 class ComplexNumberModel(object):
     """
-    Top level U-Net object.
+    Top level object for models working on complex number spectrograms.
     Attributes:
-        mixed_mag: Input placeholder for magnitude spectrogram of mixed signals (voice plus background noise) - X
-        voice_mag: Input placeholder for magnitude spectrogram of isolated voice signal - Y
-        mixed_phase: Input placeholder for phase spectrogram of mixed signals (voice plus background noise)
+        mixed_spec: Input placeholder for spectrogram of mixed signals (voice plus background noise), with real number
+                    in channel 0 and complex number in channel 1. - X
+        voice_spec: Input placeholder for magnitude spectrogram of isolated voice signal - Y
         mixed_audio: Input placeholder for waveform audio of mixed signals (voice plus background noise)
         voice_audio: Input placeholder for waveform audio of isolated voice signal
         variant: The type of U-Net model (Normal convolutional or capsule based)
         is_training: Boolean - should the model be trained on the current input or not
+        learning_rate: The learning rate the model should be trained with.
         name: Model instance name
     """
 
@@ -357,7 +359,9 @@ class ComplexNumberModel(object):
 
 
 class ComplexUNet(object):
-
+    """
+    Complex number model U-Net
+    """
     def __init__(self, input_tensor, variant, is_training, reuse, name):
         with tf.variable_scope(name, reuse=reuse):
             self.variant = variant
@@ -373,6 +377,9 @@ class ComplexUNet(object):
 
 
 class ComplexEncoder(object):
+    """
+    The down-convolutional side of a complex number capsule based U-Net model.
+    """
     def __init__(self, input_tensor):
         net = input_tensor
         with tf.variable_scope('encoder'):
@@ -397,6 +404,9 @@ class ComplexEncoder(object):
 
 
 class ComplexDecoder(object):
+    """
+    The up-convolutional side of a complex number capsule based U-Net model.
+    """
     def __init__(self, input_tensor, encoder):
         net = input_tensor
         with tf.variable_scope('decoder'):

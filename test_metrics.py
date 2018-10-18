@@ -14,11 +14,14 @@ This script takes the results of a test set being passed through a model, conver
 to audio and then calculates audio quality metrics.
 
 This process causes a bottleneck and is not on the critical path towards training a model. As such, required data has 
-been dumped to pickle files by the main script, so that this script can be run on a different server.
+been dumped to pickle files by the main script, so that this script can be run on a different server or post training.
 """
 
 
 def get_test_metrics(argv):
+    """
+    Calculate the audio separation quality metrics from pickled test results.
+    """
 
     experiment_id = argv[1]
 
@@ -116,7 +119,6 @@ def get_test_metrics(argv):
                             'mean_sir': mean_sir[v], 'mean_sar': mean_sar[v], 'mean_nsdr': mean_nsdr[v]})
 
     #  Write the results from the experiment to a CSV file, one row per test
-
     if not os.path.isdir('test_metrics'):
         os.mkdir('test_metrics')
     file_name = 'test_metrics/' + experiment_id + '.csv'

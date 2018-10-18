@@ -7,8 +7,14 @@ import tensorflow as tf
 
 def train(sess, model, model_config, model_folder, handle, training_iterator, training_handle, validation_iterator,
           validation_handle, writer):
+    """
+    Train an audio_models.py model.
+    """
 
     def validation(last_val_cost, min_val_cost, min_val_check, worse_val_checks, model, val_check):
+        """
+        Perform a validation check using the validation dataset.
+        """
         print('Validating')
         sess.run(validation_iterator.initializer)
         val_costs = list()
@@ -50,6 +56,9 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         return last_val_cost, min_val_cost, min_val_check, worse_val_checks
 
     def checkpoint(model_config, model_folder, saver, sess, global_step):
+        """
+        Take a checkpoint of the model.
+        """
         # Make sure there is a folder to save the checkpoint in
         checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
         try:
