@@ -52,6 +52,7 @@ def get_paired_dataset(zipped_files,
                        batch_size,
                        n_shuffle,
                        normalise,
+                       representation,
                        mag_phase):
 
     return (
@@ -66,9 +67,11 @@ def get_paired_dataset(zipped_files,
              num_parallel_calls=n_parallel_readers)
         .flat_map(af.zip_tensor_slices)
         .map(partial(af.compute_spectrogram_map,
+                     sr=sample_rate,
                      n_fft=n_fft,
                      fft_hop=fft_hop,
                      normalise=normalise,
+                     representation=representation,
                      mag_phase=mag_phase),
              num_parallel_calls=n_parallel_readers)
         .shuffle(n_shuffle).batch(batch_size).prefetch(3)
@@ -89,6 +92,7 @@ def prepare_datasets(model_config):
                                    model_config['batch_size'],
                                    model_config['n_shuffle'],
                                    model_config['normalise_mag'],
+                                   model_config['representation'],
                                    model_config['mag_phase'])
 
         val_files = zip_files(os.path.join(root, path['x_val']),
@@ -103,6 +107,7 @@ def prepare_datasets(model_config):
                                  model_config['batch_size'],
                                  model_config['n_shuffle'],
                                  model_config['normalise_mag'],
+                                 model_config['representation'],
                                  model_config['mag_phase'])
 
         test_files = zip_files(os.path.join(root, path['x_test']),
@@ -117,6 +122,7 @@ def prepare_datasets(model_config):
                                   model_config['batch_size'],
                                   model_config['n_shuffle'],
                                   model_config['normalise_mag'],
+                                  model_config['representation'],
                                   model_config['mag_phase'])
         return train, val, test
 
@@ -194,6 +200,7 @@ def prepare_datasets(model_config):
                                                   model_config['batch_size'],
                                                   model_config['n_shuffle'],
                                                   model_config['normalise_mag'],
+                                                  model_config['representation'],
                                                   model_config['mag_phase'])
 
             val_file_list = np.empty((0, 2))
@@ -209,6 +216,7 @@ def prepare_datasets(model_config):
                                                 model_config['batch_size'],
                                                 model_config['n_shuffle'],
                                                 model_config['normalise_mag'],
+                                                model_config['representation'],
                                                 model_config['mag_phase'])
 
             test_file_list = np.empty((0, 2))
@@ -224,6 +232,7 @@ def prepare_datasets(model_config):
                                                  model_config['batch_size'],
                                                  model_config['n_shuffle'],
                                                  model_config['normalise_mag'],
+                                                 model_config['representation'],
                                                  model_config['mag_phase'])
 
         if model_config['dataset'] == 'CHiME':

@@ -19,7 +19,9 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 @ex.config
 def cfg():
     model_config = {'model_variant': 'basic_capsnet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
+                    'representation': 'spectrogram',  # Which type of 2D audio representation to use, from ['spectrogram', 'constant q']
                     'mag_phase': True,  # Whether to use a magnitude/phase or complex number representation of the spectrogram
+                    'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
                     'initialisation_test': True,  # Whether or not to calculate test metrics before training
                     'loading': False,  # Whether to load an existing checkpoint
                     'checkpoint_to_load': "115/115-473",  # Checkpoint format: run/run-step
@@ -44,8 +46,7 @@ def cfg():
                     'n_shuffle': 1000,  # Number of patches buffered before batching
                     'learning_rate': 0.0002,  # The learning rate to be used by the model
                     'epochs': 7,  # Number of full passes through the dataset to train for
-                    'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
-                    'GPU': '0'
+                    'GPU': '0'  # Which GPU to use
                     }
 
     if model_config['local_run']:  # Data and Checkpoint directories on my laptop

@@ -16,7 +16,7 @@ def normalise_audio(audio):
 def read_audio_py(py_path, sample_rate):
     mono, native_sr = sf.read(py_path)
     if native_sr != sample_rate:
-        mono = librosa.core.resample(mono, native_sr, sample_rate)
+        mono = librosa.resample(mono, native_sr, sample_rate)
     return np.expand_dims(mono, 1).astype(np.float32)
 
 
@@ -34,7 +34,7 @@ def read_audio_pair(path_a, path_b, sample_rate):
             tf.py_func(read_audio_py, [path_b, sample_rate], tf.float32, stateful=False))
 
 
-def compute_spectrogram(audio, n_fft, fft_hop, normalise, mag_phase):
+def compute_spectrogram(audio, sr, n_fft, fft_hop, normalise, representation, mag_phase):
     '''
     Parameters
     ----------
@@ -45,54 +45,36 @@ def compute_spectrogram(audio, n_fft, fft_hop, normalise, mag_phase):
     Tensor of shape (n_frames, 1 + n_fft / 2, 2), where the last dimension is (magnitude, phase)
     '''
 
-    def stft(x, normalise, mag_phase):
-        spec = librosa.stft(
-            x, n_fft=n_fft, hop_length=fft_hop, window='hann')
+    def stft(x):
+        rep = librosa.stft(x[:, 0], n_fft=n_fft, hop_length=fft_hop, window='hann')
         if mag_phase:
-            mag = np.abs(spec)
+            mag = np.abs(rep)
             if normalise:
                 mag = (mag - mag.min()) / (mag.max() - mag.min())
-            return mag, np.angle(spec)
+            return mag, np.angle(rep)
         else:
-            return spec.real, spec.imag
+            return rep.real, rep.imag
 
-    def mono_func(py_audio, normalise, mag_phase):
-        mag, phase = stft(py_audio[:, 0], normalise, mag_phase)
-        ret = np.array([mag, phase]).T
-        return ret.astype(np.float32)
+    def cqt(x):
+        rep = librosa.cqt(x[:, 0], sr=sr, hop_length=fft_hop, n_bins=257, bins_per_octave=36)
+        if mag_phase:
+            mag = np.abs(rep)
+            if normalise:
+                mag = (mag - mag.min()) / (mag.max() - mag.min())
+            return np.array([mag, np.angle(rep)]).T.astype(np.float32)
+        else:
+            return np.array([rep.real, rep.imag]).T.astype(np.float32)
 
     with tf.name_scope('read_spectrogram'):
-        ret = tf.py_func(mono_func, [audio, normalise, mag_phase], tf.float32, stateful=False)
+        if representation == 'spectrogram':
+            ret = tf.py_func(stft, [audio], tf.float32, stateful=False)
+        elif representation == 'constant q':
+            ret = tf.py_func(cqt, [audio], tf.float32, stateful=False)
+        else:
+            raise ValueError(
+                'Representation must be either "spectrogram" or "constant q" but was {r}'.format(r=str(representation)))
         ret.set_shape([(audio.get_shape()[0].value/fft_hop) + 1, 1 + n_fft / 2, 2])
     return ret
-
-
-def extract_spectrogram_patches(
-        spec, n_fft, patch_window, patch_hop):
-    '''
-    Parameters
-    ----------
-    spec : Spectrogram of shape (n_frames, 1 + n_fft / 2, 2)
-
-    Returns
-    -------
-    Tensor of shape (n_patches, patch_window, 1 + n_fft / 2, 2)
-        containing patches from spec.
-    '''
-    with tf.name_scope('extract_spectrogram_patches'):
-        spec4d = tf.expand_dims(spec, 0)
-
-        patches = tf.extract_image_patches(
-            spec4d, ksizes=[1, patch_window, 1 + n_fft / 2, 1],
-            strides=[1, patch_hop, 1 + n_fft / 2, 1],
-            rates=[1, 1, 1, 1],
-            padding='VALID'
-        )
-
-        num_patches = tf.shape(patches)[1]
-
-        return tf.reshape(patches, [num_patches, patch_window,
-                                    int(1 + n_fft / 2), 2])
 
 
 def extract_audio_patches(audio, fft_hop, patch_window, patch_hop):
@@ -122,24 +104,16 @@ def extract_audio_patches(audio, fft_hop, patch_window, patch_hop):
         return tf.squeeze(tf.reshape(patches, [num_patches, 1, patch_length, 1]), 1)
 
 
-def compute_spectrogram_map(audio_a, audio_b, n_fft, fft_hop, normalise=False, mag_phase=True):
+def compute_spectrogram_map(audio_a, audio_b, sr, n_fft, fft_hop, normalise=False,
+                            representation='spectrogram', mag_phase=True):
     """
     Take a pair of audio waveform arrays and return the corresponding spectrograms, and the original arrays.
+    TODO: Change name as now includes cqt as well as stft
     """
-    spec_a = compute_spectrogram(audio_a, n_fft, fft_hop, normalise, mag_phase)
-    spec_b = compute_spectrogram(audio_b, n_fft, fft_hop, normalise, mag_phase)
+    spec_a = compute_spectrogram(audio_a, sr, n_fft, fft_hop, normalise, representation, mag_phase)
+    spec_b = compute_spectrogram(audio_b, sr, n_fft, fft_hop, normalise, representation, mag_phase)
 
     return spec_a, spec_b, audio_a, audio_b
-
-
-def extract_patches_map(spec_a, spec_b, audio_a, audio_b, n_fft, fft_hop, patch_window, patch_hop):
-    patches_a = extract_spectrogram_patches(spec_a, n_fft, patch_window, patch_hop)
-    patches_b = extract_spectrogram_patches(spec_b, n_fft, patch_window, patch_hop)
-
-    audio_patches_a = extract_audio_patches(audio_a, fft_hop, patch_window, patch_hop)
-    audio_patches_b = extract_audio_patches(audio_b, fft_hop, patch_window, patch_hop)
-
-    return patches_a, patches_b, audio_patches_a, audio_patches_b
 
 
 def extract_audio_patches_map(audio_a, audio_b, fft_hop, patch_window, patch_hop):
