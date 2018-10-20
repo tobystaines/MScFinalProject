@@ -25,7 +25,7 @@ def cfg():
                     'checkpoint_to_load': "136/136-6",  # Checkpoint format: run/run-step
                     'saving': True,  # Whether to take checkpoints
                     'save_by_epochs': False,  # Checkpoints at end of each epoch or every 'save_iters'?
-                    'save_iters': 64599,  # Number of training iterations between checkpoints
+                    'save_iters': 13000,  # Number of training iterations between checkpoints
                     'early_stopping': False,  # Should validation data checks be used for early stopping?
                     'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 50000,  # Number of training iterations between validation checks,
@@ -43,7 +43,7 @@ def cfg():
                     'batch_size': 2,  # Number of patches in each batch
                     'n_shuffle': 10,  # Number of patches buffered before batching
                     'learning_rate': 0.0002,  # The learning rate to be used by the model
-                    'epochs': 5000,  # Number of full passes through the dataset to train for
+                    'epochs': 1000,  # Number of full passes through the dataset to train for
                     'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
                     'GPU': '0'
                     }
