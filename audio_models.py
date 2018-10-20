@@ -393,13 +393,13 @@ class ComplexEncoder(object):
                 self.l2 = net
 
             with tf.variable_scope('layer-3'):
-                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=2, strides=2,
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=4, strides=2,
                                                       padding='same',
                                                       routings=3)(net)
                 self.l3 = net
 
             with tf.variable_scope('layer-4'):
-                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=16, num_atoms=2, strides=2,
+                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=8, strides=2,
                                                       padding='same',
                                                       routings=3)(net)
 
@@ -411,7 +411,7 @@ class ComplexDecoder(object):
         net = input_tensor
         with tf.variable_scope('decoder'):
             with tf.variable_scope('layer-1'):
-                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=8, num_atoms=2, upsamp_type='deconv',
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=4, num_atoms=4, upsamp_type='deconv',
                                                         scaling=2, padding='same', routings=3)(net)
                 net = layers.Concatenate(axis=-2)([net, encoder.l3])
                 self.l1 = net
