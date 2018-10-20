@@ -20,7 +20,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {'model_variant': 'capsunet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'mag_phase': False,  # Whether to use a magnitude/phase or complex number representation of the spectrogram
-                    'initialisation_test': False,  # Whether or not to calculate test metrics before training
+                    'initialisation_test': True,  # Whether or not to calculate test metrics before training
                     'loading': False,  # Whether to load an existing checkpoint
                     'checkpoint_to_load': "136/136-6",  # Checkpoint format: run/run-step
                     'saving': True,  # Whether to take checkpoints
@@ -30,7 +30,7 @@ def cfg():
                     'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 50000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
-                    'dataset': 'LibriSpeech_s',  # Choice from ['CHiME', 'LibriSpeech_s', 'LibriSpeech_m',
+                    'dataset': 'CHiME and LibriSpeech_s',  # Choice from ['CHiME', 'LibriSpeech_s', 'LibriSpeech_m',
                                         #               'LibriSpeech_l', 'CHiME and LibriSpeech_s',
                                         #               'CHiME and LibriSpeech_m', 'CHiME and LibriSpeech_l']
                     'local_run': False,  # Whether experiment is running on laptop or server
@@ -41,9 +41,9 @@ def cfg():
                     'patch_window': 256,  # Number of fourier transforms (rows) in each patch
                     'patch_hop': 128,  # Number of fourier transforms between the start of each patch
                     'batch_size': 2,  # Number of patches in each batch
-                    'n_shuffle': 5,  # Number of patches buffered before batching
+                    'n_shuffle': 1000,  # Number of patches buffered before batching
                     'learning_rate': 0.0002,  # The learning rate to be used by the model
-                    'epochs': 20,  # Number of full passes through the dataset to train for
+                    'epochs': 7,  # Number of full passes through the dataset to train for
                     'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
                     'GPU': '0'
                     }
@@ -55,8 +55,8 @@ def cfg():
 
     else:  # Data and Checkpoint directories on the uni server
         model_config['chime_data_root'] = '/data/Speech_Data/CHiME3/data/audio/16kHz/isolated/'
-        model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
-        #model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
+        #model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
+        model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
         #model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'

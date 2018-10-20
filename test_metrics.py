@@ -41,10 +41,12 @@ def get_test_metrics(argv):
     dump_folder = 'dumps/' + experiment_id
     file_list = glob(dump_folder + '/*')
     test_num = max([int(file.split('_')[2]) for file in file_list]) + 1
+    batch_num = max([int(file.split('_')[4]) for file in file_list]) + 1
     metrics = list()
     #  For each test run, calculate the results
     for test in range(test_num):
         print('{ts}:\tProcessing test {t}'.format(ts=datetime.datetime.now(), t=test))
+        print('\t\t{b} batches to process.'.format(b=batch_num))
         test_files = [file for file in file_list if file.split('_')[2] == str(test)]
         test_costs = list()
         sdrs = np.empty((0, 2))
