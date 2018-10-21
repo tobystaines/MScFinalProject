@@ -54,6 +54,8 @@ def compute_spectrogram(audio, n_fft, fft_hop, normalise, mag_phase):
                 mag = (mag - mag.min()) / (mag.max() - mag.min())
             return mag, np.angle(spec)
         else:
+            if normalise:
+                spec = spec / np.sqrt(np.sum((spec * np.conj(spec))**2))
             return spec.real, spec.imag
 
     def mono_func(py_audio, normalise, mag_phase):
