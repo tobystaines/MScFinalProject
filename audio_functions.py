@@ -45,27 +45,22 @@ def compute_spectrogram(audio, n_fft, fft_hop, normalise, mag_phase):
     Tensor of shape (n_frames, 1 + n_fft / 2, 2), where the last dimension is (magnitude, phase)
     '''
 
-    def stft(x, normalise, mag_phase):
+    def stft(x, normalise):
         spec = librosa.stft(
             x, n_fft=n_fft, hop_length=fft_hop, window='hann')
-        if mag_phase:
-            mag = np.abs(spec)
-            if normalise:
-                mag = (mag - mag.min()) / (mag.max() - mag.min())
-            return mag, np.angle(spec)
-        else:
-            if normalise:
-                spec = spec / np.sqrt(np.sum((spec * np.conj(spec))**2))
-            return spec.real, spec.imag
+        if normalise:
+            spec = spec / np.sqrt(np.sum((spec * np.conj(spec))**2))
+        return spec.T
 
     def mono_func(py_audio, normalise, mag_phase):
-        mag, phase = stft(py_audio[:, 0], normalise, mag_phase)
-        ret = np.array([mag, phase]).T
-        return ret.astype(np.float32)
+        spectrogram = stft(py_audio[:, 0], normalise)
+        return spectrogram
+        #ret = np.array([mag, phase]).T
+        #return ret.astype(np.float32)
 
     with tf.name_scope('read_spectrogram'):
-        ret = tf.py_func(mono_func, [audio, normalise, mag_phase], tf.float32, stateful=False)
-        ret.set_shape([(audio.get_shape()[0].value/fft_hop) + 1, 1 + n_fft / 2, 2])
+        ret = tf.py_func(stft, [audio[:, 0], normalise], tf.complex64, stateful=False)
+        ret.set_shape([(audio.get_shape()[0].value/fft_hop) + 1, 1 + n_fft / 2, 1])
     return ret
 
 

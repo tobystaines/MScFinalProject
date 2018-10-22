@@ -18,27 +18,27 @@ class MagnitudeModel(object):
         learning_rate: The learning rate the model should be trained with.
         name: Model instance name
     """
-    def __init__(self, mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio, variant, is_training, learning_rate,
+    def __init__(self, mixed_spec, voice_spec, mixed_audio, voice_audio, variant, is_training, learning_rate,
                  name):
         with tf.variable_scope(name):
-            self.mixed_mag = mixed_mag
-            self.voice_mag = voice_mag
-            self.mixed_phase = mixed_phase
+            self.mixed_mag = tf.abs(mixed_spec)
+            self.voice_mag = tf.abs(voice_spec)
+            self.mixed_phase = tf.angle(mixed_spec)
             self.mixed_audio = mixed_audio
             self.voice_audio = voice_audio
             self.variant = variant
             self.is_training = is_training
 
             if self.variant in ['unet', 'capsunet']:
-                self.voice_mask_network = UNet(mixed_mag, variant, is_training=is_training, reuse=False, name='voice-mask-unet')
+                self.voice_mask_network = UNet(self.mixed_mag, variant, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant == 'basic_capsnet':
-                self.voice_mask_network = BasicCapsnet(mixed_mag, name='SegCaps_CapsNetBasic')
+                self.voice_mask_network = BasicCapsnet(self.mixed_mag, name='SegCaps_CapsNetBasic')
 
             self.voice_mask = self.voice_mask_network.output
 
-            self.gen_voice = self.voice_mask * mixed_mag
+            self.gen_voice = self.voice_mask * self.mixed_mag
 
-            self.cost = mf.l1_loss(self.gen_voice, voice_mag)
+            self.cost = mf.l1_loss(self.gen_voice, self.voice_mag)
 
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=learning_rate,
@@ -299,9 +299,17 @@ class ComplexNumberModel(object):
 
     def __init__(self, mixed_spec, voice_spec, mixed_audio, voice_audio, variant, is_training, learning_rate,
                  name='complex_unet_model'):
+
+        def convert_to_channels(complex_spec):
+            real = tf.expand_dims(tf.real(complex_spec), axis=3)
+            imag = tf.expand_dims(tf.imag(complex_spec), axis=3)
+            out_spec = tf.concat((real, imag), axis=3)
+
+            return out_spec
+
         with tf.variable_scope(name):
-            self.mixed_spec = mixed_spec
-            self.voice_spec = voice_spec
+            self.mixed_spec = convert_to_channels(mixed_spec)
+            self.voice_spec = convert_to_channels(voice_spec)
 
             self.input_shape = mixed_spec.get_shape().as_list()
             self.mixed_audio = mixed_audio

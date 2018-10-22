@@ -20,20 +20,20 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {'model_variant': 'capsunet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'mag_phase': True,  # Whether to use a magnitude/phase or complex number representation of the spectrogram
-                    'initialisation_test': True,  # Whether or not to calculate test metrics before training
+                    'initialisation_test': False,  # Whether or not to calculate test metrics before training
                     'loading': False,  # Whether to load an existing checkpoint
                     'checkpoint_to_load': "136/136-6",  # Checkpoint format: run/run-step
-                    'saving': True,  # Whether to take checkpoints
+                    'saving': False,  # Whether to take checkpoints
                     'save_by_epochs': False,  # Checkpoints at end of each epoch or every 'save_iters'?
                     'save_iters': 10000,  # Number of training iterations between checkpoints
-                    'early_stopping': True,  # Should validation data checks be used for early stopping?
+                    'early_stopping': False,  # Should validation data checks be used for early stopping?
                     'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 50000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
-                    'dataset': 'CHiME and LibriSpeech_s',  # Choice from ['CHiME', 'LibriSpeech_s', 'LibriSpeech_m',
+                    'dataset': 'CHiME',  # Choice from ['CHiME', 'LibriSpeech_s', 'LibriSpeech_m',
                                         #               'LibriSpeech_l', 'CHiME and LibriSpeech_s',
                                         #               'CHiME and LibriSpeech_m', 'CHiME and LibriSpeech_l']
-                    'local_run': False,  # Whether experiment is running on laptop or server
+                    'local_run': True,  # Whether experiment is running on laptop or server
                     'sample_rate': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'n_fft': 1024,  # Number of samples in each fourier transform
                     'fft_hop': 256,  # Number of samples between the start of each fourier transform
@@ -100,18 +100,16 @@ def do_experiment(model_config):
 
     # Create variable placeholders and model
     is_training = tf.placeholder(shape=(), dtype=bool)
+    mixed_spec_trim = mixed_spec[:, :, :-1, :]
+    voice_spec_trim = voice_spec[:, :, :-1, :]
+
     if model_config['mag_phase']:
-        mixed_mag = tf.expand_dims(mixed_spec[:, :, :-1, 0], 3)
-        mixed_phase = tf.expand_dims(mixed_spec[:, :, :-1, 1], 3)
-        voice_mag = tf.expand_dims(voice_spec[:, :, :-1, 0], 3)
 
         print('Creating model')
-        model = audio_models.MagnitudeModel(mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio,
+        model = audio_models.MagnitudeModel(mixed_spec_trim, voice_spec_trim, mixed_audio, voice_audio,
                                             model_config['model_variant'], is_training, model_config['learning_rate'],
                                             name='Magnitude_Model')
     else:
-        mixed_spec_trim = mixed_spec[:, :, :-1, :]
-        voice_spec_trim = voice_spec[:, :, :-1, :]
 
         print('Creating model')
         model = audio_models.ComplexNumberModel(mixed_spec_trim, voice_spec_trim, mixed_audio, voice_audio,
