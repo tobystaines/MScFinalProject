@@ -1,5 +1,6 @@
 import tensorflow as tf
-
+import math
+import numpy as np
 
 def concat(x, y):
     return tf.concat([x, y], axis=3)
@@ -59,3 +60,21 @@ def l1_loss(x, y):
 
 def pw_l1_loss(x, y):
     return tf.abs(x - y)
+
+
+def l1_phase_loss(x, y):
+    """
+    Calculates the l1 loss between two phase spectrograms, correcting for the circularity of phase. The true difference
+    between each element of x and y is the minimum of x - y, x - (y + 2pi) and x - (y - 2pi).
+    :param x: 2D tensor, a phase spectrogram in radians
+    :param y: 2D tensor, a phase spectrogram in radians
+    :return: l1 loss between x and y
+    """
+    pi = tf.constant(math.pi)
+    original_dif = x - y
+    add_2_pi_dif = x - (y + 2 * pi)
+    minus_2_pi_dif = x - (y - 2 * pi)
+
+    corrected_dif = tf.minimum(original_dif, tf.minimum(add_2_pi_dif, minus_2_pi_dif))
+
+    return tf.reduce_mean(tf.abs(corrected_dif))
