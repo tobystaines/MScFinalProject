@@ -34,7 +34,7 @@ class MagnitudeModel(object):
             elif self.variant == 'basic_capsnet':
                 self.voice_mask_network = BasicCapsnet(mixed_mag, name='SegCaps_CapsNetBasic')
             elif self.variant == 'conv_net':
-                self.voice_mask_network = conv_net(mixed_mag, reuse=None, name='basic_cnn')
+                self.voice_mask_network = conv_net(mixed_mag, is_training=is_training, reuse=None, name='basic_cnn')
 
             self.voice_mask = self.voice_mask_network.output
 
@@ -285,7 +285,7 @@ class BasicCapsnet(object):
 
 
 class conv_net(object):
-    def __init__(self, mixed_mag, reuse, name):
+    def __init__(self, mixed_mag, is_training, reuse, name):
         """
         input_tensor: Tensor with shape [batch_size, height, width, channels]
         is_training:  Boolean - should the model be trained on the current input or not
