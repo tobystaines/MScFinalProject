@@ -2,6 +2,7 @@ import sys
 import os
 import csv
 import pickle
+import shutil
 import datetime
 from glob import glob
 import numpy as np
@@ -42,13 +43,13 @@ def get_test_metrics(argv):
     file_list = glob(dump_folder + '/*')
     test_num = max([int(file.split('_')[2]) for file in file_list]) + 1
     batch_num = max([int(file.split('_')[4]) for file in file_list]) + 1
-    metrics = list()
+    metrics = []
     #  For each test run, calculate the results
     for test in range(test_num):
         print('{ts}:\tProcessing test {t}'.format(ts=datetime.datetime.now(), t=test))
         print('\t\t{b} batches to process.'.format(b=batch_num))
         test_files = [file for file in file_list if file.split('_')[2] == str(test)]
-        test_costs = list()
+        test_costs = []
         sdrs = np.empty((0, 2))
         sirs = np.empty((0, 2))
         sars = np.empty((0, 2))
@@ -130,6 +131,10 @@ def get_test_metrics(argv):
         writer.writeheader()
         for test in metrics:
             writer.writerow(test)
+
+    # Delete the pickle files, as they are enormous, and no longer needed
+    print('Deleting pickle files')
+    shutil.rmtree(dump_folder)
 
     return metrics
 

@@ -33,6 +33,8 @@ class MagnitudeModel(object):
                 self.voice_mask_network = UNet(mixed_mag, variant, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant == 'basic_capsnet':
                 self.voice_mask_network = BasicCapsnet(mixed_mag, name='SegCaps_CapsNetBasic')
+            elif self.variant == 'conv_net':
+                self.voice_mask_network = conv_net(mixed_mag, reuse=None, name='basic_cnn')
 
             self.voice_mask = self.voice_mask_network.output
 
@@ -278,6 +280,42 @@ class BasicCapsnet(object):
                                                       padding='same',
                                                       routings=3, name='reconstruction')(net)
                 net = tf.squeeze(net, -1)
+
+            self.output = net
+
+
+class conv_net(object):
+    def __init__(self, mixed_mag, reuse, name):
+        """
+        input_tensor: Tensor with shape [batch_size, height, width, channels]
+        is_training:  Boolean - should the model be trained on the current input or not
+        name:         Model instance name
+        """
+        with tf.variable_scope(name):
+            self.mixed_mag = mixed_mag
+
+            with tf.variable_scope('Convolution'):
+                net = mf.relu(mixed_mag)
+                net = mf.conv(net, filters=128, kernel_size=5, stride=(1, 1))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.conv1 = net
+
+            with tf.variable_scope('Primary_Caps'):
+                net = mf.relu(net)
+                net = mf.conv(net, filters=128, kernel_size=5, stride=(1, 1))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.primary_caps = net
+
+            with tf.variable_scope('Seg_Caps'):
+                net = mf.relu(net)
+                net = mf.conv(net, filters=16, kernel_size=5, stride=(1, 1))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.seg_caps = net
+
+            with tf.variable_scope('Mask'):
+                net = mf.relu(net)
+                net = mf.conv(mixed_mag, filters=1, kernel_size=5, stride=(1, 1))
+                self.voice_mask = net
 
             self.output = net
 
