@@ -93,7 +93,11 @@ class ConvCapsuleLayer(layers.Layer):
     def __init__(self, kernel_size, num_capsule, num_atoms, strides=1, padding='same', routings=3,
                  kernel_initializer='he_normal', **kwargs):
         super(ConvCapsuleLayer, self).__init__(**kwargs)
-        self.kernel_size = kernel_size
+        if type(kernel_size) is int:
+            self.kernel_size = [kernel_size, kernel_size]
+        elif type(kernel_size) is list:
+            assert len(kernel_size) == 2
+            self.kernel_size = kernel_size
         self.num_capsule = num_capsule
         self.num_atoms = num_atoms
         self.strides = strides
@@ -110,7 +114,7 @@ class ConvCapsuleLayer(layers.Layer):
         self.input_num_atoms = input_shape[4]
 
         # Transform matrix
-        self.W = self.add_weight(shape=[self.kernel_size, self.kernel_size,
+        self.W = self.add_weight(shape=[self.kernel_size[0], self.kernel_size[1],
                                  self.input_num_atoms, self.num_capsule * self.num_atoms],
                                  initializer=self.kernel_initializer,
                                  name='W')
@@ -161,7 +165,7 @@ class ConvCapsuleLayer(layers.Layer):
         for i in range(len(space)):
             new_dim = conv_output_length(
                 space[i],
-                self.kernel_size,
+                self.kernel_size[i],
                 padding=self.padding,
                 stride=self.strides,
                 dilation=1)
@@ -187,7 +191,11 @@ class DeconvCapsuleLayer(layers.Layer):
     def __init__(self, kernel_size, num_capsule, num_atoms, scaling=2, upsamp_type='deconv', padding='same', routings=3,
                  kernel_initializer='he_normal', **kwargs):
         super(DeconvCapsuleLayer, self).__init__(**kwargs)
-        self.kernel_size = kernel_size
+        if type(kernel_size) is int:
+            self.kernel_size = [kernel_size, kernel_size]
+        elif type(kernel_size) is list:
+            assert len(kernel_size) == 2
+            self.kernel_size = kernel_size
         self.num_capsule = num_capsule
         self.num_atoms = num_atoms
         self.scaling = scaling
@@ -206,17 +214,17 @@ class DeconvCapsuleLayer(layers.Layer):
 
         # Transform matrix
         if self.upsamp_type == 'subpix':
-            self.W = self.add_weight(shape=[self.kernel_size, self.kernel_size,
+            self.W = self.add_weight(shape=[self.kernel_size[0], self.kernel_size[1],
                                             self.input_num_atoms,
                                             self.num_capsule * self.num_atoms * self.scaling * self.scaling],
                                      initializer=self.kernel_initializer,
                                      name='W')
         elif self.upsamp_type == 'resize':
-            self.W = self.add_weight(shape=[self.kernel_size, self.kernel_size,
+            self.W = self.add_weight(shape=[self.kernel_size[0], self.kernel_size[1],
                                      self.input_num_atoms, self.num_capsule * self.num_atoms],
                                      initializer=self.kernel_initializer, name='W')
         elif self.upsamp_type == 'deconv':
-            self.W = self.add_weight(shape=[self.kernel_size, self.kernel_size,
+            self.W = self.add_weight(shape=[self.kernel_size[0], self.kernel_size[1],
                                             self.num_capsule * self.num_atoms, self.input_num_atoms],
                                      initializer=self.kernel_initializer, name='W')
         else:
@@ -247,8 +255,8 @@ class DeconvCapsuleLayer(layers.Layer):
             batch_size = input_shape[1] * input_shape[0]
 
             # Infer the dynamic output shape:
-            out_height = deconv_length(self.input_height, self.scaling, self.kernel_size, self.padding)
-            out_width = deconv_length(self.input_width, self.scaling, self.kernel_size, self.padding)
+            out_height = deconv_length(self.input_height, self.scaling, self.kernel_size[0], self.padding)
+            out_width = deconv_length(self.input_width, self.scaling, self.kernel_size[1], self.padding)
             output_shape = (batch_size, out_height, out_width, self.num_capsule * self.num_atoms)
 
             outputs = K.conv2d_transpose(input_tensor_reshaped, self.W, output_shape, (self.scaling, self.scaling),
@@ -280,8 +288,8 @@ class DeconvCapsuleLayer(layers.Layer):
     def compute_output_shape(self, input_shape):
         output_shape = list(input_shape)
 
-        output_shape[1] = deconv_length(output_shape[1], self.scaling, self.kernel_size, self.padding)
-        output_shape[2] = deconv_length(output_shape[2], self.scaling, self.kernel_size, self.padding)
+        output_shape[1] = deconv_length(output_shape[1], self.scaling, self.kernel_size[0], self.padding)
+        output_shape[2] = deconv_length(output_shape[2], self.scaling, self.kernel_size[1], self.padding)
         output_shape[3] = self.num_capsule
         output_shape[4] = self.num_atoms
 
