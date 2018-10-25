@@ -14,7 +14,7 @@
     "sources": [
       [
         "audio_models.py",
-        "_sources/audio_models_75f9e73000da35c08be8e3abe575a8ef.py"
+        "_sources/audio_models_2cbcf63a2199c8b0d60685b16de5ee68.py"
       ],
       [
         "dataset.py",
@@ -22,7 +22,7 @@
       ],
       [
         "main.py",
-        "_sources/main_c08943d080aef33dae79fd529f7cb15e.py"
+        "_sources/main_30794e25d88ddcade01a9abc203719d4.py"
       ],
       [
         "train.py",
@@ -30,7 +30,15 @@
       ]
     ]
   },
-  "heartbeat": "2018-10-24T18:43:12.637204",
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 111, in do_experiment\n    name='Magnitude_Model')\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 37, in __init__\n    self.voice_mask_network = conv_net(mixed_mag, reuse=None, name='basic_cnn')\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 300, in __init__\n    net = mf.batch_norm(net, is_training=is_training, reuse=reuse)\n",
+    "NameError: name 'is_training' is not defined\n"
+  ],
+  "heartbeat": "2018-10-24T18:19:44.045310",
   "host": {
     "ENV": {},
     "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
@@ -40,7 +48,7 @@
         {
           "model": "GeForce GTX 1080 Ti",
           "persistence_mode": false,
-          "total_memory": 11175
+          "total_memory": 11177
         },
         {
           "model": "GeForce GTX 1080 Ti",
@@ -49,7 +57,7 @@
         }
       ]
     },
-    "hostname": "america",
+    "hostname": "africa",
     "os": [
       "Linux",
       "Linux-4.15.0-36-generic-x86_64-with-Ubuntu-16.04-xenial"
@@ -85,7 +93,7 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2018-10-21T11:13:08.791133",
-  "status": "COMPLETED",
-  "stop_time": "2018-10-24T18:43:12.578026"
+  "start_time": "2018-10-24T18:18:29.889292",
+  "status": "FAILED",
+  "stop_time": "2018-10-24T18:19:44.051815"
 }
