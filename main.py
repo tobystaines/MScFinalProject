@@ -18,7 +18,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'model_variant': 'conv_net',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
+    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'mag_phase': True,  # Whether to use a magnitude/phase or complex number representation of the spectrogram
                     'initialisation_test': True,  # Whether or not to calculate test metrics before training
                     'loading': False,  # Whether to load an existing checkpoint
@@ -30,7 +30,7 @@ def cfg():
                     'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 50000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
-                    'dataset': 'CHiME and LibriSpeech_s',  # Choice from ['CHiME', 'LibriSpeech_s', 'LibriSpeech_m',
+                    'dataset': 'CHiME',  # Choice from ['CHiME', 'LibriSpeech_s', 'LibriSpeech_m',
                                         #               'LibriSpeech_l', 'CHiME and LibriSpeech_s',
                                         #               'CHiME and LibriSpeech_m', 'CHiME and LibriSpeech_l']
                     'local_run': False,  # Whether experiment is running on laptop or server
@@ -43,7 +43,7 @@ def cfg():
                     'batch_size': 50,  # Number of patches in each batch
                     'n_shuffle': 1000,  # Number of patches buffered before batching
                     'learning_rate': 0.0002,  # The learning rate to be used by the model
-                    'epochs': 7,  # Number of full passes through the dataset to train for
+                    'epochs': 8,  # Number of full passes through the dataset to train for
                     'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
                     'GPU': '0'
                     }
