@@ -82,9 +82,9 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     latest_checkpoint_path = os.path.join(model_config['model_base_dir'], model_config['checkpoint_to_load'])
 
     cost_summary = tf.summary.scalar('Training_loss', model.cost)
-    if model_config['mag_phase']:
-        mix_summary = tf.summary.image('Mixture', model.mixed_mag)
-        voice_summary = tf.summary.image('Voice', model.voice_mag)
+    if model_config['data_type'] == 'mag':
+        mix_summary = tf.summary.image('Mixture', model.mixed_input)
+        voice_summary = tf.summary.image('Voice', model.voice_input)
         mask_summary = tf.summary.image('Voice_Mask', model.voice_mask)
         gen_voice_summary = tf.summary.image('Generated_Voice', model.gen_voice)
     saver = tf.train.Saver(tf.global_variables(), max_to_keep=5, write_version=tf.train.SaverDef.V2)
@@ -94,7 +94,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     # Train for the specified number of epochs, unless early stopping is triggered
     while epoch < model_config['epochs'] and worse_val_checks < model_config['num_worse_val_checks']:
         try:
-            if model_config['mag_phase']:
+            if model_config['data_type'] == 'mag':
                 try:
                     _, cost, cost_sum, mix, voice, mask, gen_voice = sess.run([model.train_op, model.cost, cost_summary,
                                                                                mix_summary, voice_summary, mask_summary,
@@ -140,14 +140,15 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         except tf.errors.OutOfRangeError:
             print('{ts}:\tEpoch {e} finished after {i} iterations.'.format(ts=datetime.datetime.now(),
                                                                            e=epoch, i=iteration))
-            try:
-                writer.add_summary(mix, iteration)
-                writer.add_summary(voice, iteration)
-                writer.add_summary(mask, iteration)
-                writer.add_summary(gen_voice, iteration)
-            except NameError:  # Indicates the try has not been successfully executed at all
-                print('No images to record')
-                #break
+            if model_config['data_type'] == 'mag':
+                try:
+                    writer.add_summary(mix, iteration)
+                    writer.add_summary(voice, iteration)
+                    writer.add_summary(mask, iteration)
+                    writer.add_summary(gen_voice, iteration)
+                except NameError:  # Indicates the try has not been successfully executed at all
+                    print('No images to record')
+                    break
             epoch += 1
             # If using early stopping by epochs, enter validation loop
             if model_config['early_stopping'] and model_config['val_by_epochs'] and iteration > 1:

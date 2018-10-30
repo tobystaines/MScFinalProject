@@ -18,11 +18,11 @@ class MagnitudeModel(object):
         learning_rate: The learning rate the model should be trained with.
         name: Model instance name
     """
-    def __init__(self, mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio, variant, is_training, learning_rate,
+    def __init__(self, mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, variant, is_training, learning_rate,
                  data_type, name):
         with tf.variable_scope(name):
-            self.mixed_mag = mixed_mag
-            self.voice_mag = voice_mag
+            self.mixed_mag = mixed_input
+            self.voice_mag = voice_input
             self.mixed_phase = mixed_phase
             self.mixed_audio = mixed_audio
             self.voice_audio = voice_audio
@@ -30,24 +30,24 @@ class MagnitudeModel(object):
             self.is_training = is_training
 
             if self.variant in ['unet', 'capsunet']:
-                self.voice_mask_network = UNet(mixed_mag, variant, is_training=is_training, reuse=False, name='voice-mask-unet')
+                self.voice_mask_network = UNet(mixed_input, variant, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant == 'basic_capsnet':
-                self.voice_mask_network = BasicCapsnet(mixed_mag, name='SegCaps_CapsNetBasic')
+                self.voice_mask_network = BasicCapsnet(mixed_input, name='SegCaps_CapsNetBasic')
             elif self.variant == 'conv_net':
-                self.voice_mask_network = conv_net(mixed_mag, is_training=is_training, reuse=None, name='basic_cnn')
+                self.voice_mask_network = conv_net(mixed_input, is_training=is_training, reuse=None, name='basic_cnn')
 
             self.voice_mask = self.voice_mask_network.output
 
-            self.gen_voice = self.voice_mask * mixed_mag
+            self.gen_voice = self.voice_mask * mixed_input
 
             if data_type == 'mag':
-                self.cost = mf.l1_loss(self.gen_voice, voice_mag)
+                self.cost = mf.l1_loss(self.gen_voice, voice_input)
             elif data_type == 'mag_phase':
-                self.mag_loss = mf.l1_loss(self.gen_voice[:, :, 0], voice_mag[:, :, 0])
-                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, 1], voice_mag[:, :, 1])
+                self.mag_loss = mf.l1_loss(self.gen_voice[:, :, 0], voice_input[:, :, 0])
+                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, 1], voice_input[:, :, 1])
                 self.cost = (self.mag_loss + self.phase_loss)/2
             elif data_type == 'real_imag':
-                self.cost = mf.l1_loss(self.gen_voice, voice_mag)
+                self.cost = mf.l1_loss(self.gen_voice, voice_input)
 
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=learning_rate,

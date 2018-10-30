@@ -20,23 +20,13 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, wr
     print('{ts}:\tEntering test loop'.format(ts=datetime.datetime.now()))
     while True:
         try:
-            if model_config['mag_phase']:
-                cost, voice_est_mag, voice_ref_mag, voice_ref_audio, \
-                    mixed_audio, mixed_mag, mixed_phase = sess.run([model.cost, tf.squeeze(model.gen_voice), tf.squeeze(model.voice_mag),
-                                                                    model.voice_audio, model.mixed_audio, tf.squeeze(model.mixed_mag),
-                                                                    tf.squeeze(model.mixed_phase)],
-                                                                   {model.is_training: False, handle: testing_handle})
-                results = (cost, voice_est_mag, voice_ref_mag, voice_ref_audio,
-                           mixed_audio, mixed_mag, mixed_phase, model_config)
-            else:
-                cost, voice_est_spec, voice_ref_spec, voice_ref_audio, mixed_audio, \
-                    mixed_spec = sess.run([model.cost,
-                                           tf.complex(model.gen_voice[:, :, :, 0], model.gen_voice[:, :, :, 1]),
-                                           tf.complex(model.voice_spec[:, :, :, 0], model.voice_spec[:, :, :, 1]),
-                                           model.voice_audio, model.mixed_audio,
-                                           tf.complex(model.mixed_spec[:, :, :, 0], model.mixed_spec[:, :, :, 1])],
-                                          {model.is_training: False, handle: testing_handle})
-                results = (cost, voice_est_spec, voice_ref_spec, voice_ref_audio, mixed_audio, mixed_spec, model_config)
+            cost, voice_est_matrix, voice_ref_matrix, voice_ref_audio, \
+                mixed_audio, mixed_input, mixed_phase = sess.run([model.cost, model.gen_voice, model.voice_input,
+                                                                  model.voice_audio, model.mixed_audio, model.mixed_input,
+                                                                  model.mixed_phase],
+                                                                 {model.is_training: False, handle: testing_handle})
+            results = (cost, voice_est_matrix, voice_ref_matrix, voice_ref_audio,
+                       mixed_audio, mixed_input, mixed_phase, model_config)
             if math.isnan(cost):
                 print('Error: cost = nan\nDiscarding batch')
             else:
