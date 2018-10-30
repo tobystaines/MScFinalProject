@@ -44,7 +44,7 @@ class MagnitudeModel(object):
                 self.cost = mf.l1_loss(self.gen_voice, voice_input)
             elif data_type == 'mag_phase':
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
-                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * 0.0001
+                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * 0.00001
                 self.cost = (self.mag_loss + self.phase_loss)/2
             elif data_type == 'real_imag':
                 self.cost = mf.l1_loss(self.gen_voice, voice_input)
