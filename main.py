@@ -19,7 +19,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 @ex.config
 def cfg():
     model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
-                    'mag_phase': True,  # Whether to use a magnitude/phase or complex number representation of the spectrogram
+                    'data_type': 'mag_phase',  # From [' mag', 'mag_phase', 'real_imag', 'mag_real_imag']
                     'initialisation_test': True,  # Whether or not to calculate test metrics before training
                     'loading': False,  # Whether to load an existing checkpoint
                     'checkpoint_to_load': "136/136-6",  # Checkpoint format: run/run-step
@@ -100,23 +100,24 @@ def do_experiment(model_config):
 
     # Create variable placeholders and model
     is_training = tf.placeholder(shape=(), dtype=bool)
-    if model_config['mag_phase']:
-        mixed_mag = tf.expand_dims(mixed_spec[:, :, :-1, 0], 3)
-        mixed_phase = tf.expand_dims(mixed_spec[:, :, :-1, 1], 3)
-        voice_mag = tf.expand_dims(voice_spec[:, :, :-1, 0], 3)
+    mixed_mag = tf.expand_dims(mixed_spec[:, :, :-1, 2], 3)
+    mixed_phase = tf.expand_dims(mixed_spec[:, :, :-1, 3], 3)
+    voice_mag = tf.expand_dims(voice_spec[:, :, :-1, 2], 3)
 
-        print('Creating model')
-        model = audio_models.MagnitudeModel(mixed_mag, voice_mag, mixed_phase, mixed_audio, voice_audio,
-                                            model_config['model_variant'], is_training, model_config['learning_rate'],
-                                            name='Magnitude_Model')
-    else:
-        mixed_spec_trim = mixed_spec[:, :, :-1, :]
-        voice_spec_trim = voice_spec[:, :, :-1, :]
+    print('Creating model')
+    if model_config['data_type'] == 'mag':
+        mixed_input = mixed_mag
+        voice_input = voice_mag
+    elif model_config['data_type'] == 'mag_phase':
+        mixed_input = mixed_spec[:, :, :-1, 2:4]
+        voice_input = voice_spec[:, :, :-1, 2:4]
+    elif model_config['data_type'] == 'real_imag':
+        mixed_input = mixed_spec[:, :, :-1, 0:2]
+        voice_input = voice_spec[:, :, :-1, 0:2]
 
-        print('Creating model')
-        model = audio_models.ComplexNumberModel(mixed_spec_trim, voice_spec_trim, mixed_audio, voice_audio,
-                                                model_config['model_variant'], is_training,
-                                                model_config['learning_rate'], name='Complex_Model')
+    model = audio_models.MagnitudeModel(mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio,
+                                        model_config['model_variant'], is_training, model_config['learning_rate'],
+                                        name='Magnitude_Model')
 
     sess.run(tf.global_variables_initializer())
 

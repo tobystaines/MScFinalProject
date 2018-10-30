@@ -52,7 +52,7 @@ def get_paired_dataset(zipped_files,
                        batch_size,
                        n_shuffle,
                        normalise,
-                       mag_phase):
+                       mag_phase): # TODO: Remove mag_phase, including in test_metrics
 
     return (
         tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1]))
@@ -68,8 +68,7 @@ def get_paired_dataset(zipped_files,
         .map(partial(af.compute_spectrogram_map,
                      n_fft=n_fft,
                      fft_hop=fft_hop,
-                     normalise=normalise,
-                     mag_phase=mag_phase),
+                     normalise=normalise),
              num_parallel_calls=n_parallel_readers)
         .shuffle(n_shuffle).batch(batch_size).prefetch(3)
     )
