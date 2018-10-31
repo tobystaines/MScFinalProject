@@ -42,7 +42,7 @@ def cfg():
                     'patch_hop': 128,  # Number of fourier transforms between the start of each patch
                     'batch_size': 50,  # Number of patches in each batch
                     'n_shuffle': 1000,  # Number of patches buffered before batching
-                    'learning_rate': 0.0002,  # The learning rate to be used by the model
+                    'learning_rate': 0.0001,  # The learning rate to be used by the model
                     'epochs': 8,  # Number of full passes through the dataset to train for
                     'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
                     'GPU': '0'
@@ -117,7 +117,7 @@ def do_experiment(model_config):
 
     model = audio_models.MagnitudeModel(mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio,
                                         model_config['model_variant'], is_training, model_config['learning_rate'],
-                                        name='Magnitude_Model')
+                                        model_config['data_type'], name='Magnitude_Model')
 
     sess.run(tf.global_variables_initializer())
 

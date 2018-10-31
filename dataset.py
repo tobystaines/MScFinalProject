@@ -51,8 +51,7 @@ def get_paired_dataset(zipped_files,
                        n_parallel_readers,
                        batch_size,
                        n_shuffle,
-                       normalise,
-                       mag_phase): # TODO: Remove mag_phase, including in test_metrics
+                       normalise):
 
     return (
         tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1]))
@@ -87,8 +86,7 @@ def prepare_datasets(model_config):
                                    model_config['n_parallel_readers'],
                                    model_config['batch_size'],
                                    model_config['n_shuffle'],
-                                   model_config['normalise_mag'],
-                                   model_config['mag_phase'])
+                                   model_config['normalise_mag'])
 
         val_files = zip_files(os.path.join(root, path['x_val']),
                               os.path.join(root, path['y_val']))
@@ -101,8 +99,7 @@ def prepare_datasets(model_config):
                                  model_config['n_parallel_readers'],
                                  model_config['batch_size'],
                                  model_config['n_shuffle'],
-                                 model_config['normalise_mag'],
-                                 model_config['mag_phase'])
+                                 model_config['normalise_mag'])
 
         test_files = zip_files(os.path.join(root, path['x_test']),
                                os.path.join(root, path['y_test']))
@@ -115,8 +112,7 @@ def prepare_datasets(model_config):
                                   model_config['n_parallel_readers'],
                                   model_config['batch_size'],
                                   model_config['n_shuffle'],
-                                  model_config['normalise_mag'],
-                                  model_config['mag_phase'])
+                                  model_config['normalise_mag'])
         return train, val, test
 
     if model_config['local_run']:  # If running on local machine, mini dataset is all in one folder
@@ -192,8 +188,7 @@ def prepare_datasets(model_config):
                                                   model_config['n_parallel_readers'],
                                                   model_config['batch_size'],
                                                   model_config['n_shuffle'],
-                                                  model_config['normalise_mag'],
-                                                  model_config['mag_phase'])
+                                                  model_config['normalise_mag'])
 
             val_file_list = np.empty((0, 2))
             for i in range(len(voice_val_dirs)):
@@ -207,8 +202,7 @@ def prepare_datasets(model_config):
                                                 model_config['n_parallel_readers'],
                                                 model_config['batch_size'],
                                                 model_config['n_shuffle'],
-                                                model_config['normalise_mag'],
-                                                model_config['mag_phase'])
+                                                model_config['normalise_mag'])
 
             test_file_list = np.empty((0, 2))
             for i in range(len(voice_test_dirs)):
@@ -222,8 +216,7 @@ def prepare_datasets(model_config):
                                                  model_config['n_parallel_readers'],
                                                  model_config['batch_size'],
                                                  model_config['n_shuffle'],
-                                                 model_config['normalise_mag'],
-                                                 model_config['mag_phase'])
+                                                 model_config['normalise_mag'])
 
         if model_config['dataset'] == 'CHiME':
             return chime_train_data, chime_val_data, chime_test_data

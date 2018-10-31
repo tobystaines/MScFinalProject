@@ -21,8 +21,8 @@ class MagnitudeModel(object):
     def __init__(self, mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, variant, is_training, learning_rate,
                  data_type, name):
         with tf.variable_scope(name):
-            self.mixed_mag = mixed_input
-            self.voice_mag = voice_input
+            self.mixed_input = mixed_input
+            self.voice_input = voice_input
             self.mixed_phase = mixed_phase
             self.mixed_audio = mixed_audio
             self.voice_audio = voice_audio
