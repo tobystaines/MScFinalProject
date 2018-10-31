@@ -135,7 +135,7 @@ def get_test_metrics(argv):
     return metrics
 
 
-test_metrics = get_test_metrics(['test', '158'])
-#test_metrics = get_test_metrics(sys.argv)
+#test_metrics = get_test_metrics(['test', '158'])
+test_metrics = get_test_metrics(sys.argv)
 print('{ts}:\nProcessing complete\n{t}'.format(ts=datetime.datetime.now(), t=test_metrics))
 
