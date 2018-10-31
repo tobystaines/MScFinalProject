@@ -44,7 +44,7 @@ class MagnitudeModel(object):
 
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=learning_rate,
-                beta1=0.9,
+                beta1=0.2,
             )
             self.train_op = self.optimizer.minimize(self.cost)
 
