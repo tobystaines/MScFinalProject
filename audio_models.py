@@ -47,7 +47,9 @@ class MagnitudeModel(object):
                 self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * 0.00001
                 self.cost = (self.mag_loss + self.phase_loss)/2
             elif data_type == 'real_imag':
-                self.cost = mf.l1_loss(self.gen_voice, voice_input)
+                self.real_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
+                self.imag_loss = mf.l1_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1])
+                self.cost = (self.real_loss + self.imag_loss)/2
 
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=learning_rate,
