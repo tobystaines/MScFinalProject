@@ -86,7 +86,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     voice_0_summary = tf.summary.image('Voice', tf.expand_dims(model.voice_input[:, :, :, 0], axis=3))
     mask_0_summary = tf.summary.image('Voice_Mask', tf.expand_dims(model.voice_mask[:, :, :, 0], axis=3))
     gen_voice_0_summary = tf.summary.image('Generated_Voice', tf.expand_dims(model.gen_voice[:, :, :, 0], axis=3))
-    if model_config['data_type'] == 'mag_phase':
+    if model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
         mag_loss_summary = tf.summary.scalar('Training_magnitude_loss', model.mag_loss)
         phase_loss_summary = tf.summary.scalar('Training_phase_loss', model.phase_loss)
         mix_1_summary = tf.summary.image('Mixture', tf.expand_dims(model.mixed_input[:, :, :, 1], axis=3))
@@ -110,7 +110,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 except RuntimeWarning:
                     print('Invalid value encountered. Ignoring batch.')
                     continue
-            elif model_config['data_type'] == 'mag_phase':
+            elif model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
                 try:
                     _, cost, cost_sum, mag_loss_sum, phase_loss_sum, \
                         mix_0, voice_0, mask_0, gen_voice_0, mix_1, \
@@ -130,7 +130,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 restorer.restore(sess, latest_checkpoint_path)
                 break
             writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
-            if model_config['data_type'] == 'mag_phase':
+            if model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
                 writer.add_summary(mag_loss_sum, iteration)
                 writer.add_summary(phase_loss_sum, iteration)
             if iteration % 200 == 0:
@@ -162,7 +162,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                     writer.add_summary(voice_0, iteration)
                     writer.add_summary(mask_0, iteration)
                     writer.add_summary(gen_voice_0, iteration)
-                    if model_config['data_type'] == 'mag_phase':
+                    if model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
                         writer.add_summary(mix_1, iteration)
                         writer.add_summary(voice_1, iteration)
                         writer.add_summary(mask_1, iteration)
