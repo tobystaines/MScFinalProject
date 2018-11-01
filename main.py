@@ -20,10 +20,10 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'data_type': 'mag_phase_diff',  # From [' mag', 'mag_phase', 'real_imag', 'mag_real_imag']
-                    'initialisation_test': False,  # Whether or not to calculate test metrics before training
+                    'initialisation_test': True,  # Whether or not to calculate test metrics before training
                     'loading': False,  # Whether to load an existing checkpoint
                     'checkpoint_to_load': "136/136-6",  # Checkpoint format: run/run-step
-                    'saving': False,  # Whether to take checkpoints
+                    'saving': True,  # Whether to take checkpoints
                     'save_by_epochs': True,  # Checkpoints at end of each epoch or every 'save_iters'?
                     'save_iters': 10000,  # Number of training iterations between checkpoints
                     'early_stopping': True,  # Should validation data checks be used for early stopping?
@@ -33,7 +33,7 @@ def cfg():
                     'dataset': 'CHiME',  # Choice from ['CHiME', 'LibriSpeech_s', 'LibriSpeech_m',
                                         #               'LibriSpeech_l', 'CHiME and LibriSpeech_s',
                                         #               'CHiME and LibriSpeech_m', 'CHiME and LibriSpeech_l']
-                    'local_run': True,  # Whether experiment is running on laptop or server
+                    'local_run': False,  # Whether experiment is running on laptop or server
                     'sample_rate': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'n_fft': 1024,  # Number of samples in each fourier transform
                     'fft_hop': 256,  # Number of samples between the start of each fourier transform
