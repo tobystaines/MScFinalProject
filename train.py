@@ -87,6 +87,9 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         voice_summary = tf.summary.image('Voice', model.voice_input)
         mask_summary = tf.summary.image('Voice_Mask', model.voice_mask)
         gen_voice_summary = tf.summary.image('Generated_Voice', model.gen_voice)
+    elif model_config['data_type'] == 'mag_phase':
+        mag_loss_summary = tf.summary.scalar('Training_magnitude_loss', model.mag_loss)
+        mag_phase_summary = tf.summary.scalar('Training_phase_loss', model.phase_loss)
     saver = tf.train.Saver(tf.global_variables(), max_to_keep=5, write_version=tf.train.SaverDef.V2)
     sess.run(training_iterator.initializer)
 
@@ -103,9 +106,9 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 except RuntimeWarning:
                     print('Invalid value encountered. Ignoring batch.')
                     continue
-            else:
+            elif model_config['data_type'] == 'mag_phase':
                 try:
-                    _, cost, cost_sum = sess.run([model.train_op, model.cost, cost_summary],
+                    _, cost, cost_sum = sess.run([model.train_op, model.cost, cost_summary, mag_loss_summary, mag_phase_summary],
                                              {model.is_training: True, handle: training_handle})
                 except RuntimeWarning:
                     print('Invalid value encountered. Ignoring batch.')

@@ -81,6 +81,7 @@ class UNetEncoder(object):
 
     def __init__(self, input_tensor, is_training, reuse):
         net = input_tensor
+        self.input_tensor = input_tensor
         with tf.variable_scope('encoder'):
             with tf.variable_scope('layer-1'):
                 net = mf.conv(net, filters=16, kernel_size=5, stride=(2, 2))
@@ -155,7 +156,7 @@ class UNetDecoder(object):
 
             with tf.variable_scope('layer-6'):
                 net = mf.relu(mf.concat(net, encoder.l1))
-                net = mf.deconv(net, filters=1, kernel_size=5, stride=(2, 2))
+                net = mf.deconv(net, filters=encoder.input_tensor.shape[3], kernel_size=5, stride=(2, 2))
 
             self.output = net
 
