@@ -38,14 +38,25 @@ class MagnitudeModel(object):
 
             self.voice_mask = self.voice_mask_network.output
 
-            self.gen_voice = self.voice_mask * mixed_input
-
             if data_type == 'mag':
+                self.gen_voice = self.voice_mask * mixed_input
                 self.cost = mf.l1_loss(self.gen_voice, voice_input)
+
             elif data_type == 'mag_phase':
+                self.gen_voice = self.voice_mask * mixed_input
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
                 self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * 0.00001
                 self.cost = (self.mag_loss + self.phase_loss)/2
+
+            elif data_type == 'mag_phase_diff':
+                self.gen_voice_mag = tf.expand_dims(self.voice_mask[:, :, :, 0] * mixed_input[:, :, :, 0], axis=3)
+                self.mag_loss = mf.l1_loss(self.gen_voice_mag[:, :, :, 0], voice_input[:, :, :, 0])
+                self.phase_loss = mf.l1_phase_loss(mf.l1_phase_loss(mixed_input[:, :, :, 1], voice_input[:, :, :, 1]),
+                                                   self.voice_mask[:, :, :, 1]) * 0.00001
+                self.cost = (self.mag_loss + self.phase_loss) / 2
+                self.gen_voice_phase = tf.expand_dims(self.voice_mask[:, :, :, 1] + mixed_input[:, :, :, 1], axis=3)
+                self.gen_voice = tf.concat((self.gen_voice_mag, self.gen_voice_phase), axis=3)
+
             elif data_type == 'real_imag':
                 self.real_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
                 self.imag_loss = mf.l1_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1])
@@ -53,7 +64,7 @@ class MagnitudeModel(object):
 
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=learning_rate,
-                beta1=0.2,
+                beta1=0.5,
             )
             self.train_op = self.optimizer.minimize(self.cost)
 

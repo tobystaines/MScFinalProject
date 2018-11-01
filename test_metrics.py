@@ -64,7 +64,7 @@ def get_test_metrics(argv):
                                                      model_config['n_fft'], model_config['fft_hop'],
                                                      phaseIterations=phase_iterations,
                                                      phase=mixed_phase[i, :, :, 0].T)
-                elif model_config['data_type'] == 'mag_phase':
+                elif model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
                     wave = af.spectrogramToAudioFile(voice_est_matrix[i, :, :, 0].T,
                                                      model_config['n_fft'], model_config['fft_hop'],
                                                      phaseIterations=phase_iterations,
