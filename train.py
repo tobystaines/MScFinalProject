@@ -86,7 +86,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     voice_0_summary = tf.summary.image('Voice', tf.expand_dims(model.voice_input[:, :, :, 0], axis=3))
     mask_0_summary = tf.summary.image('Voice_Mask', tf.expand_dims(model.voice_mask[:, :, :, 0], axis=3))
     gen_voice_0_summary = tf.summary.image('Generated_Voice', tf.expand_dims(model.gen_voice[:, :, :, 0], axis=3))
-    if model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
+    if model_config['data_type'] in ['mag_phase', 'mag_phase_diff', 'real_imag']:
         mag_loss_summary = tf.summary.scalar('Training_magnitude_loss', model.mag_loss)
         phase_loss_summary = tf.summary.scalar('Training_phase_loss', model.phase_loss)
         mix_1_summary = tf.summary.image('Mixture', tf.expand_dims(model.mixed_input[:, :, :, 1], axis=3))
@@ -100,18 +100,14 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     # Train for the specified number of epochs, unless early stopping is triggered
     while epoch < model_config['epochs'] and worse_val_checks < model_config['num_worse_val_checks']:
         try:
-            if model_config['data_type'] == 'mag':
-                try:
+            try:
+                if model_config['data_type'] == 'mag':
                     _, cost, cost_sum, mix_0, \
                         voice_0, mask_0, gen_voice_0 = sess.run([model.train_op, model.cost, cost_summary,
                                                                  mix_0_summary, voice_0_summary, mask_0_summary,
                                                                  gen_voice_0_summary], {model.is_training: True,
                                                                                         handle: training_handle})
-                except RuntimeWarning:
-                    print('Invalid value encountered. Ignoring batch.')
-                    continue
-            elif model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
-                try:
+                elif model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
                     _, cost, cost_sum, mag_loss_sum, phase_loss_sum, \
                         mix_0, voice_0, mask_0, gen_voice_0, mix_1, \
                         voice_1, mask_1, gen_voice_1 = sess.run([model.train_op, model.cost, cost_summary,
@@ -120,9 +116,17 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                  mix_1_summary, voice_1_summary, mask_1_summary,
                                                                  gen_voice_1_summary],
                                                                 {model.is_training: True, handle: training_handle})
-                except RuntimeWarning:
-                    print('Invalid value encountered. Ignoring batch.')
-                    continue
+                elif model_config['data_type'] == 'real_imag':
+                    _, cost, cost_sum, mix_0, voice_0, mask_0, gen_voice_0, mix_1, \
+                    voice_1, mask_1, gen_voice_1 = sess.run([model.train_op, model.cost, cost_summary,
+                                                             mix_0_summary, voice_0_summary, mask_0_summary,
+                                                             gen_voice_0_summary, mix_1_summary, voice_1_summary,
+                                                             mask_1_summary, gen_voice_1_summary],
+                                                            {model.is_training: True, handle: training_handle})
+            except RuntimeWarning:
+                print('Invalid value encountered. Ignoring batch.')
+                continue
+
             if math.isnan(cost):
                 print('Error: cost = nan')
                 print('Loading latest checkpoint')
