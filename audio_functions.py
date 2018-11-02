@@ -48,11 +48,11 @@ def compute_spectrogram(audio, n_fft, fft_hop, normalise):
     def stft(x, normalise):
         spec = librosa.stft(
             x, n_fft=n_fft, hop_length=fft_hop, window='hann')
-        #mag = np.abs(spec)
+        mag = np.abs(spec)
         if normalise:
-            #mag = (mag - mag.min()) / (mag.max() - mag.min())
-            spec = spec / np.sqrt(np.sum((spec * np.conj(spec))**2))
-        return spec.real, spec.imag, np.abs(spec), np.angle(spec)
+            mag = (mag - mag.min()) / (mag.max() - mag.min())
+            #spec = spec / np.sqrt(np.sum((spec * np.conj(spec))**2))
+        return spec.real, spec.imag, mag, np.angle(spec)
 
     def mono_func(py_audio, normalise):
         real, imag, mag, phase = stft(py_audio[:, 0], normalise)
