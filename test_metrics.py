@@ -54,7 +54,6 @@ def get_test_metrics(argv):
                 mixed_audio, mixed_matrix, mixed_phase, model_config = pickle.load(open(file, 'rb'))
             print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
             test_costs.append(cost)
-            #mixed_phase = np.angle(mixed_spec)
 
             voice_est_audio = np.empty(voice_ref_audio.shape)
             for i in range(voice_est_audio.shape[0]):
