@@ -19,8 +19,8 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 @ex.config
 def cfg():
     model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
-                    'data_type': 'mag_phase_diff',  # From [' mag', 'mag_phase', 'real_imag', 'mag_real_imag']
-                    'initialisation_test': True,  # Whether or not to calculate test metrics before training
+                    'data_type': 'mag',  # From [' mag', 'mag_phase', 'real_imag', 'mag_real_imag']
+                    'initialisation_test': False,  # Whether or not to calculate test metrics before training
                     'loading': False,  # Whether to load an existing checkpoint
                     'checkpoint_to_load': "136/136-6",  # Checkpoint format: run/run-step
                     'saving': True,  # Whether to take checkpoints
