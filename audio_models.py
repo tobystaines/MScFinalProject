@@ -18,7 +18,8 @@ class MagnitudeModel(object):
         learning_rate: The learning rate the model should be trained with.
         name: Model instance name
     """
-    def __init__(self, mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, variant, is_training, learning_rate,
+    def __init__(self, mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, background_audio,
+                 variant, is_training, learning_rate,
                  data_type, name):
         with tf.variable_scope(name):
             self.mixed_input = mixed_input
@@ -26,6 +27,7 @@ class MagnitudeModel(object):
             self.mixed_phase = mixed_phase
             self.mixed_audio = mixed_audio
             self.voice_audio = voice_audio
+            self.background_audio = background_audio
             self.variant = variant
             self.is_training = is_training
 

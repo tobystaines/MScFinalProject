@@ -50,7 +50,7 @@ def get_test_metrics(argv):
 
         #  There will be one pickle file per batch. For each one, load it and calculate the metrics
         for file in test_files:
-            cost, voice_est_matrix, voice_ref_matrix, voice_ref_audio, \
+            cost, voice_est_matrix, voice_ref_audio, background_audio,\
                 mixed_audio, mixed_matrix, mixed_phase, model_config = pickle.load(open(file, 'rb'))
             print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
             test_costs.append(cost)
@@ -88,11 +88,10 @@ def get_test_metrics(argv):
             mixed_audio = np.transpose(mixed_audio, (0, 2, 1))
 
             # Subtract voice to calculate background noise
-            background_ref_audio = mixed_audio - voice_ref_audio
             background_est_audio = mixed_audio - voice_est_audio
 
             for i in range(voice_est_audio.shape[0]):
-                ref_sources = np.concatenate((voice_ref_audio[i, :, :], background_ref_audio[i, :, :]), axis=0)
+                ref_sources = np.concatenate((voice_ref_audio[i, :, :], background_audio[i, :, :]), axis=0)
                 est_sources = np.concatenate((voice_est_audio[i, :, :], background_est_audio[i, :, :]), axis=0)
                 mixed_sources = np.concatenate((mixed_audio[i, :, :], mixed_audio[i, :, :]), axis=0)
 

@@ -54,7 +54,7 @@ def cfg():
         model_config['log_dir'] = 'logs/local'
 
     else:  # Data and Checkpoint directories on the uni server
-        model_config['chime_data_root'] = '/data/Speech_Data/CHiME3/data/audio/16kHz/isolated/'
+        model_config['chime_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/NewCHiME/'
         #model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
         model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
         #model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
@@ -87,7 +87,7 @@ def do_experiment(model_config):
     # Create iterators
     handle = tf.placeholder(tf.string, shape=[])
     iterator = tf.data.Iterator.from_string_handle(handle, train_data.output_types, train_data.output_shapes)
-    mixed_spec, voice_spec, mixed_audio, voice_audio = iterator.get_next()
+    mixed_spec, voice_spec, background_spec, mixed_audio, voice_audio, background_audio = iterator.get_next()
 
     training_iterator = train_data.make_initializable_iterator()
     validation_iterator = val_data.make_initializable_iterator()
@@ -100,14 +100,12 @@ def do_experiment(model_config):
 
     # Create variable placeholders and model
     is_training = tf.placeholder(shape=(), dtype=bool)
-    mixed_mag = tf.expand_dims(mixed_spec[:, :, :-1, 2], 3)
     mixed_phase = tf.expand_dims(mixed_spec[:, :, :-1, 3], 3)
-    voice_mag = tf.expand_dims(voice_spec[:, :, :-1, 2], 3)
 
     print('Creating model')
     if model_config['data_type'] == 'mag':
-        mixed_input = mixed_mag
-        voice_input = voice_mag
+        mixed_input = tf.expand_dims(mixed_spec[:, :, :-1, 2], 3)
+        voice_input = tf.expand_dims(voice_spec[:, :, :-1, 2], 3)
     elif model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
         mixed_input = mixed_spec[:, :, :-1, 2:4]
         voice_input = voice_spec[:, :, :-1, 2:4]
@@ -115,7 +113,7 @@ def do_experiment(model_config):
         mixed_input = mixed_spec[:, :, :-1, 0:2]
         voice_input = voice_spec[:, :, :-1, 0:2]
 
-    model = audio_models.MagnitudeModel(mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio,
+    model = audio_models.MagnitudeModel(mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, background_audio,
                                         model_config['model_variant'], is_training, model_config['learning_rate'],
                                         model_config['data_type'], name='Magnitude_Model')
 
