@@ -58,10 +58,6 @@ def l1_loss(x, y):
     return tf.reduce_mean(tf.abs(x - y))
 
 
-def pw_l1_loss(x, y):
-    return tf.abs(x - y)
-
-
 def l1_phase_loss(x, y):
     """
     Calculates the l1 loss between two phase spectrograms, correcting for the circularity of phase. The true difference
@@ -71,10 +67,10 @@ def l1_phase_loss(x, y):
     :return: l1 loss between x and y
     """
     pi = tf.constant(math.pi)
-    original_dif = x - y
-    add_2_pi_dif = x - (y + 2 * pi)
-    minus_2_pi_dif = x - (y - 2 * pi)
+    original_dif = tf.abs(x - y)
+    add_2_pi_dif = tf.abs(x - (y + 2 * pi))
+    minus_2_pi_dif = tf.abs(x - (y - 2 * pi))
 
     corrected_dif = tf.minimum(original_dif, tf.minimum(add_2_pi_dif, minus_2_pi_dif))
 
-    return tf.reduce_mean(tf.abs(corrected_dif))
+    return tf.reduce_mean(corrected_dif)

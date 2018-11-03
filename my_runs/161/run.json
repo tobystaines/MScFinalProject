@@ -1,0 +1,111 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "numpy==1.15.2",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.11.0"
+    ],
+    "mainfile": "main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "audio_models.py",
+        "_sources/audio_models_ff564d1467144d172f66f943f9e2f4df.py"
+      ],
+      [
+        "dataset.py",
+        "_sources/dataset_1031df122e8eb143341414043090c37b.py"
+      ],
+      [
+        "main.py",
+        "_sources/main_f470ba6886d12e31116cbbcc287976dd.py"
+      ],
+      [
+        "train.py",
+        "_sources/train_06907b740ec6a91ef55758a4289fea9d.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1323, in _do_call\n    return fn(*args)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1302, in _run_fn\n    status, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/errors_impl.py\", line 473, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.InvalidArgumentError: Tensor must be 4-D with last dim 1, 3, or 4, not [50,256,512]\n\t [[Node: Voice_1 = ImageSummary[T=DT_FLOAT, bad_color=Tensor<type: uint8 shape: [4] values: 255 0 0...>, max_images=3, _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](Voice_1/tag, Magnitude_Model/strided_slice_3/_13)]]\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 143, in do_experiment\n    validation_iterator, validation_handle, writer)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 122, in train\n    {model.is_training: True, handle: training_handle})\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 889, in run\n    run_metadata_ptr)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1120, in _run\n    feed_dict_tensor, options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1317, in _do_run\n    options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1336, in _do_call\n    raise type(e)(node_def, op, message)\n",
+    "tensorflow.python.framework.errors_impl.InvalidArgumentError: Tensor must be 4-D with last dim 1, 3, or 4, not [50,256,512]\n\t [[Node: Voice_1 = ImageSummary[T=DT_FLOAT, bad_color=Tensor<type: uint8 shape: [4] values: 255 0 0...>, max_images=3, _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](Voice_1/tag, Magnitude_Model/strided_slice_3/_13)]]\n\nCaused by op 'Voice_1', defined at:\n  File \"main.py\", line 65, in <module>\n    @ex.automain\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 137, in automain\n    self.run_commandline()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 260, in run_commandline\n    return self.run(cmd_name, config_updates, named_configs, {}, args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 209, in run\n    run()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/run.py\", line 221, in __call__\n    self.result = self.main_function(*args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n  File \"main.py\", line 143, in do_experiment\n    validation_iterator, validation_handle, writer)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 93, in train\n    voice_1_summary = tf.summary.image('Voice', model.voice_input[:, :, :, 1])\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/summary/summary.py\", line 153, in image\n    tag=tag, tensor=tensor, max_images=max_outputs, name=scope)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/gen_logging_ops.py\", line 268, in _image_summary\n    bad_color=bad_color, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/op_def_library.py\", line 787, in _apply_op_helper\n    op_def=op_def)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 2956, in create_op\n    op_def=op_def)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 1470, in __init__\n    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access\n\nInvalidArgumentError (see above for traceback): Tensor must be 4-D with last dim 1, 3, or 4, not [50,256,512]\n\t [[Node: Voice_1 = ImageSummary[T=DT_FLOAT, bad_color=Tensor<type: uint8 shape: [4] values: 255 0 0...>, max_images=3, _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](Voice_1/tag, Magnitude_Model/strided_slice_3/_13)]]\n\n"
+  ],
+  "heartbeat": "2018-11-01T09:48:10.531051",
+  "host": {
+    "ENV": {},
+    "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
+    "gpus": {
+      "driver_version": "396.44",
+      "gpus": [
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11177
+        },
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11178
+        }
+      ]
+    },
+    "hostname": "asia",
+    "os": [
+      "Linux",
+      "Linux-4.15.0-36-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "model_config.GPU=1",
+        "model_config.initialisation_test=False"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-11-01T09:45:54.014930",
+  "status": "FAILED",
+  "stop_time": "2018-11-01T09:48:10.732924"
+}

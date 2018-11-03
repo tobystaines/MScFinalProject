@@ -82,17 +82,11 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     latest_checkpoint_path = os.path.join(model_config['model_base_dir'], model_config['checkpoint_to_load'])
 
     cost_summary = tf.summary.scalar('Training_loss', model.cost)
-    mix_0_summary = tf.summary.image('Mixture', tf.expand_dims(model.mixed_input[:, :, :, 0], axis=3))
-    voice_0_summary = tf.summary.image('Voice', tf.expand_dims(model.voice_input[:, :, :, 0], axis=3))
-    mask_0_summary = tf.summary.image('Voice_Mask', tf.expand_dims(model.voice_mask[:, :, :, 0], axis=3))
-    gen_voice_0_summary = tf.summary.image('Generated_Voice', tf.expand_dims(model.gen_voice[:, :, :, 0], axis=3))
-    if model_config['data_type'] in ['mag_phase', 'mag_phase_diff', 'real_imag']:
-        mag_loss_summary = tf.summary.scalar('Training_magnitude_loss', model.mag_loss)
-        phase_loss_summary = tf.summary.scalar('Training_phase_loss', model.phase_loss)
-        mix_1_summary = tf.summary.image('Mixture', tf.expand_dims(model.mixed_input[:, :, :, 1], axis=3))
-        voice_1_summary = tf.summary.image('Voice', tf.expand_dims(model.voice_input[:, :, :, 1], axis=3))
-        mask_1_summary = tf.summary.image('Voice_Mask', tf.expand_dims(model.voice_mask[:, :, :, 1], axis=3))
-        gen_voice_1_summary = tf.summary.image('Generated_Voice', tf.expand_dims(model.gen_voice[:, :, :, 1], axis=3))
+    if model_config['data_type'] == 'mag':
+        mix_summary = tf.summary.image('Mixture', model.mixed_input)
+        voice_summary = tf.summary.image('Voice', model.voice_input)
+        mask_summary = tf.summary.image('Voice_Mask', model.voice_mask)
+        gen_voice_summary = tf.summary.image('Generated_Voice', model.gen_voice)
     saver = tf.train.Saver(tf.global_variables(), max_to_keep=5, write_version=tf.train.SaverDef.V2)
     sess.run(training_iterator.initializer)
 
@@ -100,33 +94,22 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     # Train for the specified number of epochs, unless early stopping is triggered
     while epoch < model_config['epochs'] and worse_val_checks < model_config['num_worse_val_checks']:
         try:
-            try:
-                if model_config['data_type'] == 'mag':
-                    _, cost, cost_sum, mix_0, \
-                        voice_0, mask_0, gen_voice_0 = sess.run([model.train_op, model.cost, cost_summary,
-                                                                 mix_0_summary, voice_0_summary, mask_0_summary,
-                                                                 gen_voice_0_summary], {model.is_training: True,
-                                                                                        handle: training_handle})
-                elif model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
-                    _, cost, cost_sum, mag_loss_sum, phase_loss_sum, \
-                        mix_0, voice_0, mask_0, gen_voice_0, mix_1, \
-                        voice_1, mask_1, gen_voice_1 = sess.run([model.train_op, model.cost, cost_summary,
-                                                                 mag_loss_summary, phase_loss_summary, mix_0_summary,
-                                                                 voice_0_summary, mask_0_summary, gen_voice_0_summary,
-                                                                 mix_1_summary, voice_1_summary, mask_1_summary,
-                                                                 gen_voice_1_summary],
-                                                                {model.is_training: True, handle: training_handle})
-                elif model_config['data_type'] == 'real_imag':
-                    _, cost, cost_sum, mix_0, voice_0, mask_0, gen_voice_0, mix_1, \
-                    voice_1, mask_1, gen_voice_1 = sess.run([model.train_op, model.cost, cost_summary,
-                                                             mix_0_summary, voice_0_summary, mask_0_summary,
-                                                             gen_voice_0_summary, mix_1_summary, voice_1_summary,
-                                                             mask_1_summary, gen_voice_1_summary],
-                                                            {model.is_training: True, handle: training_handle})
-            except RuntimeWarning:
-                print('Invalid value encountered. Ignoring batch.')
-                continue
-
+            if model_config['data_type'] == 'mag':
+                try:
+                    _, cost, cost_sum, mix, voice, mask, gen_voice = sess.run([model.train_op, model.cost, cost_summary,
+                                                                               mix_summary, voice_summary, mask_summary,
+                                                                               gen_voice_summary], {model.is_training: True,
+                                                                                                    handle: training_handle})
+                except RuntimeWarning:
+                    print('Invalid value encountered. Ignoring batch.')
+                    continue
+            else:
+                try:
+                    _, cost, cost_sum = sess.run([model.train_op, model.cost, cost_summary],
+                                             {model.is_training: True, handle: training_handle})
+                except RuntimeWarning:
+                    print('Invalid value encountered. Ignoring batch.')
+                    continue
             if math.isnan(cost):
                 print('Error: cost = nan')
                 print('Loading latest checkpoint')
@@ -134,9 +117,6 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 restorer.restore(sess, latest_checkpoint_path)
                 break
             writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
-            if model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
-                writer.add_summary(mag_loss_sum, iteration)
-                writer.add_summary(phase_loss_sum, iteration)
             if iteration % 200 == 0:
                 print("{ts}:\tTraining iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
                                                                          i=iteration, c=cost))
@@ -162,15 +142,10 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                            e=epoch, i=iteration))
             if model_config['data_type'] == 'mag':
                 try:
-                    writer.add_summary(mix_0, iteration)
-                    writer.add_summary(voice_0, iteration)
-                    writer.add_summary(mask_0, iteration)
-                    writer.add_summary(gen_voice_0, iteration)
-                    if model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
-                        writer.add_summary(mix_1, iteration)
-                        writer.add_summary(voice_1, iteration)
-                        writer.add_summary(mask_1, iteration)
-                        writer.add_summary(gen_voice_1, iteration)
+                    writer.add_summary(mix, iteration)
+                    writer.add_summary(voice, iteration)
+                    writer.add_summary(mask, iteration)
+                    writer.add_summary(gen_voice, iteration)
                 except NameError:  # Indicates the try has not been successfully executed at all
                     print('No images to record')
                     break

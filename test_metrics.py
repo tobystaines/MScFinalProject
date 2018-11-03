@@ -26,15 +26,8 @@ def get_test_metrics(argv):
 
     experiment_id = argv[1]
 
-    if argv[2] == 'mag_phase':
-        mag_phase = True
-    elif argv[2] == 'complex':
-        mag_phase = False
-    else:
-        raise Exception("User must specify 'mag_phase' or 'complex' as second argument")
-
-    if len(argv) == 4:
-        phase_iterations = int(argv[3])
+    if len(argv) == 3:
+        phase_iterations = int(argv[2])
     else:
         phase_iterations = 0
 
@@ -57,28 +50,30 @@ def get_test_metrics(argv):
 
         #  There will be one pickle file per batch. For each one, load it and calculate the metrics
         for file in test_files:
-            if mag_phase:  # Data to be processed is from a magnitude spectrogram based model
-                cost, voice_est_mag, voice_ref_mag, voice_ref_audio, \
-                    mixed_audio, mixed_mag, mixed_phase, model_config = pickle.load(open(file, 'rb'))
-                print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
-                test_costs.append(cost)
-            else:  # Data to be processed is from a complex number spectrogram based model
-                cost, voice_est_spec, voice_ref_spec, \
-                    voice_ref_audio, mixed_audio, mixed_spec, model_config = pickle.load(open(file, 'rb'))
-                print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
-                test_costs.append(cost)
-                mixed_phase = np.angle(mixed_spec)
+            cost, voice_est_matrix, voice_ref_matrix, voice_ref_audio, \
+                mixed_audio, mixed_matrix, mixed_phase, model_config = pickle.load(open(file, 'rb'))
+            print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
+            test_costs.append(cost)
 
             voice_est_audio = np.empty(voice_ref_audio.shape)
             for i in range(voice_est_audio.shape[0]):
                 # Transform output back to audio
-                if mag_phase:
-                    wave = af.spectrogramToAudioFile(voice_est_mag[i, :, :].T,
+                if model_config['data_type'] == 'mag':
+                    wave = af.spectrogramToAudioFile(voice_est_matrix[i, :, :, 0].T,
                                                      model_config['n_fft'], model_config['fft_hop'],
                                                      phaseIterations=phase_iterations,
-                                                     phase=mixed_phase[i, :, :].T)
-                else:
-                    wave = librosa.istft(voice_est_spec[i, :, :].T, model_config['fft_hop'])
+                                                     phase=mixed_phase[i, :, :, 0].T)
+                elif model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
+                    wave = af.spectrogramToAudioFile(voice_est_matrix[i, :, :, 0].T,
+                                                     model_config['n_fft'], model_config['fft_hop'],
+                                                     phaseIterations=phase_iterations,
+                                                     phase=voice_est_matrix[i, :, :, 1].T)
+                elif model_config['data_type'] == 'real_imag':
+                    complex_spec = np.empty(voice_est_matrix.shape[1:3], dtype=complex)
+                    complex_spec.real = voice_est_matrix[i, :, :, 0]
+                    complex_spec.imag = voice_est_matrix[i, :, :, 1]
+
+                    wave = librosa.istft(complex_spec[i, :, :].T, model_config['fft_hop'])
 
                 voice_est_audio[i, :, :] = np.expand_dims(wave, axis=1)
 
@@ -139,7 +134,7 @@ def get_test_metrics(argv):
     return metrics
 
 
-#test_metrics = get_test_metrics(['test', '50', 'mag_phase'])
+#test_metrics = get_test_metrics(['test', '158'])
 test_metrics = get_test_metrics(sys.argv)
 print('{ts}:\nProcessing complete\n{t}'.format(ts=datetime.datetime.now(), t=test_metrics))
 

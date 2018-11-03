@@ -19,7 +19,7 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 @ex.config
 def cfg():
     model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
-                    'data_type': 'mag_phase_diff',  # From [' mag', 'mag_phase', 'real_imag', 'mag_real_imag']
+                    'data_type': 'mag_phase',  # From [' mag', 'mag_phase', 'real_imag', 'mag_real_imag']
                     'initialisation_test': True,  # Whether or not to calculate test metrics before training
                     'loading': False,  # Whether to load an existing checkpoint
                     'checkpoint_to_load': "136/136-6",  # Checkpoint format: run/run-step
@@ -108,7 +108,7 @@ def do_experiment(model_config):
     if model_config['data_type'] == 'mag':
         mixed_input = mixed_mag
         voice_input = voice_mag
-    elif model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
+    elif model_config['data_type'] == 'mag_phase':
         mixed_input = mixed_spec[:, :, :-1, 2:4]
         voice_input = voice_spec[:, :, :-1, 2:4]
     elif model_config['data_type'] == 'real_imag':
