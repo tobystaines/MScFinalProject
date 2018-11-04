@@ -16,7 +16,7 @@ def zip_files(directory_a, directory_b, directory_c):
     filelist_a = [f for f in os.listdir(directory_a) if
                   os.path.isfile(os.path.join(directory_a, f)) and re.search('CH0', f) is None]
     filelist_b = [f for f in os.listdir(directory_b) if
-                  os.path.isfile(os.path.join(directory_c, f)) and re.search('CH0', f) is None]
+                  os.path.isfile(os.path.join(directory_b, f)) and re.search('CH0', f) is None]
 
     zipped_list = list()
 
