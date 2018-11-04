@@ -5,7 +5,7 @@ import math
 import tensorflow as tf
 
 
-def test(sess, model, model_config, handle, testing_iterator, testing_handle, writer, test_count, experiment_id):
+def test(sess, model, model_config, handle, testing_iterator, testing_handle, test_count, experiment_id):
     """
     Test an audio_models.py model, saving the outputs to a pickle file.
     """

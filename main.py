@@ -134,7 +134,7 @@ def do_experiment(model_config):
     if model_config['initialisation_test']:
         print('Running initialisation test')
         initial_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle,
-                                             writer, test_count, experiment_id)
+                                             test_count, experiment_id)
 
     # Train the model
     model = train(sess, model, model_config, model_folder, handle, training_iterator, training_handle,

@@ -86,6 +86,7 @@ def get_test_metrics(argv):
             voice_ref_audio = np.transpose(voice_ref_audio, (0, 2, 1))
             voice_est_audio = np.transpose(voice_est_audio, (0, 2, 1))
             mixed_audio = np.transpose(mixed_audio, (0, 2, 1))
+            background_audio = np.transpose(background_audio, (0, 2, 1))
 
             # Subtract voice to calculate background noise
             background_est_audio = mixed_audio - voice_est_audio
