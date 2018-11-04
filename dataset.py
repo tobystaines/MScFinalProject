@@ -26,7 +26,7 @@ def zip_files(directory_a, directory_b, directory_c):
                 if file_a[:13] == file_b[:13] and (file_a[17:] == file_b[17:] or len(file_a) != len(file_b)):
                     zipped_list.append((str(directory_a + '/' + file_a),
                                         str(directory_b + '/' + file_b),
-                                        str(directory_c + '/' + file_b)))
+                                        str(directory_c + '/' + file_a)))
                     if len(file_a) == len(file_b):
                         filelist_b.remove(file_b)
                         break
@@ -34,7 +34,7 @@ def zip_files(directory_a, directory_b, directory_c):
                 if file_a == file_b:
                     zipped_list.append((str(directory_a + file_a),
                                         str(directory_b + file_b),
-                                        str(directory_c + file_b)))
+                                        str(directory_c + file_a)))
                     filelist_b.remove(file_b)
                     break
 
