@@ -142,10 +142,10 @@ def prepare_datasets(model_config):
                         'y_train_b': 'tr05_' + string + '_bg/',
                         'x_val': 'dt05_' + string + '_simu/',
                         'y_val_v': 'dt05_bth',
-                        'y_val_b': 'dr05_' + string + '_bg/',
+                        'y_val_b': 'dt05_' + string + '_bg/',
                         'x_test': 'et05_' + string + '_simu/',
                         'y_test_v': 'et05_bth',
-                        'y_test_b': 'er05_' + string + '_bg/'}
+                        'y_test_b': 'et05_' + string + '_bg/'}
                 sets.append(build_datasets(model_config, model_config['chime_data_root'], path))
             chime_train_data = sets[0][0].concatenate(sets[1][0].concatenate(sets[2][0].concatenate(sets[3][0])))
             chime_val_data = sets[0][1].concatenate(sets[1][1].concatenate(sets[2][1].concatenate(sets[3][1])))
