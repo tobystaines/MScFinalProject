@@ -1,0 +1,123 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "numpy==1.15.2",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.11.0"
+    ],
+    "mainfile": "main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "audio_models.py",
+        "_sources/audio_models_fd40382d50f783d9a368b7062124b75f.py"
+      ],
+      [
+        "dataset.py",
+        "_sources/dataset_c75ccab61af6034cf3e262bb2d3b78fe.py"
+      ],
+      [
+        "main.py",
+        "_sources/main_29b345d0088e95894a2e2afa3d5c0cf6.py"
+      ],
+      [
+        "train.py",
+        "_sources/train_84cee85c6098d8201dc356887ada1629.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1323, in _do_call\n    return fn(*args)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1302, in _run_fn\n    status, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/errors_impl.py\", line 473, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.OutOfRangeError: End of sequence\n\t [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,256,513,4], [?,256,513,4], [?,256,513,4], [?,65280,1], [?,65280,1], [?,65280,1]], output_types=[DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT], _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](IteratorFromStringHandle)]]\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 109, in train\n    handle: training_handle})\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 889, in run\n    run_metadata_ptr)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1120, in _run\n    feed_dict_tensor, options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1317, in _do_run\n    options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1336, in _do_call\n    raise type(e)(node_def, op, message)\n",
+    "tensorflow.python.framework.errors_impl.OutOfRangeError: End of sequence\n\t [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,256,513,4], [?,256,513,4], [?,256,513,4], [?,65280,1], [?,65280,1], [?,65280,1]], output_types=[DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT], _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](IteratorFromStringHandle)]]\n\nCaused by op 'IteratorGetNext', defined at:\n  File \"main.py\", line 65, in <module>\n    @ex.automain\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 137, in automain\n    self.run_commandline()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 260, in run_commandline\n    return self.run(cmd_name, config_updates, named_configs, {}, args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 209, in run\n    run()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/run.py\", line 221, in __call__\n    self.result = self.main_function(*args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n  File \"main.py\", line 90, in do_experiment\n    mixed_spec, voice_spec, background_spec, mixed_audio, voice_audio, background_audio = iterator.get_next()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/data/ops/iterator_ops.py\", line 259, in get_next\n    name=name))\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/gen_dataset_ops.py\", line 706, in iterator_get_next\n    output_shapes=output_shapes, name=name)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/op_def_library.py\", line 787, in _apply_op_helper\n    op_def=op_def)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 2956, in create_op\n    op_def=op_def)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 1470, in __init__\n    self._traceback = self._graph._extract_stack()  # pylint: disable=protected-access\n\nOutOfRangeError (see above for traceback): End of sequence\n\t [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,256,513,4], [?,256,513,4], [?,256,513,4], [?,65280,1], [?,65280,1], [?,65280,1]], output_types=[DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT], _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](IteratorFromStringHandle)]]\n\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1323, in _do_call\n    return fn(*args)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1302, in _run_fn\n    status, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/errors_impl.py\", line 473, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.UnknownError: RuntimeError: Error opening b'/home/enterprise.internal.city.ac.uk/acvn728/NewCHiME/dr05_bus_bg//M04_420C020H_BUS.CH1.wav': System error.\n\t [[Node: PyFuncStateless_2 = PyFuncStateless[Tin=[DT_STRING, DT_INT32], Tout=[DT_FLOAT], token=\"pyfunc_8\"](arg2, PyFuncStateless_2/input_1)]]\n\t [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,256,513,4], [?,256,513,4], [?,256,513,4], [?,65280,1], [?,65280,1], [?,65280,1]], output_types=[DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT], _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](IteratorFromStringHandle)]]\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 141, in do_experiment\n    validation_iterator, validation_handle, writer)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 185, in train\n    val_check)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 25, in validation\n    val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 889, in run\n    run_metadata_ptr)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1120, in _run\n    feed_dict_tensor, options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1317, in _do_run\n    options, run_metadata)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/client/session.py\", line 1336, in _do_call\n    raise type(e)(node_def, op, message)\n",
+    "tensorflow.python.framework.errors_impl.UnknownError: RuntimeError: Error opening b'/home/enterprise.internal.city.ac.uk/acvn728/NewCHiME/dr05_bus_bg//M04_420C020H_BUS.CH1.wav': System error.\n\t [[Node: PyFuncStateless_2 = PyFuncStateless[Tin=[DT_STRING, DT_INT32], Tout=[DT_FLOAT], token=\"pyfunc_8\"](arg2, PyFuncStateless_2/input_1)]]\n\t [[Node: IteratorGetNext = IteratorGetNext[output_shapes=[[?,256,513,4], [?,256,513,4], [?,256,513,4], [?,65280,1], [?,65280,1], [?,65280,1]], output_types=[DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT, DT_FLOAT], _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"](IteratorFromStringHandle)]]\n"
+  ],
+  "heartbeat": "2018-11-04T12:33:34.363822",
+  "host": {
+    "ENV": {},
+    "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
+    "gpus": {
+      "driver_version": "396.44",
+      "gpus": [
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11175
+        },
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11178
+        }
+      ]
+    },
+    "hostname": "america",
+    "os": [
+      "Linux",
+      "Linux-4.15.0-36-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-11-04T11:54:20.245578",
+  "status": "FAILED",
+  "stop_time": "2018-11-04T12:33:34.371693"
+}
