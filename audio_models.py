@@ -20,8 +20,7 @@ class MagnitudeModel(object):
         name: Model instance name
     """
     def __init__(self, mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, background_audio,
-                 variant, is_training, learning_rate,
-                 data_type, name):
+                 variant, is_training, learning_rate, data_type, name):
         with tf.variable_scope(name):
             self.mixed_input = mixed_input
             self.voice_input = voice_input
@@ -66,7 +65,13 @@ class MagnitudeModel(object):
                 self.imag_loss = mf.l1_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1])
                 self.cost = (self.real_loss + self.imag_loss)/2
 
-#            elif data_type == 'mag_real_imag':
+            elif data_type == 'mag_real_imag':
+                self.gen_voice = self.voice_mask * mixed_input
+                self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
+                self.real_loss = mf.l1_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1])
+                self.imag_loss = mf.l1_loss(self.gen_voice[:, :, :, 2], voice_input[:, :, :, 2])
+                self.cost = (self.real_loss + self.imag_loss) / 3
+
 
 
             self.optimizer = tf.train.AdamOptimizer(
