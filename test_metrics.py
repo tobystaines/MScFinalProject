@@ -74,6 +74,14 @@ def get_test_metrics(argv):
                     complex_spec.imag = voice_est_matrix[i, :, :, 1]
 
                     wave = librosa.istft(complex_spec[i, :, :].T, model_config['fft_hop'])
+                elif model_config['data_type'] == 'mag_real_imag':
+                    complex_spec = np.empty(voice_est_matrix.shape[1:3], dtype=complex)
+                    complex_spec.real = voice_est_matrix[i, :, :, 1]
+                    complex_spec.imag = voice_est_matrix[i, :, :, 2]
+                    wave = af.spectrogramToAudioFile(voice_est_matrix[i, :, :, 0].T,
+                                                     model_config['n_fft'], model_config['fft_hop'],
+                                                     phaseIterations=phase_iterations,
+                                                     phase=np.angle(complex_spec[i, :, :]).T)
 
                 voice_est_audio[i, :, :] = np.expand_dims(wave, axis=1)
 
