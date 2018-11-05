@@ -66,11 +66,14 @@ def l1_phase_loss(x, y):
     :param y: 2D tensor, a phase spectrogram in radians
     :return: l1 loss between x and y
     """
+
+    return tf.reduce_mean(phase_difference(x, y))
+
+
+def phase_difference(x, y):
     pi = tf.constant(math.pi)
     original_dif = tf.abs(x - y)
     add_2_pi_dif = tf.abs(x - (y + 2 * pi))
     minus_2_pi_dif = tf.abs(x - (y - 2 * pi))
 
-    corrected_dif = tf.minimum(original_dif, tf.minimum(add_2_pi_dif, minus_2_pi_dif))
-
-    return tf.reduce_mean(corrected_dif)
+    return tf.minimum(original_dif, tf.minimum(add_2_pi_dif, minus_2_pi_dif))

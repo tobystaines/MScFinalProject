@@ -38,7 +38,7 @@ class MagnitudeModel(object):
                 self.voice_mask_network = BasicCapsnet(mixed_input, name='SegCaps_CapsNetBasic')
             elif self.variant == 'conv_net':
                 self.voice_mask_network = conv_net(mixed_input, is_training=is_training, reuse=None, name='basic_cnn')
-            
+
             self.voice_mask = self.voice_mask_network.output
 
             if data_type == 'mag':
@@ -54,7 +54,7 @@ class MagnitudeModel(object):
             elif data_type == 'mag_phase_diff':
                 self.gen_voice_mag = tf.expand_dims(self.voice_mask[:, :, :, 0] * mixed_input[:, :, :, 0], axis=3)
                 self.mag_loss = mf.l1_loss(self.gen_voice_mag[:, :, :, 0], voice_input[:, :, :, 0])
-                self.phase_loss = mf.l1_phase_loss(mf.l1_phase_loss(mixed_input[:, :, :, 1], voice_input[:, :, :, 1]),
+                self.phase_loss = mf.l1_phase_loss(mf.phase_difference(mixed_input[:, :, :, 1], voice_input[:, :, :, 1]),
                                                    self.voice_mask[:, :, :, 1]) * 0.00001
                 self.cost = (self.mag_loss + self.phase_loss) / 2
                 self.gen_voice_phase = tf.expand_dims(self.voice_mask[:, :, :, 1] + mixed_input[:, :, :, 1], axis=3)
