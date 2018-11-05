@@ -143,7 +143,7 @@ def do_experiment(model_config):
                   validation_iterator, validation_handle, writer)
 
     # Test trained model
-    mean_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle, writer,
+    mean_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle,
                                       test_count, experiment_id)
     print('{ts}:\n\tAll done with experiment {exid}!'.format(ts=datetime.datetime.now(), exid=experiment_id))
     if model_config['initialisation_test']:
