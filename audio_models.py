@@ -70,7 +70,7 @@ class MagnitudeModel(object):
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
                 self.real_loss = mf.l1_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1])
                 self.imag_loss = mf.l1_loss(self.gen_voice[:, :, :, 2], voice_input[:, :, :, 2])
-                self.cost = (self.real_loss + self.imag_loss) / 3
+                self.cost = (self. mag_loss + self.real_loss + self.imag_loss) / 3
 
 
 
