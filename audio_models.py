@@ -4,28 +4,6 @@ from SegCaps import capsule_layers
 from keras import layers
 
 
-class DatasetBaseline(object):
-
-    def __init__(self, mixed_input, voice_input, mixed_phase, mixed_audio,
-                 voice_audio, background_audio, data_type, name):
-        with tf.variable_scope(name):
-            self.mixed_input = mixed_input
-            self.voice_input = voice_input
-            self.mixed_phase = mixed_phase
-            self.mixed_audio = mixed_audio
-            self.voice_audio = voice_audio
-            self.background_audio = background_audio
-            self.data_type = data_type
-            if self.data_type == 'mag':
-                self.cost = mf.l1_loss(mixed_input, voice_input)
-            elif self.data_type == 'mag_phase':
-                self.mag_loss = mf.l1_loss(self.mixed_input[:, :, :, 0], voice_input[:, :, :, 0])
-                self.phase_loss = mf.l1_phase_loss(self.mixed_input[:, :, :, 1], voice_input[:, :, :, 1]) * 0.00001
-                self.cost = (self.mag_loss + self.phase_loss) / 2
-            elif self.data_type == 'real_imag':
-                self.real_loss = mf.l1_loss(self.mixed_input[:, :, :, 0], voice_input[:, :, :, 0])
-                self.imag_loss = mf.l1_loss(self.mixed_input[:, :, :, 1], voice_input[:, :, :, 1])
-                self.cost = (self.real_loss + self.imag_loss) / 2
 
 class MagnitudeModel(object):
     """
@@ -60,8 +38,6 @@ class MagnitudeModel(object):
                 self.voice_mask_network = BasicCapsnet(mixed_input, name='SegCaps_CapsNetBasic')
             elif self.variant == 'conv_net':
                 self.voice_mask_network = conv_net(mixed_input, is_training=is_training, reuse=None, name='basic_cnn')
-
-            self.voice_mask = self.voice_mask_network.output
 
             if data_type == 'mag':
                 self.gen_voice = self.voice_mask * mixed_input
