@@ -38,6 +38,8 @@ class MagnitudeModel(object):
                 self.voice_mask_network = BasicCapsnet(mixed_input, name='SegCaps_CapsNetBasic')
             elif self.variant == 'conv_net':
                 self.voice_mask_network = conv_net(mixed_input, is_training=is_training, reuse=None, name='basic_cnn')
+            
+            self.voice_mask = self.voice_mask_network.output
 
             if data_type == 'mag':
                 self.gen_voice = self.voice_mask * mixed_input
