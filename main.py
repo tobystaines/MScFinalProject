@@ -112,6 +112,8 @@ def do_experiment(model_config):
     elif model_config['data_type'] == 'real_imag':
         mixed_input = mixed_spec[:, :, :-1, 0:2]
         voice_input = voice_spec[:, :, :-1, 0:2]
+    #elif data_type == 'mag_real_imag':
+    #    mixed_input = mixed_spec[:, :, ]
 
     model = audio_models.MagnitudeModel(mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, background_audio,
                                         model_config['model_variant'], is_training, model_config['learning_rate'],
