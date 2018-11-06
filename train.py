@@ -157,7 +157,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 restorer.restore(sess, latest_checkpoint_path)
                 break
             writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
-            if 'mag' in model_config['data_type']:
+            if 'mag_' in model_config['data_type']:
                 writer.add_summary(mag_loss_sum, iteration)
             if 'phase' in model_config['data_type']:
                 writer.add_summary(phase_loss_sum, iteration)
