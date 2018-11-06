@@ -136,11 +136,11 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                  mask_1_summary, gen_voice_1_summary],
                                                                 {model.is_training: True, handle: training_handle})
                 elif model_config['data_type'] == 'mag_real_imag':
-                    _, cost, cost_sum, real_loss_sum, imag_loss_sum, mix_0, \
+                    _, cost, cost_sum, mag_loss_sum, real_loss_sum, imag_loss_sum, mix_0, \
                         voice_0, mask_0, gen_voice_0, mix_1, \
                         voice_1, mask_1, gen_voice_1, mix_2, \
-                        voice_2, mask_2, gen_voice_2  = sess.run([model.train_op, model.cost, cost_summary,
-                                                                 real_loss_summary, imag_loss_summary,
+                        voice_2, mask_2, gen_voice_2 = sess.run([model.train_op, model.cost, cost_summary,
+                                                                 mag_loss_summary, real_loss_summary, imag_loss_summary,
                                                                  mix_0_summary, voice_0_summary, mask_0_summary,
                                                                  gen_voice_0_summary, mix_1_summary, voice_1_summary,
                                                                  mask_1_summary, gen_voice_1_summary, mix_2_summary,
