@@ -86,7 +86,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     voice_0_summary = tf.summary.image('Voice_0', tf.expand_dims(model.voice_input[:, :, :, 0], axis=3))
     mask_0_summary = tf.summary.image('Voice_Mask_0', tf.expand_dims(model.voice_mask[:, :, :, 0], axis=3))
     gen_voice_0_summary = tf.summary.image('Generated_Voice_0', tf.expand_dims(model.gen_voice[:, :, :, 0], axis=3))
-    if model_config['data_type'] in ['mag_phase', 'mag_phase_diff', 'real_imag']:
+    if model_config['data_type'] in ['mag_phase', 'mag_phase_diff', 'real_imag', 'mag_real_imag']:
         mix_1_summary = tf.summary.image('Mixture_1', tf.expand_dims(model.mixed_input[:, :, :, 1], axis=3))
         voice_1_summary = tf.summary.image('Voice_1', tf.expand_dims(model.voice_input[:, :, :, 1], axis=3))
         mask_1_summary = tf.summary.image('Voice_Mask_1', tf.expand_dims(model.voice_mask[:, :, :, 1], axis=3))
