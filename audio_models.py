@@ -103,11 +103,11 @@ class UNetEncoder(object):
     """
 
     def __init__(self, input_tensor, is_training, reuse):
-        net = input_tensor
+
         self.input_tensor = input_tensor
         with tf.variable_scope('encoder'):
             with tf.variable_scope('layer-1'):
-                net = mf.conv(net, filters=16, kernel_size=5, stride=(2, 2))
+                net = mf.conv(self.input_tensor, filters=16, kernel_size=5, stride=(2, 2))
                 self.l1 = net
 
             with tf.variable_scope('layer-2'):

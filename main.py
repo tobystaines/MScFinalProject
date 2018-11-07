@@ -116,8 +116,8 @@ def do_experiment(model_config):
         mixed_input = tf.concat([tf.expand_dims(mixed_spec[:, :, :-1, 2], 3), mixed_spec[:, :, :-1, 0:2]], 3)
         voice_input = tf.concat([tf.expand_dims(voice_spec[:, :, :-1, 2], 3), voice_spec[:, :, :-1, 0:2]], 3)
     elif model_config['data_type'] == 'mag_phase_real_imag':
-        mixed_input = mixed_spec
-        voice_input = voice_spec
+        mixed_input = mixed_spec[:, :, :-1, :]
+        voice_input = voice_spec[:, :, :-1, :]
 
     model = audio_models.MagnitudeModel(mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, background_audio,
                                         model_config['model_variant'], is_training, model_config['learning_rate'],
