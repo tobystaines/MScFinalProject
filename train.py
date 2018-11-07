@@ -175,9 +175,9 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 writer.add_summary(mag_loss_sum, iteration)
             if 'phase' in model_config['data_type']:
                 writer.add_summary(phase_loss_sum, iteration)
-            if 'real' in model_config['data_type']:
+            if 'real' in model_config['data_type'] and model_config['data_type'] != 'mag_phase_real_imag':
                 writer.add_summary(real_loss_sum, iteration)
-            if 'imag' in model_config['data_type']:
+            if 'imag' in model_config['data_type'] and model_config['data_type'] != 'mag_phase_real_imag':
                 writer.add_summary(imag_loss_sum, iteration)
             if iteration % 200 == 0:
                 print("{ts}:\tTraining iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
