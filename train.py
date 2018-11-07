@@ -97,17 +97,15 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         mask_2_summary = tf.summary.image('Voice_Mask_2', tf.expand_dims(model.voice_mask[:, :, :, 2], axis=3))
         gen_voice_2_summary = tf.summary.image('Generated_Voice_2', tf.expand_dims(model.gen_voice[:, :, :, 2], axis=3))
     if model_config['data_type'] in ['mag_phase_real_imag']:
-        mix_2_summary = tf.summary.image('Mixture_2', tf.expand_dims(model.mixed_input[:, :, :, 2], axis=3))
-        voice_2_summary = tf.summary.image('Voice_2', tf.expand_dims(model.voice_input[:, :, :, 2], axis=3))
-        mask_2_summary = tf.summary.image('Voice_Mask_2', tf.expand_dims(model.voice_mask[:, :, :, 2], axis=3))
-        gen_voice_2_summary = tf.summary.image('Generated_Voice_2', tf.expand_dims(model.gen_voice[:, :, :, 2], axis=3))
+        mix_3_summary = tf.summary.image('Mixture_3', tf.expand_dims(model.mixed_input[:, :, :, 2], axis=3))
+        voice_3_summary = tf.summary.image('Voice_3', tf.expand_dims(model.voice_input[:, :, :, 2], axis=3))
     if 'mag_' in model_config['data_type']:
         mag_loss_summary = tf.summary.scalar('Training_magnitude_loss', model.mag_loss)
     if 'phase' in model_config['data_type']:
         phase_loss_summary = tf.summary.scalar('Training_phase_loss', model.phase_loss)
-    if 'real' in model_config['data_type']:
+    if 'real' in model_config['data_type'] and model_config['data_type'] != 'mag_phase_real_imag':
         real_loss_summary = tf.summary.scalar('Training_real_loss', model.real_loss)
-    if 'imag' in model_config['data_type']:
+    if 'imag' in model_config['data_type'] and model_config['data_type'] != 'mag_phase_real_imag':
         imag_loss_summary = tf.summary.scalar('Training_imag_loss', model.imag_loss)
     saver = tf.train.Saver(tf.global_variables(), max_to_keep=5, write_version=tf.train.SaverDef.V2)
     sess.run(training_iterator.initializer)
@@ -152,18 +150,16 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                  voice_2_summary, mask_2_summary, gen_voice_2_summary],
                                                                 {model.is_training: True, handle: training_handle})
                 elif model_config['data_type'] == 'mag_phase_real_imag':
-                    _, cost, cost_sum, mag_loss_sum, real_loss_sum, imag_loss_sum, mix_0, \
-                        voice_0, mask_0, gen_voice_0, mix_1, \
-                        voice_1, mask_1, gen_voice_1, mix_2, \
-                        voice_2, mask_2, gen_voice_2, mix_3, \
-                        voice_3, mask_3, gen_voice_3 = sess.run([model.train_op, model.cost, cost_summary,
-                                                                 mag_loss_summary, real_loss_summary, imag_loss_summary,
+                    _, cost, cost_sum, mag_loss_sum, phase_loss_sum, \
+                        mix_0, voice_0, mask_0, gen_voice_0, mix_1, \
+                        mask_1, gen_voice_1, mix_2, voice_2, mask_2, \
+                        gen_voice_2, mix_3, voice_3, = sess.run([model.train_op, model.cost, cost_summary,
+                                                                 mag_loss_summary, phase_loss_summary,
                                                                  mix_0_summary, voice_0_summary, mask_0_summary,
                                                                  gen_voice_0_summary, mix_1_summary, voice_1_summary,
                                                                  mask_1_summary, gen_voice_1_summary, mix_2_summary,
                                                                  voice_2_summary, mask_2_summary, gen_voice_2_summary,
-                                                                 mix_2_summary, voice_2_summary, mask_2_summary,
-                                                                 gen_voice_2_summary],
+                                                                 mix_3_summary, voice_3_summary],
                                                                 {model.is_training: True, handle: training_handle})
             except RuntimeWarning:
                 print('Invalid value encountered. Ignoring batch.')
