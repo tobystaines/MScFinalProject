@@ -32,7 +32,7 @@ class MagnitudeModel(object):
             self.is_training = is_training
 
             if self.variant in ['unet', 'capsunet']:
-                self.voice_mask_network = UNet(mixed_input, variant, is_training=is_training, reuse=False, name='voice-mask-unet')
+                self.voice_mask_network = UNet(mixed_input, variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant == 'basic_capsnet':
                 self.voice_mask_network = BasicCapsnet(mixed_input, name='SegCaps_CapsNetBasic')
             elif self.variant == 'conv_net':
@@ -44,7 +44,7 @@ class MagnitudeModel(object):
                 self.gen_voice = self.voice_mask * mixed_input
                 self.cost = mf.l1_loss(self.gen_voice, voice_input)
 
-            elif data_type == 'mag_phase':
+            elif data_type in ['mag_phase', 'mag_phase_real_imag']:
                 self.gen_voice = self.voice_mask * mixed_input
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
                 self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * 0.00001
@@ -72,8 +72,6 @@ class MagnitudeModel(object):
                 self.imag_loss = mf.l1_loss(self.gen_voice[:, :, :, 2], voice_input[:, :, :, 2])
                 self.cost = (self. mag_loss + self.real_loss + self.imag_loss) / 3
 
-
-
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=learning_rate,
                 beta1=0.5,
@@ -85,13 +83,13 @@ class UNet(object):
     """
     Magnitude model U-Net
     """
-    def __init__(self, input_tensor, variant, is_training, reuse, name):
+    def __init__(self, input_tensor, variant, data_type, is_training, reuse, name):
         with tf.variable_scope(name, reuse=reuse):
             self.variant = variant
 
             if self.variant == 'unet':
                 self.encoder = UNetEncoder(input_tensor, is_training, reuse)
-                self.decoder = UNetDecoder(self.encoder.output, self.encoder, is_training, reuse)
+                self.decoder = UNetDecoder(self.encoder.output, self.encoder, data_type, is_training, reuse)
             elif self.variant == 'capsunet':
                 self.encoder = CapsUNetEncoder(input_tensor, is_training, reuse)
                 self.decoder = CapsUNetDecoder(self.encoder.output, self.encoder, is_training, reuse)
@@ -147,7 +145,7 @@ class UNetDecoder(object):
     """
     The up-convolution side of a convolutional U-Net model
     """
-    def __init__(self, input_tensor, encoder, is_training, reuse):
+    def __init__(self, input_tensor, encoder, data_type, is_training, reuse):
         net = input_tensor
 
         with tf.variable_scope('decoder'):
@@ -180,8 +178,12 @@ class UNetDecoder(object):
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
 
             with tf.variable_scope('layer-6'):
+                if data_type == 'mag_phase_real_imag':
+                    out_shape = 4
+                else:
+                    out_shape = 2
                 net = mf.relu(mf.concat(net, encoder.l1))
-                net = mf.deconv(net, filters=encoder.input_tensor.shape[3], kernel_size=5, stride=(2, 2))
+                net = mf.deconv(net, filters=out_shape, kernel_size=5, stride=(2, 2))
 
             self.output = net
 
