@@ -207,7 +207,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 writer.add_summary(voice_0, iteration)
                 writer.add_summary(mask_0, iteration)
                 writer.add_summary(gen_voice_0, iteration)
-                if model_config['data_type'] in ['mag_phase', 'mag_phase_diff', 'real_imag']:
+                if model_config['data_type'] in ['mag_phase', 'mag_phase_diff', 'real_imag', 'mag_phase_real_imag']:
                     writer.add_summary(mix_1, iteration)
                     writer.add_summary(voice_1, iteration)
                     writer.add_summary(mask_1, iteration)
@@ -218,10 +218,10 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                     writer.add_summary(mask_2, iteration)
                     writer.add_summary(gen_voice_2, iteration)
                 if model_config['data_type'] in ['mag_phase_real_imag']:
+                    writer.add_summary(mix_2, iteration)
+                    writer.add_summary(voice_2, iteration)
                     writer.add_summary(mix_3, iteration)
                     writer.add_summary(voice_3, iteration)
-                    writer.add_summary(mask_3, iteration)
-                    writer.add_summary(gen_voice_3, iteration)
             except NameError:  # Indicates the try has not been successfully executed at all
                 print('No images to record')
                 break
