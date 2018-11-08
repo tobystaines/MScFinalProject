@@ -24,6 +24,10 @@ def deconv(inputs, filters, kernel_size, stride):
     return out
 
 
+def concat3d(x, y):
+    return tf.concat([x, y], axis=4)
+
+
 def conv3d(inputs, filters, kernel_size, stride):
     out = tf.layers.conv3d(
         inputs, filters=filters, kernel_size=kernel_size,
