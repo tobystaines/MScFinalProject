@@ -1,0 +1,114 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "numpy==1.15.2",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.11.0"
+    ],
+    "mainfile": "main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "audio_models.py",
+        "_sources/audio_models_1d6d8cfc70e6288679db9219c12e3616.py"
+      ],
+      [
+        "dataset.py",
+        "_sources/dataset_20f5331d613553a1d9af5429739bb5c9.py"
+      ],
+      [
+        "main.py",
+        "_sources/main_94aa7507accea62cf29aca64a7b4d625.py"
+      ],
+      [
+        "train.py",
+        "_sources/train_e66093e25443b1ce894bd2e1099f85e6.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/common_shapes.py\", line 686, in _call_cpp_shape_fn_impl\n    input_tensors_as_shapes, status)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/errors_impl.py\", line 473, in __exit__\n    c_api.TF_GetCode(self.status.status))\n",
+    "tensorflow.python.framework.errors_impl.InvalidArgumentError: slice index 2 of dimension 3 out of bounds. for 'strided_slice_13' (op: 'StridedSlice') with input shapes: [?,256,512,2], [4], [4], [4] and with computed input tensors: input[1] = <0 0 0 2>, input[2] = <0 0 0 3>, input[3] = <1 1 1 1>.\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 147, in do_experiment\n    validation_iterator, validation_handle, writer)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 97, in train\n    mask_2_summary = tf.summary.image('Voice_Mask_2', tf.expand_dims(model.voice_mask[:, :, :, 2], axis=3))\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/array_ops.py\", line 538, in _SliceHelper\n    name=name)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/array_ops.py\", line 706, in strided_slice\n    shrink_axis_mask=shrink_axis_mask)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/ops/gen_array_ops.py\", line 5430, in strided_slice\n    name=name)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/op_def_library.py\", line 787, in _apply_op_helper\n    op_def=op_def)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 2958, in create_op\n    set_shapes_for_outputs(ret)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 2209, in set_shapes_for_outputs\n    shapes = shape_func(op)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/ops.py\", line 2159, in call_with_requiring\n    return call_cpp_shape_fn(op, require_shape_fn=True)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/common_shapes.py\", line 627, in call_cpp_shape_fn\n    require_shape_fn)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/tensorflow/python/framework/common_shapes.py\", line 691, in _call_cpp_shape_fn_impl\n    raise ValueError(err.message)\n",
+    "ValueError: slice index 2 of dimension 3 out of bounds. for 'strided_slice_13' (op: 'StridedSlice') with input shapes: [?,256,512,2], [4], [4], [4] and with computed input tensors: input[1] = <0 0 0 2>, input[2] = <0 0 0 3>, input[3] = <1 1 1 1>.\n"
+  ],
+  "heartbeat": "2018-11-08T10:13:14.738379",
+  "host": {
+    "ENV": {},
+    "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
+    "gpus": {
+      "driver_version": "396.44",
+      "gpus": [
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11177
+        },
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11178
+        }
+      ]
+    },
+    "hostname": "africa",
+    "os": [
+      "Linux",
+      "Linux-4.15.0-36-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "model_config.data_type=mag_phase_real_imag"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-11-08T10:11:12.565929",
+  "status": "FAILED",
+  "stop_time": "2018-11-08T10:13:14.748390"
+}
