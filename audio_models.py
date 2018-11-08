@@ -31,7 +31,7 @@ class MagnitudeModel(object):
             self.variant = variant
             self.is_training = is_training
 
-            if self.variant in ['unet', 'capsunet']:
+            if self.variant in ['unet', 'capsunet','3Dunet']:
                 self.voice_mask_network = UNet(mixed_input, variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant == 'basic_capsnet':
                 self.voice_mask_network = BasicCapsnet(mixed_input, name='SegCaps_CapsNetBasic')
