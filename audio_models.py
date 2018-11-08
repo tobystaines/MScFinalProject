@@ -47,7 +47,7 @@ class MagnitudeModel(object):
             elif data_type in ['mag_phase']:
                 self.gen_voice = self.voice_mask * mixed_input
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
-                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * 0.00001
+                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * 0.00002
                 self.cost = (self.mag_loss + self.phase_loss)/2
 
             elif data_type == 'mag_phase_diff':
@@ -66,11 +66,21 @@ class MagnitudeModel(object):
                 self.cost = (self.real_loss + self.imag_loss)/2
 
             elif data_type == 'mag_real_imag':
-                self.temp = self.voice_mask
                 self.gen_voice = self.voice_mask * mixed_input
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
                 self.real_loss = mf.l1_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1])
                 self.imag_loss = mf.l1_loss(self.gen_voice[:, :, :, 2], voice_input[:, :, :, 2])
+                self.cost = (self. mag_loss + self.real_loss + self.imag_loss) / 3
+
+            elif data_type == 'mag_phase2': #  TODO: Finish implementing this?
+                self.mag_mask = self.voice_mask[:, :, :, 0]
+                self.phase_mask = tf.angle(tf.complex(self.voice_mask[:, :, :, 1], self.voice_mask[:, :, :, 2]))
+                self.gen_mag = self.mag_mask * mixed_input[:, :, :, 0]
+                self.gen_phase = self.phase_mask * mixed_phase
+                self.voice_phase = tf.angle(tf.complex(self.voice_input[:, :, :, 1], self.voice_input[:, :, :, 2]))
+                self.gen_voice = tf.concat((self.gen_mag, self.gen_phase), axis=3)
+                self.mag_loss = mf.l1_loss(self.gen_mag, voice_input[:, :, :, 0])
+                self.phase_loss = mf.l1_phase_loss(self.gen_phase, self.voice_phase) * 0.00001
                 self.cost = (self. mag_loss + self.real_loss + self.imag_loss) / 3
 
             elif data_type in ['mag_phase_real_imag']:
