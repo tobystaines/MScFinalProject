@@ -91,14 +91,16 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         voice_1_summary = tf.summary.image('Voice_1', tf.expand_dims(model.voice_input[:, :, :, 1], axis=3))
         mask_1_summary = tf.summary.image('Voice_Mask_1', tf.expand_dims(model.voice_mask[:, :, :, 1], axis=3))
         gen_voice_1_summary = tf.summary.image('Generated_Voice_1', tf.expand_dims(model.gen_voice[:, :, :, 1], axis=3))
-    if model_config['data_type'] in ['mag_real_imag', 'mag_phase_real_imag']:
+    if model_config['data_type'] in ['mag_real_imag']:
         mix_2_summary = tf.summary.image('Mixture_2', tf.expand_dims(model.mixed_input[:, :, :, 2], axis=3))
         voice_2_summary = tf.summary.image('Voice_2', tf.expand_dims(model.voice_input[:, :, :, 2], axis=3))
         mask_2_summary = tf.summary.image('Voice_Mask_2', tf.expand_dims(model.voice_mask[:, :, :, 2], axis=3))
         gen_voice_2_summary = tf.summary.image('Generated_Voice_2', tf.expand_dims(model.gen_voice[:, :, :, 2], axis=3))
     if model_config['data_type'] in ['mag_phase_real_imag']:
-        mix_3_summary = tf.summary.image('Mixture_3', tf.expand_dims(model.mixed_input[:, :, :, 2], axis=3))
-        voice_3_summary = tf.summary.image('Voice_3', tf.expand_dims(model.voice_input[:, :, :, 2], axis=3))
+        mix_2_summary = tf.summary.image('Mixture_2', tf.expand_dims(model.mixed_input[:, :, :, 2], axis=3))
+        voice_2_summary = tf.summary.image('Voice_2', tf.expand_dims(model.voice_input[:, :, :, 2], axis=3))
+        mix_3_summary = tf.summary.image('Mixture_3', tf.expand_dims(model.mixed_input[:, :, :, 3], axis=3))
+        voice_3_summary = tf.summary.image('Voice_3', tf.expand_dims(model.voice_input[:, :, :, 3], axis=3))
     if 'mag_' in model_config['data_type']:
         mag_loss_summary = tf.summary.scalar('Training_magnitude_loss', model.mag_loss)
     if 'phase' in model_config['data_type']:
