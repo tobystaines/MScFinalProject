@@ -24,6 +24,24 @@ def deconv(inputs, filters, kernel_size, stride):
     return out
 
 
+def conv3d(inputs, filters, kernel_size, stride):
+    out = tf.layers.conv3d(
+        inputs, filters=filters, kernel_size=kernel_size,
+        kernel_initializer=tf.random_normal_initializer(stddev=0.02),
+        strides=stride, padding='SAME')
+
+    return out
+
+
+def deconv3d(inputs, filters, kernel_size, stride):
+    out = tf.layers.conv3d_transpose(
+        inputs, filters=filters, kernel_size=kernel_size,
+        kernel_initializer=tf.random_normal_initializer(stddev=0.02),
+        strides=stride, padding='SAME')
+
+    return out
+
+
 def batch_norm(inputs, is_training, reuse):
     return tf.contrib.layers.batch_norm(
         inputs,
