@@ -31,7 +31,7 @@ class MagnitudeModel(object):
             self.variant = variant
             self.is_training = is_training
 
-            if self.variant in ['unet', 'capsunet','3Dunet']:
+            if self.variant in ['unet', 'capsunet']:
                 self.voice_mask_network = UNet(mixed_input, variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant == 'basic_capsnet':
                 self.voice_mask_network = BasicCapsnet(mixed_input, name='SegCaps_CapsNetBasic')
@@ -66,6 +66,7 @@ class MagnitudeModel(object):
                 self.cost = (self.real_loss + self.imag_loss)/2
 
             elif data_type == 'mag_real_imag':
+                self.temp = self.voice_mask
                 self.gen_voice = self.voice_mask * mixed_input
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
                 self.real_loss = mf.l1_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1])
@@ -99,9 +100,6 @@ class UNet(object):
             elif self.variant == 'capsunet':
                 self.encoder = CapsUNetEncoder(input_tensor, is_training, reuse)
                 self.decoder = CapsUNetDecoder(self.encoder.output, self.encoder, is_training, reuse)
-            elif self.variant == '3Dunet':
-                self.encoder = UNet3DEncoder(input_tensor, is_training, reuse)
-                self.decoder = UNet3DDecoder(self.encoder.output, self.encoder, data_type, is_training, reuse)
 
             self.output = mf.tanh(self.decoder.output) / 2 + .5
 
@@ -200,103 +198,6 @@ class UNetDecoder(object):
                 net = mf.deconv(net, filters=self.out_depth, kernel_size=5, stride=(2, 2))
 
             self.output = net
-
-
-class UNet3DEncoder(object):
-    """
-    The down-convolution side of a 3D convoltional U-Net model.
-    """
-
-    def __init__(self, input_tensor, is_training, reuse):
-        self.input_tensor = tf.expand_dims(input_tensor, axis=4)
-        self.input_depth = self.input_tensor.shape[3]
-        with tf.variable_scope('encoder'):
-            with tf.variable_scope('layer-1'):
-                net = mf.conv3d(self.input_tensor, filters=8, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
-                self.l1 = net
-
-            with tf.variable_scope('layer-2'):
-                net = mf.lrelu(net)
-                net = mf.conv3d(net, filters=16, kernel_size=(5, 5, net.shape[3]), stride=(2, 2, 1))
-                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                self.l2 = net
-
-            with tf.variable_scope('layer-3'):
-                net = mf.lrelu(net)
-                net = mf.conv3d(net, filters=32, kernel_size=(5, 5, net.shape[3]), stride=(2, 2, 1))
-                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                self.l3 = net
-
-            with tf.variable_scope('layer-4'):
-                net = mf.lrelu(net)
-                net = mf.conv3d(net, filters=64, kernel_size=(5, 5, net.shape[3]), stride=(2, 2, 1))
-                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                self.l4 = net
-
-            with tf.variable_scope('layer-5'):
-                net = mf.lrelu(net)
-                net = mf.conv3d(net, filters=128, kernel_size=(5, 5, net.shape[3]), stride=(2, 2, 1))
-                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                self.l5 = net
-
-            with tf.variable_scope('layer-6'):
-                net = mf.lrelu(net)
-                net = mf.conv3d(net, filters=256, kernel_size=(5, 5, net.shape[3]), stride=(2, 2, 1))
-
-            self.output = net
-
-
-class UNet3DDecoder(object):
-    """
-    The up-convolution side of a convolutional U-Net model
-    """
-    def __init__(self, input_tensor, encoder, data_type, is_training, reuse):
-        self.input_tensor = input_tensor
-        self.input_depth = self.input_tensor.shape[3]
-
-        with tf.variable_scope('decoder'):
-            with tf.variable_scope('layer-1'):
-                net = mf.relu(self.input_tensor)
-                net = mf.deconv3d(net, filters=128, kernel_size=(5, 5, net.shape[3]), stride=(2, 2, 1))
-                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                net = mf.dropout(net, .5)
-                self.l1 = net
-
-            with tf.variable_scope('layer-2'):
-                net = mf.relu(mf.concat3d(net, encoder.l5))
-                net = mf.deconv3d(net, filters=64, kernel_size=(5, 5, net.shape[3]), stride=(2, 2, 1))
-                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                net = mf.dropout(net, .5)
-                self.l2 = net
-
-            with tf.variable_scope('layer-3'):
-                net = mf.relu(mf.concat3d(net, encoder.l4))
-                net = mf.deconv3d(net, filters=32, kernel_size=(5, 5, net.shape[3]), stride=(2, 2, 1))
-                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                net = mf.dropout(net, .5)
-                self.l3 = net
-
-            with tf.variable_scope('layer-4'):
-                net = mf.relu(mf.concat3d(net, encoder.l3))
-                net = mf.deconv3d(net, filters=16, kernel_size=(5, 5, net.shape[3]), stride=(2, 2, 1))
-                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                self.l4 = net
-
-            with tf.variable_scope('layer-5'):
-                net = mf.relu(mf.concat3d(net, encoder.l2))
-                net = mf.deconv3d(net, filters=8, kernel_size=(5, 5, net.shape[3]), stride=(2, 2, 1))
-                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                self.l5 = net
-
-            with tf.variable_scope('layer-6'):
-                if data_type == 'mag_phase_real_imag':
-                    self.out_depth = 2
-                else:
-                    self.out_depth = encoder.input_depth
-                net = mf.relu(mf.concat3d(net, encoder.l1))
-                net = mf.deconv3d(net, filters=1, kernel_size=(5, 5, self.out_depth), stride=(2, 2, 1))
-
-            self.output = tf.squeeze(net, axis=4)
 
 
 class CapsUNetEncoder(object):
