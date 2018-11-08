@@ -1,6 +1,6 @@
 import tensorflow as tf
 import math
-import numpy as np
+
 
 def concat(x, y):
     return tf.concat([x, y], axis=3)
@@ -17,28 +17,6 @@ def conv(inputs, filters, kernel_size, stride):
 
 def deconv(inputs, filters, kernel_size, stride):
     out = tf.layers.conv2d_transpose(
-        inputs, filters=filters, kernel_size=kernel_size,
-        kernel_initializer=tf.random_normal_initializer(stddev=0.02),
-        strides=stride, padding='SAME')
-
-    return out
-
-
-def concat3d(x, y):
-    return tf.concat([x, y], axis=4)
-
-
-def conv3d(inputs, filters, kernel_size, stride):
-    out = tf.layers.conv3d(
-        inputs, filters=filters, kernel_size=kernel_size,
-        kernel_initializer=tf.random_normal_initializer(stddev=0.02),
-        strides=stride, padding='SAME')
-
-    return out
-
-
-def deconv3d(inputs, filters, kernel_size, stride):
-    out = tf.layers.conv3d_transpose(
         inputs, filters=filters, kernel_size=kernel_size,
         kernel_initializer=tf.random_normal_initializer(stddev=0.02),
         strides=stride, padding='SAME')
