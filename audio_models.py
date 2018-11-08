@@ -207,36 +207,36 @@ class UNet3DEncoder(object):
         self.input_depth = self.input_tensor.shape[3]
         with tf.variable_scope('encoder'):
             with tf.variable_scope('layer-1'):
-                net = mf.conv3d(self.input_tensor, filters=8, kernel_size=(5, 5, self.input_depth), stride=(2, 2))
+                net = mf.conv3d(self.input_tensor, filters=8, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
                 self.l1 = net
 
             with tf.variable_scope('layer-2'):
                 net = mf.lrelu(net)
-                net = mf.conv3d(net, filters=16, kernel_size=(5, 5, self.input_depth), stride=(2, 2))
+                net = mf.conv3d(net, filters=16, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
                 self.l2 = net
 
             with tf.variable_scope('layer-3'):
                 net = mf.lrelu(net)
-                net = mf.conv3d(net, filters=32, kernel_size=(5, 5, self.input_depth), stride=(2, 2))
+                net = mf.conv3d(net, filters=32, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
                 self.l3 = net
 
             with tf.variable_scope('layer-4'):
                 net = mf.lrelu(net)
-                net = mf.conv3d(net, filters=64, kernel_size=(5, 5, self.input_depth), stride=(2, 2))
+                net = mf.conv3d(net, filters=64, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
                 self.l4 = net
 
             with tf.variable_scope('layer-5'):
                 net = mf.lrelu(net)
-                net = mf.conv3d(net, filters=128, kernel_size=(5, 5, self.input_depth), stride=(2, 2))
+                net = mf.conv3d(net, filters=128, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
                 self.l5 = net
 
             with tf.variable_scope('layer-6'):
                 net = mf.lrelu(net)
-                net = mf.conv3d(net, filters=256, kernel_size=(5, 5, self.input_depth), stride=(2, 2))
+                net = mf.conv3d(net, filters=256, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
 
             self.output = net
 
@@ -252,30 +252,30 @@ class UNet3DDecoder(object):
         with tf.variable_scope('decoder'):
             with tf.variable_scope('layer-1'):
                 net = mf.relu(self.input_tensor)
-                net = mf.deconv(net, filters=128, kernel_size=(5, 5, self.input_depth), stride=(2, 2))
+                net = mf.deconv(net, filters=128, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
                 net = mf.dropout(net, .5)
 
             with tf.variable_scope('layer-2'):
                 net = mf.relu(mf.concat(net, encoder.l5))
-                net = mf.deconv(net, filters=64, kernel_size=(5, 5, self.input_depth), stride=(2, 2))
+                net = mf.deconv(net, filters=64, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
                 net = mf.dropout(net, .5)
 
             with tf.variable_scope('layer-3'):
                 net = mf.relu(mf.concat(net, encoder.l4))
-                net = mf.deconv(net, filters=32, kernel_size=(5, 5, self.input_depth), stride=(2, 2))
+                net = mf.deconv(net, filters=32, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
                 net = mf.dropout(net, .5)
 
             with tf.variable_scope('layer-4'):
                 net = mf.relu(mf.concat(net, encoder.l3))
-                net = mf.deconv(net, filters=16, kernel_size=(5, 5, self.input_depth), stride=(2, 2))
+                net = mf.deconv(net, filters=16, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
 
             with tf.variable_scope('layer-5'):
                 net = mf.relu(mf.concat(net, encoder.l2))
-                net = mf.deconv(net, filters=8, kernel_size=(5, 5, self.input_depth), stride=(2, 2))
+                net = mf.deconv(net, filters=8, kernel_size=(5, 5, self.input_depth), stride=(2, 2, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
 
             with tf.variable_scope('layer-6'):
@@ -284,7 +284,7 @@ class UNet3DDecoder(object):
                 else:
                     self.out_depth = encoder.input_tensor.shape[3]
                 net = mf.relu(mf.concat(net, encoder.l1))
-                net = mf.deconv(net, filters=1, kernel_size=(5, 5, self.out_depth), stride=(2, 2))
+                net = mf.deconv(net, filters=1, kernel_size=(5, 5, self.out_depth), stride=(2, 2, 1))
 
             self.output = net
 
