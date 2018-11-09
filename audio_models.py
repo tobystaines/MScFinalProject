@@ -20,7 +20,7 @@ class MagnitudeModel(object):
         name: Model instance name
     """
     def __init__(self, mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, background_audio,
-                 variant, is_training, learning_rate, data_type, name):
+                 variant, is_training, learning_rate, data_type, phase_weight, name):
         with tf.variable_scope(name):
             self.mixed_input = mixed_input
             self.voice_input = voice_input
@@ -47,7 +47,7 @@ class MagnitudeModel(object):
             elif data_type in ['mag_phase']:
                 self.gen_voice = self.voice_mask * mixed_input
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
-                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * 0.000005
+                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * phase_weight
                 self.cost = (self.mag_loss + self.phase_loss)/2
 
             elif data_type == 'mag_phase_diff':
@@ -72,7 +72,7 @@ class MagnitudeModel(object):
                 self.imag_loss = mf.l1_loss(self.gen_voice[:, :, :, 2], voice_input[:, :, :, 2])
                 self.cost = (self. mag_loss + self.real_loss + self.imag_loss) / 3
 
-            elif data_type == 'mag_phase2': #  TODO: Finish implementing this?
+            elif data_type == 'mag_phase2':
                 self.mag_mask = self.voice_mask[:, :, :, 0]
                 self.phase_mask = tf.angle(tf.complex(self.voice_mask[:, :, :, 1], self.voice_mask[:, :, :, 2]))
                 self.voice_mask = tf.concat((self.mag_mask, self.phase_mask), axis=3)
@@ -81,13 +81,13 @@ class MagnitudeModel(object):
                 self.voice_phase = tf.angle(tf.complex(self.voice_input[:, :, :, 1], self.voice_input[:, :, :, 2]))
                 self.gen_voice = tf.concat((self.gen_mag, self.gen_phase), axis=3)
                 self.mag_loss = mf.l1_loss(self.gen_mag, voice_input[:, :, :, 0])
-                self.phase_loss = mf.l1_phase_loss(self.gen_phase, self.voice_phase) * 0.00001
+                self.phase_loss = mf.l1_phase_loss(self.gen_phase, self.voice_phase) * phase_weight
                 self.cost = (self. mag_loss + self.real_loss + self.imag_loss) / 3
 
             elif data_type in ['mag_phase_real_imag']:
                 self.gen_voice = self.voice_mask * mixed_input[:, :, :, 2:4]
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 2])
-                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 3]) * 0.00001
+                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 3]) * phase_weight
                 self.cost = (self.mag_loss + self.phase_loss)/2
 
             self.optimizer = tf.train.AdamOptimizer(
