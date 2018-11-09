@@ -20,6 +20,8 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 def cfg():
     model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet']
                     'data_type': 'mag',  # From [' mag', 'mag_phase', 'real_imag', 'mag_real_imag']
+                    'phase_weight': 0.00001,  # When using a model which learns to estimate phase, defines how much
+                                              # weight phase loss should be given against magnitude loss
                     'initialisation_test': False,  # Whether or not to calculate test metrics before training
                     'loading': False,  # Whether to load an existing checkpoint
                     'checkpoint_to_load': "136/136-6",  # Checkpoint format: run/run-step
@@ -31,8 +33,8 @@ def cfg():
                     'val_iters': 50000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
                     'dataset': 'CHiME',  # Choice from ['CHiME', 'LibriSpeech_s', 'LibriSpeech_m',
-                                        #               'LibriSpeech_l', 'CHiME and LibriSpeech_s',
-                                        #               'CHiME and LibriSpeech_m', 'CHiME and LibriSpeech_l']
+                                         #              'LibriSpeech_l', 'CHiME and LibriSpeech_s',
+                                         #              'CHiME and LibriSpeech_m', 'CHiME and LibriSpeech_l']
                     'local_run': False,  # Whether experiment is running on laptop or server
                     'sample_rate': 16384,  # Desired sample rate of audio. Input will be resampled to this
                     'n_fft': 1024,  # Number of samples in each fourier transform
@@ -121,7 +123,7 @@ def do_experiment(model_config):
 
     model = audio_models.MagnitudeModel(mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, background_audio,
                                         model_config['model_variant'], is_training, model_config['learning_rate'],
-                                        model_config['data_type'], name='Magnitude_Model')
+                                        model_config['data_type'], model_config['phase_weight'], name='Magnitude_Model')
 
     sess.run(tf.global_variables_initializer())
 
