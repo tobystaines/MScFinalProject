@@ -79,7 +79,7 @@ class MagnitudeModel(object):
                 self.gen_mag = self.mag_mask * mixed_input[:, :, :, 0]
                 self.gen_phase = self.phase_mask * mixed_phase
                 self.voice_phase = tf.angle(tf.complex(self.voice_input[:, :, :, 1], self.voice_input[:, :, :, 2]))
-                self.gen_voice = mf.concat(tf.expand_dims(self.gen_mag, axis=3), tf.expand_Dims(self.gen_phase, axis=3))
+                self.gen_voice = mf.concat(tf.expand_dims(self.gen_mag, axis=3), tf.expand_dims(self.gen_phase, axis=3))
                 self.mag_loss = mf.l1_loss(self.gen_mag, voice_input[:, :, :, 0])
                 self.phase_loss = mf.l1_phase_loss(self.gen_phase, self.voice_phase) * phase_weight
                 self.cost = (self. mag_loss + self.real_loss + self.imag_loss) / 3
