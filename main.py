@@ -23,12 +23,12 @@ def cfg():
                     'phase_weight': 0.00001,  # When using a model which learns to estimate phase, defines how much
                                               # weight phase loss should be given against magnitude loss
                     'initialisation_test': False,  # Whether or not to calculate test metrics before training
-                    'loading': False,  # Whether to load an existing checkpoint
-                    'checkpoint_to_load': "136/136-6",  # Checkpoint format: run/run-step
+                    'loading': True,  # Whether to load an existing checkpoint
+                    'checkpoint_to_load': "169/169-8",  # Checkpoint format: run/run-step
                     'saving': True,  # Whether to take checkpoints
                     'save_by_epochs': True,  # Checkpoints at end of each epoch or every 'save_iters'?
                     'save_iters': 10000,  # Number of training iterations between checkpoints
-                    'early_stopping': True,  # Should validation data checks be used for early stopping?
+                    'early_stopping': False,  # Should validation data checks be used for early stopping?
                     'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
                     'val_iters': 50000,  # Number of training iterations between validation checks,
                     'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
@@ -45,7 +45,7 @@ def cfg():
                     'batch_size': 50,  # Number of patches in each batch
                     'n_shuffle': 1000,  # Number of patches buffered before batching
                     'learning_rate': 0.0001,  # The learning rate to be used by the model
-                    'epochs': 8,  # Number of full passes through the dataset to train for
+                    'epochs': 0,  # Number of full passes through the dataset to train for
                     'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
                     'GPU': '0'
                     }
