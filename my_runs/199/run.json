@@ -6,7 +6,7 @@
     "dependencies": [
       "numpy==1.15.4",
       "sacred==0.7.4",
-      "tensorflow-gpu==1.8.0"
+      "tensorflow==1.2.0"
     ],
     "mainfile": "main.py",
     "name": "UNet_Speech_Separation",
@@ -14,7 +14,7 @@
     "sources": [
       [
         "audio_models.py",
-        "_sources/audio_models_4149a998ade59f9c176d014505409792.py"
+        "_sources/audio_models_440ee1602411291adf56a3ac99578719.py"
       ],
       [
         "dataset.py",
@@ -22,7 +22,7 @@
       ],
       [
         "main.py",
-        "_sources/main_cf46758d4187e412cc9d0faf46cf4bb1.py"
+        "_sources/main_f182f8b5f6e05b9dc3d2b062c4cad05f.py"
       ],
       [
         "train.py",
@@ -30,25 +30,7 @@
       ]
     ]
   },
-  "fail_trace": [
-    "Traceback (most recent call last):\n",
-    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/ops.py\", line 1626, in _create_c_op\n    c_op = c_api.TF_FinishOperation(op_desc)\n",
-    "tensorflow.python.framework.errors_impl.InvalidArgumentError: Shape must be at least rank 4 but is rank 3 for 'Magnitude_Model/concat' (op: 'ConcatV2') with input shapes: [?,256,512], [?,256,512], [] and with computed input tensors: input[2] = <3>.\n",
-    "\nDuring handling of the above exception, another exception occurred:\n\n",
-    "Traceback (most recent call last):\n",
-    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
-    "  File \"main.py\", line 126, in do_experiment\n    model_config['data_type'], model_config['phase_weight'], name='Magnitude_Model')\n",
-    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 78, in __init__\n    self.voice_mask = tf.concat((self.mag_mask, self.phase_mask), axis=3)\n",
-    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/ops/array_ops.py\", line 1124, in concat\n    return gen_array_ops.concat_v2(values=values, axis=axis, name=name)\n",
-    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/ops/gen_array_ops.py\", line 1033, in concat_v2\n    \"ConcatV2\", values=values, axis=axis, name=name)\n",
-    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/op_def_library.py\", line 787, in _apply_op_helper\n    op_def=op_def)\n",
-    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/util/deprecation.py\", line 488, in new_func\n    return func(*args, **kwargs)\n",
-    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/ops.py\", line 3272, in create_op\n    op_def=op_def)\n",
-    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/ops.py\", line 1790, in __init__\n    control_input_ops)\n",
-    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/ops.py\", line 1629, in _create_c_op\n    raise ValueError(str(e))\n",
-    "ValueError: Shape must be at least rank 4 but is rank 3 for 'Magnitude_Model/concat' (op: 'ConcatV2') with input shapes: [?,256,512], [?,256,512], [] and with computed input tensors: input[2] = <3>.\n"
-  ],
-  "heartbeat": "2018-11-09T17:59:18.629412",
+  "heartbeat": "2018-11-10T14:14:50.426561",
   "host": {
     "ENV": {},
     "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
@@ -67,7 +49,7 @@
         }
       ]
     },
-    "hostname": "africa",
+    "hostname": "europe",
     "os": [
       "Linux",
       "Linux-4.15.0-36-generic-x86_64-with-Ubuntu-16.04-xenial"
@@ -96,16 +78,14 @@
       "--tiny_db": null,
       "--unobserved": false,
       "COMMAND": null,
-      "UPDATE": [
-        "model_config.data_type=mag_phase2"
-      ],
+      "UPDATE": [],
       "help": false,
-      "with": true
+      "with": false
     }
   },
   "resources": [],
   "result": null,
-  "start_time": "2018-11-09T17:57:39.923030",
-  "status": "FAILED",
-  "stop_time": "2018-11-09T17:59:18.635412"
+  "start_time": "2018-11-10T13:58:07.818885",
+  "status": "COMPLETED",
+  "stop_time": "2018-11-10T14:14:50.419156"
 }
