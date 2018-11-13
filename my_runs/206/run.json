@@ -30,7 +30,14 @@
       ]
     ]
   },
-  "heartbeat": "2018-11-12T14:11:10.966105",
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 134, in do_experiment\n    restorer.restore(sess, checkpoint)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/training/saver.py\", line 1530, in restore\n    + compat.as_text(save_path))\n",
+    "ValueError: The passed save_path is not a valid checkpoint: /home/enterprise.internal.city.ac.uk/acvn728/checkpoints/180/180-3\n"
+  ],
+  "heartbeat": "2018-11-12T14:13:15.795986",
   "host": {
     "ENV": {},
     "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
@@ -79,9 +86,8 @@
       "--unobserved": false,
       "COMMAND": null,
       "UPDATE": [
-        "model_config.data_type=mag_phase_diff",
-        "model_config.checkpoint_to_load=177/177-8",
-        "model_config.epochs=2"
+        "model_config.data_type=real_imag",
+        "model_config.checkpoint_to_load=180/180-3"
       ],
       "help": false,
       "with": true
@@ -89,7 +95,7 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2018-11-12T12:22:36.367088",
-  "status": "COMPLETED",
-  "stop_time": "2018-11-12T14:11:10.964262"
+  "start_time": "2018-11-12T14:11:20.722807",
+  "status": "FAILED",
+  "stop_time": "2018-11-12T14:13:15.802190"
 }
