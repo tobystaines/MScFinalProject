@@ -34,9 +34,9 @@ class MagnitudeModel(object):
             if self.variant in ['unet', 'capsunet']:
                 self.voice_mask_network = UNet(mixed_input, variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant == 'basic_capsnet':
-                self.voice_mask_network = BasicCapsnet(mixed_input, name='SegCaps_CapsNetBasic')
-            elif self.variant == 'conv_net':
-                self.voice_mask_network = conv_net(mixed_input, is_training=is_training, reuse=None, name='basic_cnn')
+                self.voice_mask_network = BasicCapsNet(mixed_input, name='basic_capsnet')
+            elif self.variant == 'basic_convnet':
+                self.voice_mask_network = BasicConvNet(mixed_input, is_training=is_training, reuse=None, name='basic_convnet')
 
             self.voice_mask = self.voice_mask_network.output
 
@@ -304,7 +304,7 @@ class CapsUNetDecoder(object):
             self.output = net
 
 
-class BasicCapsnet(object):
+class BasicCapsNet(object):
 
     def __init__(self, mixed_mag, name):
         """
@@ -342,7 +342,7 @@ class BasicCapsnet(object):
             self.output = net
 
 
-class conv_net(object):
+class BasicConvNet(object):
     def __init__(self, mixed_mag, is_training, reuse, name):
         """
         input_tensor: Tensor with shape [batch_size, height, width, channels]
@@ -376,67 +376,6 @@ class conv_net(object):
                 self.voice_mask = net
 
             self.output = net
-
-
-class ComplexNumberModel(object):
-    """
-    Top level object for models working on complex number spectrograms.
-    Attributes:
-        mixed_spec: Input placeholder for spectrogram of mixed signals (voice plus background noise), with real number
-                    in channel 0 and complex number in channel 1. - X
-        voice_spec: Input placeholder for magnitude spectrogram of isolated voice signal - Y
-        mixed_audio: Input placeholder for waveform audio of mixed signals (voice plus background noise)
-        voice_audio: Input placeholder for waveform audio of isolated voice signal
-        variant: The type of U-Net model (Normal convolutional or capsule based)
-        is_training: Boolean - should the model be trained on the current input or not
-        learning_rate: The learning rate the model should be trained with.
-        name: Model instance name
-    """
-
-    def __init__(self, mixed_spec, voice_spec, mixed_audio, voice_audio, variant, is_training, learning_rate,
-                 name='complex_unet_model'):
-        with tf.variable_scope(name):
-            self.mixed_spec = mixed_spec
-            self.voice_spec = voice_spec
-
-            self.input_shape = mixed_spec.get_shape().as_list()
-            self.mixed_audio = mixed_audio
-            self.voice_audio = voice_audio
-            self.variant = variant
-            self.is_training = is_training
-
-            self.voice_mask_unet = ComplexUNet(mixed_spec, variant, is_training=is_training, reuse=False,
-                                               name='voice-mask-unet')
-
-            self.voice_mask = self.voice_mask_unet.output
-
-            self.gen_voice = self.voice_mask * mixed_spec
-
-            self.cost = mf.l1_loss(self.gen_voice, voice_spec)
-
-            self.optimizer = tf.train.AdamOptimizer(
-                learning_rate=learning_rate,
-                beta1=0.5,
-            )
-            self.train_op = self.optimizer.minimize(self.cost)
-
-
-class ComplexUNet(object):
-    """
-    Complex number model U-Net
-    """
-    def __init__(self, input_tensor, variant, is_training, reuse, name):
-        with tf.variable_scope(name, reuse=reuse):
-            self.variant = variant
-
-            if self.variant == 'unet':
-                self.encoder = UNetEncoder(input_tensor, is_training, reuse)
-                self.decoder = UNetDecoder(self.encoder.output, self.encoder, is_training, reuse)
-            elif self.variant == 'capsunet':
-                self.encoder = ComplexEncoder(input_tensor)
-                self.decoder = ComplexDecoder(self.encoder.output, self.encoder)
-
-            self.output = mf.tanh(self.decoder.output) / 2 + .5
 
 
 class ComplexEncoder(object):
