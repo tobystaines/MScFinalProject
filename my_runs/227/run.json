@@ -1,0 +1,113 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "numpy==1.15.4",
+      "sacred==0.7.4",
+      "tensorflow==1.2.0"
+    ],
+    "mainfile": "main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "audio_models.py",
+        "_sources/audio_models_5c8968be686854094cd8a4155f0d8efe.py"
+      ],
+      [
+        "dataset.py",
+        "_sources/dataset_20f5331d613553a1d9af5429739bb5c9.py"
+      ],
+      [
+        "main.py",
+        "_sources/main_a2bb796006b3da291d2b7f804fb008d0.py"
+      ],
+      [
+        "train.py",
+        "_sources/train_0ad1646a07bfc1615aa3cfd20d8f53d4.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/ops.py\", line 1626, in _create_c_op\n    c_op = c_api.TF_FinishOperation(op_desc)\n",
+    "tensorflow.python.framework.errors_impl.InvalidArgumentError: slice index 1 of dimension 3 out of bounds. for 'strided_slice_9' (op: 'StridedSlice') with input shapes: [?,256,512,1], [4], [4], [4] and with computed input tensors: input[1] = <0 0 0 1>, input[2] = <0 0 0 2>, input[3] = <1 1 1 1>.\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 149, in do_experiment\n    validation_iterator, validation_handle, writer)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 92, in train\n    mask_1_summary = tf.summary.image('Voice_Mask_1', tf.expand_dims(model.voice_mask[:, :, :, 1], axis=3))\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/ops/array_ops.py\", line 525, in _slice_helper\n    name=name)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/ops/array_ops.py\", line 691, in strided_slice\n    shrink_axis_mask=shrink_axis_mask)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/ops/gen_array_ops.py\", line 8336, in strided_slice\n    name=name)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/op_def_library.py\", line 787, in _apply_op_helper\n    op_def=op_def)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/util/deprecation.py\", line 488, in new_func\n    return func(*args, **kwargs)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/ops.py\", line 3272, in create_op\n    op_def=op_def)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/ops.py\", line 1790, in __init__\n    control_input_ops)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/ops.py\", line 1629, in _create_c_op\n    raise ValueError(str(e))\n",
+    "ValueError: slice index 1 of dimension 3 out of bounds. for 'strided_slice_9' (op: 'StridedSlice') with input shapes: [?,256,512,1], [4], [4], [4] and with computed input tensors: input[1] = <0 0 0 1>, input[2] = <0 0 0 2>, input[3] = <1 1 1 1>.\n"
+  ],
+  "heartbeat": "2018-11-16T14:20:57.249323",
+  "host": {
+    "ENV": {},
+    "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
+    "gpus": {
+      "driver_version": "396.44",
+      "gpus": [
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11177
+        },
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11178
+        }
+      ]
+    },
+    "hostname": "europe",
+    "os": [
+      "Linux",
+      "Linux-4.15.0-38-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "model_config.model_variant=basic_convnet",
+        "model_config.data_type=mag_phase"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-11-16T14:19:14.067156",
+  "status": "FAILED",
+  "stop_time": "2018-11-16T14:20:57.254565"
+}
