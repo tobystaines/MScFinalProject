@@ -57,9 +57,7 @@ def cfg():
 
     else:  # Data and Checkpoint directories on the uni server
         model_config['chime_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/NewCHiME/'
-        #model_config['librispeech_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/LibriSpeechMini/'
         model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
-        #model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
         model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
         model_config['log_dir'] = 'logs/ssh'
 
@@ -105,6 +103,7 @@ def do_experiment(model_config):
     mixed_phase = tf.expand_dims(mixed_spec[:, :, :-1, 3], 3)
 
     print('Creating model')
+    # Restructure data from pipeline based on data type required
     if model_config['data_type'] == 'mag':
         mixed_input = tf.expand_dims(mixed_spec[:, :, :-1, 2], 3)
         voice_input = tf.expand_dims(voice_spec[:, :, :-1, 2], 3)
@@ -148,7 +147,7 @@ def do_experiment(model_config):
     model = train(sess, model, model_config, model_folder, handle, training_iterator, training_handle,
                   validation_iterator, validation_handle, writer)
 
-    # Test trained model
+    # Test the trained model
     mean_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle,
                                       test_count, experiment_id)
     print('{ts}:\n\tAll done with experiment {exid}!'.format(ts=datetime.datetime.now(), exid=experiment_id))

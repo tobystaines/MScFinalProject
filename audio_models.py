@@ -4,19 +4,21 @@ from SegCaps import capsule_layers
 from keras import layers
 
 
-
 class MagnitudeModel(object):
     """
-    Top level object for models working on magnitude spectrograms.
+    Top level object for models.
     Attributes:
-        mixed_mag: Input placeholder for magnitude spectrogram of mixed signals (voice plus background noise) - X
-        voice_mag: Input placeholder for magnitude spectrogram of isolated voice signal - Y
-        mixed_phase: Input placeholder for phase spectrogram of mixed signals (voice plus background noise)
-        mixed_audio: Input placeholder for waveform audio of mixed signals (voice plus background noise)
-        voice_audio: Input placeholder for waveform audio of isolated voice signal
-        variant: The type of U-Net model (Normal convolutional or capsule based)
+        mixed_input: 4D tensor ([batch_size, height, width, channels]) - Input placeholder for mixed signals (voice plus background noise) - X
+        voice_input: 4D tensor ([batch_size, height, width, channels]) - Input placeholder for isolated voice signal - Y
+        mixed_phase: 4D tensor ([batch_size, height, width, 1]) - Input placeholder for phase spectrogram of mixed signals (voice plus background noise)
+        mixed_audio: 3D tensor ([batch_size, length, 1]) - Input placeholder for waveform audio of mixed signals (voice plus background noise)
+        voice_audio: 3D tensor ([batch_size, length, 1]) - Input placeholder for waveform audio of isolated voice signal
+        background_audio: 3D tensor ([batch_size, length, 1]) - Input placeholder for waveform audio of background noise signal
+        variant: The type of model ('unet', capsunet', basic_capsnet', 'basic_convnet')
         is_training: Boolean - should the model be trained on the current input or not
         learning_rate: The learning rate the model should be trained with.
+        data_type: The type of data representations to be used in the model (' mag', 'mag_phase', 'mag_phase2', 'mag_phase_diff', 'real_imag', 'mag_real_imag')
+        phase_weight: The weight applied to phase loss relative to magnitude loss
         name: Model instance name
     """
     def __init__(self, mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, background_audio,
