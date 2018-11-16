@@ -56,7 +56,9 @@ def get_paired_dataset(zipped_files,
                        batch_size,
                        n_shuffle,
                        normalise):
-
+    """
+    Returns a data pipeline (now tripple, rather than pair) of spectrogram and audio files
+    """
     return (
         tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1], zipped_files[:, 2]))
         .map(partial(af.read_audio_triple,

@@ -27,7 +27,7 @@ def read_audio(path, sample_rate, n_channels=1):
 
 def read_audio_triple(path_a, path_b, path_c, sample_rate):
     """
-    Takes in the path of two audio files and the required output sample rate,
+    Takes in the path of three audio files and the required output sample rate,
     returns a tuple of tensors of the wave form of the audio files.
     """
     return (tf.py_func(read_audio_py, [path_a, sample_rate], tf.float32, stateful=False),
@@ -36,15 +36,17 @@ def read_audio_triple(path_a, path_b, path_c, sample_rate):
 
 
 def compute_spectrogram(audio, n_fft, fft_hop, normalise):
-    '''
+    """
     Parameters
     ----------
-    audio : single to dual channel audio shaped (n_samples, )
+    audio : mono audio shaped (n_samples, )
+    n_fft: number of samples in each Fourier transform
+    fft_hop: hop length between the start of Fourier transforms
 
     Returns
     -------
-    Tensor of shape (n_frames, 1 + n_fft / 2, 2), where the last dimension is (magnitude, phase)
-    '''
+    Tensor of shape (n_frames, 1 + n_fft / 2, 4), where the last dimension is (real number, imaginary number, magnitude, phase)
+    """
 
     def stft(x, normalise):
         spec = librosa.stft(
@@ -68,7 +70,7 @@ def compute_spectrogram(audio, n_fft, fft_hop, normalise):
 
 def extract_spectrogram_patches(
         spec, n_fft, patch_window, patch_hop):
-    '''
+    """
     Parameters
     ----------
     spec : Spectrogram of shape (n_frames, 1 + n_fft / 2, 2)
@@ -77,7 +79,7 @@ def extract_spectrogram_patches(
     -------
     Tensor of shape (n_patches, patch_window, 1 + n_fft / 2, 2)
         containing patches from spec.
-    '''
+    """
     with tf.name_scope('extract_spectrogram_patches'):
         spec4d = tf.expand_dims(spec, 0)
 
@@ -95,7 +97,7 @@ def extract_spectrogram_patches(
 
 
 def extract_audio_patches(audio, fft_hop, patch_window, patch_hop):
-    '''
+    """
     Parameters
     ----------
     audio : Waveform audio of shape (n_samples, )
@@ -103,7 +105,7 @@ def extract_audio_patches(audio, fft_hop, patch_window, patch_hop):
     Returns
     -------
     Tensor of shape (n_patches, patch_window) containing patches from audio.
-    '''
+    """
     with tf.name_scope('extract_audio_patches'):
         audio4d = tf.expand_dims(tf.expand_dims(audio, 0), 0)
         patch_length = (patch_window - 1) * fft_hop
@@ -123,7 +125,7 @@ def extract_audio_patches(audio, fft_hop, patch_window, patch_hop):
 
 def compute_spectrogram_map(audio_a, audio_b, audio_c, n_fft, fft_hop, normalise=False):
     """
-    Take a pair of audio waveform arrays and return the corresponding spectrograms, and the original arrays.
+    Takes three waveform arrays and return the corresponding spectrograms, and the original arrays.
     """
     spec_a = compute_spectrogram(audio_a, n_fft, fft_hop, normalise)
     spec_b = compute_spectrogram(audio_b, n_fft, fft_hop, normalise)
@@ -132,19 +134,9 @@ def compute_spectrogram_map(audio_a, audio_b, audio_c, n_fft, fft_hop, normalise
     return spec_a, spec_b, spec_c, audio_a, audio_b, audio_c
 
 
-def extract_patches_map(spec_a, spec_b, audio_a, audio_b, n_fft, fft_hop, patch_window, patch_hop):
-    patches_a = extract_spectrogram_patches(spec_a, n_fft, patch_window, patch_hop)
-    patches_b = extract_spectrogram_patches(spec_b, n_fft, patch_window, patch_hop)
-
-    audio_patches_a = extract_audio_patches(audio_a, fft_hop, patch_window, patch_hop)
-    audio_patches_b = extract_audio_patches(audio_b, fft_hop, patch_window, patch_hop)
-
-    return patches_a, patches_b, audio_patches_a, audio_patches_b
-
-
 def extract_audio_patches_map(audio_a, audio_b, audio_c, fft_hop, patch_window, patch_hop):
     """
-    Take a pair of audio waveform arrays and split them each into overlapping patches of matching shape.
+    Take three audio waveform arrays and split them each into overlapping patches of matching shape.
     """
     audio_patches_a = extract_audio_patches(audio_a, fft_hop, patch_window, patch_hop)
     audio_patches_b = extract_audio_patches(audio_b, fft_hop, patch_window, patch_hop)
@@ -153,21 +145,8 @@ def extract_audio_patches_map(audio_a, audio_b, audio_c, fft_hop, patch_window, 
     return audio_patches_a, audio_patches_b, audio_patches_c
 
 
-def hwr_tf(x):
-    return x * tf.cast(x > 0.0, tf.float32)
-
-
-def compute_acapella_diff(mixed, noise):
-    mixed_mag = mixed[:, :, 0:, :2]
-    mixed_phase = mixed[:, :, 0:, 2:]
-    noise_mag = noise[:, :, 0:, :2]
-    voice_mag = hwr_tf(mixed_mag - noise_mag) # TODO: normalize?
-    voice_phase = mixed_phase
-    return mixed, noise, tf.concat((voice_mag, voice_phase), axis=3)
-
-
 def spectrogramToAudioFile(magnitude, fftWindowSize, hopSize, phaseIterations=0, phase=None, length=None):
-    '''
+    """
     Computes an audio signal from the given magnitude spectrogram, and optionally an initial phase.
     Griffin-Lim is executed to recover/refine the given the phase from the magnitude spectrogram.
     :param magnitude: Magnitudes to be converted to audio
@@ -177,7 +156,7 @@ def spectrogramToAudioFile(magnitude, fftWindowSize, hopSize, phaseIterations=0,
     :param phase: If given, starts ISTFT with this particular phase matrix
     :param length: If given, audio signal is clipped/padded to this number of frames
     :return:
-    '''
+    """
     if phase is not None:
         if phaseIterations > 0:
             # Refine audio given initial phase with a number of iterations
@@ -191,7 +170,7 @@ def spectrogramToAudioFile(magnitude, fftWindowSize, hopSize, phaseIterations=0,
 
 
 def reconPhase(magnitude, fftWindowSize, hopSize, phaseIterations=0, initPhase=None, length=None):
-    '''
+    """
     Griffin-Lim algorithm for reconstructing the phase for a given magnitude spectrogram, optionally with a given
     intial phase.
     :param magnitude: Magnitudes to be converted to audio
@@ -201,7 +180,7 @@ def reconPhase(magnitude, fftWindowSize, hopSize, phaseIterations=0, initPhase=N
     :param initPhase: If given, starts reconstruction with this particular phase matrix
     :param length: If given, audio signal is clipped/padded to this number of frames
     :return:
-    '''
+    """
     for i in range(phaseIterations):
         if i == 0:
             if initPhase is None:
@@ -219,7 +198,7 @@ def reconPhase(magnitude, fftWindowSize, hopSize, phaseIterations=0, initPhase=N
 
 
 def zip_tensor_slices(*args):
-    '''
+    """
     Parameters
     ----------
     *args : list of _n_ _k_-dimensional tensors, where _k_ >= 2
@@ -246,7 +225,7 @@ def zip_tensor_slices(*args):
     # Output:
     # (array([1, 2], dtype=int32), array([10, 20], dtype=int32))
     # (array([3, 4], dtype=int32), array([30, 40], dtype=int32))
-    '''
+    """
     return tf.data.Dataset.zip(tuple([
         tf.data.Dataset.from_tensor_slices(arg)
         for arg in args

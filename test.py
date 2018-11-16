@@ -9,6 +9,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, te
     """
     Test an audio_models.py model, saving the outputs to a pickle file.
     """
+    # Create a folder for saving pickle files
     dump_folder = 'dumps/' + str(experiment_id)
     if not os.path.isdir(dump_folder):
         os.mkdir(dump_folder)
@@ -18,6 +19,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, te
     test_costs = list()
 
     print('{ts}:\tEntering test loop'.format(ts=datetime.datetime.now()))
+    # For each batch, save the data required for metric calculation and record the loss.
     while True:
         try:
             cost, voice_est_matrix, voice_ref_audio, background_audio,\
@@ -38,7 +40,7 @@ def test(sess, model, model_config, handle, testing_iterator, testing_handle, te
                                                                             i=iteration, c=cost))
                 iteration += 1
         except tf.errors.OutOfRangeError:
-            # At the end of the dataset, calculate, record and print mean results
+            # At the end of the dataset, calculate, record and print mean loss
             mean_cost = sum(test_costs) / len(test_costs)
             print('Test pass complete\n'
                   'Mean loss over test set: {}\n'

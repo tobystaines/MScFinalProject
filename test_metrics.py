@@ -22,6 +22,8 @@ been dumped to pickle files by the main script, so that this script can be run o
 def get_test_metrics(argv):
     """
     Calculate the audio separation quality metrics from pickled test results.
+    argv[1]: Experiment ID - The experiment for which metrics are to be calculated. Mandatory
+    argv[2]: Phase iterations - Number of Griffin-Lim iterations to be used in phase reconstruction. Default=0
     """
 
     experiment_id = argv[1]
@@ -135,14 +137,13 @@ def get_test_metrics(argv):
         for test in metrics:
             writer.writerow(test)
 
-    # Delete the pickle files, as they are enormous, and no longer needed
+    # Delete the pickle files, as they are enormous and no longer needed
     print('Deleting pickle files')
     shutil.rmtree(dump_folder)
 
     return metrics
 
 
-#test_metrics = get_test_metrics(['test', '158'])
 test_metrics = get_test_metrics(sys.argv)
 print('{ts}:\nProcessing complete\n{t}'.format(ts=datetime.datetime.now(), t=test_metrics))
 
