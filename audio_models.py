@@ -56,7 +56,7 @@ class MagnitudeModel(object):
                 self.gen_voice_mag = tf.expand_dims(self.voice_mask[:, :, :, 0] * mixed_input[:, :, :, 0], axis=3)
                 self.mag_loss = mf.l1_loss(self.gen_voice_mag[:, :, :, 0], voice_input[:, :, :, 0])
                 self.phase_loss = mf.l1_phase_loss(mf.phase_difference(mixed_input[:, :, :, 1], voice_input[:, :, :, 1]),
-                                                   self.voice_mask[:, :, :, 1]) * 0.00001
+                                                   self.voice_mask[:, :, :, 1]) * phase_weight
                 self.cost = (self.mag_loss + self.phase_loss) / 2
                 self.gen_voice_phase = tf.expand_dims(self.voice_mask[:, :, :, 1] + mixed_input[:, :, :, 1], axis=3)
                 self.gen_voice = mf.concat(self.gen_voice_mag, self.gen_voice_phase)
@@ -323,7 +323,7 @@ class BasicCapsNet(object):
         with tf.variable_scope(name):
             self.mixed_mag = mixed_mag
 
-            with tf.variable_scope('Convolution'):
+            with tf.variable_scope('layer_1'):
                 net = mf.conv(mixed_mag, filters=128, kernel_size=5, stride=(1, 1))
 
                 # Reshape layer to be 1 capsule x [filters] atoms
@@ -331,23 +331,20 @@ class BasicCapsNet(object):
                 net = layers.Reshape((H.value, W.value, 1, C.value))(net)
                 self.conv1 = net
 
-            with tf.variable_scope('Primary_Caps'):
-                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=8, strides=1,
-                                                      padding='same',
-                                                      routings=1, name='primarycaps')(net)
-                self.primary_caps = net
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=8, strides=1,
+                                                  padding='same',
+                                                  routings=1, name='layer_2')(net)
+            self.primary_caps = net
 
-            with tf.variable_scope('Seg_Caps'):
-                net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=8, strides=1,
-                                                      padding='same',
-                                                      routings=3, name='seg_caps')(net)
-                self.seg_caps = net
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=8, strides=1,
+                                                  padding='same',
+                                                  routings=3, name='layer_3')(net)
+            self.seg_caps = net
 
-            with tf.variable_scope('Reconstruction'):
-                net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=1, strides=1,
-                                                      padding='same',
-                                                      routings=3, name='reconstruction')(net)
-                net = tf.squeeze(net, -1)
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=1, strides=1,
+                                                  padding='same',
+                                                  routings=3, name='mask')(net)
+            net = tf.squeeze(net, -1)
 
             self.output = net
 
@@ -362,27 +359,27 @@ class BasicConvNet(object):
         with tf.variable_scope(name):
             self.mixed_mag = mixed_mag
 
-            with tf.variable_scope('Convolution'):
+            with tf.variable_scope('layer_1'):
                 net = mf.relu(mixed_mag)
                 net = mf.conv(net, filters=128, kernel_size=5, stride=(1, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                self.conv1 = net
+                self.l1 = net
 
-            with tf.variable_scope('Primary_Caps'):
+            with tf.variable_scope('layer_2'):
                 net = mf.relu(net)
                 net = mf.conv(net, filters=128, kernel_size=5, stride=(1, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                self.primary_caps = net
+                self.l2 = net
 
-            with tf.variable_scope('Seg_Caps'):
+            with tf.variable_scope('layer_3'):
                 net = mf.relu(net)
                 net = mf.conv(net, filters=16, kernel_size=5, stride=(1, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
-                self.seg_caps = net
+                self.l3 = net
 
-            with tf.variable_scope('Mask'):
+            with tf.variable_scope('mask'):
                 net = mf.relu(net)
-                net = mf.conv(mixed_mag, filters=1, kernel_size=5, stride=(1, 1))
+                net = mf.conv(net, filters=1, kernel_size=5, stride=(1, 1))
                 self.voice_mask = net
 
             self.output = net
