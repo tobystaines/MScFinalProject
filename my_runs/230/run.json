@@ -1,0 +1,110 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "numpy==1.15.4",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.8.0"
+    ],
+    "mainfile": "main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "audio_models.py",
+        "_sources/audio_models_a54e3f2100a7846c71d6dba5a7ea8542.py"
+      ],
+      [
+        "dataset.py",
+        "_sources/dataset_697d419bf2f8c0c1aa2ef8a51405fee9.py"
+      ],
+      [
+        "main.py",
+        "_sources/main_379ff5781ac24b0142548334c07276d0.py"
+      ],
+      [
+        "train.py",
+        "_sources/train_0ad1646a07bfc1615aa3cfd20d8f53d4.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1292, in _do_call\n    return fn(*args)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1277, in _run_fn\n    options, feed_dict, fetch_list, target_list, run_metadata)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1367, in _call_tf_sessionrun\n    run_metadata)\n",
+    "tensorflow.python.framework.errors_impl.InternalError: Dst tensor is not initialized.\n\t [[{{node IteratorGetNext/_5}} = _Recv[client_terminated=false, recv_device=\"/job:localhost/replica:0/task:0/device:GPU:0\", send_device=\"/job:localhost/replica:0/task:0/device:CPU:0\", send_device_incarnation=1, tensor_name=\"edge_157_IteratorGetNext\", tensor_type=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"]()]]\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 148, in do_experiment\n    validation_iterator, validation_handle, writer)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 132, in train\n    {model.is_training: True, handle: training_handle})\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 887, in run\n    run_metadata_ptr)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1110, in _run\n    feed_dict_tensor, options, run_metadata)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1286, in _do_run\n    run_metadata)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1308, in _do_call\n    raise type(e)(node_def, op, message)\n",
+    "tensorflow.python.framework.errors_impl.InternalError: Dst tensor is not initialized.\n\t [[{{node IteratorGetNext/_5}} = _Recv[client_terminated=false, recv_device=\"/job:localhost/replica:0/task:0/device:GPU:0\", send_device=\"/job:localhost/replica:0/task:0/device:CPU:0\", send_device_incarnation=1, tensor_name=\"edge_157_IteratorGetNext\", tensor_type=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"]()]]\n"
+  ],
+  "heartbeat": "2018-11-20T20:13:27.688409",
+  "host": {
+    "ENV": {},
+    "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
+    "gpus": {
+      "driver_version": "396.44",
+      "gpus": [
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11177
+        },
+        {
+          "model": "GeForce GTX 1080 Ti",
+          "persistence_mode": false,
+          "total_memory": 11178
+        }
+      ]
+    },
+    "hostname": "africa",
+    "os": [
+      "Linux",
+      "Linux-4.15.0-38-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "model_config.phase_weight=0.00005"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2018-11-20T20:10:43.769195",
+  "status": "FAILED",
+  "stop_time": "2018-11-20T20:13:27.693694"
+}
