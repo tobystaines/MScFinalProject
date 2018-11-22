@@ -102,7 +102,7 @@ class MagnitudeModel(object):
                 self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 3]) * phase_weight
                 self.cost = (self.mag_loss + self.phase_loss)/2
 
-            elif data_type == 'complex_to_mag_phase':
+            elif data_type == 'complex_to_magphase':
                 self.gen_voice = self.voice_mask * mixed_input[:, :, :, 2:4]
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 2])
                 self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 3]) * phase_weight
