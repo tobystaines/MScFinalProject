@@ -33,7 +33,9 @@ class MagnitudeModel(object):
             self.variant = variant
             self.is_training = is_training
 
-            if self.variant in ['unet', 'capsunet']:
+            if self.variant in ['unet', 'capsunet'] and data_type == 'complex_to_magphase':
+                self.voice_mask_network = UNet(mixed_input[:, :, :, 0:2], variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
+            elif self.variant in ['unet', 'capsunet']:
                 self.voice_mask_network = UNet(mixed_input, variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant == 'basic_capsnet':
                 self.voice_mask_network = BasicCapsNet(mixed_input, name='basic_capsnet')
@@ -99,6 +101,12 @@ class MagnitudeModel(object):
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 2])
                 self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 3]) * phase_weight
                 self.cost = (self.mag_loss + self.phase_loss)/2
+
+            elif data_type == 'complex_to_mag_phase':
+                self.gen_voice = self.voice_mask * mixed_input[:, :, :, 2:4]
+                self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 2])
+                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 3]) * phase_weight
+                self.cost = (self.mag_loss + self.phase_loss) / 2
 
             self.optimizer = tf.train.AdamOptimizer(
                 learning_rate=learning_rate,
@@ -390,7 +398,7 @@ class ComplexEncoder(object):
         net = input_tensor
         with tf.variable_scope('encoder'):
             with tf.variable_scope('layer-1'):
-                # Reshape layer to be 1 capsule x [filters] atoms
+                # Reshape layer to be 1 capsule x [channels] atoms
                 _, self.H, self.W, self.C = net.get_shape()
                 net = layers.Reshape((self.H.value, self.W.value, 1, self.C.value))(net)
                 self.l1 = net
