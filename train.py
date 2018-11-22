@@ -86,18 +86,18 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
     voice_0_summary = tf.summary.image('Voice_0', tf.expand_dims(model.voice_input[:, :, :, 0], axis=3))
     mask_0_summary = tf.summary.image('Voice_Mask_0', tf.expand_dims(model.voice_mask[:, :, :, 0], axis=3))
     gen_voice_0_summary = tf.summary.image('Generated_Voice_0', tf.expand_dims(model.gen_voice[:, :, :, 0], axis=3))
-    if model_config['data_type'] in ['mag_phase', 'mag_phase2', 'mag_phase_diff', 'real_imag', 'mag_real_imag', 'mag_phase_real_imag']:
+    if model_config['data_type'] != 'mag':
         mix_1_summary = tf.summary.image('Mixture_1', tf.expand_dims(model.mixed_input[:, :, :, 1], axis=3))
         voice_1_summary = tf.summary.image('Voice_1', tf.expand_dims(model.voice_input[:, :, :, 1], axis=3))
         mask_1_summary = tf.summary.image('Voice_Mask_1', tf.expand_dims(model.voice_mask[:, :, :, 1], axis=3))
         gen_voice_1_summary = tf.summary.image('Generated_Voice_1', tf.expand_dims(model.gen_voice[:, :, :, 1], axis=3))
-    if model_config['data_type'] in ['mag_real_imag', 'mag_phase_real_imag', 'mag_phase2']:
+    if model_config['data_type'] in ['mag_real_imag', 'mag_phase_real_imag', 'mag_phase2', 'complex_to_mag_phase']:
         mix_2_summary = tf.summary.image('Mixture_2', tf.expand_dims(model.mixed_input[:, :, :, 2], axis=3))
         voice_2_summary = tf.summary.image('Voice_2', tf.expand_dims(model.voice_input[:, :, :, 2], axis=3))
     if model_config['data_type'] in ['mag_real_imag']:
         mask_2_summary = tf.summary.image('Voice_Mask_2', tf.expand_dims(model.voice_mask[:, :, :, 2], axis=3))
         gen_voice_2_summary = tf.summary.image('Generated_Voice_2', tf.expand_dims(model.gen_voice[:, :, :, 2], axis=3))
-    if model_config['data_type'] in ['mag_phase_real_imag']:
+    if model_config['data_type'] in ['mag_phase_real_imag', 'complex_to_mag_phase']:
         mix_3_summary = tf.summary.image('Mixture_3', tf.expand_dims(model.mixed_input[:, :, :, 3], axis=3))
         voice_3_summary = tf.summary.image('Voice_3', tf.expand_dims(model.voice_input[:, :, :, 3], axis=3))
     if 'mag_' in model_config['data_type']:
@@ -160,7 +160,7 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                                                                  mask_1_summary, gen_voice_1_summary, mix_2_summary,
                                                                  voice_2_summary, mask_2_summary, gen_voice_2_summary],
                                                                 {model.is_training: True, handle: training_handle})
-                elif model_config['data_type'] == 'mag_phase_real_imag':
+                elif model_config['data_type'] in ['mag_phase_real_imag', 'complex_to_mag_phase']:
                     _, cost, cost_sum, mag_loss_sum, phase_loss_sum, \
                         mix_0, voice_0, mask_0, gen_voice_0, mix_1, \
                         voice_1, mask_1, gen_voice_1, \
@@ -195,11 +195,13 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 print("{ts}:\tTraining iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
                                                                          i=iteration, c=cost))
             # If saving by iterations, take a checkpoint
-            if model_config['saving'] and not model_config['save_by_epochs'] and iteration % model_config['save_iters'] == 0:
+            if model_config['saving'] and not model_config['save_by_epochs'] \
+                    and iteration % model_config['save_iters'] == 0:
                 latest_checkpoint_path = checkpoint(model_config, model_folder, saver, sess, iteration)
 
             # If using early stopping by iterations, enter validation loop
-            if model_config['early_stopping'] and not model_config['val_by_epochs'] and iteration % model_config['val_iters'] == 0:
+            if model_config['early_stopping'] and not model_config['val_by_epochs'] \
+                    and iteration % model_config['val_iters'] == 0:
                 last_val_cost, min_val_cost, min_val_check, worse_val_checks = validation(last_val_cost,
                                                                                           min_val_cost,
                                                                                           min_val_check,
@@ -219,18 +221,19 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
                 writer.add_summary(voice_0, iteration)
                 writer.add_summary(mask_0, iteration)
                 writer.add_summary(gen_voice_0, iteration)
-                if model_config['data_type'] in ['mag_phase', 'mag_phase_diff', 'real_imag', 'mag_phase_real_imag']:
+                if model_config['data_type'] != 'mag':
                     writer.add_summary(mix_1, iteration)
                     writer.add_summary(voice_1, iteration)
                     writer.add_summary(mask_1, iteration)
                     writer.add_summary(gen_voice_1, iteration)
-                if model_config['data_type'] in ['mag_real_imag', 'mag_phase_real_imag', 'mag_phase2']:
+                if model_config['data_type'] in ['mag_real_imag', 'mag_phase_real_imag',
+                                                 'mag_phase2', 'complex_to_mag_phase']:
                     writer.add_summary(mix_2, iteration)
                     writer.add_summary(voice_2, iteration)
                 if model_config['data_type'] in ['mag_real_imag']:
                     writer.add_summary(mask_2, iteration)
                     writer.add_summary(gen_voice_2, iteration)
-                if model_config['data_type'] in ['mag_phase_real_imag']:
+                if model_config['data_type'] in ['mag_phase_real_imag', 'complex_to_mag_phase']:
                     writer.add_summary(mix_3, iteration)
                     writer.add_summary(voice_3, iteration)
             except NameError:  # Indicates the try has not been successfully executed at all
@@ -254,7 +257,8 @@ def train(sess, model, model_config, model_folder, handle, training_iterator, tr
         print('Stopped early due to validation criteria.')
     else:
         # Final validation check
-        if (iteration % model_config['val_iters'] != 1 or not model_config['early_stopping']) and not model_config['val_by_epochs']:
+        if (iteration % model_config['val_iters'] != 1 or not model_config['early_stopping']) \
+                and not model_config['val_by_epochs']:
             last_val_cost, min_val_cost, min_val_check, _ = validation(last_val_cost, min_val_cost, min_val_check,
                                                                        worse_val_checks, model, val_check)
     print('Finished requested number of epochs.')
