@@ -33,7 +33,7 @@ class MagnitudeModel(object):
             self.variant = variant
             self.is_training = is_training
 
-            if self.variant in ['unet', 'capsunet'] and data_type == 'complex_to_magphase':
+            if self.variant in ['unet', 'capsunet'] and data_type == 'complex_to_mag_phase':
                 self.voice_mask_network = UNet(mixed_input[:, :, :, 0:2], variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant in ['unet', 'capsunet']:
                 self.voice_mask_network = UNet(mixed_input, variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
@@ -102,7 +102,7 @@ class MagnitudeModel(object):
                 self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 3]) * phase_weight
                 self.cost = (self.mag_loss + self.phase_loss)/2
 
-            elif data_type == 'complex_to_magphase':
+            elif data_type == 'complex_to_mag_phase':
                 self.gen_voice = self.voice_mask * mixed_input[:, :, :, 2:4]
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 2])
                 self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 3]) * phase_weight
@@ -339,12 +339,12 @@ class BasicCapsNet(object):
                 net = layers.Reshape((H.value, W.value, 1, C.value))(net)
                 self.conv1 = net
 
-            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=8, strides=1,
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=16, strides=1,
                                                   padding='same',
                                                   routings=1, name='layer_2')(net)
             self.primary_caps = net
 
-            net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=8, strides=1,
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=16, strides=1,
                                                   padding='same',
                                                   routings=3, name='layer_3')(net)
             self.seg_caps = net

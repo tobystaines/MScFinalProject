@@ -116,7 +116,7 @@ def do_experiment(model_config):
     elif model_config['data_type'] in ['mag_real_imag', 'mag_phase2']:
         mixed_input = tf.concat([tf.expand_dims(mixed_spec[:, :, :-1, 2], 3), mixed_spec[:, :, :-1, 0:2]], 3)
         voice_input = tf.concat([tf.expand_dims(voice_spec[:, :, :-1, 2], 3), voice_spec[:, :, :-1, 0:2]], 3)
-    elif model_config['data_type'] == 'mag_phase_real_imag':
+    elif model_config['data_type'] in ['mag_phase_real_imag', 'complex_to_mag_phase']:
         mixed_input = mixed_spec[:, :, :-1, :]
         voice_input = voice_spec[:, :, :-1, :]
 
