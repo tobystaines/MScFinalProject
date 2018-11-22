@@ -65,7 +65,8 @@ def get_test_metrics(argv):
                                                      model_config['n_fft'], model_config['fft_hop'],
                                                      phaseIterations=phase_iterations,
                                                      phase=mixed_phase[i, :, :, 0].T)
-                elif model_config['data_type'] in ['mag_phase', 'mag_phase2', 'mag_phase_diff', 'mag_phase_real_imag']:
+                elif model_config['data_type'] in ['mag_phase', 'mag_phase2', 'mag_phase_diff',
+                                                   'mag_phase_real_imag', 'complex_to_mag_phase']:
                     wave = af.spectrogramToAudioFile(voice_est_matrix[i, :, :, 0].T,
                                                      model_config['n_fft'], model_config['fft_hop'],
                                                      phaseIterations=phase_iterations,
@@ -107,8 +108,10 @@ def get_test_metrics(argv):
                 mixed_sources = np.concatenate((mixed_audio[i, :, :], mixed_audio[i, :, :]), axis=0)
 
                 # Calculate audio quality statistics
-                sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(ref_sources, est_sources, compute_permutation=False)
-                sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(ref_sources, mixed_sources, compute_permutation=False)
+                sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(ref_sources, est_sources,
+                                                                        compute_permutation=False)
+                sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(ref_sources, mixed_sources,
+                                                                       compute_permutation=False)
                 nsdr = sdr - sdr_mr
                 sdrs = np.concatenate((sdrs, np.expand_dims(sdr, 1).T), axis=0)
                 sirs = np.concatenate((sirs, np.expand_dims(sir, 1).T), axis=0)
@@ -146,4 +149,3 @@ def get_test_metrics(argv):
 
 test_metrics = get_test_metrics(sys.argv)
 print('{ts}:\nProcessing complete\n{t}'.format(ts=datetime.datetime.now(), t=test_metrics))
-
