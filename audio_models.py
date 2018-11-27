@@ -63,7 +63,7 @@ class MagnitudeModel(object):
                 self.gen_voice_phase = tf.expand_dims(self.voice_mask[:, :, :, 1] + mixed_input[:, :, :, 1], axis=3)
                 self.gen_voice = mf.concat(self.gen_voice_mag, self.gen_voice_phase)
 
-            elif data_type == 'mag_phase_diff22':
+            elif data_type == 'mag_phase_diff':
                 self.gen_voice_mag = tf.expand_dims(self.voice_mask[:, :, :, 0] * mixed_input[:, :, :, 0], axis=3)
                 self.gen_voice_phase = tf.expand_dims(self.voice_mask[:, :, :, 1] + mixed_input[:, :, :, 1], axis=3)
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
