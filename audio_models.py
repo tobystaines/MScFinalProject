@@ -48,7 +48,7 @@ class MagnitudeModel(object):
                 self.gen_voice = self.voice_mask * mixed_input
                 self.cost = mf.l1_loss(self.gen_voice, voice_input)
 
-            elif data_type in ['mag_phase']:
+            elif data_type == 'mag_phase':
                 self.gen_voice = self.voice_mask * mixed_input
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
                 self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * phase_weight
@@ -96,7 +96,7 @@ class MagnitudeModel(object):
                 self.phase_loss = mf.l1_phase_loss(self.gen_phase, self.voice_phase) * phase_weight
                 self.cost = (self.mag_loss + self.phase_loss) / 2
 
-            elif data_type in ['mag_phase_real_imag']:
+            elif data_type == 'mag_phase_real_imag':
                 self.gen_voice = self.voice_mask * mixed_input[:, :, :, 2:4]
                 self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 2])
                 self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 3]) * phase_weight
@@ -324,15 +324,19 @@ class CapsUNetDecoder(object):
 
 class BasicCapsNet(object):
 
-    def __init__(self, mixed_mag, name):
+    def __init__(self, input_tensor, name):
         """
         A basic capsule network operating on magnitude spectrograms.
         """
         with tf.variable_scope(name):
-            self.mixed_mag = mixed_mag
+            self.input_tensor = input_tensor
+            if tf.rank(self.input_tensor) == 3:
+                self.output_depth = 1
+            else:
+                self.output_depth = input_tensor.shape[3]
 
             with tf.variable_scope('layer_1'):
-                net = mf.conv(mixed_mag, filters=128, kernel_size=5, stride=(1, 1))
+                net = mf.conv(input_tensor, filters=128, kernel_size=5, stride=(1, 1))
 
                 # Reshape layer to be 1 capsule x [filters] atoms
                 _, H, W, C = net.get_shape()
@@ -349,7 +353,7 @@ class BasicCapsNet(object):
                                                   routings=3, name='layer_3')(net)
             self.seg_caps = net
 
-            net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=1, strides=1,
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=self.output_depth, num_atoms=1, strides=1,
                                                   padding='same',
                                                   routings=3, name='mask')(net)
             net = tf.squeeze(net, -1)
@@ -358,17 +362,21 @@ class BasicCapsNet(object):
 
 
 class BasicConvNet(object):
-    def __init__(self, mixed_mag, is_training, reuse, name):
+    def __init__(self, input_tensor, is_training, reuse, name):
         """
         input_tensor: Tensor with shape [batch_size, height, width, channels]
         is_training:  Boolean - should the model be trained on the current input or not
         name:         Model instance name
         """
         with tf.variable_scope(name):
-            self.mixed_mag = mixed_mag
+            self.input_tensor = input_tensor
+            if tf.rank(self.input_tensor) == 3:
+                self.output_depth = 1
+            else:
+                self.output_depth = input_tensor.shape[3]
 
             with tf.variable_scope('layer_1'):
-                net = mf.relu(mixed_mag)
+                net = mf.relu(input_tensor)
                 net = mf.conv(net, filters=128, kernel_size=5, stride=(1, 1))
                 net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
                 self.l1 = net
@@ -387,7 +395,7 @@ class BasicConvNet(object):
 
             with tf.variable_scope('mask'):
                 net = mf.relu(net)
-                net = mf.conv(net, filters=1, kernel_size=5, stride=(1, 1))
+                net = mf.conv(net, filters=self.output_depth, kernel_size=5, stride=(1, 1))
                 self.voice_mask = net
 
             self.output = net
