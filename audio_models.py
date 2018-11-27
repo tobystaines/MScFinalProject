@@ -331,9 +331,9 @@ class BasicCapsNet(object):
         with tf.variable_scope(name):
             self.input_tensor = input_tensor
             if tf.rank(self.input_tensor) == 3:
-                self.output_depth = 1
+                self.out_depth = 1
             else:
-                self.output_depth = input_tensor.shape[3]
+                self.out_depth = input_tensor.shape[3].value
 
             with tf.variable_scope('layer_1'):
                 net = mf.conv(input_tensor, filters=128, kernel_size=5, stride=(1, 1))
@@ -353,7 +353,7 @@ class BasicCapsNet(object):
                                                   routings=3, name='layer_3')(net)
             self.seg_caps = net
 
-            net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=self.output_depth, num_atoms=1, strides=1,
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=self.out_depth, num_atoms=1, strides=1,
                                                   padding='same',
                                                   routings=3, name='mask')(net)
             net = tf.squeeze(net, -1)
@@ -371,9 +371,9 @@ class BasicConvNet(object):
         with tf.variable_scope(name):
             self.input_tensor = input_tensor
             if tf.rank(self.input_tensor) == 3:
-                self.output_depth = 1
+                self.out_depth = 1
             else:
-                self.output_depth = input_tensor.shape[3]
+                self.out_depth = input_tensor.shape[3].value
 
             with tf.variable_scope('layer_1'):
                 net = mf.relu(input_tensor)
@@ -395,7 +395,7 @@ class BasicConvNet(object):
 
             with tf.variable_scope('mask'):
                 net = mf.relu(net)
-                net = mf.conv(net, filters=self.output_depth, kernel_size=5, stride=(1, 1))
+                net = mf.conv(net, filters=self.out_depth, kernel_size=5, stride=(1, 1))
                 self.voice_mask = net
 
             self.output = net
