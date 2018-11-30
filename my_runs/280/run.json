@@ -6,7 +6,7 @@
     "dependencies": [
       "numpy==1.15.4",
       "sacred==0.7.4",
-      "tensorflow-gpu==1.8.0"
+      "tensorflow-gpu==1.11.0"
     ],
     "mainfile": "main.py",
     "name": "UNet_Speech_Separation",
@@ -30,7 +30,7 @@
       ]
     ]
   },
-  "heartbeat": "2018-11-30T16:02:49.589392",
+  "heartbeat": "2018-11-30T15:36:07.067802",
   "host": {
     "ENV": {},
     "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
@@ -49,7 +49,7 @@
         }
       ]
     },
-    "hostname": "africa",
+    "hostname": "europe",
     "os": [
       "Linux",
       "Linux-4.15.0-38-generic-x86_64-with-Ubuntu-16.04-xenial"
@@ -79,7 +79,9 @@
       "--unobserved": false,
       "COMMAND": null,
       "UPDATE": [
-        "model_config.phase_weight=0.000005"
+        "model_config.data_type=mag",
+        "model_config.model_variant=basic_convnet",
+        "model_config.batch_size=25"
       ],
       "help": false,
       "with": true
@@ -87,6 +89,7 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2018-11-30T11:15:01.227309",
-  "status": "RUNNING"
+  "start_time": "2018-11-30T15:33:12.229364",
+  "status": "INTERRUPTED",
+  "stop_time": "2018-11-30T15:36:07.073273"
 }
