@@ -1,0 +1,66 @@
+INFO - UNet_Speech_Separation - Running command 'do_experiment'
+INFO - UNet_Speech_Separation - Started run with ID "279"
+Experiment ID: 279
+Preparing dataset
+Dataset ready
+2018-11-30 14:56:18.933179: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2018-11-30 14:56:20.059127: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1432] Found device 0 with properties: 
+name: TITAN V major: 7 minor: 0 memoryClockRate(GHz): 1.455
+pciBusID: 0000:04:00.0
+totalMemory: 11.75GiB freeMemory: 11.34GiB
+2018-11-30 14:56:20.059184: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1511] Adding visible gpu devices: 0
+2018-11-30 14:56:20.461454: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-11-30 14:56:20.461503: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 
+2018-11-30 14:56:20.461511: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N 
+2018-11-30 14:56:20.461844: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10957 MB memory) -> physical GPU (device: 0, name: TITAN V, pci bus id: 0000:04:00.0, compute capability: 7.0)
+Session started
+Iterators created
+Creating model
+WARNING:tensorflow:From /home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py:330: calling softmax (from tensorflow.python.ops.nn_ops) with dim is deprecated and will be removed in a future version.
+Instructions for updating:
+dim is deprecated, use axis instead
+WARNING - tensorflow - From /home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py:330: calling softmax (from tensorflow.python.ops.nn_ops) with dim is deprecated and will be removed in a future version.
+Instructions for updating:
+dim is deprecated, use axis instead
+WARNING:tensorflow:From /home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py:359: calling norm (from tensorflow.python.ops.linalg_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+WARNING - tensorflow - From /home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py:359: calling norm (from tensorflow.python.ops.linalg_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+Starting training
+2018-11-30 14:56:40.933632: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 236 of 1000
+2018-11-30 14:56:51.437533: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 543 of 1000
+2018-11-30 14:57:01.193360: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 840 of 1000
+2018-11-30 14:57:06.828303: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-11-30 14:57:50.337958:	Training iteration: 200, Loss: 0.00805736891925335
+2018-11-30 14:58:31.466687:	Training iteration: 400, Loss: 0.006730987224727869
+2018-11-30 14:59:12.383137:	Training iteration: 600, Loss: 0.008264771662652493
+2018-11-30 14:59:53.751052:	Training iteration: 800, Loss: 0.006139841862022877
+2018-11-30 15:00:34.701547:	Training iteration: 1000, Loss: 0.0064278217032551765
+2018-11-30 15:01:15.858621:	Training iteration: 1200, Loss: 0.006308131851255894
+2018-11-30 15:01:56.676008:	Training iteration: 1400, Loss: 0.006898419465869665
+2018-11-30 15:02:37.724218:	Training iteration: 1600, Loss: 0.007847375236451626
+2018-11-30 15:03:18.884636:	Training iteration: 1800, Loss: 0.0074103339575231075
+2018-11-30 15:03:59.836463:	Training iteration: 2000, Loss: 0.0065921032801270485
+2018-11-30 15:04:40.783914:	Training iteration: 2200, Loss: 0.007262115832418203
+2018-11-30 15:05:21.669585:	Training iteration: 2400, Loss: 0.007303229533135891
+2018-11-30 15:06:02.912528:	Training iteration: 2600, Loss: 0.007045231759548187
+2018-11-30 15:06:43.853185:	Training iteration: 2800, Loss: 0.007673973683267832
+2018-11-30 15:07:24.733920:	Training iteration: 3000, Loss: 0.007067321799695492
+2018-11-30 15:08:05.615972:	Training iteration: 3200, Loss: 0.0054580047726631165
+2018-11-30 15:08:47.024073:	Training iteration: 3400, Loss: 0.006471303757280111
+2018-11-30 15:09:28.636270:	Training iteration: 3600, Loss: 0.005843871273100376
+2018-11-30 15:10:09.688634:	Training iteration: 3800, Loss: 0.005136493127793074
+2018-11-30 15:10:50.914820:	Training iteration: 4000, Loss: 0.006142225116491318
+2018-11-30 15:11:31.899099:	Training iteration: 4200, Loss: 0.00568985054269433
+2018-11-30 15:12:12.864449:	Training iteration: 4400, Loss: 0.007816935889422894
+2018-11-30 15:12:53.649581:	Training iteration: 4600, Loss: 0.00779930641874671
+2018-11-30 15:13:34.571456:	Training iteration: 4800, Loss: 0.0075264377519488335
+2018-11-30 15:14:17.257861: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 273 of 1000
+2018-11-30 15:14:27.310234: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 587 of 1000
+2018-11-30 15:14:37.851932: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 908 of 1000
+2018-11-30 15:14:40.245046: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-11-30 15:14:50.141741:	Training iteration: 5000, Loss: 0.007908014580607414
+2018-11-30 15:15:30.971990:	Training iteration: 5200, Loss: 0.006679342593997717
+2018-11-30 15:16:12.204104:	Training iteration: 5400, Loss: 0.008092371746897697
