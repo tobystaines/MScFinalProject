@@ -18,10 +18,12 @@ ex.observers.append(FileStorageObserver.create('my_runs'))
 
 @ex.config
 def cfg():
-    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet', 'basic_convnet']
-                    'data_type': 'mag_phase_diff',  # From [' mag', 'mag_phase', 'real_imag', 'mag_real_imag']
+    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet',
+                                              # 'basic_convnet']
+                    'data_type': 'mag_phase_diff',  # From [' mag', 'mag_phase', 'mag_phase_diff', 'real_imag',
+                                                    # 'mag_real_imag', 'complex_to_mag_phase']
                     'phase_weight': 0.005,  # When using a model which learns to estimate phase, defines how much
-                                              # weight phase loss should be given against magnitude loss
+                                            # weight phase loss should be given against magnitude loss
                     'initialisation_test': False,  # Whether or not to calculate test metrics before training
                     'loading': False,  # Whether to load an existing checkpoint
                     'checkpoint_to_load': "169/169-6",  # Checkpoint format: run/run-step
