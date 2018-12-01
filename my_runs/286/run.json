@@ -6,7 +6,7 @@
     "dependencies": [
       "numpy==1.15.4",
       "sacred==0.7.4",
-      "tensorflow-gpu==1.11.0"
+      "tensorflow-gpu==1.12.0"
     ],
     "mainfile": "main.py",
     "name": "UNet_Speech_Separation",
@@ -30,29 +30,24 @@
       ]
     ]
   },
-  "heartbeat": "2018-12-01T07:10:09.603793",
+  "heartbeat": "2018-12-01T15:01:11.884637",
   "host": {
     "ENV": {},
-    "cpu": "AMD Ryzen 7 1700 Eight-Core Processor",
+    "cpu": "Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz",
     "gpus": {
-      "driver_version": "396.44",
+      "driver_version": "410.48",
       "gpus": [
         {
-          "model": "GeForce GTX 1080 Ti",
+          "model": "TITAN V",
           "persistence_mode": false,
-          "total_memory": 11177
-        },
-        {
-          "model": "GeForce GTX 1080 Ti",
-          "persistence_mode": false,
-          "total_memory": 11178
+          "total_memory": 12036
         }
       ]
     },
-    "hostname": "europe",
+    "hostname": "fairlight",
     "os": [
       "Linux",
-      "Linux-4.15.0-38-generic-x86_64-with-Ubuntu-16.04-xenial"
+      "Linux-4.15.0-39-generic-x86_64-with-Ubuntu-16.04-xenial"
     ],
     "python_version": "3.5.2"
   },
@@ -80,8 +75,9 @@
       "COMMAND": null,
       "UPDATE": [
         "model_config.data_type=mag",
-        "model_config.model_variant=basic_convnet",
-        "model_config.batch_size=10"
+        "model_config.model_variant=capsunet",
+        "model_config.batch_size=5",
+        "model_config.n_parallel_readers=48"
       ],
       "help": false,
       "with": true
@@ -89,7 +85,6 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2018-11-30T15:37:02.938621",
-  "status": "COMPLETED",
-  "stop_time": "2018-12-01T07:10:09.600005"
+  "start_time": "2018-12-01T13:22:13.926302",
+  "status": "RUNNING"
 }
