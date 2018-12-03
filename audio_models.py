@@ -236,12 +236,12 @@ class CapsUNetEncoder(object):
 
     def __init__(self, input_tensor, is_training, reuse):
         # net = layers.Input(shape=input_tensor)
-        net = input_tensor
+        self.input_tensor = input_tensor
         with tf.variable_scope('Encoder'):
             with tf.variable_scope('Convolution'):
                 # Layer 1: A conventional Conv2D layer
                 net = layers.Conv2D(filters=16, kernel_size=5, strides=1, padding='same', activation='relu',
-                                    name='conv1')(net)
+                                    name='conv1')(self.input_tensor)
                 self.conv1 = net
 
                 # Reshape layer to be 1 capsule x [filters] atoms
