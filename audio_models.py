@@ -316,7 +316,12 @@ class CapsUNetDecoder(object):
             net = layers.Conv2D(filters=128, kernel_size=1, padding='same', kernel_initializer='he_normal',
                                 activation='relu', name='recon_2')(net)
 
-            net = layers.Conv2D(filters=1, kernel_size=1, padding='same', kernel_initializer='he_normal',
+            if tf.rank(encoder.input_tensor) == 3:
+                self.out_depth = 1
+            else:
+                self.out_depth = input_tensor.shape[3].value
+
+            net = layers.Conv2D(filters=self.out_depth, kernel_size=1, padding='same', kernel_initializer='he_normal',
                                 activation='sigmoid', name='out_recon')(net)
 
             self.output = net
