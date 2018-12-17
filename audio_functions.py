@@ -147,6 +147,7 @@ def extract_audio_patches_map(audio_a, audio_b, audio_c, fft_hop, patch_window, 
 
 def spectrogramToAudioFile(magnitude, fftWindowSize, hopSize, phaseIterations=0, phase=None, length=None):
     """
+    From Stoller et al (2017)
     Computes an audio signal from the given magnitude spectrogram, and optionally an initial phase.
     Griffin-Lim is executed to recover/refine the given the phase from the magnitude spectrogram.
     :param magnitude: Magnitudes to be converted to audio
@@ -171,6 +172,7 @@ def spectrogramToAudioFile(magnitude, fftWindowSize, hopSize, phaseIterations=0,
 
 def reconPhase(magnitude, fftWindowSize, hopSize, phaseIterations=0, initPhase=None, length=None):
     """
+    From Stoller et al (2017)
     Griffin-Lim algorithm for reconstructing the phase for a given magnitude spectrogram, optionally with a given
     intial phase.
     :param magnitude: Magnitudes to be converted to audio

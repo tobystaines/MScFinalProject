@@ -78,6 +78,7 @@ def get_paired_dataset(zipped_files,
         .shuffle(n_shuffle).batch(batch_size).prefetch(3)
     )
 
+
 def prepare_datasets(model_config):
 
     def build_datasets(model_config, root, path):
@@ -154,6 +155,9 @@ def prepare_datasets(model_config):
             chime_test_data = sets[0][2].concatenate(sets[1][2].concatenate(sets[2][2].concatenate(sets[3][2])))
 
         if 'LibriSpeech' in model_config['dataset']:
+            #### LibriSpeech data and code has not been updated to function was a triple (voice, background, mixed)
+            #### dataset, so this section of code will cause errors.
+
             # Get list of LibriSpeech sub-directories
             voice_train_dirs = glob(model_config['librispeech_data_root'] + 'Voice/train-clean-100/**/', recursive=True)
             voice_val_dirs = glob(model_config['librispeech_data_root'] + 'Voice/dev-clean/**/', recursive=True)

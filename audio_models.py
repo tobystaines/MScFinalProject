@@ -33,6 +33,7 @@ class MagnitudeModel(object):
             self.variant = variant
             self.is_training = is_training
 
+            # Initialise the selected model variant
             if self.variant in ['unet', 'capsunet'] and data_type == 'complex_to_mag_phase':
                 self.voice_mask_network = UNet(mixed_input[:, :, :, 0:2], variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant in ['unet', 'capsunet']:
@@ -44,6 +45,7 @@ class MagnitudeModel(object):
 
             self.voice_mask = self.voice_mask_network.output
 
+            # Depending on the data_type, setup the loss functions and optimisation
             if data_type == 'mag':
                 self.gen_voice = self.voice_mask * mixed_input
                 self.cost = mf.l1_loss(self.gen_voice, voice_input)
@@ -231,7 +233,7 @@ class UNetDecoder(object):
 
 class CapsUNetEncoder(object):
     """
-    The down-convolutional side of a capsule based U-Net model (based on SegCaps R3 model).
+    The down-convolutional side of a capsule based U-Net model.
     """
 
     def __init__(self, input_tensor, is_training, reuse):
@@ -402,65 +404,5 @@ class BasicConvNet(object):
                 net = mf.relu(net)
                 net = mf.conv(net, filters=self.out_depth, kernel_size=5, stride=(1, 1))
                 self.voice_mask = net
-
-            self.output = net
-
-
-class ComplexEncoder(object):
-    def __init__(self, input_tensor):
-        net = input_tensor
-        with tf.variable_scope('encoder'):
-            with tf.variable_scope('layer-1'):
-                # Reshape layer to be 1 capsule x [channels] atoms
-                _, self.H, self.W, self.C = net.get_shape()
-                net = layers.Reshape((self.H.value, self.W.value, 1, self.C.value))(net)
-                self.l1 = net
-
-            with tf.variable_scope('layer-2'):
-                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=2, strides=2,
-                                                      padding='same',
-                                                      routings=3)(net)
-                self.l2 = net
-
-            with tf.variable_scope('layer-3'):
-                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=4, strides=2,
-                                                      padding='same',
-                                                      routings=3)(net)
-                self.l3 = net
-
-            with tf.variable_scope('layer-4'):
-                net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=8, strides=2,
-                                                      padding='same',
-                                                      routings=3)(net)
-
-        self.output = net
-
-
-class ComplexDecoder(object):
-    def __init__(self, input_tensor, encoder):
-        net = input_tensor
-        with tf.variable_scope('decoder'):
-            with tf.variable_scope('layer-1'):
-                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=4, num_atoms=4, upsamp_type='deconv',
-                                                        scaling=2, padding='same', routings=3)(net)
-                net = layers.Concatenate(axis=-2)([net, encoder.l3])
-                self.l1 = net
-
-            with tf.variable_scope('layer-2'):
-                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=4, num_atoms=2, upsamp_type='deconv',
-                                                        scaling=2, padding='same', routings=3)(net)
-                net = layers.Concatenate(axis=-2)([net, encoder.l2])
-                self.l2 = net
-
-            with tf.variable_scope('layer-3'):
-                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=1, num_atoms=2, upsamp_type='deconv',
-                                                        scaling=2, padding='same', routings=3)(net)
-                net = layers.Concatenate(axis=-2)([net, encoder.l1])
-                self.l3 = net
-            with tf.variable_scope('layer-4'):
-                net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=1, num_atoms=2, upsamp_type='deconv',
-                                                        scaling=1, padding='same', routings=3)(net)
-
-                net = layers.Reshape((encoder.H.value, encoder.W.value, encoder.C.value))(net)
 
             self.output = net

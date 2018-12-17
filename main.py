@@ -86,7 +86,7 @@ def do_experiment(model_config):
 
     print('Session started')
 
-    # Create iterators
+    # Create data iterators
     handle = tf.placeholder(tf.string, shape=[])
     iterator = tf.data.Iterator.from_string_handle(handle, train_data.output_types, train_data.output_shapes)
     mixed_spec, voice_spec, background_spec, mixed_audio, voice_audio, background_audio = iterator.get_next()
