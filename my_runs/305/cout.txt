@@ -1,0 +1,380 @@
+INFO - UNet_Speech_Separation - Running command 'do_experiment'
+INFO - UNet_Speech_Separation - Started run with ID "305"
+Experiment ID: 305
+Preparing dataset
+Dataset ready
+2018-12-17 17:26:14.144093: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2018-12-17 17:26:14.353911: I tensorflow/stream_executor/cuda/cuda_gpu_executor.cc:964] successful NUMA node read from SysFS had negative value (-1), but there must be at least one NUMA node, so returning NUMA node zero
+2018-12-17 17:26:14.354896: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1411] Found device 0 with properties: 
+name: GeForce GTX 1080 Ti major: 6 minor: 1 memoryClockRate(GHz): 1.645
+pciBusID: 0000:26:00.0
+totalMemory: 10.92GiB freeMemory: 10.76GiB
+2018-12-17 17:26:14.354916: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1490] Adding visible gpu devices: 0
+2018-12-17 17:26:15.121788: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-12-17 17:26:15.121830: I tensorflow/core/common_runtime/gpu/gpu_device.cc:977]      0 
+2018-12-17 17:26:15.121838: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990] 0:   N 
+2018-12-17 17:26:15.122122: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1103] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10404 MB memory) -> physical GPU (device: 0, name: GeForce GTX 1080 Ti, pci bus id: 0000:26:00.0, compute capability: 6.1)
+Session started
+Iterators created
+Creating model
+Starting training
+2018-12-17 17:26:33.846042: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 367 of 1000
+2018-12-17 17:26:43.839513: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 793 of 1000
+2018-12-17 17:26:48.500137: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 17:30:38.050828:	Training iteration: 200, Loss: 0.004129623994231224
+2018-12-17 17:34:30.676141:	Training iteration: 400, Loss: 0.004049518145620823
+2018-12-17 17:36:12.803344: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 370 of 1000
+2018-12-17 17:36:22.774644: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 785 of 1000
+2018-12-17 17:36:28.111951: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 17:38:33.169464:	Training iteration: 600, Loss: 0.00498220743611455
+2018-12-17 17:42:23.525459:	Training iteration: 800, Loss: 0.004683408886194229
+2018-12-17 17:46:01.600705: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 377 of 1000
+2018-12-17 17:46:11.916378: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 804 of 1000
+2018-12-17 17:46:16.036179: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 17:46:23.494340:	Training iteration: 1000, Loss: 0.004790622740983963
+2018-12-17 17:50:14.785423:	Training iteration: 1200, Loss: 0.0050739203579723835
+2018-12-17 17:54:08.411503:	Training iteration: 1400, Loss: 0.004741421900689602
+2018-12-17 17:55:47.863143: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 359 of 1000
+2018-12-17 17:55:58.019252: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 793 of 1000
+2018-12-17 17:56:02.531973: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 17:58:05.095832:	Training iteration: 1600, Loss: 0.004577875602990389
+2018-12-17 18:02:04.511202:	Training iteration: 1800, Loss: 0.004465881735086441
+2018-12-17 18:05:51.794051:	Training iteration: 2000, Loss: 0.004571112804114819
+2018-12-17 18:05:56.334252:	Epoch 0 finished after 2016 iterations.
+Validating
+2018-12-17 18:05:56.515191:	Entering validation loop
+2018-12-17 18:06:06.818205: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 371 of 1000
+2018-12-17 18:06:16.809594: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 805 of 1000
+2018-12-17 18:06:21.383239: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 18:07:48.473427: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 370 of 1000
+2018-12-17 18:07:58.448311: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 785 of 1000
+2018-12-17 18:08:03.512667: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 18:09:30.416358: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 386 of 1000
+2018-12-17 18:09:40.404730: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 806 of 1000
+2018-12-17 18:09:44.899148: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 18:10:22.000114:	Validation iteration: 200, Loss: 0.004241764545440674
+2018-12-17 18:11:10.724000: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 371 of 1000
+2018-12-17 18:11:20.548733: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 805 of 1000
+2018-12-17 18:11:25.180546: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+Validation check mean loss: 0.004371771534871576
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2018-12-17 18:12:56.323666: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 391 of 1000
+2018-12-17 18:13:06.317338: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 833 of 1000
+2018-12-17 18:13:10.123529: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 18:16:43.355323:	Training iteration: 2200, Loss: 0.004323595203459263
+2018-12-17 18:20:35.174410:	Training iteration: 2400, Loss: 0.0041662706062197685
+2018-12-17 18:22:35.546867: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 373 of 1000
+2018-12-17 18:22:45.604526: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 793 of 1000
+2018-12-17 18:22:50.408202: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 18:24:34.841257:	Training iteration: 2600, Loss: 0.004702306352555752
+2018-12-17 18:28:25.175525:	Training iteration: 2800, Loss: 0.0044936528429389
+2018-12-17 18:32:06.866453:	Training iteration: 3000, Loss: 0.0046764882281422615
+2018-12-17 18:32:19.646513: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 387 of 1000
+2018-12-17 18:32:29.849323: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 817 of 1000
+2018-12-17 18:32:33.563812: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 18:36:13.540089:	Training iteration: 3200, Loss: 0.004854416474699974
+2018-12-17 18:40:05.262193:	Training iteration: 3400, Loss: 0.004812008701264858
+2018-12-17 18:42:00.776911: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 364 of 1000
+2018-12-17 18:42:10.706136: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 794 of 1000
+2018-12-17 18:42:15.245379: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 18:44:01.412585:	Training iteration: 3600, Loss: 0.004367288667708635
+2018-12-17 18:47:51.409191:	Training iteration: 3800, Loss: 0.004289061762392521
+2018-12-17 18:51:41.323225:	Training iteration: 4000, Loss: 0.004120164550840855
+2018-12-17 18:51:57.819644:	Epoch 1 finished after 4031 iterations.
+Validating
+2018-12-17 18:51:57.823024:	Entering validation loop
+2018-12-17 18:52:07.857702: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 368 of 1000
+2018-12-17 18:52:17.939588: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 806 of 1000
+2018-12-17 18:52:22.526656: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 18:53:48.594048: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 374 of 1000
+2018-12-17 18:53:58.611747: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 814 of 1000
+2018-12-17 18:54:03.031815: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 18:55:29.649114: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 372 of 1000
+2018-12-17 18:55:39.693724: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 789 of 1000
+2018-12-17 18:55:44.289419: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 18:56:22.025052:	Validation iteration: 200, Loss: 0.004258899949491024
+2018-12-17 18:57:10.251748: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 374 of 1000
+2018-12-17 18:57:20.223500: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 798 of 1000
+2018-12-17 18:57:24.818489: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+Validation check mean loss: 0.004276618993441973
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2018-12-17 18:58:53.162035: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 379 of 1000
+2018-12-17 18:59:02.944795: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 843 of 1000
+2018-12-17 18:59:06.328148: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 19:02:26.520328:	Training iteration: 4200, Loss: 0.004023382440209389
+2018-12-17 19:06:18.292828:	Training iteration: 4400, Loss: 0.0040415022522211075
+2018-12-17 19:08:35.588338: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 371 of 1000
+2018-12-17 19:08:45.800284: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 793 of 1000
+2018-12-17 19:08:51.045843: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 19:10:19.091323:	Training iteration: 4600, Loss: 0.00474515650421381
+2018-12-17 19:14:10.016477:	Training iteration: 4800, Loss: 0.004716089926660061
+2018-12-17 19:18:02.560242:	Training iteration: 5000, Loss: 0.004621922038495541
+2018-12-17 19:18:22.982473: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 374 of 1000
+2018-12-17 19:18:32.723012: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 801 of 1000
+2018-12-17 19:18:36.756012: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 19:21:58.423839:	Training iteration: 5200, Loss: 0.0047504110261797905
+2018-12-17 19:25:50.369764:	Training iteration: 5400, Loss: 0.0044980114325881
+2018-12-17 19:28:03.293460: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 364 of 1000
+2018-12-17 19:28:13.359839: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 793 of 1000
+2018-12-17 19:28:17.951455: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 19:29:46.358169:	Training iteration: 5600, Loss: 0.004648042842745781
+2018-12-17 19:33:36.814119:	Training iteration: 5800, Loss: 0.004360244609415531
+2018-12-17 19:37:25.833004:	Training iteration: 6000, Loss: 0.004332171753048897
+2018-12-17 19:37:59.877725:	Epoch 2 finished after 6046 iterations.
+Validating
+2018-12-17 19:37:59.881960:	Entering validation loop
+2018-12-17 19:38:09.915914: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 371 of 1000
+2018-12-17 19:38:19.954343: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 797 of 1000
+2018-12-17 19:38:24.637818: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 19:39:50.680570: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 375 of 1000
+2018-12-17 19:40:00.671665: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 813 of 1000
+2018-12-17 19:40:04.977959: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 19:41:31.728483: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 375 of 1000
+2018-12-17 19:41:41.845397: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 806 of 1000
+2018-12-17 19:41:46.262486: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 19:42:23.943050:	Validation iteration: 200, Loss: 0.0042769392021000385
+2018-12-17 19:43:12.972540: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 375 of 1000
+2018-12-17 19:43:22.950882: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 811 of 1000
+2018-12-17 19:43:27.374673: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+Validation check mean loss: 0.004257778014150625
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2018-12-17 19:44:55.312284: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 382 of 1000
+2018-12-17 19:45:05.427934: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 836 of 1000
+2018-12-17 19:45:09.006009: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 19:48:06.531999:	Training iteration: 6200, Loss: 0.004062989726662636
+2018-12-17 19:51:57.207268:	Training iteration: 6400, Loss: 0.0039720055647194386
+2018-12-17 19:54:32.468879: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 377 of 1000
+2018-12-17 19:54:42.530524: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 784 of 1000
+2018-12-17 19:54:47.997816: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 19:55:58.088920:	Training iteration: 6600, Loss: 0.004420814104378223
+2018-12-17 19:59:50.163845:	Training iteration: 6800, Loss: 0.004432243760675192
+2018-12-17 20:03:39.961376:	Training iteration: 7000, Loss: 0.004305813927203417
+2018-12-17 20:04:19.042515: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 394 of 1000
+2018-12-17 20:04:28.901500: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 816 of 1000
+2018-12-17 20:04:32.792876: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 20:07:37.348592:	Training iteration: 7200, Loss: 0.004680234007537365
+2018-12-17 20:11:29.838151:	Training iteration: 7400, Loss: 0.0046692658215761185
+2018-12-17 20:14:00.977678: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 370 of 1000
+2018-12-17 20:14:10.871799: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 789 of 1000
+2018-12-17 20:14:15.751576: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 20:15:26.753292:	Training iteration: 7600, Loss: 0.00452410988509655
+2018-12-17 20:19:18.280377:	Training iteration: 7800, Loss: 0.004303957335650921
+2018-12-17 20:23:06.872825:	Training iteration: 8000, Loss: 0.004097954370081425
+2018-12-17 20:23:59.003366:	Epoch 3 finished after 8061 iterations.
+Validating
+2018-12-17 20:23:59.006231:	Entering validation loop
+2018-12-17 20:24:09.093816: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 377 of 1000
+2018-12-17 20:24:19.018188: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 799 of 1000
+2018-12-17 20:24:23.703405: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 20:25:50.480585: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 381 of 1000
+2018-12-17 20:26:00.486923: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 812 of 1000
+2018-12-17 20:26:05.082725: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 20:27:31.073454: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 382 of 1000
+2018-12-17 20:27:41.074846: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 805 of 1000
+2018-12-17 20:27:45.660762: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 20:28:23.076012:	Validation iteration: 200, Loss: 0.004229133948683739
+2018-12-17 20:29:11.586874: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 377 of 1000
+2018-12-17 20:29:21.571082: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 810 of 1000
+2018-12-17 20:29:26.078336: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+Validation check mean loss: 0.0042275783752778635
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2018-12-17 20:30:54.788962: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 400 of 1000
+2018-12-17 20:31:04.623962: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 842 of 1000
+2018-12-17 20:31:08.047654: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 20:33:49.484144:	Training iteration: 8200, Loss: 0.0040778424590826035
+2018-12-17 20:37:39.817681:	Training iteration: 8400, Loss: 0.0036925694439560175
+2018-12-17 20:40:31.228522: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 379 of 1000
+2018-12-17 20:40:41.118600: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 795 of 1000
+2018-12-17 20:40:46.144451: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 20:41:38.143596:	Training iteration: 8600, Loss: 0.004552138969302177
+2018-12-17 20:45:30.243448:	Training iteration: 8800, Loss: 0.004344393964856863
+2018-12-17 20:49:18.303740:	Training iteration: 9000, Loss: 0.004583297297358513
+2018-12-17 20:50:14.710323: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 377 of 1000
+2018-12-17 20:50:24.807900: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 807 of 1000
+2018-12-17 20:50:29.040609: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 20:53:17.185508:	Training iteration: 9200, Loss: 0.004808119032531977
+2018-12-17 20:57:10.527423:	Training iteration: 9400, Loss: 0.004684623330831528
+2018-12-17 20:59:58.193532: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 366 of 1000
+2018-12-17 21:00:08.206955: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 793 of 1000
+2018-12-17 21:00:12.671869: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 21:01:13.168325:	Training iteration: 9600, Loss: 0.0044092340394854546
+2018-12-17 21:05:03.455185:	Training iteration: 9800, Loss: 0.004295290447771549
+2018-12-17 21:08:51.619515:	Training iteration: 10000, Loss: 0.004374418407678604
+2018-12-17 21:10:01.863085:	Epoch 4 finished after 10076 iterations.
+Validating
+2018-12-17 21:10:01.867580:	Entering validation loop
+2018-12-17 21:10:11.938764: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 377 of 1000
+2018-12-17 21:10:21.902283: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 805 of 1000
+2018-12-17 21:10:26.357952: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 21:11:53.071128: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 366 of 1000
+2018-12-17 21:12:03.063922: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 797 of 1000
+2018-12-17 21:12:07.750461: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 21:13:34.122908: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 384 of 1000
+2018-12-17 21:13:44.118055: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 812 of 1000
+2018-12-17 21:13:48.422540: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 21:14:26.007980:	Validation iteration: 200, Loss: 0.004232379607856274
+2018-12-17 21:15:15.071304: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 380 of 1000
+2018-12-17 21:15:25.012209: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 810 of 1000
+2018-12-17 21:15:29.518211: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+Validation check mean loss: 0.004229534128431364
+Validation loss has worsened. worse_val_checks = 1
+Checkpoint
+2018-12-17 21:16:58.090645: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 383 of 1000
+2018-12-17 21:17:08.146430: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 826 of 1000
+2018-12-17 21:17:11.942713: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 21:19:37.274939:	Training iteration: 10200, Loss: 0.0040534017607569695
+2018-12-17 21:23:26.090177:	Training iteration: 10400, Loss: 0.003689853474497795
+2018-12-17 21:26:36.313040: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 363 of 1000
+2018-12-17 21:26:46.244139: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 781 of 1000
+2018-12-17 21:26:51.414165: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 21:27:25.895360:	Training iteration: 10600, Loss: 0.004527023062109947
+2018-12-17 21:31:19.764942:	Training iteration: 10800, Loss: 0.0043507530353963375
+2018-12-17 21:35:11.015995:	Training iteration: 11000, Loss: 0.004375254735350609
+2018-12-17 21:36:24.261790: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 382 of 1000
+2018-12-17 21:36:34.256320: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 809 of 1000
+2018-12-17 21:36:38.514495: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 21:39:08.346356:	Training iteration: 11200, Loss: 0.004773781169205904
+2018-12-17 21:43:07.757586:	Training iteration: 11400, Loss: 0.004641517996788025
+2018-12-17 21:46:14.665938: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 361 of 1000
+2018-12-17 21:46:24.660417: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 798 of 1000
+2018-12-17 21:46:29.263768: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 21:47:05.672729:	Training iteration: 11600, Loss: 0.004458812065422535
+2018-12-17 21:50:55.890913:	Training iteration: 11800, Loss: 0.00400332547724247
+2018-12-17 21:54:45.164943:	Training iteration: 12000, Loss: 0.004278159700334072
+2018-12-17 21:56:12.257667:	Epoch 5 finished after 12091 iterations.
+Validating
+2018-12-17 21:56:12.261462:	Entering validation loop
+2018-12-17 21:56:22.389274: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 367 of 1000
+2018-12-17 21:56:32.285026: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 802 of 1000
+2018-12-17 21:56:37.127314: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 21:58:03.185753: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 371 of 1000
+2018-12-17 21:58:13.059122: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 807 of 1000
+2018-12-17 21:58:17.544946: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 21:59:43.947353: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 374 of 1000
+2018-12-17 21:59:53.970952: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 809 of 1000
+2018-12-17 21:59:58.456676: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 22:00:36.620215:	Validation iteration: 200, Loss: 0.004269765689969063
+2018-12-17 22:01:25.868796: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 376 of 1000
+2018-12-17 22:01:35.832130: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 807 of 1000
+2018-12-17 22:01:40.238556: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+Validation check mean loss: 0.004202226431862939
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2018-12-17 22:03:11.383726: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 386 of 1000
+2018-12-17 22:03:21.388831: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 847 of 1000
+2018-12-17 22:03:24.766666: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 22:05:33.243220:	Training iteration: 12200, Loss: 0.0041436366736888885
+2018-12-17 22:13:57.945823:	Training iteration: 12400, Loss: 0.0037317778915166855
+2018-12-17 22:20:58.232254: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 379 of 1000
+2018-12-17 22:21:07.976294: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 794 of 1000
+2018-12-17 22:21:13.354381: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 22:21:30.583273:	Training iteration: 12600, Loss: 0.004382591228932142
+2018-12-17 22:25:22.409037:	Training iteration: 12800, Loss: 0.004492329433560371
+2018-12-17 22:29:13.374671:	Training iteration: 13000, Loss: 0.0044787246733903885
+2018-12-17 22:30:43.252147: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 386 of 1000
+2018-12-17 22:30:53.236814: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 812 of 1000
+2018-12-17 22:30:57.379242: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 22:33:11.110751:	Training iteration: 13200, Loss: 0.004778921604156494
+2018-12-17 22:37:03.822013:	Training iteration: 13400, Loss: 0.004533027298748493
+2018-12-17 22:40:27.016246: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 364 of 1000
+2018-12-17 22:40:37.163289: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 793 of 1000
+2018-12-17 22:40:41.679351: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 22:41:00.576649:	Training iteration: 13600, Loss: 0.004218953661620617
+2018-12-17 22:44:50.578824:	Training iteration: 13800, Loss: 0.0041352203115820885
+2018-12-17 22:48:40.000707:	Training iteration: 14000, Loss: 0.004281909670680761
+2018-12-17 22:50:25.643965:	Epoch 6 finished after 14106 iterations.
+Validating
+2018-12-17 22:50:25.648511:	Entering validation loop
+2018-12-17 22:50:35.656221: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 376 of 1000
+2018-12-17 22:50:45.690982: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 807 of 1000
+2018-12-17 22:50:50.160346: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 22:52:16.589865: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 386 of 1000
+2018-12-17 22:52:26.606264: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 814 of 1000
+2018-12-17 22:52:31.010828: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 22:53:57.507631: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 383 of 1000
+2018-12-17 22:54:07.528553: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 814 of 1000
+2018-12-17 22:54:11.825387: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 22:54:49.543838:	Validation iteration: 200, Loss: 0.004124045837670565
+2018-12-17 22:55:38.032677: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 377 of 1000
+2018-12-17 22:55:48.042686: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 798 of 1000
+2018-12-17 22:55:52.637081: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+Validation check mean loss: 0.004195888525351793
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2018-12-17 22:57:21.878936: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 383 of 1000
+2018-12-17 22:57:31.945195: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 840 of 1000
+2018-12-17 22:57:35.514068: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 22:59:25.244749:	Training iteration: 14200, Loss: 0.004094910342246294
+2018-12-17 23:03:24.336212:	Training iteration: 14400, Loss: 0.00371213024482131
+2018-12-17 23:06:59.344481:	Training iteration: 14600, Loss: 0.0038876160979270935
+2018-12-17 23:07:09.739545: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 366 of 1000
+2018-12-17 23:07:19.650039: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 775 of 1000
+2018-12-17 23:07:25.461903: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 23:11:17.105039:	Training iteration: 14800, Loss: 0.00443603191524744
+2018-12-17 23:15:10.188321:	Training iteration: 15000, Loss: 0.00434951763600111
+2018-12-17 23:16:57.594240: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 370 of 1000
+2018-12-17 23:17:07.512777: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 805 of 1000
+2018-12-17 23:17:11.978191: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 23:19:07.454446:	Training iteration: 15200, Loss: 0.004702459089457989
+2018-12-17 23:23:02.238029:	Training iteration: 15400, Loss: 0.004441225901246071
+2018-12-17 23:26:42.751567: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 370 of 1000
+2018-12-17 23:26:52.742598: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 795 of 1000
+2018-12-17 23:26:57.269789: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 23:26:59.588955:	Training iteration: 15600, Loss: 0.0045105936005711555
+2018-12-17 23:30:50.666063:	Training iteration: 15800, Loss: 0.004258297849446535
+2018-12-17 23:34:41.056596:	Training iteration: 16000, Loss: 0.004201292991638184
+2018-12-17 23:36:42.623959:	Epoch 7 finished after 16121 iterations.
+Validating
+2018-12-17 23:36:42.626466:	Entering validation loop
+2018-12-17 23:36:52.712977: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 371 of 1000
+2018-12-17 23:37:02.627913: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 790 of 1000
+2018-12-17 23:37:07.533389: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 23:38:33.920112: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 381 of 1000
+2018-12-17 23:38:43.883534: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 804 of 1000
+2018-12-17 23:38:48.386471: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 23:40:14.779731: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 378 of 1000
+2018-12-17 23:40:24.810739: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 806 of 1000
+2018-12-17 23:40:29.302273: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 23:41:07.065062:	Validation iteration: 200, Loss: 0.0042462656274437904
+2018-12-17 23:41:56.024086: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 374 of 1000
+2018-12-17 23:42:06.055116: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 798 of 1000
+2018-12-17 23:42:10.529562: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+Validation check mean loss: 0.004203051192148234
+Validation loss has worsened. worse_val_checks = 1
+Checkpoint
+Training complete after 8 epochs.
+Finished requested number of epochs.
+Final validation loss: 0.004203051192148234
+Best validation loss (0.004195888525351793) achieved at validation check 7
+Starting testing
+2018-12-17 23:43:31.394397:	Entering test loop
+2018-12-17 23:43:41.688374: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 373 of 1000
+2018-12-17 23:43:51.808916: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 791 of 1000
+2018-12-17 23:43:56.604881: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 23:44:00.532961:	Testing iteration: 0, Loss: 0.004234733525663614
+2018-12-17 23:46:58.679710: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 365 of 1000
+2018-12-17 23:47:08.783880: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 791 of 1000
+2018-12-17 23:47:14.604194: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 23:50:15.044857: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 380 of 1000
+2018-12-17 23:50:25.044045: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 791 of 1000
+2018-12-17 23:50:30.174081: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 23:53:32.590577: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 372 of 1000
+2018-12-17 23:53:42.582534: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 792 of 1000
+2018-12-17 23:53:48.163812: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2018-12-17 23:54:06.990820:	Testing iteration: 200, Loss: 0.003989773336797953
+Test pass complete
+Mean loss over test set: 0.0040148470237349665
+Data saved to dumps/305 for later audio metric calculation
+2018-12-17 23:56:38.525726:
+	All done with experiment 305!
+	Final test loss: 0.0040148470237349665
