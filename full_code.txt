@@ -1,0 +1,1645 @@
+########## main.py #############
+
+import tensorflow as tf
+from tensorflow.python import debug as tf_debug
+from sacred import Experiment
+from sacred.observers import FileStorageObserver
+
+import os
+import datetime
+
+import audio_models
+import dataset
+from train import train
+from test import test
+
+
+ex = Experiment('UNet_Speech_Separation', interactive=True)
+ex.observers.append(FileStorageObserver.create('my_runs'))
+
+
+@ex.config
+def cfg():
+    model_config = {'model_variant': 'unet',  # The type of model to use, from ['unet', capsunet', basic_capsnet',
+                                              # 'basic_convnet']
+                    'data_type': 'mag',  # From [' mag', 'mag_phase', 'mag_phase_diff', 'real_imag',
+                                                    # 'mag_real_imag', 'complex_to_mag_phase']
+                    'phase_weight': 0.005,  # When using a model which learns to estimate phase, defines how much
+                                            # weight phase loss should be given against magnitude loss
+                    'initialisation_test': False,  # Whether or not to calculate test metrics before training
+                    'loading': False,  # Whether to load an existing checkpoint
+                    'checkpoint_to_load': "169/169-6",  # Checkpoint format: run/run-step
+                    'saving': True,  # Whether to take checkpoints
+                    'save_by_epochs': True,  # Checkpoints at end of each epoch or every 'save_iters'?
+                    'save_iters': 10000,  # Number of training iterations between checkpoints
+                    'early_stopping': True,  # Should validation data checks be used for early stopping?
+                    'val_by_epochs': True,  # Validation at end of each epoch or every 'val_iters'?
+                    'val_iters': 50000,  # Number of training iterations between validation checks,
+                    'num_worse_val_checks': 3,  # Number of successively worse validation checks before early stopping,
+                    'dataset': 'CHiME',  # Choice from ['CHiME', 'LibriSpeech_s', 'LibriSpeech_m',
+                                         #              'LibriSpeech_l', 'CHiME and LibriSpeech_s',
+                                         #              'CHiME and LibriSpeech_m', 'CHiME and LibriSpeech_l']
+                    'local_run': False,  # Whether experiment is running on laptop or server
+                    'sample_rate': 16384,  # Desired sample rate of audio. Input will be resampled to this
+                    'n_fft': 1024,  # Number of samples in each fourier transform
+                    'fft_hop': 256,  # Number of samples between the start of each fourier transform
+                    'n_parallel_readers': 16,
+                    'patch_window': 256,  # Number of fourier transforms (rows) in each patch
+                    'patch_hop': 128,  # Number of fourier transforms between the start of each patch
+                    'batch_size': 50,  # Number of patches in each batch
+                    'n_shuffle': 1000,  # Number of patches buffered before batching
+                    'learning_rate': 0.0001,  # The learning rate to be used by the model
+                    'epochs': 8,  # Number of full passes through the dataset to train for
+                    'normalise_mag': True,  # Are magnitude spectrograms normalised in pre-processing?
+                    'GPU': '0'
+                    }
+
+    if model_config['local_run']:  # Data and Checkpoint directories on my laptop
+        model_config['data_root'] = 'C:/Users/Toby/MSc_Project/Test_Audio/CHiME/'
+        model_config['model_base_dir'] = 'C:/Users/Toby/MSc_Project/MScFinalProjectCheckpoints'
+        model_config['log_dir'] = 'logs/local'
+
+    else:  # Data and Checkpoint directories on the uni server
+        model_config['chime_data_root'] = '/home/enterprise.internal.city.ac.uk/acvn728/NewCHiME/'
+        model_config['librispeech_data_root'] = '/data/Speech_Data/LibriSpeech/'
+        model_config['model_base_dir'] = '/home/enterprise.internal.city.ac.uk/acvn728/checkpoints'
+        model_config['log_dir'] = 'logs/ssh'
+
+
+@ex.automain
+def do_experiment(model_config):
+
+    tf.reset_default_graph()
+    experiment_id = ex.current_run._id
+    print('Experiment ID: {eid}'.format(eid=experiment_id))
+
+    # Prepare data
+    print('Preparing dataset')
+    train_data, val_data, test_data = dataset.prepare_datasets(model_config)
+    print('Dataset ready')
+
+    # Start session
+    tf_config = tf.ConfigProto()
+    #tf_config.gpu_options.allow_growth = True
+    tf_config.gpu_options.visible_device_list = str(model_config['GPU'])
+    sess = tf.Session(config=tf_config)
+    #sess = tf.Session()
+    #sess = tf_debug.LocalCLIDebugWrapperSession(sess, ui_type="readline")
+
+    print('Session started')
+
+    # Create data iterators
+    handle = tf.placeholder(tf.string, shape=[])
+    iterator = tf.data.Iterator.from_string_handle(handle, train_data.output_types, train_data.output_shapes)
+    mixed_spec, voice_spec, background_spec, mixed_audio, voice_audio, background_audio = iterator.get_next()
+
+    training_iterator = train_data.make_initializable_iterator()
+    validation_iterator = val_data.make_initializable_iterator()
+    testing_iterator = test_data.make_initializable_iterator()
+
+    training_handle = sess.run(training_iterator.string_handle())
+    validation_handle = sess.run(validation_iterator.string_handle())
+    testing_handle = sess.run(testing_iterator.string_handle())
+    print('Iterators created')
+
+    # Create variable placeholders and model
+    is_training = tf.placeholder(shape=(), dtype=bool)
+    mixed_phase = tf.expand_dims(mixed_spec[:, :, :-1, 3], 3)
+
+    print('Creating model')
+    # Restructure data from pipeline based on data type required
+    if model_config['data_type'] == 'mag':
+        mixed_input = tf.expand_dims(mixed_spec[:, :, :-1, 2], 3)
+        voice_input = tf.expand_dims(voice_spec[:, :, :-1, 2], 3)
+    elif model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
+        mixed_input = mixed_spec[:, :, :-1, 2:4]
+        voice_input = voice_spec[:, :, :-1, 2:4]
+    elif model_config['data_type'] == 'real_imag':
+        mixed_input = mixed_spec[:, :, :-1, 0:2]
+        voice_input = voice_spec[:, :, :-1, 0:2]
+    elif model_config['data_type'] in ['mag_real_imag', 'mag_phase2']:
+        mixed_input = tf.concat([tf.expand_dims(mixed_spec[:, :, :-1, 2], 3), mixed_spec[:, :, :-1, 0:2]], 3)
+        voice_input = tf.concat([tf.expand_dims(voice_spec[:, :, :-1, 2], 3), voice_spec[:, :, :-1, 0:2]], 3)
+    elif model_config['data_type'] in ['mag_phase_real_imag', 'complex_to_mag_phase']:
+        mixed_input = mixed_spec[:, :, :-1, :]
+        voice_input = voice_spec[:, :, :-1, :]
+
+    model = audio_models.MagnitudeModel(mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, background_audio,
+                                        model_config['model_variant'], is_training, model_config['learning_rate'],
+                                        model_config['data_type'], model_config['phase_weight'], name='Magnitude_Model')
+
+    sess.run(tf.global_variables_initializer())
+
+    if model_config['loading']:
+        print('Loading checkpoint')
+        checkpoint = os.path.join(model_config['model_base_dir'], model_config['checkpoint_to_load'])
+        restorer = tf.train.Saver()
+        restorer.restore(sess, checkpoint)
+
+    # Summaries
+    model_folder = str(experiment_id)
+    writer = tf.summary.FileWriter(os.path.join(model_config["log_dir"], model_folder), graph=sess.graph)
+
+    # Get baseline metrics at initialisation
+    test_count = 0
+    if model_config['initialisation_test']:
+        print('Running initialisation test')
+        initial_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle,
+                                             test_count, experiment_id)
+
+    # Train the model
+    model = train(sess, model, model_config, model_folder, handle, training_iterator, training_handle,
+                  validation_iterator, validation_handle, writer)
+
+    # Test the trained model
+    mean_test_loss, test_count = test(sess, model, model_config, handle, testing_iterator, testing_handle,
+                                      test_count, experiment_id)
+    print('{ts}:\n\tAll done with experiment {exid}!'.format(ts=datetime.datetime.now(), exid=experiment_id))
+    if model_config['initialisation_test']:
+        print('\tInitial test loss: {init}'.format(init=initial_test_loss))
+    print('\tFinal test loss: {final}'.format(final=mean_test_loss))
+
+######## train.py #################
+
+import datetime
+import os
+import errno
+import math
+import tensorflow as tf
+
+
+def train(sess, model, model_config, model_folder, handle, training_iterator, training_handle, validation_iterator,
+          validation_handle, writer):
+    """
+    Train an audio_models.py model.
+    """
+
+    def validation(last_val_cost, min_val_cost, min_val_check, worse_val_checks, model, val_check):
+        """
+        Perform a validation check using the validation dataset.
+        """
+        print('Validating')
+        sess.run(validation_iterator.initializer)
+        val_costs = list()
+        val_iteration = 1
+        print('{ts}:\tEntering validation loop'.format(ts=datetime.datetime.now()))
+        while True:
+            try:
+                val_cost = sess.run(model.cost, {model.is_training: False, handle: validation_handle})
+                if val_iteration % 200 == 0:
+                    print("{ts}:\tValidation iteration: {i}, Loss: {vc}".format(ts=datetime.datetime.now(),
+                                                                                i=val_iteration, vc=val_cost))
+                if math.isnan(val_cost):
+                    print('Error: cost = nan\nDiscarding batch')
+                else:
+                    val_costs.append(val_cost)
+                    val_iteration += 1
+            except tf.errors.OutOfRangeError:
+                # Calculate and record mean loss over validation dataset
+                val_check_mean_cost = sum(val_costs) / len(val_costs)
+                print('Validation check mean loss: {l}'.format(l=val_check_mean_cost))
+                summary = tf.Summary(
+                    value=[tf.Summary.Value(tag='Validation_mean_loss', simple_value=val_check_mean_cost)])
+                writer.add_summary(summary, val_check)
+                # If validation loss has worsened increment the counter, else, reset the counter
+                if val_check_mean_cost > last_val_cost:
+                    worse_val_checks += 1
+                    print('Validation loss has worsened. worse_val_checks = {w}'.format(w=worse_val_checks))
+                else:
+                    worse_val_checks = 0
+                    print('Validation loss has improved!')
+                if val_check_mean_cost < min_val_cost:
+                    min_val_cost = val_check_mean_cost
+                    print('New best validation cost!')
+                    min_val_check = val_check
+                last_val_cost = val_check_mean_cost
+
+                break
+
+        return last_val_cost, min_val_cost, min_val_check, worse_val_checks
+
+    def checkpoint(model_config, model_folder, saver, sess, global_step):
+        """
+        Take a checkpoint of the model.
+        """
+        # Make sure there is a folder to save the checkpoint in
+        checkpoint_path = os.path.join(model_config["model_base_dir"], model_folder)
+        try:
+            os.makedirs(checkpoint_path)
+        except OSError as e:
+            if e.errno != errno.EEXIST:
+                raise
+        print('Checkpoint')
+        saver.save(sess, os.path.join(checkpoint_path, model_folder), global_step=int(global_step))
+        return os.path.join(checkpoint_path, model_folder + '-' + str(global_step))
+
+    print('Starting training')
+    # Initialise variables and define summary
+    epoch = 0
+    iteration = 1
+    last_val_cost = 1
+    min_val_cost = 1
+    min_val_check = None
+    val_check = 1
+    worse_val_checks = 0
+    latest_checkpoint_path = os.path.join(model_config['model_base_dir'], model_config['checkpoint_to_load'])
+    # Summaries
+    cost_summary = tf.summary.scalar('Training_loss', model.cost)
+    mix_0_summary = tf.summary.image('Mixture_0', tf.expand_dims(model.mixed_input[:, :, :, 0], axis=3))
+    voice_0_summary = tf.summary.image('Voice_0', tf.expand_dims(model.voice_input[:, :, :, 0], axis=3))
+    mask_0_summary = tf.summary.image('Voice_Mask_0', tf.expand_dims(model.voice_mask[:, :, :, 0], axis=3))
+    gen_voice_0_summary = tf.summary.image('Generated_Voice_0', tf.expand_dims(model.gen_voice[:, :, :, 0], axis=3))
+    if model_config['data_type'] != 'mag':
+        mix_1_summary = tf.summary.image('Mixture_1', tf.expand_dims(model.mixed_input[:, :, :, 1], axis=3))
+        voice_1_summary = tf.summary.image('Voice_1', tf.expand_dims(model.voice_input[:, :, :, 1], axis=3))
+        mask_1_summary = tf.summary.image('Voice_Mask_1', tf.expand_dims(model.voice_mask[:, :, :, 1], axis=3))
+        gen_voice_1_summary = tf.summary.image('Generated_Voice_1', tf.expand_dims(model.gen_voice[:, :, :, 1], axis=3))
+    if model_config['data_type'] in ['mag_real_imag', 'mag_phase_real_imag', 'mag_phase2', 'complex_to_mag_phase']:
+        mix_2_summary = tf.summary.image('Mixture_2', tf.expand_dims(model.mixed_input[:, :, :, 2], axis=3))
+        voice_2_summary = tf.summary.image('Voice_2', tf.expand_dims(model.voice_input[:, :, :, 2], axis=3))
+    if model_config['data_type'] in ['mag_real_imag']:
+        mask_2_summary = tf.summary.image('Voice_Mask_2', tf.expand_dims(model.voice_mask[:, :, :, 2], axis=3))
+        gen_voice_2_summary = tf.summary.image('Generated_Voice_2', tf.expand_dims(model.gen_voice[:, :, :, 2], axis=3))
+    if model_config['data_type'] in ['mag_phase_real_imag', 'complex_to_mag_phase']:
+        mix_3_summary = tf.summary.image('Mixture_3', tf.expand_dims(model.mixed_input[:, :, :, 3], axis=3))
+        voice_3_summary = tf.summary.image('Voice_3', tf.expand_dims(model.voice_input[:, :, :, 3], axis=3))
+    if 'mag_' in model_config['data_type']:
+        mag_loss_summary = tf.summary.scalar('Training_magnitude_loss', model.mag_loss)
+    if 'phase' in model_config['data_type']:
+        phase_loss_summary = tf.summary.scalar('Training_phase_loss', model.phase_loss)
+    if 'real' in model_config['data_type'] and model_config['data_type'] != 'mag_phase_real_imag':
+        real_loss_summary = tf.summary.scalar('Training_real_loss', model.real_loss)
+    if 'imag' in model_config['data_type'] and model_config['data_type'] != 'mag_phase_real_imag':
+        imag_loss_summary = tf.summary.scalar('Training_imag_loss', model.imag_loss)
+    saver = tf.train.Saver(tf.global_variables(), max_to_keep=5, write_version=tf.train.SaverDef.V2)
+    sess.run(training_iterator.initializer)
+    # Begin training loop
+    # Train for the specified number of epochs, unless early stopping is triggered
+    while epoch < model_config['epochs'] and worse_val_checks < model_config['num_worse_val_checks']:
+        try:
+            try:
+                if model_config['data_type'] == 'mag':
+                    _, cost, cost_sum, mix_0, \
+                        voice_0, mask_0, gen_voice_0 = sess.run([model.train_op, model.cost, cost_summary,
+                                                                 mix_0_summary, voice_0_summary, mask_0_summary,
+                                                                 gen_voice_0_summary], {model.is_training: True,
+                                                                                        handle: training_handle})
+                elif model_config['data_type'] in ['mag_phase', 'mag_phase_diff']:
+                    _, cost, cost_sum, mag_loss_sum, phase_loss_sum, \
+                        mix_0, voice_0, mask_0, gen_voice_0, mix_1, \
+                        voice_1, mask_1, gen_voice_1 = sess.run([model.train_op, model.cost, cost_summary,
+                                                                 mag_loss_summary, phase_loss_summary, mix_0_summary,
+                                                                 voice_0_summary, mask_0_summary, gen_voice_0_summary,
+                                                                 mix_1_summary, voice_1_summary, mask_1_summary,
+                                                                 gen_voice_1_summary],
+                                                                {model.is_training: True, handle: training_handle})
+                elif model_config['data_type'] in ['mag_phase2']:
+                    _, cost, cost_sum, mag_loss_sum, \
+                        phase_loss_sum, mix_0, voice_0, mask_0, \
+                        gen_voice_0, mix_1, voice_1, mask_1, \
+                        gen_voice_1, mix_2,  voice_2 = sess.run([model.train_op, model.cost, cost_summary,
+                                                                 mag_loss_summary, phase_loss_summary, mix_0_summary,
+                                                                 voice_0_summary, mask_0_summary, gen_voice_0_summary,
+                                                                 mix_1_summary, voice_1_summary, mask_1_summary,
+                                                                 gen_voice_1_summary, mix_2_summary, voice_2_summary],
+                                                                {model.is_training: True, handle: training_handle})
+                elif model_config['data_type'] == 'real_imag':
+                    _, cost, cost_sum, real_loss_sum, imag_loss_sum, mix_0, \
+                        voice_0, mask_0, gen_voice_0, mix_1, \
+                        voice_1, mask_1, gen_voice_1 = sess.run([model.train_op, model.cost, cost_summary,
+                                                                 real_loss_summary, imag_loss_summary,
+                                                                 mix_0_summary, voice_0_summary, mask_0_summary,
+                                                                 gen_voice_0_summary, mix_1_summary, voice_1_summary,
+                                                                 mask_1_summary, gen_voice_1_summary],
+                                                                {model.is_training: True, handle: training_handle})
+                elif model_config['data_type'] == 'mag_real_imag':
+                    _, cost, cost_sum, mag_loss_sum, real_loss_sum, imag_loss_sum, mix_0, \
+                        voice_0, mask_0, gen_voice_0, mix_1, \
+                        voice_1, mask_1, gen_voice_1, mix_2, \
+                        voice_2, mask_2, gen_voice_2  = sess.run([model.train_op, model.cost, cost_summary,
+                                                                 mag_loss_summary, real_loss_summary, imag_loss_summary,
+                                                                 mix_0_summary, voice_0_summary, mask_0_summary,
+                                                                 gen_voice_0_summary, mix_1_summary, voice_1_summary,
+                                                                 mask_1_summary, gen_voice_1_summary, mix_2_summary,
+                                                                 voice_2_summary, mask_2_summary, gen_voice_2_summary],
+                                                                {model.is_training: True, handle: training_handle})
+                elif model_config['data_type'] in ['mag_phase_real_imag', 'complex_to_mag_phase']:
+                    _, cost, cost_sum, mag_loss_sum, phase_loss_sum, \
+                        mix_0, voice_0, mask_0, gen_voice_0, mix_1, \
+                        voice_1, mask_1, gen_voice_1, \
+                        mix_2, voice_2, mix_3, voice_3, = sess.run([model.train_op, model.cost, cost_summary,
+                                                                    mag_loss_summary, phase_loss_summary,
+                                                                    mix_0_summary, voice_0_summary, mask_0_summary,
+                                                                    gen_voice_0_summary, mix_1_summary, voice_1_summary,
+                                                                    mask_1_summary, gen_voice_1_summary, mix_2_summary,
+                                                                    voice_2_summary, mix_3_summary, voice_3_summary],
+                                                                   {model.is_training: True, handle: training_handle})
+
+            except RuntimeWarning:
+                print('Invalid value encountered. Ignoring batch.')
+                continue
+
+            if math.isnan(cost):
+                print('Error: cost = nan')
+                print('Loading latest checkpoint')
+                restorer = tf.train.Saver()
+                restorer.restore(sess, latest_checkpoint_path)
+                break
+            writer.add_summary(cost_sum, iteration)  # Record the loss at each iteration
+            if 'mag_' in model_config['data_type']:
+                writer.add_summary(mag_loss_sum, iteration)
+            if 'phase' in model_config['data_type']:
+                writer.add_summary(phase_loss_sum, iteration)
+            if 'real' in model_config['data_type'] and model_config['data_type'] != 'mag_phase_real_imag':
+                writer.add_summary(real_loss_sum, iteration)
+            if 'imag' in model_config['data_type'] and model_config['data_type'] != 'mag_phase_real_imag':
+                writer.add_summary(imag_loss_sum, iteration)
+            if iteration % 200 == 0:
+                print("{ts}:\tTraining iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
+                                                                         i=iteration, c=cost))
+            # If saving by iterations, take a checkpoint
+            if model_config['saving'] and not model_config['save_by_epochs'] \
+                    and iteration % model_config['save_iters'] == 0:
+                latest_checkpoint_path = checkpoint(model_config, model_folder, saver, sess, iteration)
+
+            # If using early stopping by iterations, enter validation loop
+            if model_config['early_stopping'] and not model_config['val_by_epochs'] \
+                    and iteration % model_config['val_iters'] == 0:
+                last_val_cost, min_val_cost, min_val_check, worse_val_checks = validation(last_val_cost,
+                                                                                          min_val_cost,
+                                                                                          min_val_check,
+                                                                                          worse_val_checks,
+                                                                                          model,
+                                                                                          val_check)
+                val_check += 1
+
+            iteration += 1
+
+        # When the dataset is exhausted, note the end of the epoch
+        except tf.errors.OutOfRangeError:
+            print('{ts}:\tEpoch {e} finished after {i} iterations.'.format(ts=datetime.datetime.now(),
+                                                                           e=epoch, i=iteration))
+            try:
+                writer.add_summary(mix_0, iteration)
+                writer.add_summary(voice_0, iteration)
+                writer.add_summary(mask_0, iteration)
+                writer.add_summary(gen_voice_0, iteration)
+                if model_config['data_type'] != 'mag':
+                    writer.add_summary(mix_1, iteration)
+                    writer.add_summary(voice_1, iteration)
+                    writer.add_summary(mask_1, iteration)
+                    writer.add_summary(gen_voice_1, iteration)
+                if model_config['data_type'] in ['mag_real_imag', 'mag_phase_real_imag',
+                                                 'mag_phase2', 'complex_to_mag_phase']:
+                    writer.add_summary(mix_2, iteration)
+                    writer.add_summary(voice_2, iteration)
+                if model_config['data_type'] in ['mag_real_imag']:
+                    writer.add_summary(mask_2, iteration)
+                    writer.add_summary(gen_voice_2, iteration)
+                if model_config['data_type'] in ['mag_phase_real_imag', 'complex_to_mag_phase']:
+                    writer.add_summary(mix_3, iteration)
+                    writer.add_summary(voice_3, iteration)
+            except NameError:  # Indicates the try has not been successfully executed at all
+                print('No images to record')
+                break
+            epoch += 1
+            # If using early stopping by epochs, enter validation loop
+            if model_config['early_stopping'] and model_config['val_by_epochs'] and iteration > 1:
+                last_val_cost, min_val_cost, min_val_check, worse_val_checks = validation(last_val_cost,
+                                                                                          min_val_cost,
+                                                                                          min_val_check,
+                                                                                          worse_val_checks,
+                                                                                          model,
+                                                                                          val_check)
+                val_check += 1
+            if model_config['saving'] and model_config['save_by_epochs']:
+                latest_checkpoint_path = checkpoint(model_config, model_folder, saver, sess, epoch)
+            sess.run(training_iterator.initializer)
+    print('Training complete after {e} epochs.'.format(e=epoch))
+    if model_config['early_stopping'] and worse_val_checks >= model_config['num_worse_val_checks']:
+        print('Stopped early due to validation criteria.')
+    else:
+        # Final validation check
+        if (iteration % model_config['val_iters'] != 1 or not model_config['early_stopping']) \
+                and not model_config['val_by_epochs']:
+            last_val_cost, min_val_cost, min_val_check, _ = validation(last_val_cost, min_val_cost, min_val_check,
+                                                                       worse_val_checks, model, val_check)
+    print('Finished requested number of epochs.')
+    print('Final validation loss: {lvc}'.format(lvc=last_val_cost))
+    if last_val_cost == min_val_cost:
+        print('This was the best validation loss achieved')
+    else:
+        print('Best validation loss ({mvc}) achieved at validation check {mvck}'.format(mvc=min_val_cost,
+                                                                                        mvck=min_val_check))
+    return model
+
+########## test.py ####################
+
+import datetime
+import os
+import pickle
+import math
+import tensorflow as tf
+
+
+def test(sess, model, model_config, handle, testing_iterator, testing_handle, test_count, experiment_id):
+    """
+    Test an audio_models.py model, saving the outputs to a pickle file.
+    """
+    # Create a folder for saving pickle files
+    dump_folder = 'dumps/' + str(experiment_id)
+    if not os.path.isdir(dump_folder):
+        os.mkdir(dump_folder)
+    print('Starting testing')
+    sess.run(testing_iterator.initializer)
+    iteration = 0
+    test_costs = list()
+
+    print('{ts}:\tEntering test loop'.format(ts=datetime.datetime.now()))
+    # For each batch, save the data required for metric calculation and record the loss.
+    while True:
+        try:
+            cost, voice_est_matrix, voice_ref_audio, background_audio,\
+                mixed_audio, mixed_input, mixed_phase = sess.run([model.cost, model.gen_voice, model.voice_audio,
+                                                                  model.background_audio, model.mixed_audio,
+                                                                  model.mixed_input, model.mixed_phase],
+                                                                 {model.is_training: False, handle: testing_handle})
+            results = (cost, voice_est_matrix, voice_ref_audio, background_audio,
+                       mixed_audio, mixed_input, mixed_phase, model_config)
+            if math.isnan(cost):
+                print('Error: cost = nan\nDiscarding batch')
+            else:
+                test_costs.append(cost)
+                dump_name = dump_folder + '/test_count_' + str(test_count) + '_iteration_' + str(iteration)
+                pickle.dump(results, open(dump_name, 'wb'))
+                if iteration % 200 == 0:
+                    print("{ts}:\tTesting iteration: {i}, Loss: {c}".format(ts=datetime.datetime.now(),
+                                                                            i=iteration, c=cost))
+                iteration += 1
+        except tf.errors.OutOfRangeError:
+            # At the end of the dataset, calculate, record and print mean loss
+            mean_cost = sum(test_costs) / len(test_costs)
+            print('Test pass complete\n'
+                  'Mean loss over test set: {}\n'
+                  'Data saved to {} for later audio metric calculation'.format(mean_cost, dump_folder))
+            break
+    test_count += 1
+
+    return mean_cost, test_count
+
+############ test_metrics.py ##############
+
+import sys
+import os
+import csv
+import pickle
+import shutil
+import datetime
+from glob import glob
+import numpy as np
+import mir_eval
+import librosa
+import audio_functions as af
+
+"""
+This script takes the results of a test set being passed through a model, converts the relevant parts from spectrogram 
+to audio and then calculates audio quality metrics.
+
+This process causes a bottleneck and is not on the critical path towards training a model. As such, required data has 
+been dumped to pickle files by the main script, so that this script can be run on a different server or post training.
+"""
+
+
+def get_test_metrics(argv):
+    """
+    Calculate the audio separation quality metrics from pickled test results.
+    argv[1]: Experiment ID - The experiment for which metrics are to be calculated. Mandatory
+    argv[2]: Phase iterations - Number of Griffin-Lim iterations to be used in phase reconstruction. Default=0
+    """
+
+    experiment_id = argv[1]
+
+    if len(argv) == 3:
+        phase_iterations = int(argv[2])
+    else:
+        phase_iterations = 0
+
+    # Calculate number of test runs in experiment
+    dump_folder = 'dumps/' + experiment_id
+    file_list = glob(dump_folder + '/*')
+    test_num = max([int(file.split('_')[2]) for file in file_list]) + 1
+    batch_num = max([int(file.split('_')[4]) for file in file_list]) + 1
+    metrics = []
+    #  For each test run, calculate the results
+    for test in range(test_num):
+        print('{ts}:\tProcessing test {t}'.format(ts=datetime.datetime.now(), t=test))
+        print('\t\t{b} batches to process.'.format(b=batch_num))
+        test_files = [file for file in file_list if file.split('_')[2] == str(test)]
+        test_costs = []
+        sdrs = np.empty((0, 2))
+        sirs = np.empty((0, 2))
+        sars = np.empty((0, 2))
+        nsdrs = np.empty((0, 2))
+
+        #  There will be one pickle file per batch. For each one, load it and calculate the metrics
+        for file in test_files:
+            cost, voice_est_matrix, voice_ref_audio, background_audio,\
+                mixed_audio, mixed_matrix, mixed_phase, model_config = pickle.load(open(file, 'rb'))
+            print('{ts}:\t{f} loaded.'.format(ts=datetime.datetime.now(), f=file))
+            test_costs.append(cost)
+
+            voice_est_audio = np.empty(voice_ref_audio.shape)
+            for i in range(voice_est_audio.shape[0]):
+                # Transform output back to audio
+                if model_config['data_type'] == 'mag':
+                    wave = af.spectrogramToAudioFile(voice_est_matrix[i, :, :, 0].T,
+                                                     model_config['n_fft'], model_config['fft_hop'],
+                                                     phaseIterations=phase_iterations,
+                                                     phase=mixed_phase[i, :, :, 0].T)
+                elif model_config['data_type'] in ['mag_phase', 'mag_phase2', 'mag_phase_diff',
+                                                   'mag_phase_real_imag', 'complex_to_mag_phase']:
+                    wave = af.spectrogramToAudioFile(voice_est_matrix[i, :, :, 0].T,
+                                                     model_config['n_fft'], model_config['fft_hop'],
+                                                     phaseIterations=phase_iterations,
+                                                     phase=voice_est_matrix[i, :, :, 1].T)
+                elif model_config['data_type'] == 'real_imag':
+                    complex_spec = np.empty(voice_est_matrix.shape[1:3], dtype=complex)
+                    complex_spec.real = voice_est_matrix[i, :, :, 0]
+                    complex_spec.imag = voice_est_matrix[i, :, :, 1]
+
+                    wave = librosa.istft(complex_spec.T, model_config['fft_hop'])
+                elif model_config['data_type'] == 'mag_real_imag':
+                    complex_spec = np.empty(voice_est_matrix.shape[1:3], dtype=complex)
+                    complex_spec.real = voice_est_matrix[i, :, :, 1]
+                    complex_spec.imag = voice_est_matrix[i, :, :, 2]
+                    wave = af.spectrogramToAudioFile(voice_est_matrix[i, :, :, 0].T,
+                                                     model_config['n_fft'], model_config['fft_hop'],
+                                                     phaseIterations=phase_iterations,
+                                                     phase=np.angle(complex_spec).T)
+
+                voice_est_audio[i, :, :] = np.expand_dims(wave, axis=1)
+
+                # Normalise the waveforms to enable background noise calculation by subtraction
+                voice_ref_audio[i, :, :] = af.normalise_audio(voice_ref_audio[i, :, :])
+                voice_est_audio[i, :, :] = af.normalise_audio(voice_est_audio[i, :, :])
+                mixed_audio[i, :, :] = af.normalise_audio(mixed_audio[i, :, :])
+
+            # Reshape for mir_eval
+            voice_ref_audio = np.transpose(voice_ref_audio, (0, 2, 1))
+            voice_est_audio = np.transpose(voice_est_audio, (0, 2, 1))
+            mixed_audio = np.transpose(mixed_audio, (0, 2, 1))
+            background_audio = np.transpose(background_audio, (0, 2, 1))
+
+            # Subtract voice to calculate background noise
+            background_est_audio = mixed_audio - voice_est_audio
+
+            for i in range(voice_est_audio.shape[0]):
+                ref_sources = np.concatenate((voice_ref_audio[i, :, :], background_audio[i, :, :]), axis=0)
+                est_sources = np.concatenate((voice_est_audio[i, :, :], background_est_audio[i, :, :]), axis=0)
+                mixed_sources = np.concatenate((mixed_audio[i, :, :], mixed_audio[i, :, :]), axis=0)
+
+                # Calculate audio quality statistics
+                sdr, sir, sar, _ = mir_eval.separation.bss_eval_sources(ref_sources, est_sources,
+                                                                        compute_permutation=False)
+                sdr_mr, _, _, _ = mir_eval.separation.bss_eval_sources(ref_sources, mixed_sources,
+                                                                       compute_permutation=False)
+                nsdr = sdr - sdr_mr
+                sdrs = np.concatenate((sdrs, np.expand_dims(sdr, 1).T), axis=0)
+                sirs = np.concatenate((sirs, np.expand_dims(sir, 1).T), axis=0)
+                sars = np.concatenate((sars, np.expand_dims(sar, 1).T), axis=0)
+                nsdrs = np.concatenate((nsdrs, np.expand_dims(nsdr, 1).T), axis=0)
+            print('{ts}:\t{f} processed.'.format(ts=datetime.datetime.now(), f=file))
+
+        #  Record mean results for each metric across all batches in the test
+        mean_cost = sum(test_costs) / len(test_costs)
+        mean_sdr = np.mean(sdrs, axis=0)
+        mean_sir = np.mean(sirs, axis=0)
+        mean_sar = np.mean(sars, axis=0)
+        mean_nsdr = sum(nsdrs) / len(nsdrs)
+        for (k, v) in (('voice', 0), ('background', 1)):
+            metrics.append({'test': str(test) + '_' + k, 'mean_cost': mean_cost, 'mean_sdr': mean_sdr[v],
+                            'mean_sir': mean_sir[v], 'mean_sar': mean_sar[v], 'mean_nsdr': mean_nsdr[v]})
+
+    #  Write the results from the experiment to a CSV file, one row per test
+    if not os.path.isdir('test_metrics'):
+        os.mkdir('test_metrics')
+    file_name = 'test_metrics/' + experiment_id + '.csv'
+    with open(file_name, 'w') as csvfile:
+        fieldnames = ['test', 'mean_cost', 'mean_sdr', 'mean_sir', 'mean_sar', 'mean_nsdr']
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames, lineterminator='\n')
+        writer.writeheader()
+        for test in metrics:
+            writer.writerow(test)
+
+    # Delete the pickle files, as they are enormous and no longer needed
+    print('Deleting pickle files')
+    shutil.rmtree(dump_folder)
+
+    return metrics
+
+
+test_metrics = get_test_metrics(sys.argv)
+print('{ts}:\nProcessing complete\n{t}'.format(ts=datetime.datetime.now(), t=test_metrics))
+
+########### audio_models.py #####################
+
+import tensorflow as tf
+import model_functions as mf
+from SegCaps import capsule_layers
+from keras import layers
+
+
+class MagnitudeModel(object):
+    """
+    Top level object for models.
+    Attributes:
+        mixed_input: 4D tensor ([batch_size, height, width, channels]) - Input placeholder for mixed signals (voice plus background noise) - X
+        voice_input: 4D tensor ([batch_size, height, width, channels]) - Input placeholder for isolated voice signal - Y
+        mixed_phase: 4D tensor ([batch_size, height, width, 1]) - Input placeholder for phase spectrogram of mixed signals (voice plus background noise)
+        mixed_audio: 3D tensor ([batch_size, length, 1]) - Input placeholder for waveform audio of mixed signals (voice plus background noise)
+        voice_audio: 3D tensor ([batch_size, length, 1]) - Input placeholder for waveform audio of isolated voice signal
+        background_audio: 3D tensor ([batch_size, length, 1]) - Input placeholder for waveform audio of background noise signal
+        variant: The type of model ('unet', capsunet', basic_capsnet', 'basic_convnet')
+        is_training: Boolean - should the model be trained on the current input or not
+        learning_rate: The learning rate the model should be trained with.
+        data_type: The type of data representations to be used in the model (' mag', 'mag_phase', 'mag_phase2', 'mag_phase_diff', 'real_imag', 'mag_real_imag')
+        phase_weight: The weight applied to phase loss relative to magnitude loss
+        name: Model instance name
+    """
+    def __init__(self, mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, background_audio,
+                 variant, is_training, learning_rate, data_type, phase_weight, name):
+        with tf.variable_scope(name):
+            self.mixed_input = mixed_input
+            self.voice_input = voice_input
+            self.mixed_phase = mixed_phase
+            self.mixed_audio = mixed_audio
+            self.voice_audio = voice_audio
+            self.background_audio = background_audio
+            self.variant = variant
+            self.is_training = is_training
+
+            # Initialise the selected model variant
+            if self.variant in ['unet', 'capsunet'] and data_type == 'complex_to_mag_phase':
+                self.voice_mask_network = UNet(mixed_input[:, :, :, 0:2], variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
+            elif self.variant in ['unet', 'capsunet']:
+                self.voice_mask_network = UNet(mixed_input, variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
+            elif self.variant == 'basic_capsnet':
+                self.voice_mask_network = BasicCapsNet(mixed_input, name='basic_capsnet')
+            elif self.variant == 'basic_convnet':
+                self.voice_mask_network = BasicConvNet(mixed_input, is_training=is_training, reuse=None, name='basic_convnet')
+
+            self.voice_mask = self.voice_mask_network.output
+
+            # Depending on the data_type, setup the loss functions and optimisation
+            if data_type == 'mag':
+                self.gen_voice = self.voice_mask * mixed_input
+                self.cost = mf.l1_loss(self.gen_voice, voice_input)
+
+            elif data_type == 'mag_phase':
+                self.gen_voice = self.voice_mask * mixed_input
+                self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
+                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * phase_weight
+                self.cost = (self.mag_loss + self.phase_loss)/2
+
+            elif data_type == 'mag_phase_diff2':
+                self.gen_voice_mag = tf.expand_dims(self.voice_mask[:, :, :, 0] * mixed_input[:, :, :, 0], axis=3)
+                self.mag_loss = mf.l1_loss(self.gen_voice_mag[:, :, :, 0], voice_input[:, :, :, 0])
+                self.phase_loss = mf.l1_phase_loss(mf.phase_difference(mixed_input[:, :, :, 1], voice_input[:, :, :, 1]),
+                                                   self.voice_mask[:, :, :, 1]) * phase_weight
+                self.cost = (self.mag_loss + self.phase_loss) / 2
+                self.gen_voice_phase = tf.expand_dims(self.voice_mask[:, :, :, 1] + mixed_input[:, :, :, 1], axis=3)
+                self.gen_voice = mf.concat(self.gen_voice_mag, self.gen_voice_phase)
+
+            elif data_type == 'mag_phase_diff':
+                self.gen_voice_mag = tf.expand_dims(self.voice_mask[:, :, :, 0] * mixed_input[:, :, :, 0], axis=3)
+                self.gen_voice_phase = tf.expand_dims(self.voice_mask[:, :, :, 1] + mixed_input[:, :, :, 1], axis=3)
+                self.gen_voice = mf.concat(self.gen_voice_mag, self.gen_voice_phase)
+                self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
+                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1]) * phase_weight
+                self.cost = (self.mag_loss + self.phase_loss) / 2
+
+            elif data_type == 'real_imag':
+                self.gen_voice = self.voice_mask * mixed_input
+                self.real_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
+                self.imag_loss = mf.l1_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1])
+                self.cost = (self.real_loss + self.imag_loss)/2
+
+            elif data_type == 'mag_real_imag':
+                self.gen_voice = self.voice_mask * mixed_input
+                self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 0])
+                self.real_loss = mf.l1_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 1])
+                self.imag_loss = mf.l1_loss(self.gen_voice[:, :, :, 2], voice_input[:, :, :, 2])
+                self.cost = (self. mag_loss + self.real_loss + self.imag_loss) / 3
+
+            elif data_type == 'mag_phase2':
+                self.mag_mask = self.voice_mask[:, :, :, 0]
+                self.phase_mask = tf.angle(tf.complex(self.voice_mask[:, :, :, 1], self.voice_mask[:, :, :, 2]))
+                self.voice_mask = mf.concat(tf.expand_dims(self.mag_mask, axis=3), tf.expand_dims(self.phase_mask, axis=3))
+                self.gen_mag = self.mag_mask * mixed_input[:, :, :, 0]
+                self.gen_phase = self.phase_mask * tf.squeeze(mixed_phase, axis=3)
+                self.voice_phase = tf.angle(tf.complex(self.voice_input[:, :, :, 1], self.voice_input[:, :, :, 2]))
+                self.gen_voice = mf.concat(tf.expand_dims(self.gen_mag, axis=3), tf.expand_dims(self.gen_phase, axis=3))
+                self.mag_loss = mf.l1_loss(self.gen_mag, voice_input[:, :, :, 0])
+                self.phase_loss = mf.l1_phase_loss(self.gen_phase, self.voice_phase) * phase_weight
+                self.cost = (self.mag_loss + self.phase_loss) / 2
+
+            elif data_type == 'mag_phase_real_imag':
+                self.gen_voice = self.voice_mask * mixed_input[:, :, :, 2:4]
+                self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 2])
+                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 3]) * phase_weight
+                self.cost = (self.mag_loss + self.phase_loss)/2
+
+            elif data_type == 'complex_to_mag_phase':
+                self.gen_voice = self.voice_mask * mixed_input[:, :, :, 2:4]
+                self.mag_loss = mf.l1_loss(self.gen_voice[:, :, :, 0], voice_input[:, :, :, 2])
+                self.phase_loss = mf.l1_phase_loss(self.gen_voice[:, :, :, 1], voice_input[:, :, :, 3]) * phase_weight
+                self.cost = (self.mag_loss + self.phase_loss) / 2
+
+            self.optimizer = tf.train.AdamOptimizer(
+                learning_rate=learning_rate,
+                beta1=0.5,
+            )
+            self.train_op = self.optimizer.minimize(self.cost)
+
+
+class UNet(object):
+    """
+    Magnitude model U-Net
+    """
+    def __init__(self, input_tensor, variant, data_type, is_training, reuse, name):
+        with tf.variable_scope(name, reuse=reuse):
+            self.variant = variant
+
+            if self.variant == 'unet':
+                self.encoder = UNetEncoder(input_tensor, is_training, reuse)
+                self.decoder = UNetDecoder(self.encoder.output, self.encoder, data_type, is_training, reuse)
+            elif self.variant == 'capsunet':
+                self.encoder = CapsUNetEncoder(input_tensor, is_training, reuse)
+                self.decoder = CapsUNetDecoder(self.encoder.output, self.encoder, is_training, reuse)
+
+            self.output = mf.tanh(self.decoder.output) / 2 + .5
+
+
+class UNetEncoder(object):
+    """
+    The down-convolution side of a convoltional U-Net model.
+    """
+
+    def __init__(self, input_tensor, is_training, reuse):
+
+        self.input_tensor = input_tensor
+        with tf.variable_scope('encoder'):
+            with tf.variable_scope('layer-1'):
+                net = mf.conv(self.input_tensor, filters=16, kernel_size=5, stride=(2, 2))
+                self.l1 = net
+
+            with tf.variable_scope('layer-2'):
+                net = mf.lrelu(net)
+                net = mf.conv(net, filters=32, kernel_size=5, stride=(2, 2))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.l2 = net
+
+            with tf.variable_scope('layer-3'):
+                net = mf.lrelu(net)
+                net = mf.conv(net, filters=64, kernel_size=5, stride=(2, 2))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.l3 = net
+
+            with tf.variable_scope('layer-4'):
+                net = mf.lrelu(net)
+                net = mf.conv(net, filters=128, kernel_size=5, stride=(2, 2))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.l4 = net
+
+            with tf.variable_scope('layer-5'):
+                net = mf.lrelu(net)
+                net = mf.conv(net, filters=256, kernel_size=5, stride=(2, 2))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.l5 = net
+
+            with tf.variable_scope('layer-6'):
+                net = mf.lrelu(net)
+                net = mf.conv(net, filters=512, kernel_size=5, stride=(2, 2))
+
+            self.output = net
+
+
+class UNetDecoder(object):
+    """
+    The up-convolution side of a convolutional U-Net model
+    """
+    def __init__(self, input_tensor, encoder, data_type, is_training, reuse):
+        self.input_tensor = input_tensor
+
+        with tf.variable_scope('decoder'):
+            with tf.variable_scope('layer-1'):
+                net = mf.relu(self.input_tensor)
+                net = mf.deconv(net, filters=256, kernel_size=5, stride=(2, 2))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                net = mf.dropout(net, .5)
+                self.l1 = net
+
+            with tf.variable_scope('layer-2'):
+                net = mf.relu(mf.concat(net, encoder.l5))
+                net = mf.deconv(net, filters=128, kernel_size=5, stride=(2, 2))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                net = mf.dropout(net, .5)
+                self.l2 = net
+
+            with tf.variable_scope('layer-3'):
+                net = mf.relu(mf.concat(net, encoder.l4))
+                net = mf.deconv(net, filters=64, kernel_size=5, stride=(2, 2))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                net = mf.dropout(net, .5)
+                self.l3 = net
+
+            with tf.variable_scope('layer-4'):
+                net = mf.relu(mf.concat(net, encoder.l3))
+                net = mf.deconv(net, filters=32, kernel_size=5, stride=(2, 2))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.l4 = net
+
+            with tf.variable_scope('layer-5'):
+                net = mf.relu(mf.concat(net, encoder.l2))
+                net = mf.deconv(net, filters=16, kernel_size=5, stride=(2, 2))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.l5 = net
+
+            with tf.variable_scope('layer-6'):
+                if data_type == 'mag_phase_real_imag':
+                    self.out_depth = 2
+                else:
+                    self.out_depth = encoder.input_tensor.shape[3]
+                net = mf.relu(mf.concat(net, encoder.l1))
+                net = mf.deconv(net, filters=self.out_depth, kernel_size=5, stride=(2, 2))
+
+            self.output = net
+
+
+class CapsUNetEncoder(object):
+    """
+    The down-convolutional side of a capsule based U-Net model.
+    """
+
+    def __init__(self, input_tensor, is_training, reuse):
+        # net = layers.Input(shape=input_tensor)
+        self.input_tensor = input_tensor
+        with tf.variable_scope('Encoder'):
+            with tf.variable_scope('Convolution'):
+                # Layer 1: A conventional Conv2D layer
+                net = layers.Conv2D(filters=16, kernel_size=5, strides=1, padding='same', activation='relu',
+                                    name='conv1')(self.input_tensor)
+                self.conv1 = net
+
+                # Reshape layer to be 1 capsule x [filters] atoms
+                _, H, W, C = net.get_shape()
+                net = layers.Reshape((H.value, W.value, 1, C.value))(net)
+
+            # Layer 1: Primary Capsule: Conv cap with routing 1
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=2, num_atoms=8, strides=2, padding='same',
+                                                  routings=1, name='primarycaps')(net)
+            self.primary_caps = net
+
+            # Layer 2: Convolutional Capsules
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=8, strides=2, padding='same',
+                                                  routings=3, name='conv_cap_2')(net)
+            self.conv_cap_2 = net
+
+            # Layer 3: Convolutional Capsules
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=16, strides=2, padding='same',
+                                                  routings=3, name='conv_cap_3')(net)
+            self.conv_cap_3 = net
+
+            # Layer 4: Convolutional Capsules
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=32, strides=2, padding='same',
+                                                  routings=3, name='conv_cap_4')(net)
+
+            self.output = net
+
+
+class CapsUNetDecoder(object):
+    """
+    The up-convolutional side of a capsule based U-Net model.
+    """
+
+    def __init__(self, input_tensor, encoder, is_training, reuse):
+        net = input_tensor
+        with tf.variable_scope('Decoder'):
+            # Layer 1 Up: Deconvolutional capsules, skip connection, convolutional capsules
+            net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=8, num_atoms=16, upsamp_type='deconv',
+                                                    scaling=2, padding='same', routings=3, name='deconv_cap_1')(net)
+            self.upcap_1 = net
+
+            net = layers.Concatenate(axis=-2, name='skip_1')([net, encoder.conv_cap_3])
+
+            # Layer 2 Up: Deconvolutional capsules, skip connection, convolutional capsules
+            net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=4, num_atoms=8, upsamp_type='deconv',
+                                                    scaling=2, padding='same', routings=3, name='deconv_cap_2')(net)
+            self.upcap_2 = net
+
+            net = layers.Concatenate(axis=-2, name='skip_2')([net, encoder.conv_cap_2])
+
+            # Layer 3 Up: Deconvolutional capsules, skip connection
+            net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=2, num_atoms=8, upsamp_type='deconv',
+                                                    scaling=2, padding='same', routings=3, name='deconv_cap_3')(net)
+            self.upcap_3 = net
+
+            net = layers.Concatenate(axis=-2, name='skip_3')([net, encoder.primary_caps])
+
+            # Layer 4 Up: Deconvolutional capsules, skip connection
+            net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=1, num_atoms=16, upsamp_type='deconv',
+                                                    scaling=2, padding='same', routings=3, name='deconv_cap_4')(net)
+            self.upcap_4 = net
+
+            # Reconstruction - Reshape, skip connection + 3x conventional Conv2D layers
+            _, H, W, C, D = net.get_shape()
+
+            net = layers.Reshape((H.value, W.value, D.value))(net)
+            net = layers.Concatenate(axis=-1, name='skip_4')([net, encoder.conv1])
+
+            net = layers.Conv2D(filters=64, kernel_size=1, padding='same', kernel_initializer='he_normal',
+                                activation='relu', name='recon_1')(net)
+
+            net = layers.Conv2D(filters=128, kernel_size=1, padding='same', kernel_initializer='he_normal',
+                                activation='relu', name='recon_2')(net)
+
+            if tf.rank(encoder.input_tensor) == 3:
+                self.out_depth = 1
+            else:
+                self.out_depth = encoder.input_tensor.shape[3].value
+
+            net = layers.Conv2D(filters=self.out_depth, kernel_size=1, padding='same', kernel_initializer='he_normal',
+                                activation='sigmoid', name='out_recon')(net)
+
+            self.output = net
+
+
+class BasicCapsNet(object):
+
+    def __init__(self, input_tensor, name):
+        """
+        A basic capsule network operating on magnitude spectrograms.
+        """
+        with tf.variable_scope(name):
+            self.input_tensor = input_tensor
+            if tf.rank(self.input_tensor) == 3:
+                self.out_depth = 1
+            else:
+                self.out_depth = input_tensor.shape[3].value
+
+            with tf.variable_scope('layer_1'):
+                net = mf.conv(input_tensor, filters=128, kernel_size=5, stride=(1, 1))
+
+                # Reshape layer to be 1 capsule x [filters] atoms
+                _, H, W, C = net.get_shape()
+                net = layers.Reshape((H.value, W.value, 1, C.value))(net)
+                self.conv1 = net
+
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=16, strides=1,
+                                                  padding='same',
+                                                  routings=1, name='layer_2')(net)
+            self.primary_caps = net
+
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=1, num_atoms=16, strides=1,
+                                                  padding='same',
+                                                  routings=3, name='layer_3')(net)
+            self.seg_caps = net
+
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=1, num_capsule=self.out_depth, num_atoms=1, strides=1,
+                                                  padding='same',
+                                                  routings=3, name='mask')(net)
+            net = tf.squeeze(net, -1)
+
+            self.output = net
+
+
+class BasicConvNet(object):
+    def __init__(self, input_tensor, is_training, reuse, name):
+        """
+        input_tensor: Tensor with shape [batch_size, height, width, channels]
+        is_training:  Boolean - should the model be trained on the current input or not
+        name:         Model instance name
+        """
+        with tf.variable_scope(name):
+            self.input_tensor = input_tensor
+            if tf.rank(self.input_tensor) == 3:
+                self.out_depth = 1
+            else:
+                self.out_depth = input_tensor.shape[3].value
+
+            with tf.variable_scope('layer_1'):
+                net = mf.relu(input_tensor)
+                net = mf.conv(net, filters=128, kernel_size=5, stride=(1, 1))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.l1 = net
+
+            with tf.variable_scope('layer_2'):
+                net = mf.relu(net)
+                net = mf.conv(net, filters=128, kernel_size=5, stride=(1, 1))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.l2 = net
+
+            with tf.variable_scope('layer_3'):
+                net = mf.relu(net)
+                net = mf.conv(net, filters=16, kernel_size=5, stride=(1, 1))
+                net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
+                self.l3 = net
+
+            with tf.variable_scope('mask'):
+                net = mf.relu(net)
+                net = mf.conv(net, filters=self.out_depth, kernel_size=5, stride=(1, 1))
+                self.voice_mask = net
+
+            self.output = net
+
+############# audio_functions.py ###################
+
+import tensorflow as tf
+import numpy as np
+import librosa
+import soundfile as sf
+
+
+def normalise_audio(audio):
+    """
+    Nomralises an ndarray to the interval[-1 1]. For use on 1 dimensional audio waveforms (although will work on higher
+    dimensional arrays as well).
+    """
+    norm_audio = 2*((audio - audio.min())/(audio.max()-audio.min())) - 1
+    return norm_audio
+
+
+def read_audio_py(py_path, sample_rate):
+    mono, native_sr = sf.read(py_path)
+    if native_sr != sample_rate:
+        mono = librosa.core.resample(mono, native_sr, sample_rate)
+    return np.expand_dims(mono, 1).astype(np.float32)
+
+
+def read_audio(path, sample_rate, n_channels=1):
+
+    return tf.py_func(read_audio_py, [path, sample_rate], tf.float32, stateful=False)
+
+
+def read_audio_triple(path_a, path_b, path_c, sample_rate):
+    """
+    Takes in the path of three audio files and the required output sample rate,
+    returns a tuple of tensors of the wave form of the audio files.
+    """
+    return (tf.py_func(read_audio_py, [path_a, sample_rate], tf.float32, stateful=False),
+            tf.py_func(read_audio_py, [path_b, sample_rate], tf.float32, stateful=False),
+            tf.py_func(read_audio_py, [path_c, sample_rate], tf.float32, stateful=False))
+
+
+def compute_spectrogram(audio, n_fft, fft_hop, normalise):
+    """
+    Parameters
+    ----------
+    audio : mono audio shaped (n_samples, )
+    n_fft: number of samples in each Fourier transform
+    fft_hop: hop length between the start of Fourier transforms
+
+    Returns
+    -------
+    Tensor of shape (n_frames, 1 + n_fft / 2, 4), where the last dimension is (real number, imaginary number, magnitude, phase)
+    """
+
+    def stft(x, normalise):
+        spec = librosa.stft(
+            x, n_fft=n_fft, hop_length=fft_hop, window='hann')
+        mag = np.abs(spec)
+        if normalise:
+            mag = (mag - mag.min()) / (mag.max() - mag.min())
+
+        return spec.real, spec.imag, mag, np.angle(spec)
+
+    def mono_func(py_audio, normalise):
+        real, imag, mag, phase = stft(py_audio[:, 0], normalise)
+        ret = np.array([real, imag, mag, phase]).T
+        return ret.astype(np.float32)
+
+    with tf.name_scope('read_spectrogram'):
+        ret = tf.py_func(mono_func, [audio, normalise], tf.float32, stateful=False)
+        ret.set_shape([(audio.get_shape()[0].value/fft_hop) + 1, 1 + n_fft / 2, 4])
+    return ret
+
+
+def extract_spectrogram_patches(
+        spec, n_fft, patch_window, patch_hop):
+    """
+    Parameters
+    ----------
+    spec : Spectrogram of shape (n_frames, 1 + n_fft / 2, 2)
+
+    Returns
+    -------
+    Tensor of shape (n_patches, patch_window, 1 + n_fft / 2, 2)
+        containing patches from spec.
+    """
+    with tf.name_scope('extract_spectrogram_patches'):
+        spec4d = tf.expand_dims(spec, 0)
+
+        patches = tf.extract_image_patches(
+            spec4d, ksizes=[1, patch_window, 1 + n_fft / 2, 1],
+            strides=[1, patch_hop, 1 + n_fft / 2, 1],
+            rates=[1, 1, 1, 1],
+            padding='VALID'
+        )
+
+        num_patches = tf.shape(patches)[1]
+
+        return tf.reshape(patches, [num_patches, patch_window,
+                                    int(1 + n_fft / 2), 2])
+
+
+def extract_audio_patches(audio, fft_hop, patch_window, patch_hop):
+    """
+    Parameters
+    ----------
+    audio : Waveform audio of shape (n_samples, )
+
+    Returns
+    -------
+    Tensor of shape (n_patches, patch_window) containing patches from audio.
+    """
+    with tf.name_scope('extract_audio_patches'):
+        audio4d = tf.expand_dims(tf.expand_dims(audio, 0), 0)
+        patch_length = (patch_window - 1) * fft_hop
+        patch_hop_length = (patch_hop - 1) * fft_hop
+
+        patches = tf.extract_image_patches(
+            audio4d, ksizes=[1, 1, patch_length, 1],
+            strides=[1, 1, patch_hop_length, 1],
+            rates=[1, 1, 1, 1],
+            padding='VALID'
+        )
+
+        num_patches = tf.shape(patches)[2]
+
+        return tf.squeeze(tf.reshape(patches, [num_patches, 1, patch_length, 1]), 1)
+
+
+def compute_spectrogram_map(audio_a, audio_b, audio_c, n_fft, fft_hop, normalise=False):
+    """
+    Takes three waveform arrays and return the corresponding spectrograms, and the original arrays.
+    """
+    spec_a = compute_spectrogram(audio_a, n_fft, fft_hop, normalise)
+    spec_b = compute_spectrogram(audio_b, n_fft, fft_hop, normalise)
+    spec_c = compute_spectrogram(audio_c, n_fft, fft_hop, normalise)
+
+    return spec_a, spec_b, spec_c, audio_a, audio_b, audio_c
+
+
+def extract_audio_patches_map(audio_a, audio_b, audio_c, fft_hop, patch_window, patch_hop):
+    """
+    Take three audio waveform arrays and split them each into overlapping patches of matching shape.
+    """
+    audio_patches_a = extract_audio_patches(audio_a, fft_hop, patch_window, patch_hop)
+    audio_patches_b = extract_audio_patches(audio_b, fft_hop, patch_window, patch_hop)
+    audio_patches_c = extract_audio_patches(audio_c, fft_hop, patch_window, patch_hop)
+
+    return audio_patches_a, audio_patches_b, audio_patches_c
+
+
+def spectrogramToAudioFile(magnitude, fftWindowSize, hopSize, phaseIterations=0, phase=None, length=None):
+    """
+    From Stoller et al (2017)
+    Computes an audio signal from the given magnitude spectrogram, and optionally an initial phase.
+    Griffin-Lim is executed to recover/refine the given the phase from the magnitude spectrogram.
+    :param magnitude: Magnitudes to be converted to audio
+    :param fftWindowSize: Size of FFT window used to create magnitudes
+    :param hopSize: Hop size in frames used to create magnitudes
+    :param phaseIterations: Number of Griffin-Lim iterations to recover phase
+    :param phase: If given, starts ISTFT with this particular phase matrix
+    :param length: If given, audio signal is clipped/padded to this number of frames
+    :return:
+    """
+    if phase is not None:
+        if phaseIterations > 0:
+            # Refine audio given initial phase with a number of iterations
+            return reconPhase(magnitude, fftWindowSize, hopSize, phaseIterations, phase, length)
+        # reconstructing the new complex matrix
+        stftMatrix = magnitude * np.exp(phase * 1j) # magnitude * e^(j*phase)
+        audio = librosa.istft(stftMatrix, hop_length=hopSize, length=length)
+    else:
+        audio = reconPhase(magnitude, fftWindowSize, hopSize, phaseIterations)
+    return audio
+
+
+def reconPhase(magnitude, fftWindowSize, hopSize, phaseIterations=0, initPhase=None, length=None):
+    """
+    From Stoller et al (2017)
+    Griffin-Lim algorithm for reconstructing the phase for a given magnitude spectrogram, optionally with a given
+    intial phase.
+    :param magnitude: Magnitudes to be converted to audio
+    :param fftWindowSize: Size of FFT window used to create magnitudes
+    :param hopSize: Hop size in frames used to create magnitudes
+    :param phaseIterations: Number of Griffin-Lim iterations to recover phase
+    :param initPhase: If given, starts reconstruction with this particular phase matrix
+    :param length: If given, audio signal is clipped/padded to this number of frames
+    :return:
+    """
+    for i in range(phaseIterations):
+        if i == 0:
+            if initPhase is None:
+                reconstruction = np.random.random_sample(magnitude.shape) + 1j * (2 * np.pi * np.random.random_sample(magnitude.shape) - np.pi)
+            else:
+                reconstruction = np.exp(initPhase * 1j) # e^(j*phase), so that angle => phase
+        else:
+            reconstruction = librosa.stft(audio, fftWindowSize, hopSize)[:reconstruction.shape[0],:reconstruction.shape[1]] # Indexing to keep the output the same size
+        spectrum = magnitude * np.exp(1j * np.angle(reconstruction))
+        if i == phaseIterations - 1:
+            audio = librosa.istft(spectrum, hopSize, length=length)
+        else:
+            audio = librosa.istft(spectrum, hopSize)
+    return audio
+
+
+def zip_tensor_slices(*args):
+    """
+    Parameters
+    ----------
+    *args : list of _n_ _k_-dimensional tensors, where _k_ >= 2
+        The first dimension has _m_ elements.
+
+    Returns
+    -------
+    result : Dataset of _m_ examples, where each example has _n_
+        records of _k_ - 1 dimensions.
+
+    Example
+    -------
+    ds = (
+        tf.data.Dataset.zip((
+            tf.data.Dataset.from_tensors([[1,2], [3,4], [5, 6]]),
+            tf.data.Dataset.from_tensors([[10, 20], [30, 40], [50, 60]])
+        ))
+        .flat_map(zip_tensor_slices)  # <--- *HERE*
+    )
+    el = ds.make_one_shot_iterator().get_next()
+    print sess.run(el)
+    print sess.run(el)
+
+    # Output:
+    # (array([1, 2], dtype=int32), array([10, 20], dtype=int32))
+    # (array([3, 4], dtype=int32), array([30, 40], dtype=int32))
+    """
+    return tf.data.Dataset.zip(tuple([
+        tf.data.Dataset.from_tensor_slices(arg)
+        for arg in args
+    ]))
+
+############## dataset.py ####################
+
+from functools import partial
+import numpy as np
+import tensorflow as tf
+import audio_functions as af
+import re
+import os
+from glob import glob
+
+
+def zip_files(directory_a, directory_b, directory_c):
+    """
+    Takes in three directories (a, b and c) and returns an array, where each row is a triple of matching file paths,
+    one from each directory, with directory a in col 0, directory b in col 1 an directory c in col 2.
+    """
+
+    filelist_a = [f for f in os.listdir(directory_a) if
+                  os.path.isfile(os.path.join(directory_a, f)) and re.search('CH0', f) is None]
+    filelist_b = [f for f in os.listdir(directory_b) if
+                  os.path.isfile(os.path.join(directory_b, f)) and re.search('CH0', f) is None]
+
+    zipped_list = list()
+
+    for file_a in filelist_a:
+        for file_b in filelist_b:
+            if 'CHiME' in directory_a:
+                if file_a[:13] == file_b[:13] and (file_a[17:] == file_b[17:] or len(file_a) != len(file_b)):
+                    zipped_list.append((str(directory_a + '/' + file_a),
+                                        str(directory_b + '/' + file_b),
+                                        str(directory_c + '/' + file_a)))
+                    if len(file_a) == len(file_b):
+                        filelist_b.remove(file_b)
+                        break
+            else:
+                if file_a == file_b:
+                    zipped_list.append((str(directory_a + file_a),
+                                        str(directory_b + file_b),
+                                        str(directory_c + file_a)))
+                    filelist_b.remove(file_b)
+                    break
+
+    if len(zipped_list) == 0:
+        zipped_list = np.empty((0, 3))
+    else:
+        zipped_list = np.array(zipped_list)
+
+    return zipped_list
+
+
+def get_paired_dataset(zipped_files,
+                       sample_rate,
+                       n_fft,
+                       fft_hop,
+                       patch_window,
+                       patch_hop,
+                       n_parallel_readers,
+                       batch_size,
+                       n_shuffle,
+                       normalise):
+    """
+    Returns a data pipeline (now tripple, rather than pair) of spectrogram and audio files
+    """
+    return (
+        tf.data.Dataset.from_tensor_slices((zipped_files[:, 0], zipped_files[:, 1], zipped_files[:, 2]))
+        .map(partial(af.read_audio_triple,
+                     sample_rate=sample_rate),
+             num_parallel_calls=n_parallel_readers)
+        .map(partial(af.extract_audio_patches_map,
+                     fft_hop=fft_hop,
+                     patch_window=patch_window,
+                     patch_hop=patch_hop,),
+             num_parallel_calls=n_parallel_readers)
+        .flat_map(af.zip_tensor_slices)
+        .map(partial(af.compute_spectrogram_map,
+                     n_fft=n_fft,
+                     fft_hop=fft_hop,
+                     normalise=normalise),
+             num_parallel_calls=n_parallel_readers)
+        .shuffle(n_shuffle).batch(batch_size).prefetch(3)
+    )
+
+
+def prepare_datasets(model_config):
+
+    def build_datasets(model_config, root, path):
+        train_files = zip_files(os.path.join(root, path['x_train']),
+                                os.path.join(root, path['y_train_v']),
+                                os.path.join(root, path['y_train_b']))
+        train = get_paired_dataset(train_files,
+                                   model_config['sample_rate'],
+                                   model_config['n_fft'],
+                                   model_config['fft_hop'],
+                                   model_config['patch_window'],
+                                   model_config['patch_hop'],
+                                   model_config['n_parallel_readers'],
+                                   model_config['batch_size'],
+                                   model_config['n_shuffle'],
+                                   model_config['normalise_mag'])
+
+        val_files = zip_files(os.path.join(root, path['x_val']),
+                              os.path.join(root, path['y_val_v']),
+                              os.path.join(root, path['y_val_b']))
+        val = get_paired_dataset(val_files,
+                                 model_config['sample_rate'],
+                                 model_config['n_fft'],
+                                 model_config['fft_hop'],
+                                 model_config['patch_window'],
+                                 model_config['patch_hop'],
+                                 model_config['n_parallel_readers'],
+                                 model_config['batch_size'],
+                                 model_config['n_shuffle'],
+                                 model_config['normalise_mag'])
+
+        test_files = zip_files(os.path.join(root, path['x_test']),
+                               os.path.join(root, path['y_test_v']),
+                               os.path.join(root, path['y_test_b']))
+        test = get_paired_dataset(test_files,
+                                  model_config['sample_rate'],
+                                  model_config['n_fft'],
+                                  model_config['fft_hop'],
+                                  model_config['patch_window'],
+                                  model_config['patch_hop'],
+                                  model_config['n_parallel_readers'],
+                                  model_config['batch_size'],
+                                  model_config['n_shuffle'],
+                                  model_config['normalise_mag'])
+        return train, val, test
+
+    if model_config['local_run']:  # If running on local machine, mini dataset is all in one folder
+        path = {'x_train': 'train_sup/Mixed',
+                'y_train': 'train_sup/Voice',
+                'x_val': 'validation/Mixed',
+                'y_val': 'validation/Voice',
+                'x_test': 'test/Mixed',
+                'y_test': 'test/Voice'}
+        train_data, val_data, test_data = build_datasets(model_config, model_config['data_root'], path)
+        return train_data, val_data, test_data
+
+    else:  # If running on server, data is in several folders and requires concatenation
+        if 'CHiME' in model_config['dataset']:
+            # Get CHiME data
+            sets = list()
+            for string in ['bus', 'caf', 'ped', 'str']:
+                path = {'x_train': 'tr05_' + string + '_simu/',
+                        'y_train_v': 'tr05_org',
+                        'y_train_b': 'tr05_' + string + '_bg/',
+                        'x_val': 'dt05_' + string + '_simu/',
+                        'y_val_v': 'dt05_bth',
+                        'y_val_b': 'dt05_' + string + '_bg/',
+                        'x_test': 'et05_' + string + '_simu/',
+                        'y_test_v': 'et05_bth',
+                        'y_test_b': 'et05_' + string + '_bg/'}
+                sets.append(build_datasets(model_config, model_config['chime_data_root'], path))
+            chime_train_data = sets[0][0].concatenate(sets[1][0].concatenate(sets[2][0].concatenate(sets[3][0])))
+            chime_val_data = sets[0][1].concatenate(sets[1][1].concatenate(sets[2][1].concatenate(sets[3][1])))
+            chime_test_data = sets[0][2].concatenate(sets[1][2].concatenate(sets[2][2].concatenate(sets[3][2])))
+
+        if 'LibriSpeech' in model_config['dataset']:
+            #### LibriSpeech data and code has not been updated to function was a triple (voice, background, mixed)
+            #### dataset, so this section of code will cause errors.
+
+            # Get list of LibriSpeech sub-directories
+            voice_train_dirs = glob(model_config['librispeech_data_root'] + 'Voice/train-clean-100/**/', recursive=True)
+            voice_val_dirs = glob(model_config['librispeech_data_root'] + 'Voice/dev-clean/**/', recursive=True)
+            voice_test_dirs = glob(model_config['librispeech_data_root'] + 'Voice/test-clean/**/', recursive=True)
+
+            mix_train_dirs = glob(model_config['librispeech_data_root'] + 'Mixed/train-clean-100/**/', recursive=True)
+            mix_val_dirs = glob(model_config['librispeech_data_root'] + 'Mixed/dev-clean/**/', recursive=True)
+            mix_test_dirs = glob(model_config['librispeech_data_root'] + 'Mixed/test-clean/**/', recursive=True)
+
+            if ('LibriSpeech_m' or 'LibriSpeech_l') in model_config['dataset']:
+                voice_train_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Voice/train-clean-360/**/', recursive=True))
+                mix_train_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Mixed/train-clean-360/**/', recursive=True))
+
+            if 'LibriSpeech_l' in model_config['dataset']:
+                voice_train_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Voice/train-other-500/**/', recursive=True))
+                voice_val_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Voice/dev-other/**/', recursive=True))
+                voice_test_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Voice/test-other/**/', recursive=True))
+                mix_train_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Mixed/train-other-500/**/', recursive=True))
+                mix_val_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Mixed/dev-other/**/', recursive=True))
+                mix_test_dirs.extend(
+                    glob(model_config['librispeech_data_root'] + 'Mixed/test-other/**/', recursive=True))
+
+            # Check corresponding list are of equal length
+            assert len(voice_train_dirs) == len(mix_train_dirs)
+            assert len(voice_val_dirs) == len(mix_val_dirs)
+            assert len(voice_test_dirs) == len(mix_test_dirs)
+
+            train_file_list = np.empty((0, 2))
+            for i in range(len(voice_train_dirs)):
+                train_file_list = np.concatenate((train_file_list, zip_files(mix_train_dirs[i], voice_train_dirs[i])), axis=0)
+            libri_train_data = get_paired_dataset(train_file_list,
+                                                  model_config['sample_rate'],
+                                                  model_config['n_fft'],
+                                                  model_config['fft_hop'],
+                                                  model_config['patch_window'],
+                                                  model_config['patch_hop'],
+                                                  model_config['n_parallel_readers'],
+                                                  model_config['batch_size'],
+                                                  model_config['n_shuffle'],
+                                                  model_config['normalise_mag'])
+
+            val_file_list = np.empty((0, 2))
+            for i in range(len(voice_val_dirs)):
+                val_file_list = np.concatenate((val_file_list, zip_files(mix_val_dirs[i], voice_val_dirs[i])), axis=0)
+            libri_val_data = get_paired_dataset(val_file_list,
+                                                model_config['sample_rate'],
+                                                model_config['n_fft'],
+                                                model_config['fft_hop'],
+                                                model_config['patch_window'],
+                                                model_config['patch_hop'],
+                                                model_config['n_parallel_readers'],
+                                                model_config['batch_size'],
+                                                model_config['n_shuffle'],
+                                                model_config['normalise_mag'])
+
+            test_file_list = np.empty((0, 2))
+            for i in range(len(voice_test_dirs)):
+                test_file_list = np.concatenate((test_file_list, zip_files(mix_test_dirs[i], voice_test_dirs[i])), axis=0)
+            libri_test_data = get_paired_dataset(test_file_list,
+                                                 model_config['sample_rate'],
+                                                 model_config['n_fft'],
+                                                 model_config['fft_hop'],
+                                                 model_config['patch_window'],
+                                                 model_config['patch_hop'],
+                                                 model_config['n_parallel_readers'],
+                                                 model_config['batch_size'],
+                                                 model_config['n_shuffle'],
+                                                 model_config['normalise_mag'])
+
+        if model_config['dataset'] == 'CHiME':
+            return chime_train_data, chime_val_data, chime_test_data
+        elif model_config['dataset'] in ['LibriSpeech_s', 'LibriSpeech_m', 'LibriSpeech_l']:
+            return libri_train_data, libri_val_data, libri_test_data
+        else:
+            return chime_train_data.concatenate(libri_train_data), \
+                   chime_val_data.concatenate(libri_val_data), \
+                   chime_test_data.concatenate(libri_test_data)
+
+############## model_functions.py ####################
+
+import tensorflow as tf
+import math
+
+
+def concat(x, y):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
+    return tf.concat([x, y], axis=3)
+
+
+def conv(inputs, filters, kernel_size, stride):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
+    out = tf.layers.conv2d(
+        inputs, filters=filters, kernel_size=kernel_size,
+        kernel_initializer=tf.random_normal_initializer(stddev=0.02),
+        strides=stride, padding='SAME')
+
+    return out
+
+
+def deconv(inputs, filters, kernel_size, stride):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
+    out = tf.layers.conv2d_transpose(
+        inputs, filters=filters, kernel_size=kernel_size,
+        kernel_initializer=tf.random_normal_initializer(stddev=0.02),
+        strides=stride, padding='SAME')
+
+    return out
+
+
+def batch_norm(inputs, is_training, reuse):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
+    return tf.contrib.layers.batch_norm(
+        inputs,
+        decay=0.9,
+        updates_collections=None,
+        epsilon=1e-5,
+        scale=True,
+        is_training=is_training,
+        reuse=reuse)
+
+
+def dropout(inputs, rate):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
+    return tf.nn.dropout(inputs, keep_prob=1 - rate)
+
+
+def relu(inputs):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
+    return tf.nn.relu(inputs)
+
+
+def tanh(inputs):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
+    return tf.nn.tanh(inputs)
+
+
+def lrelu(x, leak=0.2):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
+    with tf.variable_scope('lrelu'):
+        f1 = 0.5 * (1 + leak)
+        f2 = 0.5 * (1 - leak)
+        return f1 * x + f2 * abs(x)
+
+
+def l1_loss(x, y):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
+    return tf.reduce_mean(tf.abs(x - y))
+
+
+def l1_phase_loss(x, y):
+    """
+    Calculates the l1 loss between two phase spectrograms, correcting for the circularity of phase. The true difference
+    between each element of x and y is the closest to 0 of x - y, x - (y + 2pi) and x - (y - 2pi).
+    :param x: 2D tensor, a phase spectrogram in radians
+    :param y: 2D tensor, a phase spectrogram in radians
+    :return: l1 loss between x and y
+    """
+    pi = tf.constant(math.pi)
+    original_diff = tf.abs(x - y)
+    add_2_pi_diff = tf.abs(x - (y + 2 * pi))
+    minus_2_pi_diff = tf.abs(x - (y - 2 * pi))
+
+    return tf.reduce_mean(tf.minimum(original_diff, tf.minimum(add_2_pi_diff, minus_2_pi_diff)))
+
+
+def phase_difference(x, y):
+    """
+    Calculates the difference between two phase spectrograms, correcting for the circularity of phase. The true difference
+    between each element of x and y is the closest to 0 of x - y, x - (y + 2pi) and x - (y - 2pi).
+    :param x: 2D tensor, a phase spectrogram in radians
+    :param y: 2D tensor, a phase spectrogram in radians
+    :return: difference between x and y
+    """
+    pi = tf.constant(math.pi)
+    original_diff = x - y
+    add_2_pi_diff = x - (y + 2 * pi)
+    minus_2_pi_diff = x - (y - 2 * pi)
+    first_corrected_diff = tf.where(tf.less(tf.abs(original_diff), tf.abs(add_2_pi_diff)),
+                                    original_diff,
+                                    add_2_pi_diff)
+    second_corrected_diff = tf.where(tf.less(tf.abs(first_corrected_diff), tf.abs(minus_2_pi_diff)),
+                                     first_corrected_diff,
+                                     minus_2_pi_diff)
+
+    return second_corrected_diff

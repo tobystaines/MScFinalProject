@@ -3,10 +3,12 @@ import math
 
 
 def concat(x, y):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
     return tf.concat([x, y], axis=3)
 
 
 def conv(inputs, filters, kernel_size, stride):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
     out = tf.layers.conv2d(
         inputs, filters=filters, kernel_size=kernel_size,
         kernel_initializer=tf.random_normal_initializer(stddev=0.02),
@@ -16,6 +18,7 @@ def conv(inputs, filters, kernel_size, stride):
 
 
 def deconv(inputs, filters, kernel_size, stride):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
     out = tf.layers.conv2d_transpose(
         inputs, filters=filters, kernel_size=kernel_size,
         kernel_initializer=tf.random_normal_initializer(stddev=0.02),
@@ -25,6 +28,7 @@ def deconv(inputs, filters, kernel_size, stride):
 
 
 def batch_norm(inputs, is_training, reuse):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
     return tf.contrib.layers.batch_norm(
         inputs,
         decay=0.9,
@@ -36,18 +40,22 @@ def batch_norm(inputs, is_training, reuse):
 
 
 def dropout(inputs, rate):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
     return tf.nn.dropout(inputs, keep_prob=1 - rate)
 
 
 def relu(inputs):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
     return tf.nn.relu(inputs)
 
 
 def tanh(inputs):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
     return tf.nn.tanh(inputs)
 
 
 def lrelu(x, leak=0.2):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
     with tf.variable_scope('lrelu'):
         f1 = 0.5 * (1 + leak)
         f2 = 0.5 * (1 - leak)
@@ -55,6 +63,7 @@ def lrelu(x, leak=0.2):
 
 
 def l1_loss(x, y):
+    """From Dr. Galkin(2018, personal communication, 10 July)"""
     return tf.reduce_mean(tf.abs(x - y))
 
 
