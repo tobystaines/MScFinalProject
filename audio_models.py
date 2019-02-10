@@ -253,16 +253,19 @@ class CapsUNetEncoder(object):
             # Layer 1: Primary Capsule: Conv cap with routing 1
             net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=2, num_atoms=8, strides=2, padding='same',
                                                   routings=1, name='primarycaps')(net)
+            net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
             self.primary_caps = net
 
             # Layer 2: Convolutional Capsules
             net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=8, strides=2, padding='same',
                                                   routings=3, name='conv_cap_2')(net)
+            net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
             self.conv_cap_2 = net
 
             # Layer 3: Convolutional Capsules
             net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=16, strides=2, padding='same',
                                                   routings=3, name='conv_cap_3')(net)
+            net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
             self.conv_cap_3 = net
 
             # Layer 4: Convolutional Capsules
@@ -283,6 +286,7 @@ class CapsUNetDecoder(object):
             # Layer 1 Up: Deconvolutional capsules, skip connection, convolutional capsules
             net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=8, num_atoms=16, upsamp_type='deconv',
                                                     scaling=2, padding='same', routings=3, name='deconv_cap_1')(net)
+            net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
             self.upcap_1 = net
 
             net = layers.Concatenate(axis=-2, name='skip_1')([net, encoder.conv_cap_3])
@@ -290,6 +294,7 @@ class CapsUNetDecoder(object):
             # Layer 2 Up: Deconvolutional capsules, skip connection, convolutional capsules
             net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=4, num_atoms=8, upsamp_type='deconv',
                                                     scaling=2, padding='same', routings=3, name='deconv_cap_2')(net)
+            net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
             self.upcap_2 = net
 
             net = layers.Concatenate(axis=-2, name='skip_2')([net, encoder.conv_cap_2])
@@ -297,6 +302,7 @@ class CapsUNetDecoder(object):
             # Layer 3 Up: Deconvolutional capsules, skip connection
             net = capsule_layers.DeconvCapsuleLayer(kernel_size=4, num_capsule=2, num_atoms=8, upsamp_type='deconv',
                                                     scaling=2, padding='same', routings=3, name='deconv_cap_3')(net)
+            net = mf.batch_norm(net, is_training=is_training, reuse=reuse)
             self.upcap_3 = net
 
             net = layers.Concatenate(axis=-2, name='skip_3')([net, encoder.primary_caps])
