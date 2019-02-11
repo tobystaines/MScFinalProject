@@ -431,15 +431,15 @@ class NoConvCapsUNetEncoder(object):
                                                   routings=3, name='caps_conv1')(net)
             self.caps_conv1 = net
 
-            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=2, strides=2, padding='same',
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=4, strides=2, padding='same',
                                                   routings=3, name='caps_conv2')(net)
             self.caps_conv2 = net
 
-            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=2, strides=2, padding='same',
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=8, strides=2, padding='same',
                                                   routings=3, name='caps_conv3')(net)
             self.caps_conv3 = net
 
-            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=16, num_atoms=2, strides=2, padding='same',
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=16, num_atoms=16, strides=2, padding='same',
                                                   routings=3, name='caps_conv4')(net)
             #self.caps_conv4 = net
 
@@ -468,13 +468,13 @@ class NoConvCapsUNetDecoder(object):
                 #self.upcap_2 = net
 
                 #net = layers.Concatenate(axis=3, name='up3')([net, encoder.caps_conv4])
-                net = capsule_layers.DeconvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=2, upsamp_type='deconv',
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=8, upsamp_type='deconv',
                                                         scaling=2, padding='same', routings=3,
                                                         name='caps_deconv3')(net)
                 self.upcap_3 = net
 
                 net = layers.Concatenate(axis=3, name='up2')([net, encoder.caps_conv3])
-                net = capsule_layers.DeconvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=2, upsamp_type='deconv',
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=4, upsamp_type='deconv',
                                                         scaling=2, padding='same', routings=3,
                                                         name='caps_deconv2')(net)
                 self.upcap_4 = net
