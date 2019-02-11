@@ -34,9 +34,9 @@ class MagnitudeModel(object):
             self.is_training = is_training
 
             # Initialise the selected model variant
-            if self.variant in ['unet', 'capsunet'] and data_type == 'complex_to_mag_phase':
+            if self.variant in ['unet', 'capsunet', 'noconvcapsunet'] and data_type == 'complex_to_mag_phase':
                 self.voice_mask_network = UNet(mixed_input[:, :, :, 0:2], variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
-            elif self.variant in ['unet', 'capsunet']:
+            elif self.variant in ['unet', 'capsunet', 'noconvcapsunet']:
                 self.voice_mask_network = UNet(mixed_input, variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')
             elif self.variant == 'basic_capsnet':
                 self.voice_mask_network = BasicCapsNet(mixed_input, name='basic_capsnet')
@@ -131,6 +131,9 @@ class UNet(object):
             elif self.variant == 'capsunet':
                 self.encoder = CapsUNetEncoder(input_tensor, is_training, reuse)
                 self.decoder = CapsUNetDecoder(self.encoder.output, self.encoder, is_training, reuse)
+            elif self.variant == 'noconvcapsunet':
+                self.encoder = NoConvCapsUNetEncoder(input_tensor, is_training, reuse)
+                self.decoder = NoConvCapsUNetDecoder(self.encoder.output, self.encoder, is_training, reuse)
 
             self.output = mf.tanh(self.decoder.output) / 2 + .5
 
@@ -412,3 +415,99 @@ class BasicConvNet(object):
                 self.voice_mask = net
 
             self.output = net
+
+
+class NoConvCapsUNetEncoder(object):
+    def __init__(self, input_tensor, is_training, reuse):
+        self.input_tensor = input_tensor
+        with tf.variable_scope('Encoder'):
+
+            # conv1 = layers.Conv2D(filters=16, kernel_size=5, strides=1, padding='same', activation='relu', name='conv1')(x)
+
+            _, H, W, C = self.input_tensor.get_shape()
+            net = layers.Reshape((H.value, W.value, 1, C.value))(self.input_tensor)
+
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=2, num_atoms=2, strides=2, padding='same',
+                                                  routings=3, name='caps_conv1')(net)
+            self.caps_conv1 = net
+
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=2, strides=2, padding='same',
+                                                  routings=3, name='caps_conv2')(net)
+            self.caps_conv2 = net
+
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=2, strides=2, padding='same',
+                                                  routings=3, name='caps_conv3')(net)
+            self.caps_conv3 = net
+
+            net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=16, num_atoms=2, strides=2, padding='same',
+                                                  routings=3, name='caps_conv4')(net)
+            #self.caps_conv4 = net
+
+            #net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=32, num_atoms=2, strides=2, padding='same',
+            #                                      routings=3, name='caps_conv5')(net)
+            #self.caps_conv5 = net
+
+            #net = capsule_layers.ConvCapsuleLayer(kernel_size=5, num_capsule=64, num_atoms=2, strides=2, padding='same',
+            #                                      routings=3, name='caps_conv6')(net)
+            self.output = net
+
+
+class NoConvCapsUNetDecoder(object):
+    def __init__(self, input_tensor, encoder, is_training, reuse):
+            net = input_tensor
+            with tf.variable_scope('Decoder'):
+                #net = capsule_layers.DeconvCapsuleLayer(kernel_size=5, num_capsule=32, num_atoms=2, upsamp_type='deconv',
+                #                                        scaling=2, padding='same', routings=3,
+                #                                        name='caps_deconv5')(net)
+                #self.upcap_1 = net
+
+                #net = layers.Concatenate(axis=3, name='up4')([net, encoder.caps_conv5])
+                #net = capsule_layers.DeconvCapsuleLayer(kernel_size=5, num_capsule=16, num_atoms=2, upsamp_type='deconv',
+                #                                        scaling=2, padding='same', routings=3,
+                #                                        name='caps_deconv4')(net)
+                #self.upcap_2 = net
+
+                #net = layers.Concatenate(axis=3, name='up3')([net, encoder.caps_conv4])
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=5, num_capsule=8, num_atoms=2, upsamp_type='deconv',
+                                                        scaling=2, padding='same', routings=3,
+                                                        name='caps_deconv3')(net)
+                self.upcap_3 = net
+
+                net = layers.Concatenate(axis=3, name='up2')([net, encoder.caps_conv3])
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=5, num_capsule=4, num_atoms=2, upsamp_type='deconv',
+                                                        scaling=2, padding='same', routings=3,
+                                                        name='caps_deconv2')(net)
+                self.upcap_4 = net
+
+                net = layers.Concatenate(axis=3, name='up1')([net, encoder.caps_conv2])
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=5, num_capsule=2, num_atoms=2, upsamp_type='deconv',
+                                                        scaling=2, padding='same', routings=3,
+                                                        name='caps_deconv1')(net)
+                self.upcap_5 = net
+
+                net = layers.Concatenate(axis=3, name='up0')([net, encoder.caps_conv1])
+                net = capsule_layers.DeconvCapsuleLayer(kernel_size=5, num_capsule=1, num_atoms=2, upsamp_type='deconv',
+                                                        scaling=2, padding='same', routings=3,
+                                                        name='caps_deconv0')(net)
+                self.upcap_6 = net
+
+                _, H, W, C, A = net.get_shape()
+                net = layers.Reshape((H.value, W.value, A.value))(net)
+                #net = layers.Concatenate(axis=-1, name='skip_4')([net, encoder.conv1])
+
+                net = layers.Conv2D(filters=64, kernel_size=1, padding='same', kernel_initializer='he_normal',
+                                    activation='relu', name='recon_1')(net)
+
+                net = layers.Conv2D(filters=128, kernel_size=1, padding='same', kernel_initializer='he_normal',
+                                    activation='relu', name='recon_2')(net)
+
+                if tf.rank(encoder.input_tensor) == 3:
+                    self.out_depth = 1
+                else:
+                    self.out_depth = encoder.input_tensor.shape[3].value
+
+                net = layers.Conv2D(filters=self.out_depth, kernel_size=1, padding='same',
+                                    kernel_initializer='he_normal',
+                                    activation='sigmoid', name='out_recon')(net)
+
+                self.output = net
