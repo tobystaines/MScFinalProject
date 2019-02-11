@@ -1,0 +1,107 @@
+{
+  "artifacts": [],
+  "command": "do_experiment",
+  "experiment": {
+    "base_dir": "/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject",
+    "dependencies": [
+      "numpy==1.15.4",
+      "sacred==0.7.4",
+      "tensorflow-gpu==1.12.0"
+    ],
+    "mainfile": "main.py",
+    "name": "UNet_Speech_Separation",
+    "repositories": [],
+    "sources": [
+      [
+        "audio_models.py",
+        "_sources/audio_models_b70c80592bd3a93c23834ee392beece1.py"
+      ],
+      [
+        "dataset.py",
+        "_sources/dataset_653e01f066db941b29e7850b5c3ef9a6.py"
+      ],
+      [
+        "main.py",
+        "_sources/main_d547a4b9ace0f0c38fa4436e888d9beb.py"
+      ],
+      [
+        "train.py",
+        "_sources/train_caf899dd5a3dd539ae52b8372ee4b114.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1334, in _do_call\n    return fn(*args)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1319, in _run_fn\n    options, feed_dict, fetch_list, target_list, run_metadata)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1407, in _call_tf_sessionrun\n    run_metadata)\n",
+    "tensorflow.python.framework.errors_impl.ResourceExhaustedError: OOM when allocating tensor with shape[800,32,64,128] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc\n\t [[{{node Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/conv2d_transpose}} = Conv2DBackpropInput[T=DT_FLOAT, data_format=\"NCHW\", dilations=[1, 1, 1, 1], padding=\"SAME\", strides=[1, 1, 2, 2], use_cudnn_on_gpu=true, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"](Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/conv2d_transpose-0-VecPermuteNHWCToNCHW-LayoutOptimizer, Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/W/read, Magnitude_Model/gradients/Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/conv2d_transpose_grad/Conv2DBackpropFilter-2-TransposeNHWCToNCHW-LayoutOptimizer)]]\nHint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.\n\n\t [[{{node ExpandDims_5/_251}} = _Recv[client_terminated=false, recv_device=\"/job:localhost/replica:0/task:0/device:CPU:0\", send_device=\"/job:localhost/replica:0/task:0/device:GPU:0\", send_device_incarnation=1, tensor_name=\"edge_4003_ExpandDims_5\", tensor_type=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"]()]]\nHint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.\n\n",
+    "\nDuring handling of the above exception, another exception occurred:\n\n",
+    "Traceback (most recent call last):\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 150, in do_experiment\n    validation_iterator, validation_handle, writer)\n",
+    "  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/train.py\", line 123, in train\n    handle: training_handle})\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 929, in run\n    run_metadata_ptr)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1152, in _run\n    feed_dict_tensor, options, run_metadata)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1328, in _do_run\n    run_metadata)\n",
+    "  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/client/session.py\", line 1348, in _do_call\n    raise type(e)(node_def, op, message)\n",
+    "tensorflow.python.framework.errors_impl.ResourceExhaustedError: OOM when allocating tensor with shape[800,32,64,128] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc\n\t [[node Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/conv2d_transpose (defined at /home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/keras/backend/tensorflow_backend.py:3248)  = Conv2DBackpropInput[T=DT_FLOAT, data_format=\"NCHW\", dilations=[1, 1, 1, 1], padding=\"SAME\", strides=[1, 1, 2, 2], use_cudnn_on_gpu=true, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"](Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/conv2d_transpose-0-VecPermuteNHWCToNCHW-LayoutOptimizer, Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/W/read, Magnitude_Model/gradients/Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/conv2d_transpose_grad/Conv2DBackpropFilter-2-TransposeNHWCToNCHW-LayoutOptimizer)]]\nHint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.\n\n\t [[{{node ExpandDims_5/_251}} = _Recv[client_terminated=false, recv_device=\"/job:localhost/replica:0/task:0/device:CPU:0\", send_device=\"/job:localhost/replica:0/task:0/device:GPU:0\", send_device_incarnation=1, tensor_name=\"edge_4003_ExpandDims_5\", tensor_type=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"]()]]\nHint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.\n\n\nCaused by op 'Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/conv2d_transpose', defined at:\n  File \"main.py\", line 67, in <module>\n    @ex.automain\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 137, in automain\n    self.run_commandline()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 260, in run_commandline\n    return self.run(cmd_name, config_updates, named_configs, {}, args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/experiment.py\", line 209, in run\n    run()\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/run.py\", line 221, in __call__\n    self.result = self.main_function(*args)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/sacred/config/captured_function.py\", line 46, in captured_function\n    result = wrapped(*args, **kwargs)\n  File \"main.py\", line 127, in do_experiment\n    model_config['data_type'], model_config['phase_weight'], name='Magnitude_Model')\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 40, in __init__\n    self.voice_mask_network = UNet(mixed_input, variant, data_type, is_training=is_training, reuse=False, name='voice-mask-unet')\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 133, in __init__\n    self.decoder = CapsUNetDecoder(self.encoder.output, self.encoder, is_training, reuse)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/audio_models.py\", line 296, in __init__\n    scaling=2, padding='same', routings=3, name='deconv_cap_2')(net)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/keras/engine/topology.py\", line 603, in __call__\n    output = self.call(inputs, **kwargs)\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py\", line 263, in call\n    padding=self.padding, data_format='channels_last')\n  File \"/home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/keras/backend/tensorflow_backend.py\", line 3248, in conv2d_transpose\n    data_format=tf_data_format)\n  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/ops/nn_ops.py\", line 1254, in conv2d_transpose\n    name=name)\n  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/ops/gen_nn_ops.py\", line 1229, in conv2d_backprop_input\n    dilations=dilations, name=name)\n  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/op_def_library.py\", line 787, in _apply_op_helper\n    op_def=op_def)\n  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/util/deprecation.py\", line 488, in new_func\n    return func(*args, **kwargs)\n  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/ops.py\", line 3274, in create_op\n    op_def=op_def)\n  File \"/usr/local/lib/python3.5/dist-packages/tensorflow/python/framework/ops.py\", line 1770, in __init__\n    self._traceback = tf_stack.extract_stack()\n\nResourceExhaustedError (see above for traceback): OOM when allocating tensor with shape[800,32,64,128] and type float on /job:localhost/replica:0/task:0/device:GPU:0 by allocator GPU_0_bfc\n\t [[node Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/conv2d_transpose (defined at /home/enterprise.internal.city.ac.uk/acvn728/.local/lib/python3.5/site-packages/keras/backend/tensorflow_backend.py:3248)  = Conv2DBackpropInput[T=DT_FLOAT, data_format=\"NCHW\", dilations=[1, 1, 1, 1], padding=\"SAME\", strides=[1, 1, 2, 2], use_cudnn_on_gpu=true, _device=\"/job:localhost/replica:0/task:0/device:GPU:0\"](Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/conv2d_transpose-0-VecPermuteNHWCToNCHW-LayoutOptimizer, Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/W/read, Magnitude_Model/gradients/Magnitude_Model/voice-mask-unet/Decoder/deconv_cap_2/conv2d_transpose_grad/Conv2DBackpropFilter-2-TransposeNHWCToNCHW-LayoutOptimizer)]]\nHint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.\n\n\t [[{{node ExpandDims_5/_251}} = _Recv[client_terminated=false, recv_device=\"/job:localhost/replica:0/task:0/device:CPU:0\", send_device=\"/job:localhost/replica:0/task:0/device:GPU:0\", send_device_incarnation=1, tensor_name=\"edge_4003_ExpandDims_5\", tensor_type=DT_FLOAT, _device=\"/job:localhost/replica:0/task:0/device:CPU:0\"]()]]\nHint: If you want to see a list of allocated tensors when OOM happens, add report_tensor_allocations_upon_oom to RunOptions for current allocation info.\n\n\n"
+  ],
+  "heartbeat": "2019-02-10T15:32:16.492042",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) CPU E5-2650 v4 @ 2.20GHz",
+    "gpus": {
+      "driver_version": "410.48",
+      "gpus": [
+        {
+          "model": "TITAN V",
+          "persistence_mode": false,
+          "total_memory": 12036
+        }
+      ]
+    },
+    "hostname": "fairlight",
+    "os": [
+      "Linux",
+      "Linux-4.15.0-43-generic-x86_64-with-Ubuntu-16.04-xenial"
+    ],
+    "python_version": "3.5.2"
+  },
+  "meta": {
+    "command": "do_experiment",
+    "options": {
+      "--beat_interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print_config": false,
+      "--priority": null,
+      "--queue": false,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "model_config.data_type=mag",
+        "model_config.model_variant=capsunet",
+        "model_config.n_parallel_readers=24"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2019-02-10T15:29:05.834511",
+  "status": "FAILED",
+  "stop_time": "2019-02-10T15:32:16.497004"
+}
