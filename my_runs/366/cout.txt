@@ -1,0 +1,1310 @@
+INFO - UNet_Speech_Separation - Running command 'do_experiment'
+INFO - UNet_Speech_Separation - Started run with ID "366"
+Experiment ID: 366
+Preparing dataset
+Dataset ready
+2019-02-12 08:44:13.853724: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: AVX2 FMA
+2019-02-12 08:44:15.062480: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1432] Found device 0 with properties: 
+name: TITAN V major: 7 minor: 0 memoryClockRate(GHz): 1.455
+pciBusID: 0000:04:00.0
+totalMemory: 11.75GiB freeMemory: 11.34GiB
+2019-02-12 08:44:15.062537: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1511] Adding visible gpu devices: 0
+2019-02-12 08:44:15.462924: I tensorflow/core/common_runtime/gpu/gpu_device.cc:982] Device interconnect StreamExecutor with strength 1 edge matrix:
+2019-02-12 08:44:15.462973: I tensorflow/core/common_runtime/gpu/gpu_device.cc:988]      0 
+2019-02-12 08:44:15.462981: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1001] 0:   N 
+2019-02-12 08:44:15.463322: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1115] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 10957 MB memory) -> physical GPU (device: 0, name: TITAN V, pci bus id: 0000:04:00.0, compute capability: 7.0)
+Session started
+Iterators created
+Creating model
+WARNING:tensorflow:From /home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py:330: calling softmax (from tensorflow.python.ops.nn_ops) with dim is deprecated and will be removed in a future version.
+Instructions for updating:
+dim is deprecated, use axis instead
+WARNING - tensorflow - From /home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py:330: calling softmax (from tensorflow.python.ops.nn_ops) with dim is deprecated and will be removed in a future version.
+Instructions for updating:
+dim is deprecated, use axis instead
+WARNING:tensorflow:From /home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py:359: calling norm (from tensorflow.python.ops.linalg_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+WARNING - tensorflow - From /home/enterprise.internal.city.ac.uk/acvn728/MScFinalProject/SegCaps/capsule_layers.py:359: calling norm (from tensorflow.python.ops.linalg_ops) with keep_dims is deprecated and will be removed in a future version.
+Instructions for updating:
+keep_dims is deprecated, use keepdims instead
+Starting training
+2019-02-12 08:44:40.840218: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 290 of 1000
+2019-02-12 08:44:50.928090: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 606 of 1000
+2019-02-12 08:45:00.853941: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 909 of 1000
+2019-02-12 08:45:03.783264: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 08:45:40.427217:	Training iteration: 200, Loss: 0.20635628700256348
+2019-02-12 08:46:14.825663:	Training iteration: 400, Loss: 0.21068954467773438
+2019-02-12 08:46:49.559661:	Training iteration: 600, Loss: 0.2227957546710968
+2019-02-12 08:47:24.536971:	Training iteration: 800, Loss: 0.19121694564819336
+2019-02-12 08:47:58.560591:	Training iteration: 1000, Loss: 0.20870715379714966
+2019-02-12 08:48:32.814244:	Training iteration: 1200, Loss: 0.17601409554481506
+2019-02-12 08:49:06.670637:	Training iteration: 1400, Loss: 0.1991991102695465
+2019-02-12 08:49:40.525610:	Training iteration: 1600, Loss: 0.1828261762857437
+2019-02-12 08:50:14.700727:	Training iteration: 1800, Loss: 0.18592716753482819
+2019-02-12 08:50:48.506126:	Training iteration: 2000, Loss: 0.20623287558555603
+2019-02-12 08:51:22.402494:	Training iteration: 2200, Loss: 0.26015040278434753
+2019-02-12 08:51:56.126684:	Training iteration: 2400, Loss: 0.15710875391960144
+2019-02-12 08:52:30.404153:	Training iteration: 2600, Loss: 0.1659732162952423
+2019-02-12 08:53:04.315260:	Training iteration: 2800, Loss: 0.21161648631095886
+2019-02-12 08:53:37.783575:	Training iteration: 3000, Loss: 0.2200424075126648
+2019-02-12 08:54:11.500407:	Training iteration: 3200, Loss: 0.17354053258895874
+2019-02-12 08:54:46.086506:	Training iteration: 3400, Loss: 0.21955984830856323
+2019-02-12 08:55:20.080916:	Training iteration: 3600, Loss: 0.21338102221488953
+2019-02-12 08:55:54.565710:	Training iteration: 3800, Loss: 0.2151961326599121
+2019-02-12 08:56:28.811068:	Training iteration: 4000, Loss: 0.22894126176834106
+2019-02-12 08:57:02.501106:	Training iteration: 4200, Loss: 0.22639113664627075
+2019-02-12 08:57:36.352763:	Training iteration: 4400, Loss: 0.21141663193702698
+2019-02-12 08:58:10.200922:	Training iteration: 4600, Loss: 0.2212831974029541
+2019-02-12 08:58:43.828531:	Training iteration: 4800, Loss: 0.19981901347637177
+2019-02-12 08:59:19.392473: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 325 of 1000
+2019-02-12 08:59:29.475847: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 642 of 1000
+2019-02-12 08:59:39.437209: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 963 of 1000
+2019-02-12 08:59:40.502435: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 08:59:48.420924:	Training iteration: 5000, Loss: 0.2269352823495865
+2019-02-12 09:00:22.117138:	Training iteration: 5200, Loss: 0.21794220805168152
+2019-02-12 09:00:57.092232:	Training iteration: 5400, Loss: 0.21532654762268066
+2019-02-12 09:01:31.790156:	Training iteration: 5600, Loss: 0.213081955909729
+2019-02-12 09:02:05.575282:	Training iteration: 5800, Loss: 0.22765851020812988
+2019-02-12 09:02:39.233821:	Training iteration: 6000, Loss: 0.21318310499191284
+2019-02-12 09:03:12.653356:	Training iteration: 6200, Loss: 0.22937676310539246
+2019-02-12 09:03:46.703594:	Training iteration: 6400, Loss: 0.20305007696151733
+2019-02-12 09:04:20.615531:	Training iteration: 6600, Loss: 0.23434025049209595
+2019-02-12 09:04:54.781889:	Training iteration: 6800, Loss: 0.22444993257522583
+2019-02-12 09:05:28.972588:	Training iteration: 7000, Loss: 0.24915656447410583
+2019-02-12 09:06:03.281539:	Training iteration: 7200, Loss: 0.23513168096542358
+2019-02-12 09:06:37.273308:	Training iteration: 7400, Loss: 0.20441469550132751
+2019-02-12 09:07:11.094295:	Training iteration: 7600, Loss: 0.23685772716999054
+2019-02-12 09:07:44.842557:	Training iteration: 7800, Loss: 0.25929388403892517
+2019-02-12 09:08:18.481612:	Training iteration: 8000, Loss: 0.21531425416469574
+2019-02-12 09:08:52.583913:	Training iteration: 8200, Loss: 0.2564876675605774
+2019-02-12 09:09:26.176479:	Training iteration: 8400, Loss: 0.21137017011642456
+2019-02-12 09:10:00.525382:	Training iteration: 8600, Loss: 0.1924869418144226
+2019-02-12 09:10:34.505322:	Training iteration: 8800, Loss: 0.2140878140926361
+2019-02-12 09:11:09.122048:	Training iteration: 9000, Loss: 0.18694525957107544
+2019-02-12 09:11:42.782958:	Training iteration: 9200, Loss: 0.22601227462291718
+2019-02-12 09:12:16.406633:	Training iteration: 9400, Loss: 0.23194566369056702
+2019-02-12 09:12:50.841066:	Training iteration: 9600, Loss: 0.2535303235054016
+2019-02-12 09:13:24.373332:	Training iteration: 9800, Loss: 0.2467573881149292
+2019-02-12 09:13:58.112083: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 313 of 1000
+2019-02-12 09:14:08.079377: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 655 of 1000
+2019-02-12 09:14:18.043210: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 976 of 1000
+2019-02-12 09:14:18.577181: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 09:14:28.316119:	Training iteration: 10000, Loss: 0.18438145518302917
+2019-02-12 09:15:02.379997:	Training iteration: 10200, Loss: 0.2919567823410034
+2019-02-12 09:15:36.009135:	Training iteration: 10400, Loss: 0.24793192744255066
+2019-02-12 09:16:09.823777:	Training iteration: 10600, Loss: 0.26607245206832886
+2019-02-12 09:16:43.631233:	Training iteration: 10800, Loss: 0.2573757469654083
+2019-02-12 09:17:16.888641:	Training iteration: 11000, Loss: 0.27079054713249207
+2019-02-12 09:17:50.575126:	Training iteration: 11200, Loss: 0.2634778916835785
+2019-02-12 09:18:23.915734:	Training iteration: 11400, Loss: 0.29759183526039124
+2019-02-12 09:18:57.446706:	Training iteration: 11600, Loss: 0.2565843462944031
+2019-02-12 09:19:31.092514:	Training iteration: 11800, Loss: 0.2943897843360901
+2019-02-12 09:20:05.098221:	Training iteration: 12000, Loss: 0.23780457675457
+2019-02-12 09:20:38.231794:	Training iteration: 12200, Loss: 0.2545052766799927
+2019-02-12 09:21:11.645327:	Training iteration: 12400, Loss: 0.23273742198944092
+2019-02-12 09:21:46.012332:	Training iteration: 12600, Loss: 0.21085858345031738
+2019-02-12 09:22:19.691210:	Training iteration: 12800, Loss: 0.27083635330200195
+2019-02-12 09:22:53.360274:	Training iteration: 13000, Loss: 0.23309245705604553
+2019-02-12 09:23:26.197950:	Training iteration: 13200, Loss: 0.2610829472541809
+2019-02-12 09:24:00.067157:	Training iteration: 13400, Loss: 0.2430436909198761
+2019-02-12 09:24:33.714387:	Training iteration: 13600, Loss: 0.2196626365184784
+2019-02-12 09:25:07.258894:	Training iteration: 13800, Loss: 0.20538096129894257
+2019-02-12 09:25:40.946071:	Training iteration: 14000, Loss: 0.2819402813911438
+2019-02-12 09:26:14.323566:	Training iteration: 14200, Loss: 0.23109734058380127
+2019-02-12 09:26:47.872699:	Training iteration: 14400, Loss: 0.24218687415122986
+2019-02-12 09:27:21.022489:	Training iteration: 14600, Loss: 0.26762834191322327
+2019-02-12 09:27:53.274541:	Training iteration: 14800, Loss: 0.23032313585281372
+2019-02-12 09:28:24.292658: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 301 of 1000
+2019-02-12 09:28:34.102307: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 623 of 1000
+2019-02-12 09:28:44.162154: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 940 of 1000
+2019-02-12 09:28:45.903443: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 09:28:58.267031:	Training iteration: 15000, Loss: 0.23010565340518951
+2019-02-12 09:29:32.214065:	Training iteration: 15200, Loss: 0.25141966342926025
+2019-02-12 09:30:06.118773:	Training iteration: 15400, Loss: 0.2563210129737854
+2019-02-12 09:30:39.763199:	Training iteration: 15600, Loss: 0.22581255435943604
+2019-02-12 09:31:13.817593:	Training iteration: 15800, Loss: 0.2224777638912201
+2019-02-12 09:31:47.140637:	Training iteration: 16000, Loss: 0.23224759101867676
+2019-02-12 09:32:20.229983:	Training iteration: 16200, Loss: 0.285539448261261
+2019-02-12 09:32:54.405756:	Training iteration: 16400, Loss: 0.2577669024467468
+2019-02-12 09:33:27.712796:	Training iteration: 16600, Loss: 0.20651760697364807
+2019-02-12 09:34:01.653588:	Training iteration: 16800, Loss: 0.239993616938591
+2019-02-12 09:34:34.846773:	Training iteration: 17000, Loss: 0.25694069266319275
+2019-02-12 09:35:08.533032:	Training iteration: 17200, Loss: 0.23970553278923035
+2019-02-12 09:35:42.234993:	Training iteration: 17400, Loss: 0.2962433099746704
+2019-02-12 09:36:15.971165:	Training iteration: 17600, Loss: 0.24297679960727692
+2019-02-12 09:36:49.710395:	Training iteration: 17800, Loss: 0.22512511909008026
+2019-02-12 09:37:23.250149:	Training iteration: 18000, Loss: 0.24001720547676086
+2019-02-12 09:37:56.910861:	Training iteration: 18200, Loss: 0.23037922382354736
+2019-02-12 09:38:30.140267:	Training iteration: 18400, Loss: 0.2599477767944336
+2019-02-12 09:39:03.765664:	Training iteration: 18600, Loss: 0.19134217500686646
+2019-02-12 09:39:37.071063:	Training iteration: 18800, Loss: 0.2311403602361679
+2019-02-12 09:40:10.552251:	Training iteration: 19000, Loss: 0.26218491792678833
+2019-02-12 09:40:43.971280:	Training iteration: 19200, Loss: 0.23616492748260498
+2019-02-12 09:41:17.873807:	Training iteration: 19400, Loss: 0.2380509227514267
+2019-02-12 09:41:52.185576:	Training iteration: 19600, Loss: 0.23546433448791504
+2019-02-12 09:42:26.154523:	Training iteration: 19800, Loss: 0.28336548805236816
+2019-02-12 09:42:59.120881:	Training iteration: 20000, Loss: 0.25010016560554504
+2019-02-12 09:43:21.149416:	Epoch 0 finished after 20140 iterations.
+Validating
+2019-02-12 09:43:21.463772:	Entering validation loop
+2019-02-12 09:43:32.171701: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 294 of 1000
+2019-02-12 09:43:42.245282: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 604 of 1000
+2019-02-12 09:43:52.151860: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 909 of 1000
+2019-02-12 09:43:55.118963: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 09:44:27.830011:	Validation iteration: 200, Loss: 0.2527659237384796
+2019-02-12 09:45:00.112691:	Validation iteration: 400, Loss: 0.20677289366722107
+2019-02-12 09:45:32.138292:	Validation iteration: 600, Loss: 0.22824153304100037
+2019-02-12 09:45:46.666310:	Validation iteration: 800, Loss: 0.19357246160507202
+2019-02-12 09:45:58.847621: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 295 of 1000
+2019-02-12 09:46:08.842758: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 605 of 1000
+2019-02-12 09:46:18.855252: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 911 of 1000
+2019-02-12 09:46:21.722250: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 09:46:48.577517:	Validation iteration: 1000, Loss: 0.2288225144147873
+2019-02-12 09:47:20.572938:	Validation iteration: 1200, Loss: 0.2015124261379242
+2019-02-12 09:47:52.639763:	Validation iteration: 1400, Loss: 0.18297772109508514
+2019-02-12 09:48:10.658676:	Validation iteration: 1600, Loss: 0.271859347820282
+2019-02-12 09:48:25.085897: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 290 of 1000
+2019-02-12 09:48:35.046624: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 605 of 1000
+2019-02-12 09:48:45.012441: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 927 of 1000
+2019-02-12 09:48:47.427457: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 09:49:08.408767:	Validation iteration: 1800, Loss: 0.20222504436969757
+2019-02-12 09:49:40.450540:	Validation iteration: 2000, Loss: 0.24410176277160645
+2019-02-12 09:50:12.545555:	Validation iteration: 2200, Loss: 0.2294607162475586
+2019-02-12 09:50:34.078543:	Validation iteration: 2400, Loss: 0.18758359551429749
+2019-02-12 09:50:50.681369: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 290 of 1000
+2019-02-12 09:51:00.682707: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 604 of 1000
+2019-02-12 09:51:10.648062: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 909 of 1000
+2019-02-12 09:51:13.620063: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 09:51:28.931006:	Validation iteration: 2600, Loss: 0.24824321269989014
+2019-02-12 09:52:00.876121:	Validation iteration: 2800, Loss: 0.23126831650733948
+2019-02-12 09:52:32.993678:	Validation iteration: 3000, Loss: 0.22465655207633972
+2019-02-12 09:52:58.335738:	Validation iteration: 3200, Loss: 0.19978561997413635
+Validation check mean loss: 0.22588919267575278
+Validation loss has improved!
+New best validation cost!
+Checkpoint
+2019-02-12 09:53:18.406503: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 321 of 1000
+2019-02-12 09:53:28.353566: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 664 of 1000
+2019-02-12 09:53:38.480787: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 999 of 1000
+2019-02-12 09:53:38.503270: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 09:53:49.335691:	Training iteration: 20200, Loss: 0.16684308648109436
+2019-02-12 09:54:23.596033:	Training iteration: 20400, Loss: 0.2008851170539856
+2019-02-12 09:54:57.489158:	Training iteration: 20600, Loss: 0.22005769610404968
+2019-02-12 09:55:31.423722:	Training iteration: 20800, Loss: 0.20231416821479797
+2019-02-12 09:56:05.668756:	Training iteration: 21000, Loss: 0.21918711066246033
+2019-02-12 09:56:39.270138:	Training iteration: 21200, Loss: 0.21466103196144104
+2019-02-12 09:57:13.451950:	Training iteration: 21400, Loss: 0.19261279702186584
+2019-02-12 09:57:47.285333:	Training iteration: 21600, Loss: 0.18128491938114166
+2019-02-12 09:58:21.086517:	Training iteration: 21800, Loss: 0.20280051231384277
+2019-02-12 09:58:55.078408:	Training iteration: 22000, Loss: 0.21357104182243347
+2019-02-12 09:59:28.704299:	Training iteration: 22200, Loss: 0.2234894037246704
+2019-02-12 10:00:02.333969:	Training iteration: 22400, Loss: 0.20620018243789673
+2019-02-12 10:00:36.453134:	Training iteration: 22600, Loss: 0.20826444029808044
+2019-02-12 10:01:10.501954:	Training iteration: 22800, Loss: 0.18090415000915527
+2019-02-12 10:01:44.308165:	Training iteration: 23000, Loss: 0.21406328678131104
+2019-02-12 10:02:17.962095:	Training iteration: 23200, Loss: 0.2060081958770752
+2019-02-12 10:02:51.990297:	Training iteration: 23400, Loss: 0.21176515519618988
+2019-02-12 10:03:26.096339:	Training iteration: 23600, Loss: 0.2152930200099945
+2019-02-12 10:04:00.797115:	Training iteration: 23800, Loss: 0.2010517716407776
+2019-02-12 10:04:34.636536:	Training iteration: 24000, Loss: 0.19764816761016846
+2019-02-12 10:05:08.659377:	Training iteration: 24200, Loss: 0.2248508632183075
+2019-02-12 10:05:42.406302:	Training iteration: 24400, Loss: 0.23763518035411835
+2019-02-12 10:06:15.834207:	Training iteration: 24600, Loss: 0.19373327493667603
+2019-02-12 10:06:50.111165:	Training iteration: 24800, Loss: 0.22679711878299713
+2019-02-12 10:07:23.330174:	Training iteration: 25000, Loss: 0.2283673733472824
+2019-02-12 10:07:48.899050: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 313 of 1000
+2019-02-12 10:07:58.907064: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 628 of 1000
+2019-02-12 10:08:08.915257: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 942 of 1000
+2019-02-12 10:08:10.530855: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 10:08:28.867683:	Training iteration: 25200, Loss: 0.2676219940185547
+2019-02-12 10:09:02.447928:	Training iteration: 25400, Loss: 0.209078848361969
+2019-02-12 10:09:37.163297:	Training iteration: 25600, Loss: 0.16806146502494812
+2019-02-12 10:10:11.602389:	Training iteration: 25800, Loss: 0.22539255023002625
+2019-02-12 10:10:45.163818:	Training iteration: 26000, Loss: 0.21745163202285767
+2019-02-12 10:11:19.008555:	Training iteration: 26200, Loss: 0.21972250938415527
+2019-02-12 10:11:52.720939:	Training iteration: 26400, Loss: 0.22545860707759857
+2019-02-12 10:12:27.010637:	Training iteration: 26600, Loss: 0.23656915128231049
+2019-02-12 10:13:01.019845:	Training iteration: 26800, Loss: 0.19556929171085358
+2019-02-12 10:13:35.111966:	Training iteration: 27000, Loss: 0.2195424735546112
+2019-02-12 10:14:09.913997:	Training iteration: 27200, Loss: 0.21963071823120117
+2019-02-12 10:14:44.151662:	Training iteration: 27400, Loss: 0.20785576105117798
+2019-02-12 10:15:18.024809:	Training iteration: 27600, Loss: 0.22378112375736237
+2019-02-12 10:15:51.746489:	Training iteration: 27800, Loss: 0.2052244246006012
+2019-02-12 10:16:25.891077:	Training iteration: 28000, Loss: 0.23830437660217285
+2019-02-12 10:16:59.869924:	Training iteration: 28200, Loss: 0.16303005814552307
+2019-02-12 10:17:33.793949:	Training iteration: 28400, Loss: 0.19533735513687134
+2019-02-12 10:18:07.630571:	Training iteration: 28600, Loss: 0.23319411277770996
+2019-02-12 10:18:42.151537:	Training iteration: 28800, Loss: 0.20689554512500763
+2019-02-12 10:19:16.528485:	Training iteration: 29000, Loss: 0.24111056327819824
+2019-02-12 10:19:50.966069:	Training iteration: 29200, Loss: 0.2067490518093109
+2019-02-12 10:20:24.910457:	Training iteration: 29400, Loss: 0.24105629324913025
+2019-02-12 10:20:58.509654:	Training iteration: 29600, Loss: 0.20968946814537048
+2019-02-12 10:21:33.028179:	Training iteration: 29800, Loss: 0.24053770303726196
+2019-02-12 10:22:05.730003:	Training iteration: 30000, Loss: 0.24575749039649963
+2019-02-12 10:22:29.547410: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 299 of 1000
+2019-02-12 10:22:39.530276: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 646 of 1000
+2019-02-12 10:22:49.684339: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 970 of 1000
+2019-02-12 10:22:50.592118: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 10:23:10.256506:	Training iteration: 30200, Loss: 0.2672621011734009
+2019-02-12 10:23:43.964248:	Training iteration: 30400, Loss: 0.2767872214317322
+2019-02-12 10:24:17.664354:	Training iteration: 30600, Loss: 0.2726304829120636
+2019-02-12 10:24:51.471299:	Training iteration: 30800, Loss: 0.27484583854675293
+2019-02-12 10:25:25.145797:	Training iteration: 31000, Loss: 0.24951475858688354
+2019-02-12 10:25:58.664671:	Training iteration: 31200, Loss: 0.24608364701271057
+2019-02-12 10:26:32.418186:	Training iteration: 31400, Loss: 0.23579564690589905
+2019-02-12 10:27:06.198032:	Training iteration: 31600, Loss: 0.28618741035461426
+2019-02-12 10:27:39.409832:	Training iteration: 31800, Loss: 0.2634766101837158
+2019-02-12 10:28:13.546646:	Training iteration: 32000, Loss: 0.23178178071975708
+2019-02-12 10:28:47.126141:	Training iteration: 32200, Loss: 0.26855623722076416
+2019-02-12 10:29:20.253399:	Training iteration: 32400, Loss: 0.2586120367050171
+2019-02-12 10:29:54.159092:	Training iteration: 32600, Loss: 0.2712060213088989
+2019-02-12 10:30:27.913372:	Training iteration: 32800, Loss: 0.21901389956474304
+2019-02-12 10:31:01.706025:	Training iteration: 33000, Loss: 0.2863030433654785
+2019-02-12 10:31:34.790024:	Training iteration: 33200, Loss: 0.2751427888870239
+2019-02-12 10:32:08.197798:	Training iteration: 33400, Loss: 0.27017515897750854
+2019-02-12 10:32:42.311758:	Training iteration: 33600, Loss: 0.21548610925674438
+2019-02-12 10:33:16.090434:	Training iteration: 33800, Loss: 0.2651739716529846
+2019-02-12 10:33:49.789104:	Training iteration: 34000, Loss: 0.25670093297958374
+2019-02-12 10:34:23.324995:	Training iteration: 34200, Loss: 0.2800469994544983
+2019-02-12 10:34:56.583756:	Training iteration: 34400, Loss: 0.21549445390701294
+2019-02-12 10:35:30.297485:	Training iteration: 34600, Loss: 0.25196683406829834
+2019-02-12 10:36:03.337803:	Training iteration: 34800, Loss: 0.24072594940662384
+2019-02-12 10:36:34.959969:	Training iteration: 35000, Loss: 0.2706200182437897
+2019-02-12 10:36:56.304268: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 304 of 1000
+2019-02-12 10:37:06.037681: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 630 of 1000
+2019-02-12 10:37:15.992000: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 952 of 1000
+2019-02-12 10:37:17.341099: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 10:37:39.854997:	Training iteration: 35200, Loss: 0.2556188106536865
+2019-02-12 10:38:14.062258:	Training iteration: 35400, Loss: 0.22989428043365479
+2019-02-12 10:38:47.554469:	Training iteration: 35600, Loss: 0.2091025412082672
+2019-02-12 10:39:20.916549:	Training iteration: 35800, Loss: 0.27281445264816284
+2019-02-12 10:39:55.110185:	Training iteration: 36000, Loss: 0.26161882281303406
+2019-02-12 10:40:28.709600:	Training iteration: 36200, Loss: 0.22213658690452576
+2019-02-12 10:41:01.685986:	Training iteration: 36400, Loss: 0.24914580583572388
+2019-02-12 10:41:36.053929:	Training iteration: 36600, Loss: 0.23924165964126587
+2019-02-12 10:42:09.823276:	Training iteration: 36800, Loss: 0.2347906231880188
+2019-02-12 10:42:43.313528:	Training iteration: 37000, Loss: 0.232673779129982
+2019-02-12 10:43:16.676416:	Training iteration: 37200, Loss: 0.27943170070648193
+2019-02-12 10:43:50.400119:	Training iteration: 37400, Loss: 0.23061677813529968
+2019-02-12 10:44:23.784698:	Training iteration: 37600, Loss: 0.23715168237686157
+2019-02-12 10:44:57.263854:	Training iteration: 37800, Loss: 0.23403209447860718
+2019-02-12 10:45:30.946725:	Training iteration: 38000, Loss: 0.20849551260471344
+2019-02-12 10:46:04.432542:	Training iteration: 38200, Loss: 0.233485609292984
+2019-02-12 10:46:37.980310:	Training iteration: 38400, Loss: 0.2550102174282074
+2019-02-12 10:47:11.163540:	Training iteration: 38600, Loss: 0.19896021485328674
+2019-02-12 10:47:45.058295:	Training iteration: 38800, Loss: 0.21104560792446136
+2019-02-12 10:48:18.410222:	Training iteration: 39000, Loss: 0.22592879831790924
+2019-02-12 10:48:52.131624:	Training iteration: 39200, Loss: 0.2114773988723755
+2019-02-12 10:49:26.089539:	Training iteration: 39400, Loss: 0.22195425629615784
+2019-02-12 10:49:59.555781:	Training iteration: 39600, Loss: 0.281964510679245
+2019-02-12 10:50:33.748024:	Training iteration: 39800, Loss: 0.1989937424659729
+2019-02-12 10:51:07.875737:	Training iteration: 40000, Loss: 0.23994353413581848
+2019-02-12 10:51:40.042412:	Training iteration: 40200, Loss: 0.23178982734680176
+2019-02-12 10:51:52.292231:	Epoch 1 finished after 40279 iterations.
+Validating
+2019-02-12 10:51:52.297362:	Entering validation loop
+2019-02-12 10:52:02.366503: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 294 of 1000
+2019-02-12 10:52:12.608979: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 605 of 1000
+2019-02-12 10:52:22.323297: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 909 of 1000
+2019-02-12 10:52:25.398866: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 10:52:58.353336:	Validation iteration: 200, Loss: 0.19897422194480896
+2019-02-12 10:53:30.462687:	Validation iteration: 400, Loss: 0.21732638776302338
+2019-02-12 10:54:02.539457:	Validation iteration: 600, Loss: 0.21537840366363525
+2019-02-12 10:54:16.971895:	Validation iteration: 800, Loss: 0.22777146100997925
+2019-02-12 10:54:29.158745: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 291 of 1000
+2019-02-12 10:54:39.426837: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 603 of 1000
+2019-02-12 10:54:49.197063: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 912 of 1000
+2019-02-12 10:54:51.959954: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 10:55:18.621089:	Validation iteration: 1000, Loss: 0.22049561142921448
+2019-02-12 10:55:50.491096:	Validation iteration: 1200, Loss: 0.27965137362480164
+2019-02-12 10:56:22.344692:	Validation iteration: 1400, Loss: 0.21630239486694336
+2019-02-12 10:56:40.372702:	Validation iteration: 1600, Loss: 0.22137801349163055
+2019-02-12 10:56:54.804243: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 288 of 1000
+2019-02-12 10:57:04.745373: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 603 of 1000
+2019-02-12 10:57:14.773782: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 915 of 1000
+2019-02-12 10:57:17.622733: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 10:57:38.650593:	Validation iteration: 1800, Loss: 0.22276148200035095
+2019-02-12 10:58:10.720306:	Validation iteration: 2000, Loss: 0.21777164936065674
+2019-02-12 10:58:42.868103:	Validation iteration: 2200, Loss: 0.1835690438747406
+2019-02-12 10:59:04.436198:	Validation iteration: 2400, Loss: 0.19432374835014343
+2019-02-12 10:59:20.929603: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 291 of 1000
+2019-02-12 10:59:30.932734: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 603 of 1000
+2019-02-12 10:59:40.931547: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 910 of 1000
+2019-02-12 10:59:43.855766: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 10:59:59.342975:	Validation iteration: 2600, Loss: 0.24547533690929413
+2019-02-12 11:00:31.082143:	Validation iteration: 2800, Loss: 0.24759915471076965
+2019-02-12 11:01:04.628342:	Validation iteration: 3000, Loss: 0.25023573637008667
+2019-02-12 11:01:29.832433:	Validation iteration: 3200, Loss: 0.2564121186733246
+Validation check mean loss: 0.22602615254133512
+Validation loss has worsened. worse_val_checks = 1
+Checkpoint
+2019-02-12 11:01:49.806350: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 324 of 1000
+2019-02-12 11:01:59.641815: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 667 of 1000
+2019-02-12 11:02:09.701627: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 993 of 1000
+2019-02-12 11:02:09.756844: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 11:02:31.500011:	Training iteration: 40400, Loss: 0.18492284417152405
+2019-02-12 11:03:05.211199:	Training iteration: 40600, Loss: 0.20835408568382263
+2019-02-12 11:03:39.150457:	Training iteration: 40800, Loss: 0.18562528491020203
+2019-02-12 11:04:12.956266:	Training iteration: 41000, Loss: 0.22848348319530487
+2019-02-12 11:04:46.919768:	Training iteration: 41200, Loss: 0.18460282683372498
+2019-02-12 11:05:20.687317:	Training iteration: 41400, Loss: 0.19557932019233704
+2019-02-12 11:05:54.678044:	Training iteration: 41600, Loss: 0.24094168841838837
+2019-02-12 11:06:28.237596:	Training iteration: 41800, Loss: 0.19373713433742523
+2019-02-12 11:07:02.274991:	Training iteration: 42000, Loss: 0.19902999699115753
+2019-02-12 11:07:36.332578:	Training iteration: 42200, Loss: 0.23049458861351013
+2019-02-12 11:08:10.295798:	Training iteration: 42400, Loss: 0.20777356624603271
+2019-02-12 11:08:43.915782:	Training iteration: 42600, Loss: 0.21115684509277344
+2019-02-12 11:09:18.161583:	Training iteration: 42800, Loss: 0.20971481502056122
+2019-02-12 11:09:51.995686:	Training iteration: 43000, Loss: 0.22338443994522095
+2019-02-12 11:10:25.931108:	Training iteration: 43200, Loss: 0.1773146241903305
+2019-02-12 11:10:59.351279:	Training iteration: 43400, Loss: 0.2152872085571289
+2019-02-12 11:11:33.324646:	Training iteration: 43600, Loss: 0.1854390949010849
+2019-02-12 11:12:07.670014:	Training iteration: 43800, Loss: 0.22751854360103607
+2019-02-12 11:12:42.234261:	Training iteration: 44000, Loss: 0.2001495361328125
+2019-02-12 11:13:16.410717:	Training iteration: 44200, Loss: 0.19295689463615417
+2019-02-12 11:13:50.822739:	Training iteration: 44400, Loss: 0.22834955155849457
+2019-02-12 11:14:24.387724:	Training iteration: 44600, Loss: 0.1942172348499298
+2019-02-12 11:14:58.079774:	Training iteration: 44800, Loss: 0.1766817569732666
+2019-02-12 11:15:32.409306:	Training iteration: 45000, Loss: 0.24802546203136444
+2019-02-12 11:16:04.814310:	Training iteration: 45200, Loss: 0.18350569903850555
+2019-02-12 11:16:20.731835: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 320 of 1000
+2019-02-12 11:16:30.686924: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 639 of 1000
+2019-02-12 11:16:40.685397: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 962 of 1000
+2019-02-12 11:16:41.818995: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 11:17:10.304885:	Training iteration: 45400, Loss: 0.2180558741092682
+2019-02-12 11:17:44.358526:	Training iteration: 45600, Loss: 0.25946733355522156
+2019-02-12 11:18:18.923477:	Training iteration: 45800, Loss: 0.2190415859222412
+2019-02-12 11:18:53.031976:	Training iteration: 46000, Loss: 0.23876391351222992
+2019-02-12 11:19:26.455370:	Training iteration: 46200, Loss: 0.2187504917383194
+2019-02-12 11:20:00.058460:	Training iteration: 46400, Loss: 0.2174670398235321
+2019-02-12 11:20:34.154097:	Training iteration: 46600, Loss: 0.19282367825508118
+2019-02-12 11:21:07.886918:	Training iteration: 46800, Loss: 0.1789516806602478
+2019-02-12 11:21:41.715866:	Training iteration: 47000, Loss: 0.2841160297393799
+2019-02-12 11:22:16.169222:	Training iteration: 47200, Loss: 0.28131115436553955
+2019-02-12 11:22:50.451727:	Training iteration: 47400, Loss: 0.2630995810031891
+2019-02-12 11:23:25.238224:	Training iteration: 47600, Loss: 0.22558709979057312
+2019-02-12 11:23:58.718906:	Training iteration: 47800, Loss: 0.22514629364013672
+2019-02-12 11:24:32.613452:	Training iteration: 48000, Loss: 0.23531092703342438
+2019-02-12 11:25:06.119134:	Training iteration: 48200, Loss: 0.20762768387794495
+2019-02-12 11:25:39.845896:	Training iteration: 48400, Loss: 0.21763043105602264
+2019-02-12 11:26:13.905187:	Training iteration: 48600, Loss: 0.246613547205925
+2019-02-12 11:26:48.192176:	Training iteration: 48800, Loss: 0.1999724954366684
+2019-02-12 11:27:22.716846:	Training iteration: 49000, Loss: 0.269996702671051
+2019-02-12 11:27:57.483305:	Training iteration: 49200, Loss: 0.24875865876674652
+2019-02-12 11:28:31.077795:	Training iteration: 49400, Loss: 0.2298099845647812
+2019-02-12 11:29:04.942442:	Training iteration: 49600, Loss: 0.21014171838760376
+2019-02-12 11:29:38.864948:	Training iteration: 49800, Loss: 0.22351983189582825
+2019-02-12 11:30:13.346914:	Training iteration: 50000, Loss: 0.2408357411623001
+2019-02-12 11:30:45.179799:	Training iteration: 50200, Loss: 0.20901909470558167
+2019-02-12 11:30:59.143274: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 307 of 1000
+2019-02-12 11:31:09.147772: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 658 of 1000
+2019-02-12 11:31:19.142916: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 993 of 1000
+2019-02-12 11:31:19.423133: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 11:31:49.848163:	Training iteration: 50400, Loss: 0.2532775402069092
+2019-02-12 11:32:23.436808:	Training iteration: 50600, Loss: 0.26587799191474915
+2019-02-12 11:32:56.871763:	Training iteration: 50800, Loss: 0.22575442492961884
+2019-02-12 11:33:30.561429:	Training iteration: 51000, Loss: 0.2740623950958252
+2019-02-12 11:34:03.873026:	Training iteration: 51200, Loss: 0.21448051929473877
+2019-02-12 11:34:37.917511:	Training iteration: 51400, Loss: 0.21885833144187927
+2019-02-12 11:35:11.018971:	Training iteration: 51600, Loss: 0.249893456697464
+2019-02-12 11:35:44.983065:	Training iteration: 51800, Loss: 0.29500821232795715
+2019-02-12 11:36:18.304075:	Training iteration: 52000, Loss: 0.2468179166316986
+2019-02-12 11:36:52.078550:	Training iteration: 52200, Loss: 0.23746627569198608
+2019-02-12 11:37:25.617270:	Training iteration: 52400, Loss: 0.24657218158245087
+2019-02-12 11:37:58.869601:	Training iteration: 52600, Loss: 0.2581970691680908
+2019-02-12 11:38:32.961206:	Training iteration: 52800, Loss: 0.21133017539978027
+2019-02-12 11:39:06.537719:	Training iteration: 53000, Loss: 0.24466001987457275
+2019-02-12 11:39:40.489506:	Training iteration: 53200, Loss: 0.253272145986557
+2019-02-12 11:40:13.507416:	Training iteration: 53400, Loss: 0.24635742604732513
+2019-02-12 11:40:47.139364:	Training iteration: 53600, Loss: 0.22995704412460327
+2019-02-12 11:41:20.824367:	Training iteration: 53800, Loss: 0.213279128074646
+2019-02-12 11:41:54.634304:	Training iteration: 54000, Loss: 0.24911551177501678
+2019-02-12 11:42:28.385443:	Training iteration: 54200, Loss: 0.24001148343086243
+2019-02-12 11:43:01.650323:	Training iteration: 54400, Loss: 0.223725825548172
+2019-02-12 11:43:35.088000:	Training iteration: 54600, Loss: 0.204607293009758
+2019-02-12 11:44:08.393782:	Training iteration: 54800, Loss: 0.22809089720249176
+2019-02-12 11:44:41.276376:	Training iteration: 55000, Loss: 0.2380640059709549
+2019-02-12 11:45:12.810552:	Training iteration: 55200, Loss: 0.24167262017726898
+2019-02-12 11:45:24.521291: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 302 of 1000
+2019-02-12 11:45:34.328214: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 623 of 1000
+2019-02-12 11:45:44.374074: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 940 of 1000
+2019-02-12 11:45:46.210936: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 11:46:19.317938:	Training iteration: 55400, Loss: 0.27362772822380066
+2019-02-12 11:46:53.331998:	Training iteration: 55600, Loss: 0.23174569010734558
+2019-02-12 11:47:26.510861:	Training iteration: 55800, Loss: 0.22937113046646118
+2019-02-12 11:48:00.467302:	Training iteration: 56000, Loss: 0.26823970675468445
+2019-02-12 11:48:34.232109:	Training iteration: 56200, Loss: 0.24733954668045044
+2019-02-12 11:49:07.545341:	Training iteration: 56400, Loss: 0.24878965318202972
+2019-02-12 11:49:40.893328:	Training iteration: 56600, Loss: 0.23722891509532928
+2019-02-12 11:50:14.647039:	Training iteration: 56800, Loss: 0.21873366832733154
+2019-02-12 11:50:48.702092:	Training iteration: 57000, Loss: 0.25235360860824585
+2019-02-12 11:51:21.908183:	Training iteration: 57200, Loss: 0.20222806930541992
+2019-02-12 11:51:55.138725:	Training iteration: 57400, Loss: 0.23392798006534576
+2019-02-12 11:52:28.774461:	Training iteration: 57600, Loss: 0.22803854942321777
+2019-02-12 11:53:02.339436:	Training iteration: 57800, Loss: 0.2209818959236145
+2019-02-12 11:53:36.208319:	Training iteration: 58000, Loss: 0.22445425391197205
+2019-02-12 11:54:09.711981:	Training iteration: 58200, Loss: 0.2470441609621048
+2019-02-12 11:54:42.967656:	Training iteration: 58400, Loss: 0.22670882940292358
+2019-02-12 11:55:16.442887:	Training iteration: 58600, Loss: 0.2342948615550995
+2019-02-12 11:55:49.517648:	Training iteration: 58800, Loss: 0.26192182302474976
+2019-02-12 11:56:23.185206:	Training iteration: 59000, Loss: 0.2654860019683838
+2019-02-12 11:56:56.864926:	Training iteration: 59200, Loss: 0.22752761840820312
+2019-02-12 11:57:30.653975:	Training iteration: 59400, Loss: 0.2228383868932724
+2019-02-12 11:58:04.462520:	Training iteration: 59600, Loss: 0.2024712860584259
+2019-02-12 11:58:38.184360:	Training iteration: 59800, Loss: 0.2580541670322418
+2019-02-12 11:59:12.515400:	Training iteration: 60000, Loss: 0.24185019731521606
+2019-02-12 11:59:46.459717:	Training iteration: 60200, Loss: 0.24761587381362915
+2019-02-12 12:00:17.870190:	Training iteration: 60400, Loss: 0.24399803578853607
+2019-02-12 12:00:20.616740:	Epoch 2 finished after 60418 iterations.
+Validating
+2019-02-12 12:00:20.622813:	Entering validation loop
+2019-02-12 12:00:30.674178: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 290 of 1000
+2019-02-12 12:00:40.652527: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 598 of 1000
+2019-02-12 12:00:50.633924: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 908 of 1000
+2019-02-12 12:00:53.614754: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 12:01:25.889791:	Validation iteration: 200, Loss: 0.27449509501457214
+2019-02-12 12:01:58.074161:	Validation iteration: 400, Loss: 0.2812802195549011
+2019-02-12 12:02:30.042647:	Validation iteration: 600, Loss: 0.23248924314975739
+2019-02-12 12:02:44.573770:	Validation iteration: 800, Loss: 0.23373344540596008
+2019-02-12 12:02:56.770249: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 291 of 1000
+2019-02-12 12:03:06.907221: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 605 of 1000
+2019-02-12 12:03:16.882329: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 915 of 1000
+2019-02-12 12:03:19.355555: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 12:03:45.886360:	Validation iteration: 1000, Loss: 0.24972674250602722
+2019-02-12 12:04:18.026008:	Validation iteration: 1200, Loss: 0.23480954766273499
+2019-02-12 12:04:50.014405:	Validation iteration: 1400, Loss: 0.24095159769058228
+2019-02-12 12:05:08.095712:	Validation iteration: 1600, Loss: 0.18183211982250214
+2019-02-12 12:05:22.447030: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 298 of 1000
+2019-02-12 12:05:32.513197: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 606 of 1000
+2019-02-12 12:05:42.641771: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 918 of 1000
+2019-02-12 12:05:45.002516: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 12:06:06.038026:	Validation iteration: 1800, Loss: 0.21960046887397766
+2019-02-12 12:06:38.205477:	Validation iteration: 2000, Loss: 0.25887805223464966
+2019-02-12 12:07:10.385890:	Validation iteration: 2200, Loss: 0.2498808205127716
+2019-02-12 12:07:32.025108:	Validation iteration: 2400, Loss: 0.21578854322433472
+2019-02-12 12:07:48.569256: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 291 of 1000
+2019-02-12 12:07:58.798279: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 604 of 1000
+2019-02-12 12:08:08.578487: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 908 of 1000
+2019-02-12 12:08:11.582722: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 12:08:27.124579:	Validation iteration: 2600, Loss: 0.23398084938526154
+2019-02-12 12:08:58.890893:	Validation iteration: 2800, Loss: 0.24047432839870453
+2019-02-12 12:09:30.949769:	Validation iteration: 3000, Loss: 0.2145778387784958
+2019-02-12 12:09:55.883097:	Validation iteration: 3200, Loss: 0.2285066843032837
+Validation check mean loss: 0.2259644936485011
+Validation loss has improved!
+Checkpoint
+2019-02-12 12:10:15.663812: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 317 of 1000
+2019-02-12 12:10:25.711479: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 664 of 1000
+2019-02-12 12:10:35.829089: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 997 of 1000
+2019-02-12 12:10:35.829159: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 12:11:07.661441:	Training iteration: 60600, Loss: 0.21070705354213715
+2019-02-12 12:11:41.357041:	Training iteration: 60800, Loss: 0.21944528818130493
+2019-02-12 12:12:14.977266:	Training iteration: 61000, Loss: 0.1996811032295227
+2019-02-12 12:12:49.342626:	Training iteration: 61200, Loss: 0.2451627552509308
+2019-02-12 12:13:23.105141:	Training iteration: 61400, Loss: 0.21488182246685028
+2019-02-12 12:13:57.185035:	Training iteration: 61600, Loss: 0.1455448567867279
+2019-02-12 12:14:31.163794:	Training iteration: 61800, Loss: 0.201894149184227
+2019-02-12 12:15:04.809054:	Training iteration: 62000, Loss: 0.2131531685590744
+2019-02-12 12:15:38.994523:	Training iteration: 62200, Loss: 0.19373148679733276
+2019-02-12 12:16:12.718400:	Training iteration: 62400, Loss: 0.22670581936836243
+2019-02-12 12:16:46.711841:	Training iteration: 62600, Loss: 0.22465598583221436
+2019-02-12 12:17:20.559822:	Training iteration: 62800, Loss: 0.21768033504486084
+2019-02-12 12:17:54.889374:	Training iteration: 63000, Loss: 0.1759730577468872
+2019-02-12 12:18:28.566937:	Training iteration: 63200, Loss: 0.1820516586303711
+2019-02-12 12:19:02.181927:	Training iteration: 63400, Loss: 0.1747526228427887
+2019-02-12 12:19:35.944409:	Training iteration: 63600, Loss: 0.20935142040252686
+2019-02-12 12:20:10.282856:	Training iteration: 63800, Loss: 0.2207333892583847
+2019-02-12 12:20:44.241836:	Training iteration: 64000, Loss: 0.21951574087142944
+2019-02-12 12:21:18.679685:	Training iteration: 64200, Loss: 0.22408495843410492
+2019-02-12 12:21:52.614216:	Training iteration: 64400, Loss: 0.21074587106704712
+2019-02-12 12:22:26.377559:	Training iteration: 64600, Loss: 0.21668732166290283
+2019-02-12 12:22:59.838151:	Training iteration: 64800, Loss: 0.18561908602714539
+2019-02-12 12:23:33.459746:	Training iteration: 65000, Loss: 0.19202251732349396
+2019-02-12 12:24:07.336357:	Training iteration: 65200, Loss: 0.1917468011379242
+2019-02-12 12:24:45.425536: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 319 of 1000
+2019-02-12 12:24:55.333269: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 641 of 1000
+2019-02-12 12:25:05.344458: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 965 of 1000
+2019-02-12 12:25:06.544050: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 12:25:11.190299:	Training iteration: 65400, Loss: 0.26555049419403076
+2019-02-12 12:25:44.968814:	Training iteration: 65600, Loss: 0.21091769635677338
+2019-02-12 12:26:19.193294:	Training iteration: 65800, Loss: 0.2214398980140686
+2019-02-12 12:26:53.659568:	Training iteration: 66000, Loss: 0.19997751712799072
+2019-02-12 12:27:27.774891:	Training iteration: 66200, Loss: 0.19270998239517212
+2019-02-12 12:28:01.254665:	Training iteration: 66400, Loss: 0.240614652633667
+2019-02-12 12:28:34.611417:	Training iteration: 66600, Loss: 0.24305450916290283
+2019-02-12 12:29:08.915832:	Training iteration: 66800, Loss: 0.18609264492988586
+2019-02-12 12:29:43.107688:	Training iteration: 67000, Loss: 0.23290279507637024
+2019-02-12 12:30:16.931951:	Training iteration: 67200, Loss: 0.25582924485206604
+2019-02-12 12:30:51.457689:	Training iteration: 67400, Loss: 0.17959296703338623
+2019-02-12 12:31:25.760059:	Training iteration: 67600, Loss: 0.21267499029636383
+2019-02-12 12:32:00.506801:	Training iteration: 67800, Loss: 0.2359887808561325
+2019-02-12 12:32:34.199112:	Training iteration: 68000, Loss: 0.257395476102829
+2019-02-12 12:33:07.954098:	Training iteration: 68200, Loss: 0.22198361158370972
+2019-02-12 12:33:41.729532:	Training iteration: 68400, Loss: 0.2079724818468094
+2019-02-12 12:34:16.076546:	Training iteration: 68600, Loss: 0.18292765319347382
+2019-02-12 12:34:49.737248:	Training iteration: 68800, Loss: 0.21223990619182587
+2019-02-12 12:35:23.906564:	Training iteration: 69000, Loss: 0.25921905040740967
+2019-02-12 12:35:58.159672:	Training iteration: 69200, Loss: 0.2296408861875534
+2019-02-12 12:36:32.751909:	Training iteration: 69400, Loss: 0.21045216917991638
+2019-02-12 12:37:06.360565:	Training iteration: 69600, Loss: 0.29722607135772705
+2019-02-12 12:37:40.333371:	Training iteration: 69800, Loss: 0.2725211977958679
+2019-02-12 12:38:14.434808:	Training iteration: 70000, Loss: 0.22397328913211823
+2019-02-12 12:38:48.398641:	Training iteration: 70200, Loss: 0.2030927538871765
+2019-02-12 12:39:24.352126: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 308 of 1000
+2019-02-12 12:39:34.493947: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 657 of 1000
+2019-02-12 12:39:44.411878: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 983 of 1000
+2019-02-12 12:39:44.861562: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 12:39:51.702690:	Training iteration: 70400, Loss: 0.234315425157547
+2019-02-12 12:40:25.634070:	Training iteration: 70600, Loss: 0.30232006311416626
+2019-02-12 12:40:59.144063:	Training iteration: 70800, Loss: 0.2474687695503235
+2019-02-12 12:41:32.946875:	Training iteration: 71000, Loss: 0.22428622841835022
+2019-02-12 12:42:06.477903:	Training iteration: 71200, Loss: 0.24813824892044067
+2019-02-12 12:42:39.353761:	Training iteration: 71400, Loss: 0.22596615552902222
+2019-02-12 12:43:13.231129:	Training iteration: 71600, Loss: 0.24650204181671143
+2019-02-12 12:43:46.664151:	Training iteration: 71800, Loss: 0.277739018201828
+2019-02-12 12:44:20.250357:	Training iteration: 72000, Loss: 0.2559370696544647
+2019-02-12 12:44:53.843814:	Training iteration: 72200, Loss: 0.2900214195251465
+2019-02-12 12:45:27.672145:	Training iteration: 72400, Loss: 0.24647706747055054
+2019-02-12 12:46:00.445502:	Training iteration: 72600, Loss: 0.2395024299621582
+2019-02-12 12:46:34.110623:	Training iteration: 72800, Loss: 0.25716179609298706
+2019-02-12 12:47:08.210288:	Training iteration: 73000, Loss: 0.2029302716255188
+2019-02-12 12:47:42.028807:	Training iteration: 73200, Loss: 0.2960212230682373
+2019-02-12 12:48:15.372007:	Training iteration: 73400, Loss: 0.24351124465465546
+2019-02-12 12:48:48.593211:	Training iteration: 73600, Loss: 0.22346161305904388
+2019-02-12 12:49:22.700473:	Training iteration: 73800, Loss: 0.3103182911872864
+2019-02-12 12:49:56.642076:	Training iteration: 74000, Loss: 0.26864200830459595
+2019-02-12 12:50:30.054508:	Training iteration: 74200, Loss: 0.22944137454032898
+2019-02-12 12:51:04.047504:	Training iteration: 74400, Loss: 0.24789635837078094
+2019-02-12 12:51:37.330048:	Training iteration: 74600, Loss: 0.245854452252388
+2019-02-12 12:52:10.684369:	Training iteration: 74800, Loss: 0.26709210872650146
+2019-02-12 12:52:44.258293:	Training iteration: 75000, Loss: 0.23388846218585968
+2019-02-12 12:53:16.486374:	Training iteration: 75200, Loss: 0.22662749886512756
+2019-02-12 12:53:49.573880: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 301 of 1000
+2019-02-12 12:53:59.668730: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 628 of 1000
+2019-02-12 12:54:09.592838: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 943 of 1000
+2019-02-12 12:54:11.331322: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 12:54:20.837455:	Training iteration: 75400, Loss: 0.21255221962928772
+2019-02-12 12:54:54.517982:	Training iteration: 75600, Loss: 0.22634060680866241
+2019-02-12 12:55:28.491331:	Training iteration: 75800, Loss: 0.21866263449192047
+2019-02-12 12:56:01.789817:	Training iteration: 76000, Loss: 0.24803751707077026
+2019-02-12 12:56:35.969039:	Training iteration: 76200, Loss: 0.2121591567993164
+2019-02-12 12:57:09.318068:	Training iteration: 76400, Loss: 0.20289920270442963
+2019-02-12 12:57:42.370131:	Training iteration: 76600, Loss: 0.2748252749443054
+2019-02-12 12:58:16.364620:	Training iteration: 76800, Loss: 0.23012956976890564
+2019-02-12 12:58:50.021910:	Training iteration: 77000, Loss: 0.23993943631649017
+2019-02-12 12:59:23.989911:	Training iteration: 77200, Loss: 0.2185230851173401
+2019-02-12 12:59:56.878556:	Training iteration: 77400, Loss: 0.2598361074924469
+2019-02-12 13:00:30.551352:	Training iteration: 77600, Loss: 0.25651752948760986
+2019-02-12 13:01:04.946318:	Training iteration: 77800, Loss: 0.27072733640670776
+2019-02-12 13:01:38.505773:	Training iteration: 78000, Loss: 0.19653914868831635
+2019-02-12 13:02:12.276515:	Training iteration: 78200, Loss: 0.21070733666419983
+2019-02-12 13:02:46.335997:	Training iteration: 78400, Loss: 0.2695978879928589
+2019-02-12 13:03:19.789773:	Training iteration: 78600, Loss: 0.24657517671585083
+2019-02-12 13:03:53.171606:	Training iteration: 78800, Loss: 0.26367756724357605
+2019-02-12 13:04:26.486964:	Training iteration: 79000, Loss: 0.27446243166923523
+2019-02-12 13:05:00.057836:	Training iteration: 79200, Loss: 0.22389885783195496
+2019-02-12 13:05:33.647814:	Training iteration: 79400, Loss: 0.23285038769245148
+2019-02-12 13:06:07.430729:	Training iteration: 79600, Loss: 0.21383914351463318
+2019-02-12 13:06:41.196345:	Training iteration: 79800, Loss: 0.192119762301445
+2019-02-12 13:07:15.236574:	Training iteration: 80000, Loss: 0.23404134809970856
+2019-02-12 13:07:49.281551:	Training iteration: 80200, Loss: 0.23383060097694397
+2019-02-12 13:08:22.343969:	Training iteration: 80400, Loss: 0.1980724036693573
+2019-02-12 13:08:46.961324:	Epoch 3 finished after 80557 iterations.
+Validating
+2019-02-12 13:08:46.967626:	Entering validation loop
+2019-02-12 13:08:57.002503: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 285 of 1000
+2019-02-12 13:09:06.988475: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 601 of 1000
+2019-02-12 13:09:17.075115: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 903 of 1000
+2019-02-12 13:09:20.095624: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 13:09:52.548554:	Validation iteration: 200, Loss: 0.24261748790740967
+2019-02-12 13:10:24.629323:	Validation iteration: 400, Loss: 0.2471102923154831
+2019-02-12 13:10:56.575047:	Validation iteration: 600, Loss: 0.16469116508960724
+2019-02-12 13:11:11.083449:	Validation iteration: 800, Loss: 0.19726413488388062
+2019-02-12 13:11:23.237549: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 297 of 1000
+2019-02-12 13:11:33.243802: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 603 of 1000
+2019-02-12 13:11:43.335312: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 919 of 1000
+2019-02-12 13:11:45.951687: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 13:12:13.025670:	Validation iteration: 1000, Loss: 0.20875944197177887
+2019-02-12 13:12:44.944075:	Validation iteration: 1200, Loss: 0.21938326954841614
+2019-02-12 13:13:16.967254:	Validation iteration: 1400, Loss: 0.2172161042690277
+2019-02-12 13:13:35.040092:	Validation iteration: 1600, Loss: 0.16595633327960968
+2019-02-12 13:13:49.496830: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 294 of 1000
+2019-02-12 13:13:59.530925: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 603 of 1000
+2019-02-12 13:14:09.392704: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 911 of 1000
+2019-02-12 13:14:12.274456: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 13:14:33.116748:	Validation iteration: 1800, Loss: 0.2055531144142151
+2019-02-12 13:15:05.313401:	Validation iteration: 2000, Loss: 0.2554730176925659
+2019-02-12 13:15:37.255602:	Validation iteration: 2200, Loss: 0.212065652012825
+2019-02-12 13:15:58.819863:	Validation iteration: 2400, Loss: 0.2293994426727295
+2019-02-12 13:16:15.345574: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 297 of 1000
+2019-02-12 13:16:25.411301: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 607 of 1000
+2019-02-12 13:16:35.363624: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 921 of 1000
+2019-02-12 13:16:37.868226: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 13:16:53.026984:	Validation iteration: 2600, Loss: 0.2185426652431488
+2019-02-12 13:17:24.721746:	Validation iteration: 2800, Loss: 0.20092305541038513
+2019-02-12 13:17:56.772313:	Validation iteration: 3000, Loss: 0.2170189917087555
+2019-02-12 13:18:21.899486:	Validation iteration: 3200, Loss: 0.22384682297706604
+Validation check mean loss: 0.22595944240439736
+Validation loss has improved!
+Checkpoint
+2019-02-12 13:18:41.712236: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 318 of 1000
+2019-02-12 13:18:51.694576: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 661 of 1000
+2019-02-12 13:19:01.813656: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 994 of 1000
+2019-02-12 13:19:01.986119: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 13:19:10.001740:	Training iteration: 80600, Loss: 0.19998952746391296
+2019-02-12 13:19:44.102759:	Training iteration: 80800, Loss: 0.1890716254711151
+2019-02-12 13:20:17.883582:	Training iteration: 81000, Loss: 0.2360524833202362
+2019-02-12 13:20:51.672573:	Training iteration: 81200, Loss: 0.20193228125572205
+2019-02-12 13:21:25.988921:	Training iteration: 81400, Loss: 0.23329180479049683
+2019-02-12 13:21:59.832032:	Training iteration: 81600, Loss: 0.1786442995071411
+2019-02-12 13:22:33.912025:	Training iteration: 81800, Loss: 0.19587472081184387
+2019-02-12 13:23:07.604455:	Training iteration: 82000, Loss: 0.20194926857948303
+2019-02-12 13:23:41.166231:	Training iteration: 82200, Loss: 0.22029241919517517
+2019-02-12 13:24:15.065094:	Training iteration: 82400, Loss: 0.20099717378616333
+2019-02-12 13:24:48.620464:	Training iteration: 82600, Loss: 0.19828130304813385
+2019-02-12 13:25:22.363237:	Training iteration: 82800, Loss: 0.19951915740966797
+2019-02-12 13:25:56.643681:	Training iteration: 83000, Loss: 0.19538143277168274
+2019-02-12 13:26:30.513476:	Training iteration: 83200, Loss: 0.19381791353225708
+2019-02-12 13:27:04.382568:	Training iteration: 83400, Loss: 0.16761159896850586
+2019-02-12 13:27:37.900263:	Training iteration: 83600, Loss: 0.20707745850086212
+2019-02-12 13:28:11.688573:	Training iteration: 83800, Loss: 0.22133684158325195
+2019-02-12 13:28:45.890422:	Training iteration: 84000, Loss: 0.19884398579597473
+2019-02-12 13:29:20.673432:	Training iteration: 84200, Loss: 0.2041320949792862
+2019-02-12 13:29:54.456281:	Training iteration: 84400, Loss: 0.2138710618019104
+2019-02-12 13:30:28.533194:	Training iteration: 84600, Loss: 0.2515796422958374
+2019-02-12 13:31:02.420193:	Training iteration: 84800, Loss: 0.21687498688697815
+2019-02-12 13:31:36.064545:	Training iteration: 85000, Loss: 0.20417404174804688
+2019-02-12 13:32:10.328162:	Training iteration: 85200, Loss: 0.19620788097381592
+2019-02-12 13:32:43.528032:	Training iteration: 85400, Loss: 0.2017599642276764
+2019-02-12 13:33:12.070335: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 319 of 1000
+2019-02-12 13:33:22.105807: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 631 of 1000
+2019-02-12 13:33:32.054602: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 949 of 1000
+2019-02-12 13:33:33.494941: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 13:33:48.905983:	Training iteration: 85600, Loss: 0.2185005247592926
+2019-02-12 13:34:22.506993:	Training iteration: 85800, Loss: 0.24321652948856354
+2019-02-12 13:34:57.039963:	Training iteration: 86000, Loss: 0.20063579082489014
+2019-02-12 13:35:31.335179:	Training iteration: 86200, Loss: 0.16891668736934662
+2019-02-12 13:36:04.924246:	Training iteration: 86400, Loss: 0.23672941327095032
+2019-02-12 13:36:38.835740:	Training iteration: 86600, Loss: 0.21836701035499573
+2019-02-12 13:37:12.299608:	Training iteration: 86800, Loss: 0.23950915038585663
+2019-02-12 13:37:46.718640:	Training iteration: 87000, Loss: 0.24770289659500122
+2019-02-12 13:38:20.601463:	Training iteration: 87200, Loss: 0.2590569853782654
+2019-02-12 13:38:54.594325:	Training iteration: 87400, Loss: 0.26685720682144165
+2019-02-12 13:39:29.011065:	Training iteration: 87600, Loss: 0.2498033493757248
+2019-02-12 13:40:03.594471:	Training iteration: 87800, Loss: 0.2254665642976761
+2019-02-12 13:40:37.678090:	Training iteration: 88000, Loss: 0.2085067480802536
+2019-02-12 13:41:11.351610:	Training iteration: 88200, Loss: 0.25256261229515076
+2019-02-12 13:41:44.992396:	Training iteration: 88400, Loss: 0.22505353391170502
+2019-02-12 13:42:18.771209:	Training iteration: 88600, Loss: 0.2421814501285553
+2019-02-12 13:42:52.550136:	Training iteration: 88800, Loss: 0.20992298424243927
+2019-02-12 13:43:26.396627:	Training iteration: 89000, Loss: 0.23883502185344696
+2019-02-12 13:44:00.827323:	Training iteration: 89200, Loss: 0.22670511901378632
+2019-02-12 13:44:35.112927:	Training iteration: 89400, Loss: 0.22797991335391998
+2019-02-12 13:45:09.439950:	Training iteration: 89600, Loss: 0.24444034695625305
+2019-02-12 13:45:43.255593:	Training iteration: 89800, Loss: 0.20872536301612854
+2019-02-12 13:46:16.716465:	Training iteration: 90000, Loss: 0.1915511190891266
+2019-02-12 13:46:51.178817:	Training iteration: 90200, Loss: 0.19707542657852173
+2019-02-12 13:47:23.990537:	Training iteration: 90400, Loss: 0.21844923496246338
+2019-02-12 13:47:50.580950: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 303 of 1000
+2019-02-12 13:48:00.543260: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 643 of 1000
+2019-02-12 13:48:10.684173: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 972 of 1000
+2019-02-12 13:48:11.493229: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 13:48:28.402477:	Training iteration: 90600, Loss: 0.23505045473575592
+2019-02-12 13:49:02.354329:	Training iteration: 90800, Loss: 0.22561778128147125
+2019-02-12 13:49:35.687814:	Training iteration: 91000, Loss: 0.24961841106414795
+2019-02-12 13:50:09.692608:	Training iteration: 91200, Loss: 0.20708119869232178
+2019-02-12 13:50:43.304599:	Training iteration: 91400, Loss: 0.27492180466651917
+2019-02-12 13:51:16.965927:	Training iteration: 91600, Loss: 0.23023277521133423
+2019-02-12 13:51:50.445587:	Training iteration: 91800, Loss: 0.2583892047405243
+2019-02-12 13:52:23.967374:	Training iteration: 92000, Loss: 0.24667686223983765
+2019-02-12 13:52:57.006301:	Training iteration: 92200, Loss: 0.26305633783340454
+2019-02-12 13:53:31.076862:	Training iteration: 92400, Loss: 0.222231924533844
+2019-02-12 13:54:04.878593:	Training iteration: 92600, Loss: 0.2792242169380188
+2019-02-12 13:54:38.003275:	Training iteration: 92800, Loss: 0.26111704111099243
+2019-02-12 13:55:11.698505:	Training iteration: 93000, Loss: 0.2733737528324127
+2019-02-12 13:55:45.622264:	Training iteration: 93200, Loss: 0.27318495512008667
+2019-02-12 13:56:19.252896:	Training iteration: 93400, Loss: 0.2566124200820923
+2019-02-12 13:56:52.591829:	Training iteration: 93600, Loss: 0.28631168603897095
+2019-02-12 13:57:25.870371:	Training iteration: 93800, Loss: 0.3092487156391144
+2019-02-12 13:57:59.685411:	Training iteration: 94000, Loss: 0.26649922132492065
+2019-02-12 13:58:33.297404:	Training iteration: 94200, Loss: 0.20690324902534485
+2019-02-12 13:59:06.652075:	Training iteration: 94400, Loss: 0.2696996331214905
+2019-02-12 13:59:40.399722:	Training iteration: 94600, Loss: 0.30493563413619995
+2019-02-12 14:00:13.778090:	Training iteration: 94800, Loss: 0.248995840549469
+2019-02-12 14:00:47.059383:	Training iteration: 95000, Loss: 0.20956799387931824
+2019-02-12 14:01:20.030891:	Training iteration: 95200, Loss: 0.2475212812423706
+2019-02-12 14:01:51.959121:	Training iteration: 95400, Loss: 0.23850056529045105
+2019-02-12 14:02:15.845286: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 301 of 1000
+2019-02-12 14:02:25.719143: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 629 of 1000
+2019-02-12 14:02:35.690256: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 952 of 1000
+2019-02-12 14:02:37.166156: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 14:02:56.750736:	Training iteration: 95600, Loss: 0.2519919276237488
+2019-02-12 14:03:30.585371:	Training iteration: 95800, Loss: 0.219352126121521
+2019-02-12 14:04:04.223492:	Training iteration: 96000, Loss: 0.24996933341026306
+2019-02-12 14:04:37.970542:	Training iteration: 96200, Loss: 0.27264273166656494
+2019-02-12 14:05:12.254323:	Training iteration: 96400, Loss: 0.2701040804386139
+2019-02-12 14:05:45.440438:	Training iteration: 96600, Loss: 0.280237078666687
+2019-02-12 14:06:18.609537:	Training iteration: 96800, Loss: 0.21098682284355164
+2019-02-12 14:06:53.038932:	Training iteration: 97000, Loss: 0.2127697467803955
+2019-02-12 14:07:26.588912:	Training iteration: 97200, Loss: 0.24822750687599182
+2019-02-12 14:08:00.059185:	Training iteration: 97400, Loss: 0.21391081809997559
+2019-02-12 14:08:33.441368:	Training iteration: 97600, Loss: 0.25311267375946045
+2019-02-12 14:09:06.814197:	Training iteration: 97800, Loss: 0.25426268577575684
+2019-02-12 14:09:40.717839:	Training iteration: 98000, Loss: 0.2320099174976349
+2019-02-12 14:10:14.235765:	Training iteration: 98200, Loss: 0.23780007660388947
+2019-02-12 14:10:47.899487:	Training iteration: 98400, Loss: 0.2523954510688782
+2019-02-12 14:11:21.323281:	Training iteration: 98600, Loss: 0.22617487609386444
+2019-02-12 14:11:54.887510:	Training iteration: 98800, Loss: 0.22533981502056122
+2019-02-12 14:12:28.135137:	Training iteration: 99000, Loss: 0.2783908247947693
+2019-02-12 14:13:02.008136:	Training iteration: 99200, Loss: 0.25769519805908203
+2019-02-12 14:13:35.481789:	Training iteration: 99400, Loss: 0.2747793197631836
+2019-02-12 14:14:09.404708:	Training iteration: 99600, Loss: 0.22934411466121674
+2019-02-12 14:14:43.414907:	Training iteration: 99800, Loss: 0.2393869161605835
+2019-02-12 14:15:17.160460:	Training iteration: 100000, Loss: 0.2551227807998657
+2019-02-12 14:15:51.466371:	Training iteration: 100200, Loss: 0.25864678621292114
+2019-02-12 14:16:25.562609:	Training iteration: 100400, Loss: 0.23849421739578247
+2019-02-12 14:16:57.900889:	Training iteration: 100600, Loss: 0.2287568300962448
+2019-02-12 14:17:12.947714:	Epoch 4 finished after 100696 iterations.
+Validating
+2019-02-12 14:17:12.953898:	Entering validation loop
+2019-02-12 14:17:23.066329: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 298 of 1000
+2019-02-12 14:17:32.964210: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 606 of 1000
+2019-02-12 14:17:43.028657: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 919 of 1000
+2019-02-12 14:17:45.581205: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 14:18:18.190382:	Validation iteration: 200, Loss: 0.22634108364582062
+2019-02-12 14:18:50.415840:	Validation iteration: 400, Loss: 0.2501116394996643
+2019-02-12 14:19:22.419235:	Validation iteration: 600, Loss: 0.2348891794681549
+2019-02-12 14:19:36.912482:	Validation iteration: 800, Loss: 0.19989922642707825
+2019-02-12 14:19:49.146783: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 296 of 1000
+2019-02-12 14:19:59.333218: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 604 of 1000
+2019-02-12 14:20:09.210371: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 914 of 1000
+2019-02-12 14:20:11.800122: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 14:20:38.871991:	Validation iteration: 1000, Loss: 0.18801860511302948
+2019-02-12 14:21:10.681192:	Validation iteration: 1200, Loss: 0.2592045068740845
+2019-02-12 14:21:42.691737:	Validation iteration: 1400, Loss: 0.23155370354652405
+2019-02-12 14:22:00.623201:	Validation iteration: 1600, Loss: 0.2705104947090149
+2019-02-12 14:22:14.931461: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 291 of 1000
+2019-02-12 14:22:24.919473: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 605 of 1000
+2019-02-12 14:22:35.098028: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 921 of 1000
+2019-02-12 14:22:37.537685: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 14:22:58.136663:	Validation iteration: 1800, Loss: 0.1677604615688324
+2019-02-12 14:23:29.984823:	Validation iteration: 2000, Loss: 0.22921574115753174
+2019-02-12 14:24:01.887025:	Validation iteration: 2200, Loss: 0.23081542551517487
+2019-02-12 14:24:23.474089:	Validation iteration: 2400, Loss: 0.30328768491744995
+2019-02-12 14:24:39.951120: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 286 of 1000
+2019-02-12 14:24:50.065266: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 606 of 1000
+2019-02-12 14:25:00.041486: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 916 of 1000
+2019-02-12 14:25:02.781971: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 14:25:18.095199:	Validation iteration: 2600, Loss: 0.22002241015434265
+2019-02-12 14:25:49.857477:	Validation iteration: 2800, Loss: 0.19359448552131653
+2019-02-12 14:26:22.200377:	Validation iteration: 3000, Loss: 0.20539554953575134
+2019-02-12 14:26:47.467801:	Validation iteration: 3200, Loss: 0.19715288281440735
+Validation check mean loss: 0.22595854912122543
+Validation loss has improved!
+Checkpoint
+2019-02-12 14:27:07.307800: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 322 of 1000
+2019-02-12 14:27:17.308551: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 664 of 1000
+2019-02-12 14:27:27.315779: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 989 of 1000
+2019-02-12 14:27:27.798749: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 14:27:46.335236:	Training iteration: 100800, Loss: 0.20841574668884277
+2019-02-12 14:28:20.031104:	Training iteration: 101000, Loss: 0.21540109813213348
+2019-02-12 14:28:53.771292:	Training iteration: 101200, Loss: 0.22609661519527435
+2019-02-12 14:29:27.597450:	Training iteration: 101400, Loss: 0.22100570797920227
+2019-02-12 14:30:01.479865:	Training iteration: 101600, Loss: 0.2130526751279831
+2019-02-12 14:30:35.077444:	Training iteration: 101800, Loss: 0.22253769636154175
+2019-02-12 14:31:09.508264:	Training iteration: 102000, Loss: 0.22160229086875916
+2019-02-12 14:31:43.242929:	Training iteration: 102200, Loss: 0.2142685055732727
+2019-02-12 14:32:17.336721:	Training iteration: 102400, Loss: 0.20646627247333527
+2019-02-12 14:32:51.391578:	Training iteration: 102600, Loss: 0.22791129350662231
+2019-02-12 14:33:25.480756:	Training iteration: 102800, Loss: 0.20706519484519958
+2019-02-12 14:33:59.052278:	Training iteration: 103000, Loss: 0.19463717937469482
+2019-02-12 14:34:33.191301:	Training iteration: 103200, Loss: 0.20375078916549683
+2019-02-12 14:35:07.089158:	Training iteration: 103400, Loss: 0.19289085268974304
+2019-02-12 14:35:41.088322:	Training iteration: 103600, Loss: 0.21385972201824188
+2019-02-12 14:36:14.815653:	Training iteration: 103800, Loss: 0.21158137917518616
+2019-02-12 14:36:49.009250:	Training iteration: 104000, Loss: 0.21955180168151855
+2019-02-12 14:37:23.224789:	Training iteration: 104200, Loss: 0.18160642683506012
+2019-02-12 14:37:57.713641:	Training iteration: 104400, Loss: 0.21837539970874786
+2019-02-12 14:38:31.618851:	Training iteration: 104600, Loss: 0.244004487991333
+2019-02-12 14:39:05.377169:	Training iteration: 104800, Loss: 0.1815013438463211
+2019-02-12 14:39:39.123202:	Training iteration: 105000, Loss: 0.22869116067886353
+2019-02-12 14:40:13.020281:	Training iteration: 105200, Loss: 0.18291234970092773
+2019-02-12 14:40:47.474875:	Training iteration: 105400, Loss: 0.21313589811325073
+2019-02-12 14:41:19.658728:	Training iteration: 105600, Loss: 0.21566709876060486
+2019-02-12 14:41:38.354012: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 320 of 1000
+2019-02-12 14:41:48.446497: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 641 of 1000
+2019-02-12 14:41:58.406671: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 962 of 1000
+2019-02-12 14:41:59.553308: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 14:42:25.186845:	Training iteration: 105800, Loss: 0.22737009823322296
+2019-02-12 14:42:59.003446:	Training iteration: 106000, Loss: 0.20552775263786316
+2019-02-12 14:43:33.844682:	Training iteration: 106200, Loss: 0.2537434697151184
+2019-02-12 14:44:08.226089:	Training iteration: 106400, Loss: 0.2172805517911911
+2019-02-12 14:44:41.947593:	Training iteration: 106600, Loss: 0.2669370174407959
+2019-02-12 14:45:15.481750:	Training iteration: 106800, Loss: 0.1857573390007019
+2019-02-12 14:45:49.405624:	Training iteration: 107000, Loss: 0.21642178297042847
+2019-02-12 14:46:23.421979:	Training iteration: 107200, Loss: 0.25390011072158813
+2019-02-12 14:46:57.207690:	Training iteration: 107400, Loss: 0.21437686681747437
+2019-02-12 14:47:31.566197:	Training iteration: 107600, Loss: 0.25484251976013184
+2019-02-12 14:48:06.068100:	Training iteration: 107800, Loss: 0.23701047897338867
+2019-02-12 14:48:40.958989:	Training iteration: 108000, Loss: 0.24614983797073364
+2019-02-12 14:49:14.410162:	Training iteration: 108200, Loss: 0.21815401315689087
+2019-02-12 14:49:48.380894:	Training iteration: 108400, Loss: 0.2319987714290619
+2019-02-12 14:50:21.712727:	Training iteration: 108600, Loss: 0.23039917647838593
+2019-02-12 14:50:55.829727:	Training iteration: 108800, Loss: 0.2121708244085312
+2019-02-12 14:51:29.824504:	Training iteration: 109000, Loss: 0.21916478872299194
+2019-02-12 14:52:04.123426:	Training iteration: 109200, Loss: 0.21029549837112427
+2019-02-12 14:52:38.436284:	Training iteration: 109400, Loss: 0.2473013550043106
+2019-02-12 14:53:12.764168:	Training iteration: 109600, Loss: 0.18275204300880432
+2019-02-12 14:53:46.847560:	Training iteration: 109800, Loss: 0.2146642506122589
+2019-02-12 14:54:20.787517:	Training iteration: 110000, Loss: 0.22632254660129547
+2019-02-12 14:54:54.395288:	Training iteration: 110200, Loss: 0.19578474760055542
+2019-02-12 14:55:28.718507:	Training iteration: 110400, Loss: 0.22061511874198914
+2019-02-12 14:56:00.844854:	Training iteration: 110600, Loss: 0.24790100753307343
+2019-02-12 14:56:17.599109: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 309 of 1000
+2019-02-12 14:56:27.605402: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 657 of 1000
+2019-02-12 14:56:37.728513: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 986 of 1000
+2019-02-12 14:56:38.102840: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 14:57:05.522084:	Training iteration: 110800, Loss: 0.25455814599990845
+2019-02-12 14:57:39.183186:	Training iteration: 111000, Loss: 0.2802251875400543
+2019-02-12 14:58:12.764142:	Training iteration: 111200, Loss: 0.243597149848938
+2019-02-12 14:58:46.609879:	Training iteration: 111400, Loss: 0.25677409768104553
+2019-02-12 14:59:19.930977:	Training iteration: 111600, Loss: 0.2920669913291931
+2019-02-12 14:59:53.846342:	Training iteration: 111800, Loss: 0.2581644654273987
+2019-02-12 15:00:26.907337:	Training iteration: 112000, Loss: 0.3002585172653198
+2019-02-12 15:01:00.631922:	Training iteration: 112200, Loss: 0.25235283374786377
+2019-02-12 15:01:34.140943:	Training iteration: 112400, Loss: 0.24937880039215088
+2019-02-12 15:02:07.999091:	Training iteration: 112600, Loss: 0.25568825006484985
+2019-02-12 15:02:41.419670:	Training iteration: 112800, Loss: 0.22400560975074768
+2019-02-12 15:03:14.545752:	Training iteration: 113000, Loss: 0.24045182764530182
+2019-02-12 15:03:48.638810:	Training iteration: 113200, Loss: 0.23572272062301636
+2019-02-12 15:04:22.537019:	Training iteration: 113400, Loss: 0.2676222324371338
+2019-02-12 15:04:56.235478:	Training iteration: 113600, Loss: 0.2449512481689453
+2019-02-12 15:05:29.651027:	Training iteration: 113800, Loss: 0.26135388016700745
+2019-02-12 15:06:03.021596:	Training iteration: 114000, Loss: 0.2564513683319092
+2019-02-12 15:06:36.839921:	Training iteration: 114200, Loss: 0.262127161026001
+2019-02-12 15:07:10.636562:	Training iteration: 114400, Loss: 0.3221558928489685
+2019-02-12 15:07:44.583709:	Training iteration: 114600, Loss: 0.27096375823020935
+2019-02-12 15:08:17.698371:	Training iteration: 114800, Loss: 0.24441924691200256
+2019-02-12 15:08:51.182625:	Training iteration: 115000, Loss: 0.2628408670425415
+2019-02-12 15:09:24.490558:	Training iteration: 115200, Loss: 0.24608682096004486
+2019-02-12 15:09:57.611158:	Training iteration: 115400, Loss: 0.22906756401062012
+2019-02-12 15:10:29.052517:	Training iteration: 115600, Loss: 0.2821309566497803
+2019-02-12 15:10:43.306978: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 303 of 1000
+2019-02-12 15:10:53.153504: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 636 of 1000
+2019-02-12 15:11:03.449374: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 965 of 1000
+2019-02-12 15:11:04.224265: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 15:11:34.201540:	Training iteration: 115800, Loss: 0.22994783520698547
+2019-02-12 15:12:08.217577:	Training iteration: 116000, Loss: 0.26235416531562805
+2019-02-12 15:12:41.452068:	Training iteration: 116200, Loss: 0.22335398197174072
+2019-02-12 15:13:15.570103:	Training iteration: 116400, Loss: 0.2537151575088501
+2019-02-12 15:13:49.369379:	Training iteration: 116600, Loss: 0.20432180166244507
+2019-02-12 15:14:22.963078:	Training iteration: 116800, Loss: 0.2586591839790344
+2019-02-12 15:14:55.982821:	Training iteration: 117000, Loss: 0.24106097221374512
+2019-02-12 15:15:30.083230:	Training iteration: 117200, Loss: 0.20294463634490967
+2019-02-12 15:16:04.387649:	Training iteration: 117400, Loss: 0.2441193014383316
+2019-02-12 15:16:37.645912:	Training iteration: 117600, Loss: 0.23871198296546936
+2019-02-12 15:17:10.838595:	Training iteration: 117800, Loss: 0.2564254403114319
+2019-02-12 15:17:44.645699:	Training iteration: 118000, Loss: 0.25245827436447144
+2019-02-12 15:18:18.257612:	Training iteration: 118200, Loss: 0.2562011480331421
+2019-02-12 15:18:52.261513:	Training iteration: 118400, Loss: 0.26579055190086365
+2019-02-12 15:19:25.963177:	Training iteration: 118600, Loss: 0.2461431920528412
+2019-02-12 15:19:59.615737:	Training iteration: 118800, Loss: 0.196515291929245
+2019-02-12 15:20:32.937238:	Training iteration: 119000, Loss: 0.2766191363334656
+2019-02-12 15:21:06.262612:	Training iteration: 119200, Loss: 0.2773338854312897
+2019-02-12 15:21:39.960397:	Training iteration: 119400, Loss: 0.20485594868659973
+2019-02-12 15:22:13.861392:	Training iteration: 119600, Loss: 0.25941407680511475
+2019-02-12 15:22:47.446956:	Training iteration: 119800, Loss: 0.24880360066890717
+2019-02-12 15:23:21.451175:	Training iteration: 120000, Loss: 0.2037004828453064
+2019-02-12 15:23:55.158440:	Training iteration: 120200, Loss: 0.2262508124113083
+2019-02-12 15:24:29.286712:	Training iteration: 120400, Loss: 0.24331340193748474
+2019-02-12 15:25:03.342414:	Training iteration: 120600, Loss: 0.19633738696575165
+2019-02-12 15:25:34.922046:	Training iteration: 120800, Loss: 0.22096861898899078
+2019-02-12 15:25:40.468927:	Epoch 5 finished after 120835 iterations.
+Validating
+2019-02-12 15:25:40.474085:	Entering validation loop
+2019-02-12 15:25:50.481443: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 294 of 1000
+2019-02-12 15:26:00.632090: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 604 of 1000
+2019-02-12 15:26:10.492496: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 908 of 1000
+2019-02-12 15:26:13.477241: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 15:26:46.448232:	Validation iteration: 200, Loss: 0.25419795513153076
+2019-02-12 15:27:18.546354:	Validation iteration: 400, Loss: 0.28195708990097046
+2019-02-12 15:27:50.632404:	Validation iteration: 600, Loss: 0.21653109788894653
+2019-02-12 15:28:05.252253:	Validation iteration: 800, Loss: 0.2009519636631012
+2019-02-12 15:28:17.420379: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 295 of 1000
+2019-02-12 15:28:27.535702: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 604 of 1000
+2019-02-12 15:28:37.398788: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 912 of 1000
+2019-02-12 15:28:40.194357: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 15:29:06.905228:	Validation iteration: 1000, Loss: 0.25313812494277954
+2019-02-12 15:29:38.715211:	Validation iteration: 1200, Loss: 0.1743994802236557
+2019-02-12 15:30:10.763518:	Validation iteration: 1400, Loss: 0.2365167737007141
+2019-02-12 15:30:28.691344:	Validation iteration: 1600, Loss: 0.2806304395198822
+2019-02-12 15:30:42.999734: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 295 of 1000
+2019-02-12 15:30:53.116422: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 604 of 1000
+2019-02-12 15:31:03.032817: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 919 of 1000
+2019-02-12 15:31:05.482858: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 15:31:26.262201:	Validation iteration: 1800, Loss: 0.21971940994262695
+2019-02-12 15:31:58.598918:	Validation iteration: 2000, Loss: 0.2076064646244049
+2019-02-12 15:32:30.644631:	Validation iteration: 2200, Loss: 0.22935810685157776
+2019-02-12 15:32:52.324191:	Validation iteration: 2400, Loss: 0.19840514659881592
+2019-02-12 15:33:08.818405: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 292 of 1000
+2019-02-12 15:33:18.848925: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 604 of 1000
+2019-02-12 15:33:28.844472: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 916 of 1000
+2019-02-12 15:33:31.445891: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 15:33:46.845406:	Validation iteration: 2600, Loss: 0.20294877886772156
+2019-02-12 15:34:18.594459:	Validation iteration: 2800, Loss: 0.23396766185760498
+2019-02-12 15:34:50.717235:	Validation iteration: 3000, Loss: 0.20301303267478943
+2019-02-12 15:35:15.995282:	Validation iteration: 3200, Loss: 0.21691417694091797
+Validation check mean loss: 0.2259207201551236
+Validation loss has improved!
+Checkpoint
+2019-02-12 15:35:35.751305: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 320 of 1000
+2019-02-12 15:35:45.874777: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 669 of 1000
+2019-02-12 15:35:55.764044: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 994 of 1000
+2019-02-12 15:35:55.945921: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 15:36:25.018917:	Training iteration: 121000, Loss: 0.21576064825057983
+2019-02-12 15:36:58.528007:	Training iteration: 121200, Loss: 0.20375800132751465
+2019-02-12 15:37:32.131192:	Training iteration: 121400, Loss: 0.16843388974666595
+2019-02-12 15:38:06.402007:	Training iteration: 121600, Loss: 0.17495135962963104
+2019-02-12 15:38:40.269679:	Training iteration: 121800, Loss: 0.1732116937637329
+2019-02-12 15:39:13.801058:	Training iteration: 122000, Loss: 0.18855051696300507
+2019-02-12 15:39:48.037408:	Training iteration: 122200, Loss: 0.19991973042488098
+2019-02-12 15:40:21.654808:	Training iteration: 122400, Loss: 0.20351949334144592
+2019-02-12 15:40:56.196771:	Training iteration: 122600, Loss: 0.19532614946365356
+2019-02-12 15:41:29.948283:	Training iteration: 122800, Loss: 0.23376722633838654
+2019-02-12 15:42:03.647534:	Training iteration: 123000, Loss: 0.19335117936134338
+2019-02-12 15:42:37.444023:	Training iteration: 123200, Loss: 0.18834030628204346
+2019-02-12 15:43:11.954275:	Training iteration: 123400, Loss: 0.17673739790916443
+2019-02-12 15:43:45.587824:	Training iteration: 123600, Loss: 0.2087005078792572
+2019-02-12 15:44:19.272618:	Training iteration: 123800, Loss: 0.20994946360588074
+2019-02-12 15:44:53.001477:	Training iteration: 124000, Loss: 0.18926942348480225
+2019-02-12 15:45:27.417507:	Training iteration: 124200, Loss: 0.21577349305152893
+2019-02-12 15:46:01.444072:	Training iteration: 124400, Loss: 0.202607661485672
+2019-02-12 15:46:35.984249:	Training iteration: 124600, Loss: 0.19881877303123474
+2019-02-12 15:47:10.048411:	Training iteration: 124800, Loss: 0.1725914180278778
+2019-02-12 15:47:44.228236:	Training iteration: 125000, Loss: 0.21881826221942902
+2019-02-12 15:48:17.797600:	Training iteration: 125200, Loss: 0.21343223750591278
+2019-02-12 15:48:51.473547:	Training iteration: 125400, Loss: 0.18875089287757874
+2019-02-12 15:49:25.799494:	Training iteration: 125600, Loss: 0.1827181875705719
+2019-02-12 15:50:06.500693: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 315 of 1000
+2019-02-12 15:50:16.598752: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 640 of 1000
+2019-02-12 15:50:26.483579: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 966 of 1000
+2019-02-12 15:50:27.539902: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 15:50:29.413576:	Training iteration: 125800, Loss: 0.26661401987075806
+2019-02-12 15:51:03.854478:	Training iteration: 126000, Loss: 0.22712509334087372
+2019-02-12 15:51:37.964115:	Training iteration: 126200, Loss: 0.21145088970661163
+2019-02-12 15:52:12.403946:	Training iteration: 126400, Loss: 0.27441078424453735
+2019-02-12 15:52:46.291197:	Training iteration: 126600, Loss: 0.2191031277179718
+2019-02-12 15:53:19.808706:	Training iteration: 126800, Loss: 0.19648998975753784
+2019-02-12 15:53:53.464128:	Training iteration: 127000, Loss: 0.21148046851158142
+2019-02-12 15:54:27.368492:	Training iteration: 127200, Loss: 0.21070940792560577
+2019-02-12 15:55:01.338699:	Training iteration: 127400, Loss: 0.21690833568572998
+2019-02-12 15:55:38.726950:	Training iteration: 127600, Loss: 0.2067134827375412
+2019-02-12 15:56:14.394273:	Training iteration: 127800, Loss: 0.22198829054832458
+2019-02-12 15:56:52.778803:	Training iteration: 128000, Loss: 0.2742977738380432
+2019-02-12 15:57:30.586871:	Training iteration: 128200, Loss: 0.22609534859657288
+2019-02-12 15:58:08.006957:	Training iteration: 128400, Loss: 0.20812547206878662
+2019-02-12 15:58:43.114698:	Training iteration: 128600, Loss: 0.2048296332359314
+2019-02-12 15:59:16.470291:	Training iteration: 128800, Loss: 0.20894590020179749
+2019-02-12 15:59:50.922389:	Training iteration: 129000, Loss: 0.25570374727249146
+2019-02-12 16:00:24.404613:	Training iteration: 129200, Loss: 0.23342543840408325
+2019-02-12 16:00:59.012368:	Training iteration: 129400, Loss: 0.22695350646972656
+2019-02-12 16:01:33.211838:	Training iteration: 129600, Loss: 0.23132646083831787
+2019-02-12 16:02:07.687380:	Training iteration: 129800, Loss: 0.2139052003622055
+2019-02-12 16:02:41.338170:	Training iteration: 130000, Loss: 0.26080450415611267
+2019-02-12 16:03:15.196390:	Training iteration: 130200, Loss: 0.2284284234046936
+2019-02-12 16:03:49.150332:	Training iteration: 130400, Loss: 0.202704057097435
+2019-02-12 16:04:23.431315:	Training iteration: 130600, Loss: 0.20626330375671387
+2019-02-12 16:05:02.324456: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 311 of 1000
+2019-02-12 16:05:12.208863: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 659 of 1000
+2019-02-12 16:05:22.183504: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 996 of 1000
+2019-02-12 16:05:22.309152: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 16:05:26.082084:	Training iteration: 130800, Loss: 0.2574792206287384
+2019-02-12 16:05:59.922777:	Training iteration: 131000, Loss: 0.2450951784849167
+2019-02-12 16:06:33.539979:	Training iteration: 131200, Loss: 0.25719794631004333
+2019-02-12 16:07:06.872393:	Training iteration: 131400, Loss: 0.285971075296402
+2019-02-12 16:07:40.669650:	Training iteration: 131600, Loss: 0.278853178024292
+2019-02-12 16:08:13.874589:	Training iteration: 131800, Loss: 0.20018348097801208
+2019-02-12 16:08:47.953023:	Training iteration: 132000, Loss: 0.2748483717441559
+2019-02-12 16:09:21.724178:	Training iteration: 132200, Loss: 0.28148990869522095
+2019-02-12 16:09:55.334275:	Training iteration: 132400, Loss: 0.295607328414917
+2019-02-12 16:10:29.070089:	Training iteration: 132600, Loss: 0.26319360733032227
+2019-02-12 16:11:03.273779:	Training iteration: 132800, Loss: 0.2633919417858124
+2019-02-12 16:11:36.406650:	Training iteration: 133000, Loss: 0.24352341890335083
+2019-02-12 16:12:10.049667:	Training iteration: 133200, Loss: 0.27845484018325806
+2019-02-12 16:12:44.089978:	Training iteration: 133400, Loss: 0.2383158802986145
+2019-02-12 16:13:17.723099:	Training iteration: 133600, Loss: 0.289315402507782
+2019-02-12 16:13:51.227862:	Training iteration: 133800, Loss: 0.26180773973464966
+2019-02-12 16:14:24.348978:	Training iteration: 134000, Loss: 0.2748328149318695
+2019-02-12 16:14:58.433442:	Training iteration: 134200, Loss: 0.2373407632112503
+2019-02-12 16:15:32.501609:	Training iteration: 134400, Loss: 0.24825537204742432
+2019-02-12 16:16:05.703444:	Training iteration: 134600, Loss: 0.2241356074810028
+2019-02-12 16:16:39.592699:	Training iteration: 134800, Loss: 0.29763299226760864
+2019-02-12 16:17:12.908569:	Training iteration: 135000, Loss: 0.24205748736858368
+2019-02-12 16:17:46.445402:	Training iteration: 135200, Loss: 0.2689875662326813
+2019-02-12 16:18:19.627935:	Training iteration: 135400, Loss: 0.2794186472892761
+2019-02-12 16:18:52.248513:	Training iteration: 135600, Loss: 0.24266546964645386
+2019-02-12 16:19:28.063802: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 304 of 1000
+2019-02-12 16:19:38.020651: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 637 of 1000
+2019-02-12 16:19:48.034874: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 965 of 1000
+2019-02-12 16:19:49.114015: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 16:19:55.705797:	Training iteration: 135800, Loss: 0.27546119689941406
+2019-02-12 16:20:29.467486:	Training iteration: 136000, Loss: 0.2842462658882141
+2019-02-12 16:21:03.357138:	Training iteration: 136200, Loss: 0.2380290925502777
+2019-02-12 16:21:36.413656:	Training iteration: 136400, Loss: 0.24273042380809784
+2019-02-12 16:22:10.660157:	Training iteration: 136600, Loss: 0.23952716588974
+2019-02-12 16:22:44.229084:	Training iteration: 136800, Loss: 0.2203526496887207
+2019-02-12 16:23:17.427160:	Training iteration: 137000, Loss: 0.23532679677009583
+2019-02-12 16:23:51.478918:	Training iteration: 137200, Loss: 0.1989220678806305
+2019-02-12 16:24:25.247242:	Training iteration: 137400, Loss: 0.23496240377426147
+2019-02-12 16:24:58.792616:	Training iteration: 137600, Loss: 0.24257045984268188
+2019-02-12 16:25:31.783769:	Training iteration: 137800, Loss: 0.21654829382896423
+2019-02-12 16:26:05.398180:	Training iteration: 138000, Loss: 0.2538425326347351
+2019-02-12 16:26:39.512370:	Training iteration: 138200, Loss: 0.21026723086833954
+2019-02-12 16:27:12.999194:	Training iteration: 138400, Loss: 0.2200797200202942
+2019-02-12 16:27:46.952180:	Training iteration: 138600, Loss: 0.2635490298271179
+2019-02-12 16:28:20.484091:	Training iteration: 138800, Loss: 0.19553007185459137
+2019-02-12 16:28:54.175641:	Training iteration: 139000, Loss: 0.2672017514705658
+2019-02-12 16:29:27.260918:	Training iteration: 139200, Loss: 0.2997910976409912
+2019-02-12 16:30:00.679800:	Training iteration: 139400, Loss: 0.2426091432571411
+2019-02-12 16:30:34.007508:	Training iteration: 139600, Loss: 0.2159753143787384
+2019-02-12 16:31:07.713210:	Training iteration: 139800, Loss: 0.2618904411792755
+2019-02-12 16:31:41.451460:	Training iteration: 140000, Loss: 0.2410462349653244
+2019-02-12 16:32:15.452180:	Training iteration: 140200, Loss: 0.2561023235321045
+2019-02-12 16:32:49.350401:	Training iteration: 140400, Loss: 0.28460878133773804
+2019-02-12 16:33:23.765588:	Training iteration: 140600, Loss: 0.23029333353042603
+2019-02-12 16:33:56.790209:	Training iteration: 140800, Loss: 0.2316272258758545
+2019-02-12 16:34:23.990803:	Epoch 6 finished after 140974 iterations.
+Validating
+2019-02-12 16:34:23.998427:	Entering validation loop
+2019-02-12 16:34:34.085257: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 291 of 1000
+2019-02-12 16:34:44.251446: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 590 of 1000
+2019-02-12 16:34:54.044751: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 886 of 1000
+2019-02-12 16:34:57.821677: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 16:35:30.514909:	Validation iteration: 200, Loss: 0.2579078674316406
+2019-02-12 16:36:02.470399:	Validation iteration: 400, Loss: 0.22477476298809052
+2019-02-12 16:36:34.460741:	Validation iteration: 600, Loss: 0.2585492432117462
+2019-02-12 16:36:49.030826:	Validation iteration: 800, Loss: 0.22380444407463074
+2019-02-12 16:37:01.216524: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 297 of 1000
+2019-02-12 16:37:11.294472: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 606 of 1000
+2019-02-12 16:37:21.206717: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 924 of 1000
+2019-02-12 16:37:23.624868: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 16:37:50.162536:	Validation iteration: 1000, Loss: 0.3179003596305847
+2019-02-12 16:38:21.977689:	Validation iteration: 1200, Loss: 0.2048715353012085
+2019-02-12 16:38:54.202138:	Validation iteration: 1400, Loss: 0.21360087394714355
+2019-02-12 16:39:12.211686:	Validation iteration: 1600, Loss: 0.22398912906646729
+2019-02-12 16:39:26.763723: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 293 of 1000
+2019-02-12 16:39:36.555138: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 602 of 1000
+2019-02-12 16:39:46.581853: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 911 of 1000
+2019-02-12 16:39:49.402208: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 16:40:10.346289:	Validation iteration: 1800, Loss: 0.2636018693447113
+2019-02-12 16:40:42.400980:	Validation iteration: 2000, Loss: 0.25941914319992065
+2019-02-12 16:41:14.563257:	Validation iteration: 2200, Loss: 0.20341619849205017
+2019-02-12 16:41:36.122785:	Validation iteration: 2400, Loss: 0.2252478003501892
+2019-02-12 16:41:52.668332: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 298 of 1000
+2019-02-12 16:42:02.737109: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 605 of 1000
+2019-02-12 16:42:12.690768: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 915 of 1000
+2019-02-12 16:42:15.318624: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 16:42:30.483316:	Validation iteration: 2600, Loss: 0.27530041337013245
+2019-02-12 16:43:02.209382:	Validation iteration: 2800, Loss: 0.22278915345668793
+2019-02-12 16:43:34.146184:	Validation iteration: 3000, Loss: 0.16633152961730957
+2019-02-12 16:43:59.262177:	Validation iteration: 3200, Loss: 0.16617991030216217
+Validation check mean loss: 0.22597197787256904
+Validation loss has worsened. worse_val_checks = 1
+Checkpoint
+2019-02-12 16:44:19.092851: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 322 of 1000
+2019-02-12 16:44:29.062502: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 660 of 1000
+2019-02-12 16:44:39.084282: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 992 of 1000
+2019-02-12 16:44:39.536154: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 16:44:44.608623:	Training iteration: 141000, Loss: 0.20350715517997742
+2019-02-12 16:45:18.623607:	Training iteration: 141200, Loss: 0.16232770681381226
+2019-02-12 16:45:52.461921:	Training iteration: 141400, Loss: 0.21548202633857727
+2019-02-12 16:46:26.390888:	Training iteration: 141600, Loss: 0.23769602179527283
+2019-02-12 16:47:00.473733:	Training iteration: 141800, Loss: 0.21006616950035095
+2019-02-12 16:47:34.137034:	Training iteration: 142000, Loss: 0.21533575654029846
+2019-02-12 16:48:08.231364:	Training iteration: 142200, Loss: 0.20926719903945923
+2019-02-12 16:48:42.080853:	Training iteration: 142400, Loss: 0.22894051671028137
+2019-02-12 16:49:15.982195:	Training iteration: 142600, Loss: 0.19325077533721924
+2019-02-12 16:49:50.081306:	Training iteration: 142800, Loss: 0.20714277029037476
+2019-02-12 16:50:23.667061:	Training iteration: 143000, Loss: 0.19959747791290283
+2019-02-12 16:50:57.679288:	Training iteration: 143200, Loss: 0.20330247282981873
+2019-02-12 16:51:31.414585:	Training iteration: 143400, Loss: 0.1976970136165619
+2019-02-12 16:52:05.580785:	Training iteration: 143600, Loss: 0.20485183596611023
+2019-02-12 16:52:39.328419:	Training iteration: 143800, Loss: 0.19671303033828735
+2019-02-12 16:53:12.803436:	Training iteration: 144000, Loss: 0.20272420346736908
+2019-02-12 16:53:46.564920:	Training iteration: 144200, Loss: 0.20311090350151062
+2019-02-12 16:54:21.043162:	Training iteration: 144400, Loss: 0.211933895945549
+2019-02-12 16:54:55.868289:	Training iteration: 144600, Loss: 0.18926428258419037
+2019-02-12 16:55:29.813422:	Training iteration: 144800, Loss: 0.1891624927520752
+2019-02-12 16:56:03.729496:	Training iteration: 145000, Loss: 0.212406188249588
+2019-02-12 16:56:37.324539:	Training iteration: 145200, Loss: 0.17969092726707458
+2019-02-12 16:57:11.076194:	Training iteration: 145400, Loss: 0.1890113651752472
+2019-02-12 16:57:44.999126:	Training iteration: 145600, Loss: 0.20939528942108154
+2019-02-12 16:58:18.024211:	Training iteration: 145800, Loss: 0.21349158883094788
+2019-02-12 16:58:49.052062: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 320 of 1000
+2019-02-12 16:58:59.072938: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 638 of 1000
+2019-02-12 16:59:09.087565: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 959 of 1000
+2019-02-12 16:59:10.171015: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 16:59:22.589715:	Training iteration: 146000, Loss: 0.20835885405540466
+2019-02-12 16:59:56.613828:	Training iteration: 146200, Loss: 0.22022980451583862
+2019-02-12 17:00:30.962803:	Training iteration: 146400, Loss: 0.2186708301305771
+2019-02-12 17:01:05.039393:	Training iteration: 146600, Loss: 0.2588616609573364
+2019-02-12 17:01:38.735616:	Training iteration: 146800, Loss: 0.21169012784957886
+2019-02-12 17:02:12.414301:	Training iteration: 147000, Loss: 0.22779548168182373
+2019-02-12 17:02:46.187586:	Training iteration: 147200, Loss: 0.1790233552455902
+2019-02-12 17:03:20.291974:	Training iteration: 147400, Loss: 0.2393614947795868
+2019-02-12 17:03:54.153187:	Training iteration: 147600, Loss: 0.2351350039243698
+2019-02-12 17:04:28.267987:	Training iteration: 147800, Loss: 0.19290736317634583
+2019-02-12 17:05:02.560616:	Training iteration: 148000, Loss: 0.25338447093963623
+2019-02-12 17:05:36.865845:	Training iteration: 148200, Loss: 0.21404242515563965
+2019-02-12 17:06:10.910057:	Training iteration: 148400, Loss: 0.21217405796051025
+2019-02-12 17:06:44.569255:	Training iteration: 148600, Loss: 0.2112669199705124
+2019-02-12 17:07:18.338443:	Training iteration: 148800, Loss: 0.21734650433063507
+2019-02-12 17:07:52.122272:	Training iteration: 149000, Loss: 0.272643119096756
+2019-02-12 17:08:26.413580:	Training iteration: 149200, Loss: 0.22100788354873657
+2019-02-12 17:08:59.893162:	Training iteration: 149400, Loss: 0.2572110891342163
+2019-02-12 17:09:34.260614:	Training iteration: 149600, Loss: 0.20907893776893616
+2019-02-12 17:10:08.426557:	Training iteration: 149800, Loss: 0.19882157444953918
+2019-02-12 17:10:43.325769:	Training iteration: 150000, Loss: 0.21981778740882874
+2019-02-12 17:11:17.054514:	Training iteration: 150200, Loss: 0.2384776771068573
+2019-02-12 17:11:50.380112:	Training iteration: 150400, Loss: 0.17564532160758972
+2019-02-12 17:12:24.814551:	Training iteration: 150600, Loss: 0.24175246059894562
+2019-02-12 17:12:57.999090:	Training iteration: 150800, Loss: 0.2642251253128052
+2019-02-12 17:13:27.098627: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 308 of 1000
+2019-02-12 17:13:37.160363: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 653 of 1000
+2019-02-12 17:13:47.146481: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 977 of 1000
+2019-02-12 17:13:47.886550: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 17:14:01.962972:	Training iteration: 151000, Loss: 0.21891888976097107
+2019-02-12 17:14:35.922158:	Training iteration: 151200, Loss: 0.2651464641094208
+2019-02-12 17:15:09.310753:	Training iteration: 151400, Loss: 0.2724485993385315
+2019-02-12 17:15:43.482783:	Training iteration: 151600, Loss: 0.20977966487407684
+2019-02-12 17:16:17.102917:	Training iteration: 151800, Loss: 0.2470875084400177
+2019-02-12 17:16:50.472604:	Training iteration: 152000, Loss: 0.2693217992782593
+2019-02-12 17:17:24.021267:	Training iteration: 152200, Loss: 0.26189330220222473
+2019-02-12 17:17:57.895660:	Training iteration: 152400, Loss: 0.2869398593902588
+2019-02-12 17:18:30.995904:	Training iteration: 152600, Loss: 0.25204038619995117
+2019-02-12 17:19:04.623914:	Training iteration: 152800, Loss: 0.2566883862018585
+2019-02-12 17:19:38.415083:	Training iteration: 153000, Loss: 0.2935042679309845
+2019-02-12 17:20:11.623286:	Training iteration: 153200, Loss: 0.2503076493740082
+2019-02-12 17:20:44.968490:	Training iteration: 153400, Loss: 0.24666810035705566
+2019-02-12 17:21:18.779693:	Training iteration: 153600, Loss: 0.2440042346715927
+2019-02-12 17:21:52.514733:	Training iteration: 153800, Loss: 0.26731956005096436
+2019-02-12 17:22:26.039742:	Training iteration: 154000, Loss: 0.21640357375144958
+2019-02-12 17:22:59.033769:	Training iteration: 154200, Loss: 0.26957207918167114
+2019-02-12 17:23:32.939560:	Training iteration: 154400, Loss: 0.2686532139778137
+2019-02-12 17:24:06.805412:	Training iteration: 154600, Loss: 0.27432578802108765
+2019-02-12 17:24:40.413033:	Training iteration: 154800, Loss: 0.22528555989265442
+2019-02-12 17:25:14.417622:	Training iteration: 155000, Loss: 0.238547682762146
+2019-02-12 17:25:47.715376:	Training iteration: 155200, Loss: 0.2861180305480957
+2019-02-12 17:26:20.895807:	Training iteration: 155400, Loss: 0.19761058688163757
+2019-02-12 17:26:54.471376:	Training iteration: 155600, Loss: 0.2538866400718689
+2019-02-12 17:27:26.367596:	Training iteration: 155800, Loss: 0.2295784056186676
+2019-02-12 17:27:52.694320: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 302 of 1000
+2019-02-12 17:28:02.714283: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 632 of 1000
+2019-02-12 17:28:12.738983: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 947 of 1000
+2019-02-12 17:28:14.322127: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 17:28:31.071989:	Training iteration: 156000, Loss: 0.25320231914520264
+2019-02-12 17:29:05.022532:	Training iteration: 156200, Loss: 0.26784974336624146
+2019-02-12 17:29:38.460668:	Training iteration: 156400, Loss: 0.24295693635940552
+2019-02-12 17:30:11.895611:	Training iteration: 156600, Loss: 0.2394307404756546
+2019-02-12 17:30:46.079415:	Training iteration: 156800, Loss: 0.20002076029777527
+2019-02-12 17:31:19.425223:	Training iteration: 157000, Loss: 0.24900683760643005
+2019-02-12 17:31:52.485209:	Training iteration: 157200, Loss: 0.2026367485523224
+2019-02-12 17:32:26.560846:	Training iteration: 157400, Loss: 0.2590388059616089
+2019-02-12 17:33:00.675485:	Training iteration: 157600, Loss: 0.2726585566997528
+2019-02-12 17:33:34.238322:	Training iteration: 157800, Loss: 0.2428416907787323
+2019-02-12 17:34:07.411509:	Training iteration: 158000, Loss: 0.2618701756000519
+2019-02-12 17:34:40.879989:	Training iteration: 158200, Loss: 0.24919889867305756
+2019-02-12 17:35:14.582630:	Training iteration: 158400, Loss: 0.257632851600647
+2019-02-12 17:35:48.304003:	Training iteration: 158600, Loss: 0.24091145396232605
+2019-02-12 17:36:22.018349:	Training iteration: 158800, Loss: 0.24641059339046478
+2019-02-12 17:36:55.478707:	Training iteration: 159000, Loss: 0.23060724139213562
+2019-02-12 17:37:28.942219:	Training iteration: 159200, Loss: 0.2557255029678345
+2019-02-12 17:38:01.907163:	Training iteration: 159400, Loss: 0.22110839188098907
+2019-02-12 17:38:35.743192:	Training iteration: 159600, Loss: 0.24766752123832703
+2019-02-12 17:39:08.941450:	Training iteration: 159800, Loss: 0.2402142882347107
+2019-02-12 17:39:42.626620:	Training iteration: 160000, Loss: 0.2529595196247101
+2019-02-12 17:40:16.267335:	Training iteration: 160200, Loss: 0.21039852499961853
+2019-02-12 17:40:49.725928:	Training iteration: 160400, Loss: 0.2607164978981018
+2019-02-12 17:41:23.967654:	Training iteration: 160600, Loss: 0.19873839616775513
+2019-02-12 17:41:57.853434:	Training iteration: 160800, Loss: 0.2715567946434021
+2019-02-12 17:42:30.311549:	Training iteration: 161000, Loss: 0.27227258682250977
+2019-02-12 17:42:48.093347:	Epoch 7 finished after 161113 iterations.
+Validating
+2019-02-12 17:42:48.100817:	Entering validation loop
+2019-02-12 17:42:58.195652: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 284 of 1000
+2019-02-12 17:43:08.142997: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 588 of 1000
+2019-02-12 17:43:18.279828: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 888 of 1000
+2019-02-12 17:43:21.883933: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 17:43:54.557751:	Validation iteration: 200, Loss: 0.22870540618896484
+2019-02-12 17:44:26.508873:	Validation iteration: 400, Loss: 0.20851144194602966
+2019-02-12 17:44:58.409993:	Validation iteration: 600, Loss: 0.2167133092880249
+2019-02-12 17:45:12.859559:	Validation iteration: 800, Loss: 0.2271488904953003
+2019-02-12 17:45:25.001379: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 291 of 1000
+2019-02-12 17:45:34.986241: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 604 of 1000
+2019-02-12 17:45:44.988176: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 913 of 1000
+2019-02-12 17:45:47.592067: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 17:46:15.039524:	Validation iteration: 1000, Loss: 0.2288016825914383
+2019-02-12 17:46:46.785641:	Validation iteration: 1200, Loss: 0.24169254302978516
+2019-02-12 17:47:18.936511:	Validation iteration: 1400, Loss: 0.24376201629638672
+2019-02-12 17:47:36.925154:	Validation iteration: 1600, Loss: 0.2484452724456787
+2019-02-12 17:47:51.360598: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 285 of 1000
+2019-02-12 17:48:01.323937: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 600 of 1000
+2019-02-12 17:48:11.395968: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 899 of 1000
+2019-02-12 17:48:14.535988: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 17:48:35.418039:	Validation iteration: 1800, Loss: 0.22417211532592773
+2019-02-12 17:49:07.374768:	Validation iteration: 2000, Loss: 0.21827980875968933
+2019-02-12 17:49:39.529796:	Validation iteration: 2200, Loss: 0.1979602575302124
+2019-02-12 17:50:01.203448:	Validation iteration: 2400, Loss: 0.18870815634727478
+2019-02-12 17:50:17.905285: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 291 of 1000
+2019-02-12 17:50:27.826219: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 603 of 1000
+2019-02-12 17:50:37.822205: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 922 of 1000
+2019-02-12 17:50:40.257238: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 17:50:55.684996:	Validation iteration: 2600, Loss: 0.2554037570953369
+2019-02-12 17:51:27.204726:	Validation iteration: 2800, Loss: 0.21242240071296692
+2019-02-12 17:51:59.306361:	Validation iteration: 3000, Loss: 0.24787098169326782
+2019-02-12 17:52:24.303337:	Validation iteration: 3200, Loss: 0.24677911400794983
+Validation check mean loss: 0.2259319048401628
+Validation loss has improved!
+Checkpoint
+Training complete after 8 epochs.
+Finished requested number of epochs.
+Final validation loss: 0.2259319048401628
+Best validation loss (0.22588919267575278) achieved at validation check 1
+Starting testing
+2019-02-12 17:52:34.484822:	Entering test loop
+2019-02-12 17:52:45.060221: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 289 of 1000
+2019-02-12 17:52:55.023207: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 593 of 1000
+2019-02-12 17:53:05.013729: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 899 of 1000
+2019-02-12 17:53:08.653085: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 17:53:09.179210:	Testing iteration: 0, Loss: 0.2581234574317932
+2019-02-12 17:54:04.649014:	Testing iteration: 200, Loss: 0.25791120529174805
+2019-02-12 17:54:59.428895:	Testing iteration: 400, Loss: 0.26037463545799255
+2019-02-12 17:55:48.491511:	Testing iteration: 600, Loss: 0.2506908178329468
+2019-02-12 17:56:09.160859: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 285 of 1000
+2019-02-12 17:56:19.225858: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 595 of 1000
+2019-02-12 17:56:29.231566: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 891 of 1000
+2019-02-12 17:56:33.104156: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 17:57:16.505909:	Testing iteration: 800, Loss: 0.24754558503627777
+2019-02-12 17:58:11.639180:	Testing iteration: 1000, Loss: 0.23661690950393677
+2019-02-12 17:59:01.990786:	Testing iteration: 1200, Loss: 0.2649357318878174
+2019-02-12 17:59:33.713542: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 289 of 1000
+2019-02-12 17:59:43.704190: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 602 of 1000
+2019-02-12 17:59:53.697213: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 901 of 1000
+2019-02-12 17:59:57.174813: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 18:00:42.670045:	Testing iteration: 1400, Loss: 0.2368757128715515
+2019-02-12 18:02:06.433191:	Testing iteration: 1600, Loss: 0.2476584017276764
+2019-02-12 18:03:29.910723:	Testing iteration: 1800, Loss: 0.2741590142250061
+2019-02-12 18:04:30.332593: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 284 of 1000
+2019-02-12 18:04:40.357071: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 581 of 1000
+2019-02-12 18:04:50.474227: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:98] Filling up shuffle buffer (this may take a while): 876 of 1000
+2019-02-12 18:04:54.714942: I tensorflow/core/kernels/data/shuffle_dataset_op.cc:136] Shuffle buffer filled.
+2019-02-12 18:05:16.613666:	Testing iteration: 2000, Loss: 0.2898830771446228
+2019-02-12 18:06:37.177340:	Testing iteration: 2200, Loss: 0.2127600908279419
+2019-02-12 18:07:56.824477:	Testing iteration: 2400, Loss: 0.22997435927391052
+Test pass complete
+Mean loss over test set: 0.2554288378141059
+Data saved to dumps/366 for later audio metric calculation
+2019-02-12 18:09:04.255972:
+	All done with experiment 366!
+	Final test loss: 0.2554288378141059
