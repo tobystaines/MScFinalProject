@@ -96,9 +96,9 @@ def l2_phase_loss(x, y):
     :return: l1 loss between x and y
     """
     pi = tf.constant(math.pi)
-    original_diff = tf.losses.mean_squared_error(y, x, reduction=None)
-    add_2_pi_diff = tf.losses.mean_squared_error(y + 2 * pi, x, reduction=None)
-    minus_2_pi_diff = tf.losses.mean_squared_error(y - 2 * pi, x, reduction=None)
+    original_diff = tf.losses.mean_squared_error(y, x, reduction=tf.losses.Reduction.NONE)
+    add_2_pi_diff = tf.losses.mean_squared_error(y + 2 * pi, x, reduction=tf.losses.Reduction.NONE)
+    minus_2_pi_diff = tf.losses.mean_squared_error(y - 2 * pi, x, reduction=tf.losses.Reduction.NONE)
 
     return tf.reduce_mean(tf.minimum(original_diff, tf.minimum(add_2_pi_diff, minus_2_pi_diff)))
 
