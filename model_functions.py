@@ -67,6 +67,10 @@ def l1_loss(x, y):
     return tf.reduce_mean(tf.abs(x - y))
 
 
+def l2_loss(x, y):
+    return tf.losses.mean_squared_error(y, x)
+
+
 def l1_phase_loss(x, y):
     """
     Calculates the l1 loss between two phase spectrograms, correcting for the circularity of phase. The true difference
@@ -79,6 +83,22 @@ def l1_phase_loss(x, y):
     original_diff = tf.abs(x - y)
     add_2_pi_diff = tf.abs(x - (y + 2 * pi))
     minus_2_pi_diff = tf.abs(x - (y - 2 * pi))
+
+    return tf.reduce_mean(tf.minimum(original_diff, tf.minimum(add_2_pi_diff, minus_2_pi_diff)))
+
+
+def l2_phase_loss(x, y):
+    """
+    Calculates the l2 loss between two phase spectrograms, correcting for the circularity of phase. The true difference
+    between each element of x and y is the closest to 0 of x - y, x - (y + 2pi) and x - (y - 2pi).
+    :param x: 2D tensor, a phase spectrogram in radians
+    :param y: 2D tensor, a phase spectrogram in radians
+    :return: l1 loss between x and y
+    """
+    pi = tf.constant(math.pi)
+    original_diff = tf.losses.mean_squared_error(y, x, reduction=None)
+    add_2_pi_diff = tf.losses.mean_squared_error(y + 2 * pi, x, reduction=None)
+    minus_2_pi_diff = tf.losses.mean_squared_error(y - 2 * pi, x, reduction=None)
 
     return tf.reduce_mean(tf.minimum(original_diff, tf.minimum(add_2_pi_diff, minus_2_pi_diff)))
 

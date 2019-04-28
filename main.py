@@ -22,6 +22,7 @@ def cfg():
                                               # 'basic_convnet']
                     'data_type': 'mag_phase',  # From [' mag', 'mag_phase', 'mag_phase_diff', 'real_imag',
                                                     # 'mag_real_imag', 'complex_to_mag_phase']
+                    'phase_loss': 'l1',  # From ['l1', 'l1_circular', 'l2', 'l2_circular']
                     'phase_weight': 0.0005,  # When using a model which learns to estimate phase, defines how much
                                             # weight phase loss should be given against magnitude loss
                     'initialisation_test': False,  # Whether or not to calculate test metrics before training
@@ -124,7 +125,8 @@ def do_experiment(model_config):
 
     model = audio_models.MagnitudeModel(mixed_input, voice_input, mixed_phase, mixed_audio, voice_audio, background_audio,
                                         model_config['model_variant'], is_training, model_config['learning_rate'],
-                                        model_config['data_type'], model_config['phase_weight'], name='Magnitude_Model')
+                                        model_config['data_type'], model_config['phase_weight'],
+                                        model_config['phase_loss'], name='Magnitude_Model')
 
     sess.run(tf.global_variables_initializer())
 
